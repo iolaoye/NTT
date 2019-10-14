@@ -1,10 +1,4 @@
 class StatesController < ApplicationController
-################################  save BMPS  #################################
-# POST /bmps/scenario
-  def save_bmps
-		ddd
-  end
-
   # GET /states
   # GET /states.json
   def index
@@ -20,7 +14,11 @@ class StatesController < ApplicationController
   # GET /states/1
   # GET /states/1.json
   def show
-    @state = State.find(params[:id])
+    if params[:abbr] != nil then
+      @state = State.find_by_state_abbreviation(params[:abbr])
+    else
+      @state = State.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
