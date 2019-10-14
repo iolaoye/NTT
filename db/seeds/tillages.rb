@@ -102,7 +102,7 @@ Tillage.create!({:id => 187,:code => 267,:dndc => 0,:name => 'SPFRSPDR',:operati
 Tillage.create!({:id => 188,:code => 271,:dndc => 0,:name => 'FERTRENT',:operation => 9,:eqp => '',:status => false,:abbreviation => 'FERT',:spanish_name =>  '',:activity_id => 2}, :without_protection => true)
 Tillage.create!({:id => 189,:code => 272,:dndc => 0,:name => 'AERIALCH',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  '',:activity_id => 99}, :without_protection => true)
 Tillage.create!({:id => 190,:code => 273,:dndc => 0,:name => 'CHEMIMPL',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  ' ',:activity_id => 99}, :without_protection => true)
-Tillage.create!({:id => 192,:code => 274,:dndc => 0,:name => 'CHEMLGSP',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  ' ',:activity_id => 99}, :without_protection => true)
+Tillage.create!({:id => 191,:code => 274,:dndc => 0,:name => 'CHEMLGSP',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  ' ',:activity_id => 99}, :without_protection => true)
 Tillage.create!({:id => 192,:code => 277,:dndc => 0,:name => 'CGE30TLR',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  ' ',:activity_id => 99}, :without_protection => true)
 Tillage.create!({:id => 193,:code => 283,:dndc => 0,:name => 'CHEMRENT',:operation => 7,:eqp => '',:status => false,:abbreviation => 'PEST',:spanish_name =>  ' ',:activity_id => 99}, :without_protection => true)
 Tillage.create!({:id => 194,:code => 292,:dndc => 0,:name => 'CSP2WD',:operation => 2,:eqp => '',:status => false,:abbreviation => 'HARV',:spanish_name =>  ' ',:activity_id => 4}, :without_protection => true)
