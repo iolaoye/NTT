@@ -8,6 +8,8 @@ cont = false
 	file = "db/seeds/tillages.rb"
 	load file
 
+	file = "db/seeds/animals.rb"
+	load file
 if cont then
 
 	file = "db/seeds/activities.rb"
