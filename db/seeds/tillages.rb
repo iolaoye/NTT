@@ -163,7 +163,7 @@ Tillage.create!({:id => 131,:code => 533,:dndc => 0,:name => 'WYCDITCH',:operati
 Tillage.create!({:id => 132,:code => 534,:dndc => 0,:name => 'WYGTPIPE',:operation => 8,:eqp => 'WY GATED PIPE',:status => false,:abbreviation => 'IRRI',:spanish_name =>  'WY TUBERIA CERRADA',:activity_id => 11}, :without_protection => true)
 Tillage.create!({:id => 133,:code => 563,:dndc => 1,:name => 'C:THIN 3',:operation => 0,:eqp => 'THIN',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Reducir Dencidad',:activity_id => 12}, :without_protection => true)
 Tillage.create!({:id => 134,:code => 565,:dndc => 1,:name => 'WEED',:operation => 0,:eqp => 'WEED',:status => false,:abbreviation => 'TILL',:spanish_name =>  'DESYERBAR',:activity_id => 13}, :without_protection => true)
-Tillage.create!({:id => 134,:code => 580,:dndc => 1,:name => 'FERT',:operation => 9,:eqp => 'FERTILIZER',:status => true,:abbreviation => 'NUTC',:spanish_name =>  'Fertilizante',:activity_id => 2}, :without_protection => true)
+Tillage.create!({:id => 205,:code => 580,:dndc => 1,:name => 'FERT',:operation => 9,:eqp => 'FERTILIZER',:status => true,:abbreviation => 'NUTC',:spanish_name =>  'Fertilizante',:activity_id => 2}, :without_protection => true)
 Tillage.create!({:id => 135,:code => 604,:dndc => 1,:name => 'C:LABOR6',:operation => 0,:eqp => 'LABOR',:status => false,:abbreviation => 'TILL',:spanish_name =>  'TRABAJO',:activity_id => 14}, :without_protection => true)
 Tillage.create!({:id => 136,:code => 607,:dndc => 1,:name => 'C:STACK6',:operation => 0,:eqp => 'STACKING',:status => false,:abbreviation => 'TILL',:spanish_name =>  'APILAR',:activity_id => 15}, :without_protection => true)
 Tillage.create!({:id => 137,:code => 608,:dndc => 1,:name => 'C:CULT 6',:operation => 0,:eqp => 'CULTIVATE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'CULTIVAR',:activity_id => 16}, :without_protection => true)
@@ -204,4 +204,4 @@ Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operati
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 171,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp => 'DESTROY PUDDLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Destruir Puddle',:activity_id => 3}, :without_protection => true)
-#LAST id = 204 tillage code = 734 lime appl.
+#LAST id = 205 tillage code = 580 fertilizer.
