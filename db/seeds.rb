@@ -4,10 +4,10 @@
 # encoding: utf-8
 
 cont = false
-
-file = "db/seeds/parameters.rb"
-load file
 	
+	file = "db/seeds/tillages.rb"
+	load file
+
 if cont then
 
 	file = "db/seeds/activities.rb"
