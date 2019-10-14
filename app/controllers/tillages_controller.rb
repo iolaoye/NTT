@@ -25,7 +25,11 @@ class TillagesController < ApplicationController
   # GET /tillages/1
   # GET /tillages/1.json
   def show
-    @tillage = Tillage.find(params[:id])
+    if params[:code] != nil then
+      @tillage = Tillage.find_by_code(params[:code])
+    else
+      @tillage = Tillage.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
