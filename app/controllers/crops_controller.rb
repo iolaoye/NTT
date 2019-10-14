@@ -13,8 +13,11 @@ class CropsController < ApplicationController
   # GET /crops/1
   # GET /crops/1.json
   def show
-    @crop = Crop.find(params[:id])
-
+    if params[:number] then
+      @crop = Crop.find_by_number(params[:number])
+    else
+      @crop = Crop.find(params[:id])
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @crop }
@@ -25,7 +28,7 @@ class CropsController < ApplicationController
   # GET /crops/new.json
   def new
     @crop = Crop.new
-	@crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
+	  @crops = Crop.load_crops(Location.find(session[:location_id]).state_id)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @crop }
