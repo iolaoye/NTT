@@ -13,8 +13,11 @@ class CropsController < ApplicationController
   # GET /crops/1
   # GET /crops/1.json
   def show
-    if params[:number] then
+    case true
+    when params[:number] != nil  
       @crop = Crop.find_by_number_and_state_id(params[:number], params[:state_id])
+    when params[:crop_name] != nil
+      @crop = Crop.find_by_code(params[:crop_name])
     else
       @crop = Crop.find(params[:id])
     end
