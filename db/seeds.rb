@@ -10,6 +10,10 @@ cont = false
 
 	file = "db/seeds/animals.rb"
 	load file
+
+	file = "db/seeds/stations.rb"
+	load file
+
 if cont then
 
 	file = "db/seeds/activities.rb"
