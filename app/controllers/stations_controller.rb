@@ -14,8 +14,18 @@ class StationsController < ApplicationController
   # GET /stations/1
   # GET /stations/1.json
   def show
-    if params[:sql] != nil then
-      @station = Station.find_by_sql(params[:sql].gsub! "mas","+").first
+    if params[:nlat] != nil then
+      lat_dif=0.04
+      lon_dif = 0.09
+      lat_less = params[:nlat].to_f - lat_dif
+      lat_plus = params[:nlat].to_f + lat_dif
+      lon_less = params[:nlon].to_f - lon_dif
+      lon_plus = params[:nlon].to_f + lon_dif
+      sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlat] + ") as distance, final_year"
+      sql = sql + " FROM stations"
+      sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+      sql = sql + " ORDER BY distance"
+      @station = Station.find_by_sql(sql).first
     else
       @station = Station.find(params[:id])
     end
