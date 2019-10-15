@@ -15,7 +15,7 @@ class StationsController < ApplicationController
   # GET /stations/1.json
   def show
     if params[:sql] != nil then
-      @station = Station.find_by_sql(params[:sql].gsub! "mas","+")
+      @station = Station.find_by_sql(params[:sql].gsub! "mas","+").first
     else
       @station = Station.find(params[:id])
     end
