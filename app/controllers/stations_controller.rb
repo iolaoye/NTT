@@ -14,7 +14,6 @@ class StationsController < ApplicationController
   # GET /stations/1
   # GET /stations/1.json
   def show
-    debugger
     if params[:sql] != nil then
       @station = Station.find_by_sql(params[:sql])
     else
