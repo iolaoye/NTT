@@ -14,7 +14,12 @@ class StationsController < ApplicationController
   # GET /stations/1
   # GET /stations/1.json
   def show
-    @station = Station.find(params[:id])
+    debugger
+    if params[:sql] != nil then
+      @station = Station.find_by_sql(params[:sql])
+    else
+      @station = Station.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -88,6 +93,6 @@ class StationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def station_params
-      params.require(:station).permit()
+      params.require(:station).permit(:lat, :lon, :file_name, :initial_year, :final_year)
     end
 end
