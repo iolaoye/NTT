@@ -14,7 +14,7 @@ class CountiesController < ApplicationController
   # GET /counties/1.json
   def show
     if params[:sql] != nil then
-      @county = County.find_by_sql(params[:sql])
+      @county = County.find_by_sql(params[:sql]).first
     else
       @county = County.find(params[:id])
     end
