@@ -23,6 +23,7 @@
 # URL to get soils information
 	#URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
 	URL_SoilsInfo = 'http://ntt.ama.cbntt.org/RScript_Soil/GetSoils.asmx?WSDL'
+	URL_NRCS = "http://SDMDataAccess.nrcs.usda.gov/Tabular/SDMTabularService.asmx?WSDL"
 
 #APEX folders.
 	APEX = "public/NTTFiles"
@@ -73,7 +74,9 @@
 		WICK_ENV = "#{ENV['GEM_HOME']}/gems/wkhtmltopdf-binary-#{Gem.loaded_specs['wkhtmltopdf-binary'].version}/bin/wkhtmltopdf_linux_amd64"
 	end
 
-
+#coordinates distance vilaues
+    LAT_DIF=0.04
+    LON_DIF = 0.09
 #convertion values
 	AC_TO_HA = 0.404685645
 	AC_TO_FT2 = 43560
