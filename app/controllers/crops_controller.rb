@@ -13,7 +13,6 @@ class CropsController < ApplicationController
   # GET /crops/1
   # GET /crops/1.json
   def show
-    debugger
     case true
     when params[:number] != nil  
       @crop = Crop.find_by_number_and_state_id(params[:number], params[:state_id])
