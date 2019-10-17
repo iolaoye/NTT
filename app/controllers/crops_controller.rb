@@ -15,7 +15,7 @@ class CropsController < ApplicationController
   def show
     case true
     when params[:number] != nil  
-      @crop = Crop.find_by_number_and_state_id(params[:number])
+      @crop = Crop.find_by_number(params[:number])
     when params[:crop_name] != nil
       @crop = Crop.find_by_code(params[:crop_name])
     when params[:sql] != nil
