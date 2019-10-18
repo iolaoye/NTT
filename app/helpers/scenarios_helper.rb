@@ -987,7 +987,28 @@ module ScenariosHelper
   end
 
   def request_soils()
-  	#http://sdmdataaccess.nrcs.usda.gov/Tabular/SDMTabularService.asmx
+  	#soil1 = "AL001"
+ 	#soil2 = "328057"
+ 	#soil3 = "AaB"
+ 	#sql = "SELECT "
+   #sql = sql + "hydgrp as horizdesc2,compname as seriesname,albedodry_r as albedo,comppct_r as compct," 
+   #sql = sql + "sandtotal_r as sand, silttotal_r as silt, 100-(sandtotal_r+silttotal_r) as clay, dbthirdbar_r as bd,om_r as om,"
+   #sql = sql + "texdesc as texture,ph1to1h2o_r as ph,hzdepb_r as ldep,drainagecl as horizgen,ecec_r as cec, muname, slope_r"
+   #sql = sql + "FROM sacatalog sac "
+   #sql = sql + "INNER JOIN legend l ON l.areasymbol = sac.areasymbol AND l.areatypename = 'Non-MLRA Soil Survey Area' "
+   #sql = sql + "INNER JOIN mapunit mu ON mu.lkey = l.lkey "
+   #sql = sql + "LEFT OUTER JOIN component c ON c.mukey = mu.mukey "
+   #sql = sql + "LEFT OUTER JOIN chorizon ch ON ch.cokey = c.cokey "
+   #sql = sql + "LEFT OUTER JOIN chtexturegrp chtgrp ON chtgrp.chkey = ch.chkey "
+   #sql = sql + "LEFT OUTER JOIN chtexture cht ON cht.chtgkey = chtgrp.chtgkey "
+   #sql = sql + "LEFT OUTER JOIN chtexturemod chtmod ON chtmod.chtkey = cht.chtkey "
+   #sql = sql + "WHERE l.areasymbol='" + soil1 + "' AND mu.mukey='" + soil2 + "' AND musym='" + soil3 + "' AND hydgrp<>'' "
+   #sql = sql + "ORDER BY mu.mukey, compname, hzdepb_r"
+   #sql = "SELECT mukey FROM mapunit WHERE mukey = 328057"
+    #client = Savon.client(wsdl: URL_NRCS)
+ 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
+ 	#response = client.call(:run_query, message: { "query" => sql })
+
     client = Savon.client(wsdl: URL_SoilsInfo)
  	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
  	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => session[:session_id]})
@@ -1120,14 +1141,28 @@ module ScenariosHelper
   end
 
   def get_weather_file_name(lat, lon)
-    client = Savon.client(wsdl: URL_SoilsInfo)
+  	lat_less = params[:nlat].to_f - LAT_DIF
+	lat_plus = params[:nlat].to_f + LAT_DIF
+	lon_less = params[:nlon].to_f - LON_DIF
+	lon_plus = params[:nlon].to_f + LON_DIF
+	sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year"
+	sql = sql + " FROM stations"
+	sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+	sql = sql + " ORDER BY distance"
+	station = Station.find_by_sql(sql).first
+	if station != nil
+		return station.file_name + "," + station.initial_year + "," + station.final_year
+	else
+		return "Error saving weather file name"
+	end
+    #client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
-    response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
-    if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
-      return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
-    else
-      return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
-    end
+    #response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+    #if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+      #return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    #else
+      #return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+    #end
   end
 
 ################################  Save Prism data #################################
@@ -1138,6 +1173,7 @@ module ScenariosHelper
     centroid = calculate_centroid()
     @weather.latitude = centroid.cy
     @weather.longitude = centroid.cx
+
     weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
     #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
     data = weather_data.split(",")
