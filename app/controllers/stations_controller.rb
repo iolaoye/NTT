@@ -3,7 +3,7 @@ class StationsController < ApplicationController
   # GET /stations.json
   def index
     @stations = Station.all
-	@location = Location.where(:project_id => params[:project_id]).first
+	  @location = Location.where(:project_id => params[:project_id]).first
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +14,19 @@ class StationsController < ApplicationController
   # GET /stations/1
   # GET /stations/1.json
   def show
-    @station = Station.find(params[:id])
+    if params[:nlat] != nil then
+      lat_less = params[:nlat].to_f - LAT_DIF
+      lat_plus = params[:nlat].to_f + LAT_DIF
+      lon_less = params[:nlon].to_f - LON_DIF
+      lon_plus = params[:nlon].to_f + LON_DIF
+      sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year"
+      sql = sql + " FROM stations"
+      sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+      sql = sql + " ORDER BY distance"
+      @station = Station.find_by_sql(sql).first
+    else
+      @station = Station.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -88,6 +100,6 @@ class StationsController < ApplicationController
     # params.require(:person).permit(:name, :age)
     # Also, you can specialize this method with per-user checking of permissible attributes.
     def station_params
-      params.require(:station).permit()
+      params.require(:station).permit(:lat, :lon, :file_name, :initial_year, :final_year)
     end
 end

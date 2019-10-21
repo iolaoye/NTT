@@ -155,6 +155,7 @@ module SimulationsHelper
         apex_wth = apex_string1
       end   # end case i
     end # end for
+    #client = Savon.client(wsdl: 'http://ntt.ama.cbntt.org/Borrar/GetSoils.asmx?WSDL')
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_control, "parm" => apex_parm, "site" => apex_site, "wth" => apex_wth, "session_id" => session[:session_id]})
@@ -397,76 +398,76 @@ module SimulationsHelper
   	end
   end
 
-  def create_weather_file(dir_name, field_id)
-    #define if there is future climate bmp for this scenario
-    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)
-    if !(bmp == nil) then
-      centroid = calculate_centroid()
-      @apex_wth = get_future_climate(bmp.depth, centroid[0], centroid[1])
-      if @apex_wth[:string].include? "Error"
-        return @apex_wth[:string]
-      else
-        return "OK"
-      end    # end if error
-    end   #end if bmp
-    weather = Weather.find_by_field_id(field_id)
-    if (weather.way_id == 2)
-      #copy the file path
-      path = File.join(OWN, weather.weather_file)
-	    if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
-        @apex_wth = read_file(File.join(OWN, weather.weather_file), true)
-      else
-        path = File.join(PRISM1, weather.weather_file)
-        #print_array_to_file(PATH, "APEX.wth")
-        @apex_wth = send_file1_to_APEX("WTH", path)
-        if @apex_wth.include? "Error"
-          return @apex_wth
-        end
-      end
-      #todo after file is copied if climate bmp is in place modified the weather file.
-      bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
-      climate_array = Array.new
-      climates = Climate.where(:bmp_id => bmp_id)
-      climates.each do |climate|
-      climate_array = update_hash(climate, climate_array)
-    end
-    if climates.first != nil
-      @apex_wth.each_line do |day|
-        month = @apex_wth[6, 4].to_i
-        max_input = climate_array[month]["max"]
-        min_input = climate_array[month]["min"]
-        pcp_input = climate_array[month]["pcp"] / 100
-        max_file = @apex_wth[20, 6].to_f
-        min_file = @apex_wth[26, 6].to_f
-        pcp_file = @apex_wth[32, 7].to_f
-        if max_input != 0
-          max = max_file + max_input
-          max = sprintf("%.1f", max)
-          while max.length < 6
-            max = " " + max
-          end
-          @apex_wth[20, 6] = max
-        end #end if max
-        if min_input != 0
-          min = min_file + min_input
-          min = sprintf("%.1f", min)
-          while min.length < 6
-            min = " " + min
-          end
-          @apex_wth[26, 6] = min
-        end #end if min
-        if pcp_input != 0
-          pcp = pcp_file + pcp_file * pcp_input
-          pcp = sprintf("%.2f", pcp)
-          while pcp.length < 7
-            pcp = " " + pcp
-          end
-          @apex_wth[32, 7] = pcp
-        end #end if pcp
-      end # end each
-    end #end if
-    return "OK"
-  end
+  #def create_weather_file(dir_name, field_id)
+    ##define if there is future climate bmp for this scenario
+    #bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 28)
+    #if !(bmp == nil) then
+      #centroid = calculate_centroid()
+      #@apex_wth = get_future_climate(bmp.depth, centroid[0], centroid[1])
+      #if @apex_wth[:string].include? "Error"
+        #return @apex_wth[:string]
+      #else
+        #return "OK"
+      #end    # end if error
+    #end   #end if bmp
+    #weather = Weather.find_by_field_id(field_id)
+    #if (weather.way_id == 2)
+      ##copy the file path
+      #path = File.join(OWN, weather.weather_file)
+	    #if File.exist?(path) then FileUtils.cp_r(path, dir_name + "/APEX.wth") else return "You need to upload your weather file before trying to simulate scenarios" end
+        #@apex_wth = read_file(File.join(OWN, weather.weather_file), true)
+      #else
+        #path = File.join(PRISM1, weather.weather_file)
+        ##print_array_to_file(PATH, "APEX.wth")
+        #@apex_wth = send_file1_to_APEX("WTH", path)
+        #if @apex_wth.include? "Error"
+          #return @apex_wth
+        #end
+      #end
+      ##todo after file is copied if climate bmp is in place modified the weather file.
+      #bmp_id = Bmp.select(:id).where(:scenario_id => @scenario.id)
+      #climate_array = Array.new
+      #climates = Climate.where(:bmp_id => bmp_id)
+      #climates.each do |climate|
+      #climate_array = update_hash(climate, climate_array)
+    #end
+    #if climates.first != nil
+      #@apex_wth.each_line do |day|
+        #month = @apex_wth[6, 4].to_i
+        #max_input = climate_array[month]["max"]
+        #min_input = climate_array[month]["min"]
+        #pcp_input = climate_array[month]["pcp"] / 100
+        #max_file = @apex_wth[20, 6].to_f
+        #min_file = @apex_wth[26, 6].to_f
+        #pcp_file = @apex_wth[32, 7].to_f
+        #if max_input != 0
+          #max = max_file + max_input
+          #max = sprintf("%.1f", max)
+          #while max.length < 6
+            #max = " " + max
+          #end
+          #@apex_wth[20, 6] = max
+        #end #end if max
+        #if min_input != 0
+          #min = min_file + min_input
+          #min = sprintf("%.1f", min)
+          #while min.length < 6
+            #min = " " + min
+          #end
+          #@apex_wth[26, 6] = min
+        #end #end if min
+        #if pcp_input != 0
+          #pcp = pcp_file + pcp_file * pcp_input
+          #pcp = sprintf("%.2f", pcp)
+          #while pcp.length < 7
+            #pcp = " " + pcp
+          #end
+          #@apex_wth[32, 7] = pcp
+        #end #end if pcp
+      #end # end each
+    #end #end if
+    #return "OK"
+  #end
 
   def create_apex_soils()
     msg = "OK"

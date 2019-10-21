@@ -60,6 +60,7 @@ NTTG3::Application.routes.draw do
   resources :apex_soils
   resources :apex_layers
   resources :locations
+  resources :stations
   resources :users do
     resources :projects
   end

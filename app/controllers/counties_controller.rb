@@ -13,7 +13,11 @@ class CountiesController < ApplicationController
   # GET /counties/1
   # GET /counties/1.json
   def show
-    @county = County.find(params[:id])
+    if params[:sql] != nil then
+      @county = County.find_by_sql(params[:sql]).first
+    else
+      @county = County.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
