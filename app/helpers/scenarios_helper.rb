@@ -1141,17 +1141,17 @@ module ScenariosHelper
   end
 
   def get_weather_file_name(lat, lon)
-  	lat_less = params[:nlat].to_f - LAT_DIF
-	lat_plus = params[:nlat].to_f + LAT_DIF
-	lon_less = params[:nlon].to_f - LON_DIF
-	lon_plus = params[:nlon].to_f + LON_DIF
-	sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year"
+  	lat_less = lat - LAT_DIF
+	lat_plus = lat + LAT_DIF
+	lon_less = lon - LON_DIF
+	lon_plus = lon + LON_DIF
+	sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
 	sql = sql + " FROM stations"
 	sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
 	sql = sql + " ORDER BY distance"
 	station = Station.find_by_sql(sql).first
 	if station != nil
-		return station.file_name + "," + station.initial_year + "," + station.final_year
+		return station.file_name + "," + station.initial_year.to_s + "," + station.final_year.to_s
 	else
 		return "Error saving weather file name"
 	end
