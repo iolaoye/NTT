@@ -264,7 +264,6 @@ module ScenariosHelper
         subarea.xtp8 = 0
         subarea.xtp9 = 0
         subarea.xtp10 = 0
-		
 		buffer_length = field_area   #total Area
 		#bmps = Bmp.where(:bmpsublist => [1, 2, 3])
 		temp_length = Math.sqrt(buffer_length * AC_TO_KM2)
@@ -425,54 +424,9 @@ module ScenariosHelper
 				#line 10
 				subarea.pec = 1
 				add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
-			when 9    #Ponds
-				#line 2
-				subarea.number = 107
-				#subarea.iops = soil_id
-				#subarea.iow = 1
-				#line 5
-				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
-				#line 4
-				subarea.wsa = soil_area * AC_TO_HA * -1      #soil_area here is the reservior area. Negative on 04/09/18 according to Dr. Saleh
-				# reduce the area of others subareas proportionally
-				if @bmp.sides == 0 then
-					#update_wsa("-", subarea.wsa)
-				end
-				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
-				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-				subarea.slp = 0.0025
-				subarea.splg = calculate_slope_length(subarea.slp * 100)
-				subarea.chs = 0.0
-				subarea.chn = 0.0
-				subarea.upn = 0.0
-				subarea.ffpq = 0.0
-				#line 5
-				subarea.rchd = 0.0
-				subarea.rcbw = 0.0
-				subarea.rctw = 0.0
-				subarea.rchs = 0.0
-				subarea.rchn = 0.0
-				subarea.rchc = 0.2
-				subarea.rchk = 0.2
-				#line 6
-				subarea.rsee = 0.3
-				subarea.rsae = subarea.wsa * -1
-				subarea.rsve = 50
-				subarea.rsep = 0.3
-				subarea.rsap = subarea.wsa * -1
-				subarea.rsvp = 25
-				subarea.rsrr = 20
-				subarea.rsv = 20
-				subarea.rsys = 300
-				subarea.rsyn = 300
+			when 9    #Ponds		
 				#line 7
-				subarea.rshc = 0.001
-				subarea.rsdp = 360
-				subarea.rsbd = 0.8
-				#subarea.pcof = @bmp.irrigation_efficiency
-				#line 10
-				subarea.pec = 1
-				#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
+				subarea.pcof = @bmp.irrigation_efficiency
 			when 10    #Stream Fencing
 				bmp = Bmp.find(bmp_id)
 				temp_length = bmp.depth * FT_TO_KM
@@ -702,6 +656,26 @@ module ScenariosHelper
 				#line 10
 				subarea.pec = 1.0
 				add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
+			when 16    # land leveling
+				#line 3
+				subarea.slp = subarea.slp * (100 - @bmp.slope_reduction) / 100
+			when 17    #terrace system
+				case subarea.slp
+				when 0..0.02
+				subarea.pec = 0.6
+				when 0.021..0.08
+				subarea.pec = 0.5
+				when 0.081..0.12
+				subarea.pec = 0.6
+				when 0.121..0.16
+				subarea.pec = 0.7
+				when 0.161..0.20
+				subarea.pec = 0.8
+				when 0.201..0.25
+				subarea.pec = 0.9
+				else
+				subarea.pec = 1.0
+				end
 			when 23    #Shading
 				#line 2
 				subarea.number = 101
@@ -747,42 +721,40 @@ module ScenariosHelper
 
     def calculate_slope_length(soil_slope)
         slopeLength = 0.0
-
         case soil_slope.round(4)
-            when 0 .. 0.5, 11.0001 .. 12
-                slope_length = 100 * FT_TO_M
-            when 0.5001 .. 1, 2.0001 .. 3
-                slope_length = 200 * FT_TO_M
-            when 1.0001 .. 2
-                slope_length = 300 * FT_TO_M
-            when 3.0001 .. 4
-                slope_length = 180 * FT_TO_M
-            when 4.0001 .. 5
-                slope_length = 160 * FT_TO_M
-            when 5.0001 .. 6
-                slope_length = 150 * FT_TO_M
-            when 6.0001 .. 7
-                slope_length = 140 * FT_TO_M
-            when 7.0001 .. 8
-                slope_length = 130 * FT_TO_M
-            when 8.0001 .. 9
-                slope_length = 125 * FT_TO_M
-            when 9.0001 .. 10
-                slope_length = 120 * FT_TO_M
-            when 10.0001 .. 11
-                slope_length = 110 * FT_TO_M
-            when 12.0001 .. 13
-                slope_length = 90 * FT_TO_M
-            when 13.0001 .. 14
-                slope_length = 80 * FT_TO_M
-            when 14.0001 .. 15
-                slope_length = 70 * FT_TO_M
-            when 15.0001 .. 17
-                slope_length = 60 * FT_TO_M
-            else
-                slope_length = 50 * FT_TO_M
+        when 0 .. 0.5, 11.0001 .. 12
+            slope_length = 100 * FT_TO_M
+        when 0.5001 .. 1, 2.0001 .. 3
+            slope_length = 200 * FT_TO_M
+        when 1.0001 .. 2
+            slope_length = 300 * FT_TO_M
+        when 3.0001 .. 4
+            slope_length = 180 * FT_TO_M
+        when 4.0001 .. 5
+            slope_length = 160 * FT_TO_M
+        when 5.0001 .. 6
+            slope_length = 150 * FT_TO_M
+        when 6.0001 .. 7
+            slope_length = 140 * FT_TO_M
+        when 7.0001 .. 8
+            slope_length = 130 * FT_TO_M
+        when 8.0001 .. 9
+            slope_length = 125 * FT_TO_M
+        when 9.0001 .. 10
+            slope_length = 120 * FT_TO_M
+        when 10.0001 .. 11
+            slope_length = 110 * FT_TO_M
+        when 12.0001 .. 13
+            slope_length = 90 * FT_TO_M
+        when 13.0001 .. 14
+            slope_length = 80 * FT_TO_M
+        when 14.0001 .. 15
+            slope_length = 70 * FT_TO_M
+        when 15.0001 .. 17
+            slope_length = 60 * FT_TO_M
+        else
+            slope_length = 50 * FT_TO_M
         end
-
         return slope_length
     end
 
