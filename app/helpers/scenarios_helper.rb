@@ -274,13 +274,13 @@ module ScenariosHelper
 				scenario.bmps.each do |bmp|
 					if [1,2,3,9,11,16,17,18,25].include? bmp.bmpsublist_id
 						@bmp = bmp
-						update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length)
+						update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
 					end
 				end
 			end
 		else
 			#call whatever is comming once
-			update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length)
+			update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
 		end
 
 		#this is when the subarea is added from a scenario
@@ -305,7 +305,7 @@ module ScenariosHelper
 		end
 	end
 
-	def update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length)
+	def update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
 		if !(@bmp==nil)
 			case @bmp.bmpsublist_id
 			when 1,2 
@@ -322,7 +322,7 @@ module ScenariosHelper
 	            subarea.iri = @bmp.days
 	            subarea.bir = 1-@bmp.water_stress_factor
 	            subarea.efi = @bmp.irrigation_efficiency
-	            subarea.armx = @bmp.maximum_single_application / IN_TO_MM	  		      
+	            subarea.armx = @bmp.maximum_single_application * IN_TO_MM	  		      
 	      		subarea.fdsf = 0
 				subarea.fdsf = @bmp.safety_factor
 	            subarea.fnp4 = @bmp.dry_manure * LBS_TO_KG
@@ -335,6 +335,7 @@ module ScenariosHelper
         		end
 			when 3  #tile drain
 				subarea.idr = @bmp.depth * FT_TO_MM  # update the tile drain depth in mm.
+				subarea.drt = 2
 			when 6, 7    #PPDE
 				#line 2
 				subarea.number = 106
@@ -637,11 +638,12 @@ module ScenariosHelper
 				subarea.chs = subarea.slp
 				subarea.chn = 0.1
 				subarea.upn = 0.24
+				subarea.ffpq = params[:bmp_fs][:floodplain_flow]
 				#subarea.ffpq = params[:bmp_ww][:floodplain_flow]
 				#line 5
 				subarea.rchn = 0.1
-				subarea.rchc = 0.2 #TODO
-				subarea.rchk = 0.2 #TODO
+				subarea.rchc = 0.2 #
+				subarea.rchk = 0.2 #
 				if subarea.rchc > 0.01
 					subarea.rchc = 0.01
 				end
@@ -656,6 +658,8 @@ module ScenariosHelper
 				#line 10
 				subarea.pec = 1.0
 				add_buffer_operation(136, Crop.find(@bmp.crop_id).number, 0, 1400, 0, 22, 2, scenario_id)
+			when 15    #Contour Buffer
+
 			when 16    # land leveling
 				#line 3
 				subarea.slp = subarea.slp * (100 - @bmp.slope_reduction) / 100
@@ -1107,6 +1111,12 @@ module ScenariosHelper
           update_soil_operation(SoilOperation.new, soil.id, operation)
         end # end soils each
       end # end operations.each
+      ### if there is contour buffer BMP the subareas need to be added. for each scenario
+      @bmp = scenario.bmps.find_by_bmpsublist_id(15) 
+      if @bmp != nil then
+      	#call subroutine to add the subareas for CB
+      	add_cb(scenario)
+      end
     end #end Scenario each do
     @field.field_average_slope = @field.soils.average(:slope)
     @field.updated = false
@@ -1116,6 +1126,70 @@ module ScenariosHelper
     	return "Error saving soils"
     end
   end
+
+  ###################################### create_soil layers ######################################
+  ### if there is contour buffer BMP the subareas need to be added. for each scenario ###
+  def add_cb(scenario)
+    total_width = @bmp.width + @bmp.crop_width
+    total_strips = ((@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)).to_i
+    buffer_area = @bmp.width / total_width 
+    crop_area = @bmp.crop_width / total_width 
+    if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
+    subareas = scenario.subareas
+    number = subareas.count + 1
+    iops = subareas[subareas.count-1].iops + 1
+    inps = subareas[subareas.count-1].inps + 1
+    iow = subareas[subareas.count-1].iow + 1
+    areas = Array.new
+    iops = 0
+    crop = Crop.find(@bmp.crop_id)
+    add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, scenario.id)
+    (total_strips*2).times do |i|
+      j=0
+      subareas.each do |s|
+        if i == 0 then  # update the current subareas. And save the initial areas in an array to calculate further areas.
+          areas[j] = s.wsa
+          s.rchl = s.chl
+          s.wsa = s.wsa / total_strips * crop_area
+          if j > 0 && s.wsa > 0 then
+            s.wsa *= -1
+          end
+          s.save
+          j += 1
+          iops = s.iops
+        else
+          s_new = s.dup
+          s_new.rchl = s_new.chl
+          s_new.number = number
+          number += 1
+          #s_new.iops = iops
+          #s_new.inps = inps
+          #s_new.iow = iow
+          s_new.subarea_type = "CB"
+          #if s_new.chl == s_new.rchl then
+            #s_new.rchl *= 0.90
+          #end
+          s_new.bmp_id = @bmp.id
+          if i.even? then
+            s_new.wsa = areas[j] / total_strips * crop_area
+            s_new.description = "0000000000000000  .sub Contour Main Crop Strip"
+            s_new.wsa *= -1
+          else
+            s_new.wsa = areas[j] / total_strips * buffer_area
+            s_new.description = "0000000000000000  .sub Contour Buffer Grass Strip"
+            s_new.iops = iops + 1
+            if j > 0 then
+              s_new.wsa *= -1
+            else
+              s_new.rchl = s_new.chl * 0.9
+            end
+          end
+          j += 1
+          s_new.save
+        end
+      end
+    end
+   end
 
   ###################################### create_soil layers ######################################
   ## Create layers receiving from map for each soil.
