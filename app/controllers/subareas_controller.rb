@@ -119,9 +119,8 @@ class SubareasController < ApplicationController
   def get_subareas()
     @subareas = []
 	  i=1
-
     if @scenario_id != 0 then
-      subareas = @field.scenarios.find(@scenario_id).subareas
+      subareas = @field.scenarios.find(@scenario_id).subareas.order("iops")
       if subareas != nil then
         subareas.each do |subarea|
           @subareas.push(:subarea_type => subarea.subarea_type, :subarea_number => i, :subarea_description => subarea.description, :subarea_id => subarea.id)
