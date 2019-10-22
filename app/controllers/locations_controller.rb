@@ -509,7 +509,7 @@ class LocationsController < ApplicationController
     end
 	  scenarios = Scenario.where(:field_id => @field.id)
     scenarios.each do |scenario|
-      add_scenario_to_soils(scenario)
+      add_scenario_to_soils(scenario, true)
 	    operations = Operation.where(:scenario_id => scenario.id)
 	    operations.each do |operation|
 		  soils.each do |soil|

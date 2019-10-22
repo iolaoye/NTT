@@ -692,7 +692,7 @@ class BmpsController < ApplicationController
 		@inps = 1
         #@iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-          create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create")
+          create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
         end
       when "update"
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
@@ -718,7 +718,7 @@ class BmpsController < ApplicationController
 		  if @bmp.save then
 			  msg = pads_pipes(type)
 			  if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-				create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create")
+				create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
 			  end
 		  else
 			return "Error saving BMP"
@@ -1473,7 +1473,7 @@ end
           end
         end
       else  # others 
-        create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, @field.field_area, @bmp.id, id, false, "create")
+        create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, @field.field_area, @bmp.id, id, false, "create", false)
       end
       return "OK"
     else
