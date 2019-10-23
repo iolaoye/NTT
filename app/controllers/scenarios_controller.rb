@@ -149,7 +149,7 @@ class ScenariosController < ApplicationController
         @scenarios = Scenario.where(:field_id => params[:field_id])
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
-        add_scenario_to_soils(@scenario)
+        add_scenario_to_soils(@scenario, false)
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
 	    flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
@@ -1607,7 +1607,7 @@ class ScenariosController < ApplicationController
     if new_scenario.save
   		#new_scenario_id = new_scenario.id
   		#3. Copy subareas info by scenario
-  		add_scenario_to_soils(new_scenario)
+  		add_scenario_to_soils(new_scenario, false)
       #3A. Update subarea with bmps informaiton
       update_subareas(new_scenario, scenario)
   		#4. Copy operations info

@@ -263,7 +263,7 @@ class FieldsController < ApplicationController
             next
           end
         end
-        add_scenario_to_soils(scenario)
+        add_scenario_to_soils(scenario, false)
         logger.info("#{Time.now} - after adding scenario to Soil")
         @cropping_systems = CropSchedule.all
         @operations = Operation.where(:scenario_id => scenario.id)
