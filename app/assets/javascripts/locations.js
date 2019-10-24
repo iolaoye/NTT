@@ -12,6 +12,9 @@ var arrayFieldsArea = [];
 var latLng = "";
 var boundsPreDraw = null;
 var strDrawnAOI = '';
+var x;
+var strFarmXY;
+var infowindow = null;
 
 var ready = function pageLoad() {
     Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
