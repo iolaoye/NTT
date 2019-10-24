@@ -1006,5 +1006,14 @@ window.onload = function() {
   initialize();
 };
 
+$(function () {
+    $('#btnContinue').click(function () {
+        //Create a Dialog (modal)
+        $("#dialog-modal").dialog({
+            modal: false,
+            hide: false
+        });
+    });
+});
 
 
