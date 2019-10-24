@@ -1016,4 +1016,37 @@ $(function () {
     });
 });
 
+   function saveSelectedShapeInfo() {
+        if (selectedShape) {
+            var vertices = selectedShape.getPath();
+            var bounds = new google.maps.LatLngBounds();
+            var polyCenter = bounds.getCenter();
+            document.getElementById("savedata").value += selectedShape.content;
+            for (var i = 0; i < vertices.length; i++) {
+                var xy = vertices.getAt(i);
+                bounds.extend(xy);
+                if (i == (vertices.length - 1)) {
+                    document.getElementById("savedata").value +=
+            xy.lng().toFixed(6) + "," + xy.lat().toFixed(6) + " ";
+                }
+                else {
+                    document.getElementById("savedata").value +=
+            xy.lng().toFixed(6) + "," + xy.lat().toFixed(6) + " ";
+                }
+            }
+            document.getElementById("savedata").value += "\n";
+        }
+    }
 
+    //in case to fine county
+    function searchLocations() {
+        var address = document.getElementById("addressInput").value;
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                searchLocationsNear(results[0].geometry.location);
+            } else {
+                alert(address + ' not found');
+            }
+        });
+    }
