@@ -1,5 +1,3 @@
-
-
 var drawingManager;
 var selectedShape;
 var map = null;
@@ -13,6 +11,11 @@ var arrayFieldsXY = [];
 var arrayFieldsArea = [];
 var latLng = "";
 var boundsPreDraw = null;
+var strDrawnAOI = '';
+
+var ready = function pageLoad() {
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
+}
 
 function turnOffControls() {
     document.getElementById("dvForm").style.display = "none";
