@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.11.1'
 gem 'tzinfo-data'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -43,10 +43,10 @@ gem 'protected_attributes'
 # To use debugger
 gem 'byebug', '~> 9.0', '>= 9.0.6'
 
-gem 'bcrypt-ruby', '3.1.5'
-gem 'bcrypt', '>=3.1.11'
+#gem 'bcrypt-ruby', '3.1.5'
+#gem 'bcrypt', '>=3.1.11'
 # rest API for NTT call
-gem "nokogiri", '1.6.8'
+gem "nokogiri", '1.10.4'
 gem 'savon', '>= 2.0'
 
 gem 'chartkick', '~> 1.5', '>= 1.5.2'
@@ -68,4 +68,3 @@ gem 'rake'
 #gem 'rgeo'
 #gem 'rgeo-shapefile'
 gem 'rubyzip', '~> 1.0.0', require: 'zip'
-
