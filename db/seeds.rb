@@ -57,13 +57,13 @@ if cont then
 
 	file = "db/seeds/drainages.rb"
 	load file
- 
+
 	file = "db/seeds/events.rb"
 	load file
 
 	file = "db/seeds/feeds_augmenteds.rb"
 	load file
-	
+
 	file = "db/seeds/fertilizers.rb"
 	load file
 
