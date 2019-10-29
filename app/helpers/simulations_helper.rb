@@ -2708,7 +2708,6 @@ module SimulationsHelper
       @herd_list = Array.new
       msg = "OK"
       dir_name = APEX + "/APEX" + session[:session_id]
-      debugger
       if !File.exists?(dir_name)
         FileUtils.mkdir_p(dir_name)
       end
