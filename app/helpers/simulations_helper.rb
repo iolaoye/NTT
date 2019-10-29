@@ -1758,15 +1758,15 @@ module SimulationsHelper
     @change_fert_for_grazing_line.push(newLine)
   end
 
-  def print_string_to_file(data, file)
-    path = File.join(APEX, "APEX" + session[:session_id])
-    FileUtils.mkdir(path) unless File.directory?(path)
-    path = File.join(path, file)
-    File.open(path, "w+") do |f|
-      f << data
-      f.close
-    end
-  end
+  #def print_string_to_file(data, file)
+    #path = File.join(APEX, "APEX" + session[:session_id])
+    #FileUtils.mkdir(path) unless File.directory?(path)
+    #path = File.join(path, file)
+    #File.open(path, "w+") do |f|
+      #f << data
+      #f.close
+    #end
+  #end
 
   def print_array_to_file(data, file)
     path = File.join(APEX, "APEX" + session[:session_id])
@@ -1780,18 +1780,18 @@ module SimulationsHelper
     end
   end
 
-  def print_wind_to_file(data, file)
-    path = File.join(APEX, "APEX" + session[:session_id])
-    FileUtils.mkdir(path) unless File.directory?(path)
-    path = File.join(path, file)
-    File.open(path, "w+") do |f|
-      data.each do |row|
-        f << row
-        f << "\n"
-      end
-      f.close
-    end
-  end
+  #def print_wind_to_file(data, file)
+    #path = File.join(APEX, "APEX" + session[:session_id])
+    #FileUtils.mkdir(path) unless File.directory?(path)
+    #path = File.join(path, file)
+    #File.open(path, "w+") do |f|
+      #data.each do |row|
+        #f << row
+        #f << "\n"
+      #end
+      #f.close
+    #end
+  #end
 
   def read_file(file, name_composed)
     if name_composed == false then
@@ -2707,10 +2707,10 @@ module SimulationsHelper
       @last_herd = 0
       @herd_list = Array.new
       msg = "OK"
-      dir_name = APEX + "/APEX" + session[:session_id]
-      if !File.exists?(dir_name)
-        FileUtils.mkdir_p(dir_name)
-      end
+      #dir_name = APEX + "/APEX" + session[:session_id]
+      #if !File.exists?(dir_name)
+        #FileUtils.mkdir_p(dir_name)
+      #end
       #CREATE structure for nutrients that go with fert file
       @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
       @current_nutrients = Array.new
