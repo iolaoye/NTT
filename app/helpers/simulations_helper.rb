@@ -2707,10 +2707,11 @@ module SimulationsHelper
       @last_herd = 0
       @herd_list = Array.new
       msg = "OK"
-      #dir_name = APEX + "/APEX" + session[:session_id]
-      #if !File.exists?(dir_name)
-        #FileUtils.mkdir_p(dir_name)
-      #end
+      dir_name = APEX + "/APEX" + session[:session_id]
+      debugger
+      if !File.exists?(dir_name)
+        FileUtils.mkdir_p(dir_name)
+      end
       #CREATE structure for nutrients that go with fert file
       @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
       @current_nutrients = Array.new
