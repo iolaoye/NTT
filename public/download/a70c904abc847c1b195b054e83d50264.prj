@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<projects>
+  <project>
+    <project_name>Bj copy</project_name>
+    <project_description/>
+    <project_version>NTTG3</project_version>
+  </project>
+  <location>
+    <state_id>17</state_id>
+    <county_id>1072</county_id>
+    <status/>
+    <coordinates>-98.727737,38.543926 -98.723273,38.544195 -98.722930,38.538018 -98.728080,38.537213 -98.727737,38.543926 </coordinates>
+    <fields/>
+    <watersheds/>
+  </location>
+  <controls/>
+  <parameters/>
+</projects>

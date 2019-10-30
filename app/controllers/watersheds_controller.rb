@@ -4,7 +4,7 @@ class WatershedsController < ApplicationController
   include SimulationsHelper
   include ApplicationHelper
 
-  before_filter :set_notifications
+  before_action :set_notifications
 
   def run_fem
     drive = "D:"

@@ -16,7 +16,7 @@ def index
     crop_schedule()
     @operations = @operations.reorder("year, month_id, day, rotation, crop_id")
     #@rotations = @scenario.operations.where(:activity_id => 1).reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
-    @rotations = @scenario.operations.reorder("year, month_id, day, rotation, crop_id").select("rotation, crop_id").distinct
+    @rotations = @scenario.operations.reorder("rotation, crop_id").select("rotation, crop_id").distinct
     if @operations.last != nil
       @highest_year = @operations.last.year
       else

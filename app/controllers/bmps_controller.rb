@@ -1,6 +1,6 @@
 include ScenariosHelper
 class BmpsController < ApplicationController
-  before_filter :take_names
+  before_action :take_names
 
   def take_names
     @project_name = Project.find(params[:project_id]).name
@@ -49,7 +49,8 @@ class BmpsController < ApplicationController
     else
       bmpsublists = Bmpsublist.where(:status => true).where("id != 27 and id != 28")
     end
-    @bmps = Bmp.where(:bmpsublist_id => 0)
+    @bmps = Array.new
+    #@bmps = Bmp.where(:bmpsublist_id => 0)
     @bmps[0] = Bmp.new
 	  @climates = Climate.where(:id => 0)
 
@@ -310,7 +311,8 @@ class BmpsController < ApplicationController
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     #@irrigation = Irrigation.arel_table
     @climate_array = create_hash()
-    @state = Location.find(Location.find_by_project_id(@project.id)).state_id
+    @state = @project.location.state_id
+    #@state = Location.find(Location.find_by_project_id(@project.id)).state_id
     msg = input_fields("create", bmpsublist)
     if msg == "OK" then
       if @bmp.save then

@@ -1,8 +1,5 @@
 class SupplementParametersController < ApplicationController
-  before_filter :set_params
-
-
-
+  before_action :set_params
 
   def set_params
     @field = Field.find(params[:field_id])

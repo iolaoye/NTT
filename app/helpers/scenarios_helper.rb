@@ -98,7 +98,6 @@ module ScenariosHelper
 		end # end events.each
 	end
 
-
 	def add_scenario_to_soils(scenario, soil_resubmit)
 		field = Field.find(scenario.field_id)
 		soils = field.soils
@@ -308,7 +307,7 @@ module ScenariosHelper
 	def update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
 		if !(@bmp==nil)
 			case @bmp.bmpsublist_id
-			when 1,2 
+			when 1,2 #autoirrigation / autofertigation
 	            case @bmp.irrigation_id
 	            when 1
 	            	subarea.nirr = 1.0

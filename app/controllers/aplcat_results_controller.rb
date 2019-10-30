@@ -1,5 +1,5 @@
 class AplcatResultsController < ApplicationController
-  before_filter :set_params
+  before_action :set_params
 
 
 

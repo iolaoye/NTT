@@ -9,6 +9,8 @@ include ScenariosHelper
     @weather.latitude = params[:weather][:latitude]
     @weather.longitude = params[:weather][:longitude]
     weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+    if weather_data.include? "Error" then return "Error Saving coordinates" end
+
     #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
     data = weather_data.split(",")
     @weather.weather_file = data[0]
@@ -21,7 +23,7 @@ include ScenariosHelper
     if @weather.save
       return "OK"
     else
-      retunr "Error Saving coordinates"
+      return "Error Saving coordinates"
     end
   end
 

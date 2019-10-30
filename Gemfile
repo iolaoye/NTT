@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.11.1'
+gem 'rails', '5.2.3'
 gem 'tzinfo-data'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3', '1.4.1'
-gem 'will_paginate', '3.0.3'
+gem 'will_paginate'
 gem 'coffee-script-source', '1.8.0'
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,7 +29,7 @@ gem 'jquery-turbolinks'
 
 gem 'axlsx_rails'  # Provide templates for the axlsx gem
 
-gem 'protected_attributes'
+gem 'protected_attributes_continued'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -60,7 +60,7 @@ gem 'wkhtmltopdf-binary'
 #gem 'dbf'
 gem 'cancan'
 gem 'rack-timeout', '0.4.2'
-gem 'mysql2', '~> 0.3.18'
+gem 'mysql2'
 #gem 'gmaps4rails'
 #gem 'georuby', require: 'geo_ruby/shp', require: 'georuby'
 #gem 'dbf'
