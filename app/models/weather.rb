@@ -11,7 +11,6 @@ class Weather < ActiveRecord::Base
   validates :longitude, numericality: { greater_than_or_equal_to: -180.00, less_than_or_equal_to: 180.00 }, if: Proc.new {|way| way.way_id == 3 }
   #Functions
   def simulation_years
-    debugger
     if self.simulation_final_year == 0 && self.simulation_initial_year == 0
 		return 
 	end
@@ -27,7 +26,6 @@ class Weather < ActiveRecord::Base
   end
 
   def file
-    debugger
     case self.way_id
 	  when 2 
 		if self.weather_file == nil
