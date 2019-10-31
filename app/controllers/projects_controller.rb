@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
     if params[:id] == "upload" then
       redirect_to "upload"
     end
-    #@project = Project.find(params[:id])
+    @project = Project.find(params[:id])
     @location = @project.location
     session[:location_id] = @location.id
     case true
@@ -105,7 +105,7 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @user = User.find(session[:user_id])
-    #@project = Project.new(project_params)
+    @project = Project.new(project_params)
     #params[:project_id] = @project.id
     @project.user_id = session[:user_id]
     @project.version = "NTTG3"
