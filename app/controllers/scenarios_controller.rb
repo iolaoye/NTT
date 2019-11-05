@@ -57,6 +57,7 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
+    debugger
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
@@ -180,6 +181,7 @@ class ScenariosController < ApplicationController
 # DELETE /scenarios/1
 # DELETE /scenarios/1.json
   def destroy
+    @scenario = Scenario.find(params[:id])
     @errors = Array.new
     if @scenario.destroy
       flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
@@ -215,6 +217,7 @@ class ScenariosController < ApplicationController
 
 ################################  FEM - simulate the selected scenario for FEM #################################
   def simulate_fem
+    debugger
     @errors = Array.new
     msg = "OK"
     msg = fem_tables()
@@ -225,6 +228,7 @@ class ScenariosController < ApplicationController
     @scenarios_selected = params[:select_scenario]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
+        debugger
         @scenario = Scenario.find(scenario_id)
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
@@ -429,6 +433,7 @@ class ScenariosController < ApplicationController
 
 ################################  RUN-FEM - simulate the selected scenario for FEM #################################
   def run_fem
+    debugger
     drive = "D:"
     folder = drive + "\\NTT_FEM_Files\\FEM" + session[:session_id]
     #create NTT_FEMOptions.txt file
