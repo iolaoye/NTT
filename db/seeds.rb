@@ -5,16 +5,19 @@
 
 cont = false
 	
-	file = "db/seeds/counties.rb"
-	load file
+	#file = "db/seeds/counties.rb"
+	#load file
 	
-	file = "db/seeds/tillages.rb"
-	load file
+	#file = "db/seeds/tillages.rb"
+	#load file
 
-	file = "db/seeds/animals.rb"
-	load file
+	#file = "db/seeds/animals.rb"
+	#load file
 
-	file = "db/seeds/stations.rb"
+	#file = "db/seeds/stations.rb"
+	#load file
+
+	file = "db/seeds/crops.rb"
 	load file
 
 if cont then
