@@ -73,6 +73,7 @@ class ScenariosController < ApplicationController
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
       redirect_to project_field_scenarios_path(@project, @field)
     else
+      @scenarios = @scenarios = Scenario.where(:field_id => @field.id)
       render "index", error: msg
     end # end if msg
   end
