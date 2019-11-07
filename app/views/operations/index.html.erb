@@ -5,6 +5,13 @@
   </div>
 <% end %>
 
+<% if alert != nil %>
+	<div class="alert alert-info" role="error" style="background-color:yellow;">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= alert %>
+  </div>
+<% end %>
+
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
 	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('general.to') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
 		<% if @rotations.blank? && ENV["APP_VERSION"] == "standard" %>

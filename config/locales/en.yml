@@ -565,6 +565,8 @@ en:
     scenario: Scenario
     simulate: Simulate
     add_crop_rotation: needs a crop rotation for a successful simulation.
+    cover_crop_info: More than one cover crop has been added. Please modify the seeding rate accordingly
+    cover_crop_added: Cover crop added successfully
     operation: Operation
     create_scenario: Create Scenario
     select_scenario: Select Scenario
