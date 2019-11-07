@@ -9,7 +9,6 @@ class OperationsController < ApplicationController
 def index
     #console
     add_breadcrumb t('menu.operations')
-
     if params[:bmp_ccr] != nil then
       add_cover_crop
     end
@@ -24,7 +23,8 @@ def index
     end
     
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
+      #Sformat.html # index.html.erb
       format.json { render json: @operations }
     end
   end
@@ -42,8 +42,14 @@ def index
     operation.subtype_id = 1
     operation.scenario_id = @scenario.id
     operation.rotation = params[:bmp_ccr][:year]
+    operation.amount = Crop.find_by_id(params[:bmp_ccr][:crop_id]).plant_population_ft
     if operation.save
       add_soil_operation(operation)
+      if @scenario.operations.where("subtype_id = 1 and activity_id = 1").count > 1 then
+        #means there are more than one crop rotation. Advice user to average seeding
+        flash[:alert] = t('scenario.cover_crop_info')
+      end
+      flash[:notice] = t('scenario.cover_crop_added')
     end
   end
 ################################  SHOW  #################################

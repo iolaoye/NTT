@@ -561,6 +561,8 @@ es:
     scenario: Escenario
     simulate: Simular
     add_crop_rotation: necesita una rotación de cultivo para ejecutar una simulación.
+    cover_crop_info: Mas de un cultivo de proteccion han sido adicionados. Por favor modifique la tasa de plantas adecuadamente.
+    cover_crop_added: cultivo de protección adicionado satisfactoriamente
     operation: Operación
     create_scenario: Crear Escenario
     select_scenario: Seleccione Escenario
