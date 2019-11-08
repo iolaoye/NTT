@@ -1299,6 +1299,7 @@ module SimulationsHelper
         last_op_id = so.id
       end
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
+      c_cs_count = c_cs.count
       cc_number = @scenario.operations.last.id
       @c_cs = false
       c_cs.each do |bmp| 
@@ -1353,7 +1354,7 @@ module SimulationsHelper
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
         else
-          if c_cs.count > 0  then
+          if c_cs_count > 0  then
             date_oper = Date.parse(sprintf("%2d", soil_operation[1].year) + "/" + sprintf("%2d", soil_operation[1].month) + "/" + sprintf("%2d", soil_operation[1].day))
             if c_c_p == false and date_oper > cc_plt_date then 
               j+=1
@@ -1415,14 +1416,15 @@ module SimulationsHelper
     items[8] = "LONGITUDE"
     apex_string = ""
 
-    if crop_ant != operation.apex_crop then
+    if @crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
       if crop != nil then
         lu_number = crop.lu_number
         harvest_code = crop.harvest_code
         filter_strip = crop.type1
+        @crop_name = crop.name
       end
-      crop_ant = operation.apex_crop
+      @crop_ant = operation.apex_crop
     end
     #if the process is starting the lines 1, 2 should be created
     if j == 0 then
@@ -1641,7 +1643,7 @@ module SimulationsHelper
         operation_name = Activity.find(operation.activity_id).name
     end
     @fem_list.push(@scenario.name + COMA + @scenario.name + COMA + @state_abbreviation + COMA + operation.year.to_s + COMA + operation.month.to_s + COMA + operation.day.to_s + COMA + operation.apex_operation.to_s + COMA + operation_name + COMA + operation.apex_crop.to_s +
-                   COMA + Crop.find_by_number(operation.apex_crop).name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
+                   COMA + @crop_name + COMA + @soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end add_operation method
 
