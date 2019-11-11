@@ -349,7 +349,7 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      if xmlString.include? "feed"
+      if xmlString.include? "machine"
         xmlString.gsub! "<", "["
         xmlString.gsub! ">", "]"
         xmlString.gsub! "\n", ""
@@ -389,7 +389,7 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      if xmlString.include? "feed"
+      if xmlString.include? "structure"
         xmlString.gsub! "<", "["
         xmlString.gsub! ">", "]"
         xmlString.gsub! "\n", ""
@@ -417,7 +417,7 @@ class ScenariosController < ApplicationController
         }
       end
       xmlString = xmlBuilder.to_xml
-      if xmlString.include? "feed"
+      if xmlString.include? "other"
         xmlString.gsub! "<", "["
         xmlString.gsub! ">", "]"
         xmlString.gsub! "\n", ""
@@ -810,8 +810,8 @@ class ScenariosController < ApplicationController
 
   ################################  aplcat - run the selected scenario for aplcat #################################
   def run_aplcat
-	    msg = "OK"
-	    #find the aplcat parameters for the sceanrio selected
+    msg = "OK"
+    #find the aplcat parameters for the sceanrio selected
 		aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
 		grazing = GrazingParameter.where(:scenario_id => @scenario.id)
 		supplement = SupplementParameter.where(:scenario_id => @scenario.id)
@@ -1069,7 +1069,7 @@ class ScenariosController < ApplicationController
 		apex_string += "| " + t('graze.ejd') + "\n"
 		#for i in 0..grazing.count-1
 			#apex_string += sprintf("%d", grazing[i].for_button) + "\t"
-	#	end
+    #	end
 		#apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%.2f", grazing[i].for_dmi_cows) + "\t"
@@ -1141,7 +1141,7 @@ class ScenariosController < ApplicationController
 		#for j in 0..supplement.count-1
 			#apex_string += sprintf("%d", supplement[j].for_button) + "\t"
 		#end
-	#	apex_string += "| " + t('graze.dmi_code') + "\n"
+    #	apex_string += "| " + t('graze.dmi_code') + "\n"
 		for j in 0..supplement.count-1
 			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
 		end
@@ -1523,13 +1523,13 @@ class ScenariosController < ApplicationController
 
   ################################  copy scenario selected  #################################
   def copy_scenario
-	@use_old_soil = false
-	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
+  	@use_old_soil = false
+  	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     @scenarios = Scenario.where(:field_id => @field.id)
     add_breadcrumb 'Scenarios'
-	render "index"
+    render "index"
   end
 
   ####### update subareas after they have been created in case BMPs have been applied ######
