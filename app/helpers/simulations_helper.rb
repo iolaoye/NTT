@@ -1454,18 +1454,22 @@ module SimulationsHelper
         found = false
         if @depth_ant != nil then
           for n in 0..@depth_ant.count - 1
-            if @depth_ant[n] = operation.opv2 then
+            if @depth_ant[n] == operation.opv2 then
               oper_ant = @opers[n]
               found = true
             end
           end
-          num_of_depths= @depth_ant.count - 1
-        else
-          num_of_depths= 0
+          #num_of_depths= @depth_ant.count - 1
+        #else
+          #num_of_depths= 0
         end
 
         if found == false then
-          oper_ant = oper_ant + 1
+          if @opers.count > 0 then
+            oper_ant = @opers[@opers.count-1] + 1
+          else
+            oper_ant = oper_ant + 1
+          end
           @opers.push(oper_ant)
           @depth_ant.push(operation.opv2)
           change_till_for_depth(oper_ant, @depth_ant[@depth_ant.count - 1]) unless @depth_ant == nil
