@@ -1422,7 +1422,7 @@ module SimulationsHelper
         lu_number = crop.lu_number
         harvest_code = crop.harvest_code
         filter_strip = crop.type1
-        crop_name = crop.name
+        @crop_name = crop.name
       end
       crop_ant = operation.apex_crop
     end
