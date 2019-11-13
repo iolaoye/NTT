@@ -1414,7 +1414,7 @@ module SimulationsHelper
     items[7] = "LATITUDE"
     items[8] = "LONGITUDE"
     apex_string = ""
-
+    lu_number = 3     # default lu number. 
     if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
       if crop != nil then
