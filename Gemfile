@@ -43,8 +43,8 @@ gem 'protected_attributes_continued'
 # To use debugger
 gem 'byebug', '~> 9.0', '>= 9.0.6'
 
-#gem 'bcrypt-ruby', '3.1.5'
-#gem 'bcrypt', '>=3.1.11'
+gem 'bcrypt-ruby', '3.1.5'
+gem 'bcrypt', '>=3.1.11'
 # rest API for NTT call
 gem "nokogiri", '1.10.4'
 gem 'savon', '>= 2.0'
