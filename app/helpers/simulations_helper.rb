@@ -1415,16 +1415,16 @@ module SimulationsHelper
     items[7] = "LATITUDE"
     items[8] = "LONGITUDE"
     apex_string = ""
-
-    if @crop_ant != operation.apex_crop then
+    lu_number = 3     # default lu number. 
+    if crop_ant != operation.apex_crop then
       crop = Crop.find_by_number(operation.apex_crop)
       if crop != nil then
         lu_number = crop.lu_number
         harvest_code = crop.harvest_code
         filter_strip = crop.type1
-        @crop_name = crop.name
+        crop_name = crop.name
       end
-      @crop_ant = operation.apex_crop
+      crop_ant = operation.apex_crop
     end
     #if the process is starting the lines 1, 2 should be created
     if j == 0 then
