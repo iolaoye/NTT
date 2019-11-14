@@ -1,11 +1,10 @@
 class FemFacilitiesController < ApplicationController
   before_action :set_fem_facility, only: [:show, :edit, :update, :destroy]
   include FemHelper
-
   # GET /fem_facilities
   def index
     session[:simulation] = "fem"
-    @fem_facilities = FemFacility.all.order(:name)
+    @fem_facilities = FemFacility.where(:project_id => @project.id).order(:name)    
     if @fem_facilities == [] then
       load_facilities
       @fem_facilities = FemFacility.where(:project_id => @project.id).order(:name)    
