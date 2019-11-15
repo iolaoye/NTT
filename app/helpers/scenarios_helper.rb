@@ -1018,7 +1018,6 @@ module ScenariosHelper
     #client = Savon.client(wsdl: URL_NRCS)
  	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
  	#response = client.call(:run_query, message: { "query" => sql })
-
     client = Savon.client(wsdl: URL_SoilsInfo)
  	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
  	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => session[:session_id]})
@@ -1253,21 +1252,21 @@ module ScenariosHelper
     centroid = calculate_centroid()
     @weather.latitude = centroid.cy
     @weather.longitude = centroid.cx
-
     weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
-    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
-    data = weather_data.split(",")
-    @weather.weather_file = data[0]
-    data[2].slice! "\r\n"
-    @weather.simulation_final_year = data[2]
-    @weather.weather_final_year = @weather.simulation_final_year
-    @weather.weather_initial_year = data[1]
-    @weather.simulation_initial_year = @weather.weather_initial_year + 5
-    @weather.way_id = 1
+    if !(weather_data.include? "Error")
+	    data = weather_data.split(",")
+	    @weather.weather_file = data[0]
+	    data[2].slice! "\r\n"
+	    @weather.simulation_final_year = data[2]
+	    @weather.weather_final_year = @weather.simulation_final_year
+	    @weather.weather_initial_year = data[1]
+	    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+	    @weather.way_id = 1
+	end
     if @weather.save
       return "OK"
     else
-      retunr "Error Saving PRISM"
+      retunr t('notices.no_weather_file')
     end
   end
   
