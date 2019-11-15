@@ -226,7 +226,7 @@ module SimulationsHelper
     end 
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files, also fem_list########
-    response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "session_id" => session[:session_id]})
+    response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "wth" => "", "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
       return "OK"
     else
@@ -2754,7 +2754,7 @@ module SimulationsHelper
       else
         @soils = @field.soils.limit(1)
       end
-      @soil_list = Array.new
+      @soil_list = Array.new      
       if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
       @subarea_file = Array.new
       @soil_number = 0
