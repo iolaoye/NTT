@@ -428,8 +428,8 @@ module ScenariosHelper
 				#line 7
 				subarea.pcof = @bmp.irrigation_efficiency
 			when 10    #Stream Fencing
-				bmp = Bmp.find(bmp_id)
-				temp_length = bmp.depth * FT_TO_KM
+				#bmp = Bmp.find(bmp_id)
+				temp_length = @bmp.depth * FT_TO_KM
 				#line 2
 				subarea.number = 108
 				#subarea.iops = soil_id
@@ -454,12 +454,12 @@ module ScenariosHelper
 				subarea.rchn = 0.1
 				subarea.rchc = 0.2
 				subarea.rchk = 0.2
-                subarea.rfpw = bmp.width * FT_TO_M
-                subarea.rfpl = bmp.depth * FT_TO_KM
+                subarea.rfpw = @bmp.width * FT_TO_M
+                subarea.rfpl = @bmp.depth * FT_TO_KM
 				#subarea.pcof = @bmp.irrigation_efficiency
 				#line 10
 				subarea.pec = 1
-				add_buffer_operation(136, bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
+				add_buffer_operation(136, @bmp.crop_id, 0, 1400, 0, 22, 2, scenario_id)
 				#add_buffer_operation(139, 129, 0, 2000, 0, 33, 2, scenario_id)
 			when 12    #Riperian Forest
 			when 13    #Filter Strip and reparian forest
