@@ -932,7 +932,7 @@ module SimulationsHelper
     last_owner1 = 0
     i=0
   	nirr = 0
-    if @grazing == nil then
+    if @grazing == nil and @soils.count > 1 then
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
