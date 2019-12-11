@@ -195,6 +195,7 @@ class WatershedsController < ApplicationController
   		#update watershed_scenarios
   		@watershed_name = params[:commit]
   		@watershed_name.slice! "Add to "
+      debuygger
   		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
   		status = new_scenario()
   		@notice = nil
@@ -262,17 +263,17 @@ class WatershedsController < ApplicationController
   			  	end
             if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
     				watershed_scenarios.each do |p|
-    				  @scenario = Scenario.find(p.scenario_id)
-    				  @field = Field.find(p.field_id)
-    					@grazing = @scenario.operations.find_by_activity_id([7, 9])
-    					if @grazing == nil then
-    						@soils = Soil.where(:field_id => p.field_id)
-    					else
-    						@soils = Soil.where(:field_id => p.field_id).limit(1)
-    					end
-    				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-    				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-    				  	j+=1
+      				  @scenario = Scenario.find(p.scenario_id)
+      				  @field = Field.find(p.field_id)
+      					@grazing = @scenario.operations.find_by_activity_id([7, 9])
+      					if @grazing == nil then
+      						@soils = Soil.where(:field_id => p.field_id).limit(1)
+      					else
+      						@soils = Soil.where(:field_id => p.field_id).limit(1)
+      					end
+      				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+      				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+      				  	j+=1
     				end # end watershed_scenarios.each
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
