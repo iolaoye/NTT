@@ -1,6 +1,7 @@
 ﻿create_scenario = ->
     $("#div_new").toggle(true)
     $("#div_copy_other").toggle(false)
+    $("#div_upload").toggle(false)
 
 change_select_scenarios = ->
     tbl_scenarios = $("#tbl_scenarios")
@@ -9,6 +10,12 @@ change_select_scenarios = ->
 
 copy_from_other_field = ->
     $("#div_copy_other").toggle(true)
+    $("#div_new").toggle(false)
+    $("#div_upload").toggle(false)
+
+upload_user_scenarios = ->
+    $("#div_upload").toggle(true)
+    $("#div_copy_other").toggle(false)
     $("#div_new").toggle(false)
 
 loading_screen = ->
@@ -53,5 +60,7 @@ $(document).ready ->
         $("#simulate_aplcat").toggle(false)
     $("#other_field_scenario").click ->
         copy_from_other_field()
+    $("#upload_scenarios").click ->
+        upload_user_scenarios()
     $("#field_id").change ->
         select_scenarios()

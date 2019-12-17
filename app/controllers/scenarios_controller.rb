@@ -1630,6 +1630,8 @@ class ScenariosController < ApplicationController
   	return "OK"
   end
 
+  def upload_scenarios
+  end
   def download
     download_apex_files()
   end
