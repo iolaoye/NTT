@@ -68,9 +68,9 @@ NTTG3::Application.routes.draw do
   get '/serve_image/:filename' => 'application#serve'
   get 'projects/upload'
   post 'projects/upload_project'
-
   resources :projects do
     post 'locations/upload_shapefile'
+    post 'fields/upload_scenarios'
     resources :fem_generals
     resources :fem_facilities
     resources :fem_machines
@@ -91,9 +91,11 @@ NTTG3::Application.routes.draw do
     get 'download', on: :member
     get :group, on: :member
     resources :fields do
+      post 'scenarios/upload_scenarios'
       resources :scenarios do
 		    get 'copy_scenario', on: :member
         get 'copy_other_scenario', on: :collection
+        get 'upload_scenarios', on: :collection
         post :download, on: :collection
         post :download_aplcat, on: :collection
         post :download_fem, on: :collection

@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
 	before_action :set_locale
 	before_action :set_breadcrumbs
     before_action :set_env
+	before_action :mailer_set_url_options
+
+	def mailer_set_url_options
+	  ActionMailer::Base.default_url_options[:host] = request.host_with_port
+	end
 
     def serve
     	path = "app/assets/images/#{params[:filename]}" + "." + "#{params[:format]}"
