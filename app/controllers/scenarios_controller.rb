@@ -1631,7 +1631,100 @@ class ScenariosController < ApplicationController
   end
 
   def upload_scenarios
+    @errors = Array.new
+    @scenarios = Scenario.where(:field_id => @field.id)
+    debugger
+    if params[:type] != nil then
+      case params[:type][:file]
+      when "1"
+      when "2"
+        file_name = params[:scenarios]
+        if file_name.respond_to?(:read)
+          @data = file_name.read
+        elsif file_name.respond_to?(:path)
+          @data = File.read(file_name.path)
+        else
+          @erros.push "Bad file_data: #{@filename.class.name}: # {@filename.inspect}"
+          return
+        end
+        upload_scenarios_txt
+      when "3"
+        @data = Nokogiri::XML(params[:scenarios])
+        msg = upload_scenarios_xml
+        if msg.include? "Error"
+          return
+        end
+      end
+    else
+      @errors.push "Please select file type to upload"
+    end
+    add_breadcrumb t('menu.scenarios')
+
+    respond_to do |format|
+      format.html { render action: "index" }
+      format.json { render json: @scenarios }
+    end
   end
+
+  def upload_scenarios_xml
+    # validates the xml file
+    case true
+    when @data.elements.length <= 0
+      @errors.push "XML files does not have nodes"
+      return
+    when @data.elements[0].name != "ntt"
+      @errors.push "Element[0] is not NTT - Please fix the xml file and try again."
+      return
+    when @data.elements[0].elements.length <= 0
+      @errors.push "XML files does not have scenarios"
+      return
+    when @data.elements[0].elements[0].name != "scenario_info"
+      @errors.push "XML files does not have ScenarioInfo node"
+      return
+    end
+    @data.xpath("//scenario_info").each do |scn|
+      debugger
+      ActiveRecord::Base.transaction do
+        begin
+          scenario = Scenario.new
+          scenario.name = scn.xpath("name").text
+          scenario.field_id = @field.id
+          scenario.save
+          debugger
+          scn.xpath("operation_info").each do |opr|
+            debugger
+            operation = Operation.new
+            operation.scenario_id = scenario.id
+            operation.activity_id = opr.xpath("activity_id").text
+            operation.crop_id = opr.xpath("crop_id").text
+            operation.day = opr.xpath("day").text
+            operation.month_id = opr.xpath("month").text
+            operation.year = opr.xpath("year").text
+            operation.amount = opr.xpath("amount").text
+            operation.depth = opr.xpath("depth").text
+            operation.no3_n = opr.xpath("no3_n").text
+            operation.po4_p = opr.xpath("po4_p").text
+            operation.org_n = opr.xpath("org_n").text
+            operation.org_p = opr.xpath("org_p").text
+            operation.nh3 = opr.xpath("nh3").text
+            operation.subtype_id = opr.xpath("subtype_id").text
+            operation.moisture = opr.xpath("moisture").text
+            operation.org_c = opr.xpath("org_c").text
+            operation.nh4_n = opr.xpath("nh4").text
+            operation.rotation = opr.xpath("rotation").text
+            operation.save
+            msg = "Scenario " + scenario.name + " created succesfully"
+          end   # end node cicle
+        rescue => e
+          @errors.push = "Failed, Error: " + e.inspect
+          raise ActiveRecord::Rollback
+        ensure
+          return "OK"
+        end
+      end  # end transaction
+    end  # end reading data elements.
+  end
+
   def download
     download_apex_files()
   end

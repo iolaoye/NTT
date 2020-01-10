@@ -19,6 +19,6 @@
   </br>
   <div class="actions">
         <%= submit_tag(value = t('scenario.upload_scenarios'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.scenario')}) %>
-    <%= link_to t('general.back'), welcomes_path, :class => "btn btn-primary" %>
+    <%= link_to t('general.back'), project_field_scenarios_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
