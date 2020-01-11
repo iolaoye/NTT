@@ -1,0 +1,24 @@
+<% if flash[:notice] %>
+  <div class="flash_alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<%= form_tag({action: :upload_scenarios}, multipart: true) do %>
+  <div>
+  	<div class="page-header"><h1><%= t('project.upload_project') %></h1></div>
+	  	<td><%= label :name, 'Excel ' + t('models.file') %></td>
+	  	<td><%= radio_button("type", "file", "1")%></td>
+	  	<td><%= label :name, 'Text/CVS ' + t('models.file') %></td>
+	  	<td><%= radio_button("type", "file", "2")%></td>
+	  	<td><%= label :name, 'XML ' + t('models.file') %></td>
+	  	<td><%= radio_button("type", "file", "3")%></td>       
+        <br>
+        <%= file_field_tag :scenarios, {:required => true} %>
+  </div>
+  </br>
+  <div class="actions">
+        <%= submit_tag(value = t('scenario.upload_scenarios'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.scenario')}) %>
+    <%= link_to t('general.back'), project_field_scenarios_path, :class => "btn btn-primary" %>
+  </div>
+<% end %>
