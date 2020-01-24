@@ -10,7 +10,7 @@
         <% county += ", " + State.find(@project.location.state_id).state_name %>
       <% end %>
     <% end %> 
-    <% if request.url.include? ".bk." or request.url.include? 'localhost' or request.url.include? "ntt-re"  %>
+    <% if request.url.include? ".bk." or request.url.include? 'localhost'  %>
         <%= link_to t('menu.location') + " (" + county + ")", edit_project_location_path(@project, @project.location) %>   <!-- new map -->
     <%  else %>
         <%= link_to t('menu.location') + " (" + county + ")", project_location_path(@project, @project.location) %>    <!-- old map -->       
