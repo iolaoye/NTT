@@ -1,4 +1,4 @@
-﻿# Sample localization file for English. Add more files in this directory for other locales.
+# Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
   activerecord:
@@ -1010,23 +1010,24 @@ en:
     understanding2: NTT Disclaimer
     language: Language
   pdf:
+    source: Source
     owner: Owner
-    ntt_report: Nutrient Tracking Tool - Report
+    ntt_report: Nutrient Tracking Tool - Water Quality Report
     user: User
     email: Email
     company: Company
-    input_info: Input Information Report
+    input_info: Project Information
     name: Name
     description: Description
     date_created: Date Created
     report_created: Report Created
-    location_info: Location and Additional Site Information
+    location_info: Location
     state: State
     county: County
     weather_info: Weather Information
     weather_option: Weather Option
     station_name: Station Name
-    weather_period: Weather Period
+    weather_period: Available Period
     simulation_period: Simulation Period
     field_info: Field Information
     area: Area
@@ -1038,7 +1039,7 @@ en:
     albedo: Albedo
     slope: Slope
     percentage: 'Percentage'
-    layers_info: Layers Information
+    layers_info: Soil Detailed (Layers) Information
     soil_name: Soil Name
     depth: Depth
     soil: Soil
@@ -1057,7 +1058,7 @@ en:
     operation_method: Operation Method
     val_one: Val One
     val_two: Val Two
-    bmp_info: Best Management Practices (BMPs) Information
+    bmp_info: Structural and Conservation Practices
     autoirrigation: Autoirrigation
     irrigation: Irrigation
     water_stress_factor: Plant Water stress factor
@@ -1102,7 +1103,7 @@ en:
     inches: inches
     acres: acres
     days: days
-    annual_results: Annual Results for Nutrients, Flow, Sediment, and Crop Yield
+    annual_results: "Averages annual values for nutrients and sediment losses, flow, yield"
     description: Description
     baseline: Baseline
     difference: Difference

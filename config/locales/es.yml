@@ -1002,8 +1002,9 @@ es:
     understanding2: Descargo de responsabilidad del NTT
     language: Idioma
   pdf:
+     source: Fuente
     owner: Propietario
-    ntt_report: Nutrient Tracking Tool - Informe
+    ntt_report: Nutrient Tracking Tool - Informe de Calidad del Agua
     user: Usuario
     email: Email
     company: Empresa
@@ -1012,13 +1013,13 @@ es:
     description: Descripción
     date_created: Fecha de Creacion
     report_created: Fecha de Creacion del Informe
-    location_info: Ubicación e Información Adicional del Sitio
+    location_info: Ubicación
     state: Estdo
     county: Condado
     weather_info: Información del Clima
     weather_option: Opcion de Clima
     station_name: Nombre de estación
-    weather_period: Período de Clima
+    weather_period: Período Disponible
     simulation_period: Período de Simulación
     field_info: Información del parcela
     area: Área
@@ -1030,7 +1031,7 @@ es:
     albedo: Albedo
     slope: Inclinación
     percentage: Porcentaje
-    layers_info: Información de Capas
+    layers_info: Información detallada de los suelos (Capas)
     soil_name: Nombre de la Tierra
     depth: Profundidad
     soil: Tierra
@@ -1049,8 +1050,8 @@ es:
     operation_method: Método de Operación
     val_one: Val One
     val_two: Val Two
-    bmp_info: Informatción de las Buenas Prácticas de Administración (BMPs)
-    autoirrigation: Irrigacion Automatica
+    bmp_info: Prácticas Estructurales y de Conservación
+    autoirrigation: Irrigación Automática
     irrigation: Irrigación
     water_stress_factor: Factor de estrés hídrico
     irrigation_efficiency: Eficiencia del riego
@@ -1093,8 +1094,8 @@ es:
     none_required: Este BPG no requiere ninguna entrada
     inches: pulgadas
     acres: acres
-    days: días
-    annual_results: Resultados anuales de nutrientes, flujo, sedimentos, y rendimientos de cultivos
+    days: días.
+    annual_results: "Valores anuales promedio para nutrientes y perdida de sedimanto, flujo y rendimientos de cultivos"
     description: Descripción
     baseline: Base
     difference: Diferencia
