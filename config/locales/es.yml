@@ -1002,7 +1002,7 @@ es:
     understanding2: Descargo de responsabilidad del NTT
     language: Idioma
   pdf:
-     source: Fuente
+    source: Fuente
     owner: Propietario
     ntt_report: Nutrient Tracking Tool - Informe de Calidad del Agua
     user: Usuario
