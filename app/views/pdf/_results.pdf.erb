@@ -2,7 +2,7 @@
 <% @results1 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario1 == "" %>
 <% @results2 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario2 == "" %>
 <% @results3 = @field.scenarios.find(@result_scenario1).annual_results unless @result_scenario3 == "" %>
-<div class="group_header first_group" style='margin-left: = -40px'><%=t('pdf.annual_results')%></div>
+<div class="group_header first_group" style='margin-left: = -40px'><strong><%=t('pdf.annual_results')%></strong></div>
 <table style="border:thin solid black; border-radius: 3px; background: #204060; margin-left: 40px" class="table_fill">
     <thead style="color: white; display: table-row-group">
         <tr class='gvHeaderStyle' >
