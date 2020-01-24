@@ -1002,11 +1002,12 @@ es:
     understanding2: Descargo de responsabilidad del NTT
     language: Idioma
   pdf:
+    owner: Propietario
     ntt_report: Nutrient Tracking Tool - Informe
     user: Usuario
     email: Email
     company: Empresa
-    input_info: Reporte de Información Entrada
+    input_info: Información del Projecto
     name: Nombre
     description: Descripción
     date_created: Fecha de Creacion

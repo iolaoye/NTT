@@ -1010,6 +1010,7 @@ en:
     understanding2: NTT Disclaimer
     language: Language
   pdf:
+    owner: Owner
     ntt_report: Nutrient Tracking Tool - Report
     user: User
     email: Email
