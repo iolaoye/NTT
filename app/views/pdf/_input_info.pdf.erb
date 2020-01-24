@@ -1,11 +1,20 @@
 <% t = Time.now %>
-<div></div>
-<div><%= "\n" %></div>
-<div class="group_header first_group"><strong><%=t('pdf.input_info')%></strong/div>
-    <div class="data_titles">
-        <strong><%=t('pdf.name')%>:  </strong><%= @project.name %></br>
-        <strong><%=t('pdf.description')%>: </strong><%= @project.description %></br>
-        <strong><%=t('pdf.date_created')%>: </strong><%= @project.created_at %></br>
-        <strong><%=t('pdf.report_created')%>: </strong><%=t.day%>/<%=t.month%>/<%=t.year %>&nbsp; <%=t.strftime("%I:%M%p") %></br>
-    </div>
-</br>
+<div class="group_header first_group"><strong><%=t('pdf.input_info')%></strong></div>
+<div style='margin-left: 40px'>
+	<strong><%=t('pdf.name')%>:  </strong><%= @project.name %></br>
+	<strong><%=t('pdf.description')%>: </strong><%= @project.description %></br>
+    <strong><%=t('pdf.owner')%>:</strong> <%= @user.name %></br>
+    <strong><%=t('pdf.email')%>:</strong> <%= @user.email %></br>
+    <strong><%=t('pdf.company')%>:</strong> <%= @user.company %></br>
+	<strong><%=t('pdf.date_created')%>: </strong><%= @project.created_at %></br>
+	<strong><%=t('pdf.report_created')%>: </strong><%=t.day%>/<%=t.month%>/<%=t.year %>&nbsp; <%=t.strftime("%I:%M%p") %></br>
+	<strong><%="NTT Version"%>: </strong></br>
+	<% @state = State.find(@location.state_id) %>
+	<% @county = County.find(@location.county_id) %>
+	<div class="group_header"><strong><%=t('pdf.location_info')%></strong></div>
+	<div class="data_titles" style='margin-left: 40px'>
+	    <strong><%=t('pdf.state')%>:  </strong><%= @state.state_name %></br>
+	    <strong><%=t('pdf.county')%>  </strong>:<%= @county.county_name %></br>
+	</div>
+	</br>
+</div>
