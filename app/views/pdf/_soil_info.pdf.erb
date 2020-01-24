@@ -1,12 +1,12 @@
 <% @soils = Soil.where(:field_id => @field.id, :selected => true) %>
 
-<div class="group_header"><%=t('pdf.soil_info')%></div>
-<table class='table_fill'>
+<div class="group_header"><strong><%=t('pdf.soil_info')%></strong></div>
+<table class='table_fill'  style='margin-left: 40px'>
     <thead style=" display: table-row-group">
         <tr class="first_tr">
-            <th class="table_head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <th class="table_head"></th>
+            <th class="table_head" style="text-align: left">
                 <%=t('pdf.name')%>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th class="table_head"><%=t('pdf.symbol')%></th>
             <th class="table_head"><%=t('pdf.group')%></th>
@@ -20,6 +20,7 @@
         <% @soils.each do |soil| %>
             <% if (i % 2  == 0) %>
                 <tr class="table_row_even">
+                    <td class="row text"><%= 'Soil #' + i.to_s + ":" %> </td>
                     <td class="row text"><%= soil.name %></td>
                     <td class="row text"><%= soil.symbol %></td>
                     <td class="row text"><%= soil.group %></td>
@@ -29,6 +30,7 @@
                 </tr>
             <% else %>
                 <tr class="table_row_odd">
+                    <td class="row text"><%= 'Soil #' + i.to_s + ":" %> </td>
                     <td class="row text"><%= soil.name %></td>
                     <td class="row text"><%= soil.symbol %></td>
                     <td class="row text"><%= soil.group %></td>
