@@ -1,8 +1,16 @@
 <% @field = Field.find(params[:field_id]) %>
-<div class="group_header"><%=t('pdf.field_info')%></div>
-    <div class="data_titles">
+<div class="group_header"><strong><%=t('pdf.field_info')%></strong></div>
+    <div class="data_titles" style='margin-left: 40px'>
         <strong><%=t('pdf.name')%>:  </strong><%= @field.field_name %></br>
         <strong><%=t('pdf.area')%>:  </strong><%= @field.field_area %></br>
         <strong><%=t('pdf.average_slope')%>:  </strong><%= @field.field_average_slope %></br>
+        <%if ENV["APP_VERSION"] == "modified"%>
+        	<strong><%=t('soil.test')%>:  </strong>
+        	<% if @field.soilp == nil || @field.soilp == 0 %> 
+        		<%= 'None' %>
+        	<% else %>
+        		<%= @field.soilp %></br>
+        	<% end %>
+        <% end %>
     </div>
 </br>
