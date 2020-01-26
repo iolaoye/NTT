@@ -10,8 +10,8 @@ class LocationsController < ApplicationController
     #@shp_path = "/Users/gallego/Downloads/NTT_Example/NTT_Example.shp"
     filepath = Rails.root.join("lib", "external_scripts", "get_coords.r ")
     @r_parm = filepath.to_s + @shp_path.to_s
-    output = `Rscript --vanilla #{@r_parm}`
-    @found_fields = output.split("Field:")
+    @output = `Rscript --vanilla #{@r_parm}`
+    @found_fields = @output.split("Field:")
     #FileUtils.rm_rf(dir_path)
   end
 
