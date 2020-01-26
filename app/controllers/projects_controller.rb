@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
     when @location.fields.count > 0 && @project.version == "NTTG3"  # load fields
       redirect_to project_fields_path(@project)
     else # Load map
-      if request.url.include? ".bk." or request.url.include? "localhost" then 
+      if request.url.include? ".bk." or request.url.include? "localhost" or request.url.include? "ntt-re" then 
         redirect_to edit_project_location_path(@project, @location)  # new map
       else
         redirect_to project_location_path(@project, @location)   # old map       
