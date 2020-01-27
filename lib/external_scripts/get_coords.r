@@ -1,3 +1,6 @@
+#tryCatch({require(rgdal)},
+#        error = function(w) {msg0 <<- w})
+#
 args = commandArgs(trailingOnly = TRUE)
 require(rgdal)
 s_f_org = readOGR(dsn=args[1])
@@ -11,4 +14,7 @@ for (i in 1:npoly){
         cat(paste0(s_f@polygons[[i]]@Polygons[[1]]@coords[j,1],",",s_f@polygons[[i]]@Polygons[[1]]@coords[j,2]),"")
     }
 }
+
+
+
 
