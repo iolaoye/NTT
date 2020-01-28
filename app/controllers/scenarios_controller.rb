@@ -1633,7 +1633,6 @@ class ScenariosController < ApplicationController
   def upload_scenarios
     @errors = Array.new
     @scenarios = Scenario.where(:field_id => @field.id)
-    debugger
     if params[:type] != nil then
       case params[:type][:file]
       when "1"
@@ -1683,16 +1682,13 @@ class ScenariosController < ApplicationController
       return
     end
     @data.xpath("//scenario_info").each do |scn|
-      debugger
       ActiveRecord::Base.transaction do
         begin
           scenario = Scenario.new
           scenario.name = scn.xpath("name").text
           scenario.field_id = @field.id
           scenario.save
-          debugger
           scn.xpath("operation_info").each do |opr|
-            debugger
             operation = Operation.new
             operation.scenario_id = scenario.id
             operation.activity_id = opr.xpath("activity_id").text
