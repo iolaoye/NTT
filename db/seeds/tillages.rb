@@ -119,7 +119,7 @@ Tillage.create!({:id => 87,:code => 304,:dndc => 1,:name => 'PNUTDIGS',:operatio
 Tillage.create!({:id => 88,:code => 306,:dndc => 1,:name => 'PNUTRESK',:operation => 0,:eqp => 'PEANUT RESHAKER-COND',:status => false,:abbreviation => 'TILL',:spanish_name => 'PEANUT RESHAKER-COND',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 89,:code => 307,:dndc => 1,:name => 'PNUTSHKI',:operation => 0,:eqp => 'PEANUT SHAKER-INVERTER',:status => false,:abbreviation => 'TILL',:spanish_name => 'AGITADOR/INVERSOR DE MANI',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 90,:code => 308,:dndc => 1,:name => 'PNUTVINC',:operation => 0,:eqp => 'PEANUT VINE CUTTER',:status => false,:abbreviation => 'TILL',:spanish_name => 'CORTADOR DE VID DE MANI',:activity_id => 3}, :without_protection => true)
-Tillage.create!({:id => 208,:code => 310,:dndc => 1,:name => 'SILAGEHV':opeeration => 0,:eqp => 'SILAGE HARVESTER',:status => true,:abbreviation => 'HARV',:spanish_name => 'Cosecha de SILAGE',:activity_id => 4}, :without_protection => true)
+Tillage.create!({:id => 208,:code => 310,:dndc => 1,:name => 'SILAGEHV',:operation => 0,:eqp => 'SILAGE HARVESTER',:status => true,:abbreviation => 'HARV',:spanish_name => 'Cosecha de SILAGE',:activity_id => 4}, :without_protection => true)
 Tillage.create!({:id => 91,:code => 317,:dndc => 1,:name => 'MOWERPTO',:operation => 0,:eqp => 'MOWER COND PTO',:status => false,:abbreviation => 'TILL',:spanish_name =>  'PODADORA COND PTO',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 92,:code => 318,:dndc => 1,:name => 'MOWERCSP',:operation => 0,:eqp => 'MOWER COND, SELF-PROP',:status => false,:abbreviation => 'TILL',:spanish_name =>  'PODADORA COND, SELF-PROP',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 93,:code => 319,:dndc => 1,:name => 'MOWERDRD',:operation => 0,:eqp => 'MOWER DRUM-DISC',:status => false,:abbreviation => 'TILL',:spanish_name =>  'PODADORA DRUM-DISC',:activity_id => 3}, :without_protection => true)
@@ -207,4 +207,4 @@ Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operati
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 171,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp => 'DESTROY PUDDLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Destruir Puddle',:activity_id => 3}, :without_protection => true)
-#LAST id = 207 tillage code = 569 harvest.
+#LAST id = 208 tillage code = 310 harvest sillage
