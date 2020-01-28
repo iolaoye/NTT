@@ -128,10 +128,10 @@ def index
         end
       end
       operation = Operation.new(operation_params)
-      #if operation.activity_id == 2 && operation.type_id == 1 && operation.po4_p > 0 && operation.po4_p < 100 then
-        #operation.po4_p *= PO4_TO_P2O5
-      #end
-
+      #calculate the days animals in field
+      if operation.activity_id == 7 or operation.activity_id == 9 then
+        operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(params[:operation][:year].to_i,params[:operation][:month_id].to_i,params[:operation][:day].to_i)).to_i + 1
+      end
       operation.scenario_id = params[:scenario_id]
       if operation.activity_id == 9 then
         operation.moisture = params[:operation][:moisture]
@@ -233,23 +233,19 @@ def index
     if params[:operation][:activity_id] != "7" && params[:operation][:activity_id] != "9"
       calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f)
     end
-
     @operation = Operation.find(params[:id])
     @crops = Crop.load_crops(@project.location.state_id)
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     respond_to do |format|
       if @operation.update_attributes(operation_params)
-        #if @operation.activity_id == 2 && @operation.type_id == 1 && @operation.po4_p > 0 && @operation.po4_p < 100 then
-          #@operation.po4_p *= PO4_TO_P2O5
-          #@operation.save
-        #end
-
         if params[:operation][:activity_id] == "7" || params[:operation][:activity_id] == "9" 
           if params[:access] != nil
             @operation.org_c = 1
           else
             @operation.org_c = 0
           end
+          #calculate the days animals in field
+          @operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(params[:operation][:year].to_i,params[:operation][:month_id].to_i,params[:operation][:day].to_i)).to_i + 1
           @operation.save
         end
         SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.

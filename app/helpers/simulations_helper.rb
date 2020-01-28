@@ -2307,17 +2307,21 @@ module SimulationsHelper
     ops.each do |op|
       if op.org_c == 1  then
         # total manure / day
-    		total_manure = op.amount * op.nh3 / 24 * Fertilizer.find(op.type_id).dry_matter / 100
+        # Wet manure produced per animal / day - https://www.nrcs.usda.gov/wps/portal/nrcs/detail/null/?cid=nrcs143_014211
+    		#amount=number of animals, nh3=hours in stream, 24=hours in a day, dry_manure=dry_manure produce per animal, subtype_id=days in field
+        total_manure_per_day = op.amount * op.nh3 / 24 * Animal.find(op.type_id).dry_manure * op.subtype_id
         # nutrients / month
-    		no3 += total_manure * op.depth * op.no3_n
-    		po4 += total_manure * op.depth * op.po4_p
-    		org_n += total_manure * op.depth * op.org_n
-    		org_p += total_manure * op.depth * op.org_p
+        # depth=days animals in field, no3_n,po4_p,org_n,org_p=fraction of nutrients in manure.
+    		no3 += total_manure_per_day * op.no3_n
+    		po4 += total_manure_per_day * op.po4_p
+    		org_n += total_manure_per_day * op.org_n
+    		org_p += total_manure_per_day * op.org_p
     		if session[:simulation] == 'scenario'
     		  results = @scenario.annual_results.where(:sub1 => 0)
     		else
     		  results = AnnualResult.where(:watershed_id => @watershed.id)
     		end
+        #Total nutrient results from NTT file per year. Needs to add record by record, which represent each year and divide by area to represent by acer. Results are already converted to lbs/acer.
     		results.each do |result|
           result.no3 += no3 / @field.field_area
           result.po4 += po4 / @field.field_area
