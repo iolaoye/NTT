@@ -214,7 +214,7 @@ include ScenariosHelper
   def upload_weather
     msg = "Error loading file"
     #name = params[:weather][:weather_file].original_filename
-    name = "Uploaded data in file"
+    name = "(Weather uploaded - uploading a new one will replace the current one)"
     # create the file path
     #path = File.join(OWN, name)
     # open the weather file for writing.
