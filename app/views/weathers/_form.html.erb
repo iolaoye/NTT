@@ -28,7 +28,7 @@
             <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
             <% if (params[:locale] == "en") %>
                 <%= f.label :way, way.way_name %>
-                <% if way.id == 2 and @weather.weather_file.include? "Uploaded" %>
+                <% if way.id == 2 and @weather.weather_file.include? "uploaded" %>
                   <strong><%= @weather.weather_file %></strong>
                 <% end %>
             <% else %>
