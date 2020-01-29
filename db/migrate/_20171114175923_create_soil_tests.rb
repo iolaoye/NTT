@@ -1,4 +1,4 @@
-class CreateSoilTests < ActiveRecord::Migration
+class CreateSoilTests < ActiveRecord::Migration[5.2]
   def change
     create_table :soil_tests do |t|
       t.string :name
