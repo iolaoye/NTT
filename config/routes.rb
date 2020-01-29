@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :climes
   resources :aplcat_results
   resources :fem_results
   #get 'fem/index' => 'fem#list'
