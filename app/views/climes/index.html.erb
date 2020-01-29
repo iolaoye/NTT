@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Climes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Daily weather</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @climes.each do |clime| %>
+      <tr>
+        <td><%= clime.field_id %></td>
+        <td><%= clime.daily_weather %></td>
+        <td><%= link_to 'Show', clime %></td>
+        <td><%= link_to 'Edit', edit_clime_path(clime) %></td>
+        <td><%= link_to 'Destroy', clime, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Clime', new_clime_path %>

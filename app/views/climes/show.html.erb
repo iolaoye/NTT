@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Field:</strong>
+  <%= @clime.field_id %>
+</p>
+
+<p>
+  <strong>Daily weather:</strong>
+  <%= @clime.daily_weather %>
+</p>
+
+<%= link_to 'Edit', edit_clime_path(@clime) %> |
+<%= link_to 'Back', climes_path %>
