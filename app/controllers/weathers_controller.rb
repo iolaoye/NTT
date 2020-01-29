@@ -230,6 +230,7 @@ include ScenariosHelper
     i=0
     data = ""
     #File.open(path, "r").each_line do |line|
+    Clime.where(:field_id => @field.id).delete_all
     input_file.each do |line|
       #data = line.split(/\r\n/)
       data = line.split(" ")
@@ -272,7 +273,7 @@ include ScenariosHelper
   	  end   # end case data.len
       daily_clime = Clime.new
       daily_clime.field_id = @field.id
-      daily_weather = "  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*"
+      daily_clime.daily_weather = "  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*"
       daily_clime.save
       weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
     end  # end do file.open
