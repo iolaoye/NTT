@@ -213,11 +213,12 @@ include ScenariosHelper
 ########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
   def upload_weather
     msg = "Error loading file"
-    name = params[:weather][:weather_file].original_filename
+    #name = params[:weather][:weather_file].original_filename
+    name = "Uploaded data in file"
     # create the file path
-    path = File.join(OWN, name)
+    #path = File.join(OWN, name)
     # open the weather file for writing.
-    weather_file = open(path, "w")
+    #weather_file = open(path, "w")
     #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) } 
     original_data = params[:weather][:weather_file].read
     input_file = original_data.split(/\r\n/)
@@ -275,11 +276,11 @@ include ScenariosHelper
       daily_clime.field_id = @field.id
       daily_clime.daily_weather = "  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*"
       daily_clime.save
-      weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
+      #weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
     end  # end do file.open
-  	weather_file.close
-    weather_file = open(path, "r")
-    original_data = weather_file.read
+  	#weather_file.close
+    #weather_file = open(path, "r")
+    #original_data = weather_file.read
     #changed instead the file is going too be save in a table link to the field.
 
     #client = Savon.client(wsdl: URL_SoilsInfo)
