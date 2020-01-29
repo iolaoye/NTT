@@ -270,15 +270,21 @@ include ScenariosHelper
   		when 9
   			if data[8].to_f < -90 then ws = sprintf("%7.1f",data[8]) else ws = sprintf("%7.2f",data[8]) end
   	  end   # end case data.len
+      daily_clime = Clime.new
+      daily_clime.field_id = @field.id
+      daily_weather = "  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*"
+      daily_clime.save
       weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
     end  # end do file.open
   	weather_file.close
     weather_file = open(path, "r")
     original_data = weather_file.read
-    client = Savon.client(wsdl: URL_SoilsInfo)
+    #changed instead the file is going too be save in a table link to the field.
+
+    #client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
-    response = client.call(:apex_files, message: {"fileName" => "UploadWeather", "data" => name, "parm" => "", "site" => "", "wth" => original_data, "session_id" => session[:session_id]})
-    if response.body[:apex_files_response][:apex_files_result] == "created" then
+    #response = client.call(:apex_files, message: {"fileName" => "UploadWeather", "data" => name, "parm" => "", "site" => "", "wth" => original_data, "session_id" => session[:session_id]})
+    #if response.body[:apex_files_response][:apex_files_result] == "created" then
       #verify that there are more than 5 years of weather period.
       if @weather.simulation_initial_year >= @weather.weather_final_year then
         @weather.simulation_initial_year = @weather.weather_initial_year
@@ -292,9 +298,9 @@ include ScenariosHelper
       else
         return msg
       end
-    else
-      return response.body[:apex_files_response][:apex_files_result]
-    end
+    #else
+      #return response.body[:apex_files_response][:apex_files_result]
+    #end
     return
   end
   
