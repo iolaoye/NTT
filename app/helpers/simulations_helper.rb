@@ -132,7 +132,11 @@ module SimulationsHelper
           end
         else
           #get file name for the current
-          apex_string = PRISM1 + "/" + @field.weather.weather_file 
+          if @field.weather.weather_file.include? "Weather uploaded" then
+            apex_string = @field.weather.weather_file
+          else
+            apex_string = PRISM1 + "/" + @field.weather.weather_file 
+          end
         end    
       end  # case i end 
       apex_string1=""
@@ -160,11 +164,35 @@ module SimulationsHelper
     ###### create control, param, site, and weather files ########
     response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_control, "parm" => apex_parm, "site" => apex_site, "wth" => apex_wth, "session_id" => session[:session_id]})
     if response.body[:apex_files_response][:apex_files_result] == "created" then
+      # the file should be sent to APEX for simulation.
+      if @field.weather.weather_file.include? "Weather uploaded" then
+        msg = create_weather_file()
+        if (!msg == "OK")
+          return msg
+        end
+      end
       return "OK"
     else
       return response.body[:apex_files_response][:apex_files_result]
     end
   end
+
+  def create_weather_file
+    wth_data = Clime.where(:field_id => @field.id)
+    wth_file = ""
+    wth_data.each do |wth|
+      wth_file += wth.daily_weather
+    end # end wth.each
+    #send file to APEX
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files, also fem_list########
+    response = client.call(:apex_files, message: {"fileName" => "Weather_File", "data" => wth_file, "wth" => "", "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
+      return "OK"
+    else
+      return response.body[:apex_files_response][:apex_files_result]
+    end
+  end #end def
 
   def send_files1_to_APEX(file)
     start = @scenario.operations.find_by_activity_id(9)
