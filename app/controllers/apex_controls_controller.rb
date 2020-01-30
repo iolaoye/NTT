@@ -112,7 +112,8 @@ class ApexControlsController < ApplicationController
       if control.number != 1 && control.number != 2
   		  apex_control.value = control.default_value
       else
-        weather = Weather.find(@field.weather_id)
+        weather = Weather.find_by_field_id(@field.id)
+        #weather = Weather.find(@field.weather_id)
         if control.number == 1 then
           apex_control.value = weather.simulation_final_year - weather.simulation_initial_year + 5 + 1
         end
