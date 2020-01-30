@@ -301,6 +301,7 @@ class ProjectsController < ApplicationController
     #require 'open-uri'
     #require 'net/http'
     #require 'rubygems'
+
     project = Project.find(project_id)
 
     builder = Nokogiri::XML::Builder.new do |xml|
@@ -365,8 +366,6 @@ class ProjectsController < ApplicationController
     } #end xml.location
   end
 
-  # end method
-
   def save_field_information(xml, field)
     xml.field {
       #field information
@@ -376,7 +375,7 @@ class ProjectsController < ApplicationController
       xml.field_average_slope field.field_average_slope
       xml.field_type field.field_type
       xml.soilp field.soilp 
-      xml.soil_aluminum field.soil_aluminum 
+      xml.soil_aliminum field.soil_aliminum 
       xml.soil_test field.soil_test
       xml.coordinates field.coordinates   #any thing for field should be before coordinates beacuse here the new field is saved.
       save_clime_information(field.id)
@@ -503,7 +502,7 @@ class ProjectsController < ApplicationController
       xml.bdd layer.bdd
       xml.psp layer.psp
       xml.satc layer.satc
-      xml.soil_aluminum layer.soil_aluminum
+      xml.soil_aliminum layer.soil_aliminum
       xml.soil_test_id layer.soil_test_id
       xml.soil_p_initial layer.soil_p_initial
     } # layer xml
@@ -1131,8 +1130,8 @@ class ProjectsController < ApplicationController
         field.field_type = p.text
       when "soilp"
         field.soilp = p.text
-      when "soil_aluminum"
-        field.soil_aluminum = p.text
+      when "soil_aliminum"
+        field.soil_aliminum = p.text
       when "soil_test"
         field.soil_test = p.text
       when "coordinates"
@@ -1595,8 +1594,8 @@ class ProjectsController < ApplicationController
           layer.psp = p.text
         when "satc"
           layer.satc = p.text
-        when "soil_aluminum"
-          layer.soil_aluminum = p.text
+        when "soil_aliminum"
+          layer.soil_aliminum = p.text
         when "soil_test_id"
           layer.soil_test_id = p.text
         when "soil_p_initial"
