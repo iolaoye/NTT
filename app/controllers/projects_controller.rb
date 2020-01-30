@@ -191,7 +191,7 @@ class ProjectsController < ApplicationController
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
   def upload_prj
-      @inps1 = 0
+    @inps1 = 0
     saved = false
     msg = ""
     @upload_id = 0
@@ -376,10 +376,10 @@ class ProjectsController < ApplicationController
       xml.field_average_slope field.field_average_slope
       xml.field_type field.field_type
       xml.soilp field.soilp 
-      xml.soil_aliminum field.soil_aliminum 
+      xml.soil_aluminum field.soil_aluminum 
       xml.soil_test field.soil_test
       xml.coordinates field.coordinates   #any thing for field should be before coordinates beacuse here the new field is saved.
-      
+      save_clime_information(field.id)
       weather = Weather.find_by_field_id(field.id)
       save_weather_information(xml, weather)
       site = Site.find_by_field_id(field.id)
@@ -390,7 +390,6 @@ class ProjectsController < ApplicationController
           save_soil_information(xml, soil)
         end # end soils.each
       } #end xml.soils
-
       #scenarios and operations information
       scenarios = Scenario.where(:field_id => field.id)
       xml.scenarios {
@@ -412,8 +411,19 @@ class ProjectsController < ApplicationController
       xml.way_id weather.way_id
       xml.weather_initial_year weather.weather_initial_year
       xml.weather_final_year weather.weather_final_year
+      xml.station_id weather.station_id
     } #weather info end
   end # end method
+
+  def save_clime_information(field_id)
+    climes = Clime.where(:field_id => field_id)
+    climes.each do |clime|
+      xml.climes {
+        xml.field_id clime.field_id
+        xml.daily_weather clime.daily_weather       
+      }
+    end
+  end
 
   def save_site_info(xml, site)
     xml.site {
@@ -493,7 +503,7 @@ class ProjectsController < ApplicationController
       xml.bdd layer.bdd
       xml.psp layer.psp
       xml.satc layer.satc
-      xml.soil_aliminum layer.soil_aluminum
+      xml.soil_aluminum layer.soil_aluminum
       xml.soil_test_id layer.soil_test_id
       xml.soil_p_initial layer.soil_p_initial
     } # layer xml
@@ -561,6 +571,9 @@ class ProjectsController < ApplicationController
       xml.org_p operation.org_p
       xml.nh3 operation.nh3
       xml.subtype_id operation.subtype_id
+      xml.moisture operation.moisture
+      xml.org_c operation.org_c
+      xml.rotation operation.rotation
       soil_operations = SoilOperation.where(:operation_id => operation.id)
       xml.soil_operations {
         soil_operations.each do |so|
@@ -607,6 +620,8 @@ class ProjectsController < ApplicationController
       xml.pcp result.pcp
       xml.n2o result.n2o
       xml.prkn result.prkn
+      xml.co2 result.co2
+      xml.biom result.biom
     } # xml each result end
   end  # end method
 
@@ -820,18 +835,18 @@ class ProjectsController < ApplicationController
     } # xml each subarea end
   end
 
-  def save_chart_information(xml, chart)
-    xml.chart {
-      xml.description_id chart.description_id
-      xml.watershed_id chart.watershed_id
-      xml.scenario_id chart.scenario_id
-      xml.field_id chart.field_id
-      xml.soil_id chart.soil_id
-      xml.month_year chart.month_year
-      xml.value chart.value
-      xml.crop_id chart.crop_id
-    } # xml each chart_info end
-  end
+  #def save_chart_information(xml, chart)
+    #xml.chart {
+      #xml.description_id chart.description_id
+      #xml.watershed_id chart.watershed_id
+      #xml.scenario_id chart.scenario_id
+      #xml.field_id chart.field_id
+      #xml.soil_id chart.soil_id
+      #xml.month_year chart.month_year
+      #xml.value chart.value
+      #xml.crop_id chart.crop_id
+    #} # xml each chart_info end
+  #end
 
   def save_climate_information(xml, climate)
     xml.climate {
@@ -845,9 +860,9 @@ class ProjectsController < ApplicationController
   def save_watershed_information(xml, watershed)
     xml.watershed {
       xml.name watershed.name
-    if watershed.last_simulation != nil then
-      xml.last_simulation watershed.last_simulation
-    end
+      if watershed.last_simulation != nil then
+        xml.last_simulation watershed.last_simulation
+      end
       watershed_scenarios = WatershedScenario.where(:watershed_id => watershed.id)
       xml.watershed_scenarios {
         watershed_scenarios.each do |wss|
@@ -920,7 +935,6 @@ class ProjectsController < ApplicationController
       end
       @project.version = "NTTG3"
       if @project.save then
-        #params[:project_id] = @project.id
         msg = upload_location_info(node)
         msg = upload_weather_info(node)
         return "OK"
@@ -1006,8 +1020,7 @@ class ProjectsController < ApplicationController
       msg = "OK"
       location = Location.new
       location.project_id = @project.id
-      node.elements.each do |p|
-        
+      node.elements.each do |p|       
         case p.name
           when "state_id"
             location.state_id = p.text
@@ -1035,13 +1048,11 @@ class ProjectsController < ApplicationController
             end
         end # end case p.name
       end # end node.elements do
-    #rescue
+      #rescue
       #msg = 'Location could not be saved'
     #end
-  return msg
+    return msg
   end
-
-  # end method
 
   def upload_field_info(node)
     
@@ -1120,8 +1131,8 @@ class ProjectsController < ApplicationController
         field.field_type = p.text
       when "soilp"
         field.soilp = p.text
-      when "soil_aliminum"
-        field.soil_aliminum = p.text
+      when "soil_aluminum"
+        field.soil_aluminum = p.text
       when "soil_test"
         field.soil_test = p.text
       when "coordinates"
@@ -1219,7 +1230,8 @@ class ProjectsController < ApplicationController
         when "weather_file"
           weather.weather_file = p.text
           if weather.weather_file.include? "uploaded" then
-            weather.weather_file = ""
+            #upload_clime_new_version()
+            #weather.weather_file = ""
           end
         when "way_id"
           weather.way_id = p.text
@@ -1317,19 +1329,17 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_soil_info(node, field_id)
-    
+  def upload_soil_info(node, field_id)   
     soil = Soil.new
     soil.field_id = field_id
     soil.selected = false
-    node.elements.each do |p|
-      
+    node.elements.each do |p|      
       case p.name
         when "Selected"
           if p.text == "True" then
             soil.selected = true
-      else
-      return
+          else
+            return
           end
         when "Key"
           soil.key = p.text
@@ -1474,20 +1484,6 @@ class ProjectsController < ApplicationController
           soil.fbm = p.text
         when "fhp"
           soil.fhp = p.text
-        #when "subareas"
-          #p.elements.each do |sa|
-            #msg = upload_subarea_new_version(0, 0, soil.id, sa)
-            #if msg != "OK"
-              #return msg
-            #end
-          #end
-        #when "soil_operations"
-          #p.elements.each do |so|
-            #msg = upload_soil_operation_new(so, 0, soil.id, 0, 0)
-            #if msg != "OK"
-              #return msg
-            #end
-          #end
       end # case end
     end # each element end
     if soil.save
@@ -1552,12 +1548,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_layer_new_version(soil_id, node)
-    
+  def upload_layer_new_version(soil_id, node)   
     layer = Layer.new
     layer.soil_id = soil_id
     node.elements.each do |p|
-
       case p.name
         when "depth"
           layer.depth = p.text
@@ -1601,6 +1595,12 @@ class ProjectsController < ApplicationController
           layer.psp = p.text
         when "satc"
           layer.satc = p.text
+        when "soil_aluminum"
+          layer.soil_aluminum = p.text
+        when "soil_test_id"
+          layer.soil_test_id = p.text
+        when "soil_p_initial"
+          layer.soil_p_initial = p.text
       end
     end
     if layer.save
@@ -2155,6 +2155,18 @@ class ProjectsController < ApplicationController
           subarea.ny3 = p.text
         when "ny4"
           subarea.ny4 = p.text
+        when "ny5"
+          subarea.ny5 = p.text
+        when "ny6"
+          subarea.ny6 = p.text
+        when "ny7"
+          subarea.ny7 = p.text
+        when "ny8"
+          subarea.ny8 = p.text
+        when "ny9"
+          subarea.ny9 = p.text
+        when "ny10"
+          subarea.ny10 = p.text
         when "xtp1"
           subarea.xtp1 = p.text
         when "xtp2"
@@ -2163,6 +2175,19 @@ class ProjectsController < ApplicationController
           subarea.xtp3 = p.text
         when "xtp4"
           subarea.xtp4 = p.text
+        when "xtp5"
+          subarea.xtp5 = p.text
+        when "xtp6"
+          subarea.xtp6 = p.text
+        when "xtp7"
+          subarea.xtp7 = p.text
+        when "xtp8"
+          subarea.xtp8 = p.text
+        when "xtp9"
+          subarea.xtp9 = p.text
+        when "xtp10"
+          subarea.xtp10 = p.text
+
       end #end case
     end #end each
     if subarea.save then
@@ -2330,6 +2355,12 @@ class ProjectsController < ApplicationController
           operation.org_p = p.text
         when "nh3"
           operation.nh3 = p.text
+        when "moisture"
+          operation.moisture = p.text
+        when "org_c"
+          operation.org_c = p.text
+        when "rotation"
+          operation.rotation = p.text
         when "soil_operations"
           p.elements.each do |soil_op|
             msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
@@ -2464,6 +2495,10 @@ class ProjectsController < ApplicationController
         result.n2o = p.text
       when "prkn"
         result.prkn = p.text
+      when "co2"
+        result.co2 = p.text
+      when "biom"
+        result.biom = p.text
       end # end case
     end # end each
     if result.save
@@ -2653,8 +2688,6 @@ class ProjectsController < ApplicationController
 
   def add_result(field_id, soil_id, scenario_id, p_text, description_id)
     result = AnnualResult.new
-    #result.field_id = field_id
-    #result.soil_id = soil_id
     result.scenario_id = scenario_id
     result.value = p_text
     result.description_id = description_id
@@ -2680,14 +2713,7 @@ class ProjectsController < ApplicationController
           description_id += description_id
       end # end case
     end # each do
-    #after all of the crops ahve been added, Crop yield should be added too
-    #result = add_result(field_id, soil_id, scenario_id, "", 70)
-    #result.ci_value = ""
-    #result.crop_id = ""
-    #result.save
   end
-
-  # end method
 
   def upload_scenario_info(node, field_id)
     name = ""
@@ -2708,8 +2734,6 @@ class ProjectsController < ApplicationController
       end #end case
     end ## end each
   end
-
-  # end method
 
   def upload_chart_info(node, field_id, soil_id, scenario_id, description_id)
     i = 1
