@@ -398,13 +398,6 @@ class ProjectsController < ApplicationController
           save_scenario_information(xml, scenario)
         end # end scenarios.each
       } #end xml.scenarios
-
-      #charts = Chart.where(:field_id => field.id)
-      #xml.charts {
-        #charts.each do |chart|
-          #save_chart_information(xml, chart)
-        #end # end charts.each
-      #} # end xml.charts
     } # end field info
   end   # end method
 
@@ -1225,6 +1218,9 @@ class ProjectsController < ApplicationController
           weather.longitude = p.text
         when "weather_file"
           weather.weather_file = p.text
+          if weather.weather_file.include? "uploaded" then
+            weather.weather_file = ""
+          end
         when "way_id"
           weather.way_id = p.text
       end
