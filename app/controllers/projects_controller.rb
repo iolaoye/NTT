@@ -301,9 +301,7 @@ class ProjectsController < ApplicationController
     #require 'open-uri'
     #require 'net/http'
     #require 'rubygems'
-
     project = Project.find(project_id)
-
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.projects {
         xml.project {
@@ -378,7 +376,12 @@ class ProjectsController < ApplicationController
       xml.soil_aliminum field.soil_aliminum 
       xml.soil_test field.soil_test
       xml.coordinates field.coordinates   #any thing for field should be before coordinates beacuse here the new field is saved.
-      save_clime_information(field.id)
+      climes = Clime.where(:field_id => field.id)
+      xml.climes {
+        climes.each do |clime|
+          save_clime_information(xml, clime)
+        end
+      }
       weather = Weather.find_by_field_id(field.id)
       save_weather_information(xml, weather)
       site = Site.find_by_field_id(field.id)
@@ -414,14 +417,11 @@ class ProjectsController < ApplicationController
     } #weather info end
   end # end method
 
-  def save_clime_information(field_id)
-    climes = Clime.where(:field_id => field_id)
-    climes.each do |clime|
-      xml.climes {
-        xml.field_id clime.field_id
-        xml.daily_weather clime.daily_weather       
-      }
-    end
+  def save_clime_information(xml, clime)   
+    xml.clime {
+      xml.field_id clime.field_id
+      xml.daily_weather clime.daily_weather       
+    }
   end
 
   def save_site_info(xml, site)
@@ -442,7 +442,7 @@ class ProjectsController < ApplicationController
   def save_soil_information(xml, soil)
     #soils and layers information
     xml.soil {
-    xml.id soil.id
+      xml.id soil.id
       xml.selected soil.selected
       xml.key soil.key
       xml.symbol soil.symbol
@@ -502,7 +502,7 @@ class ProjectsController < ApplicationController
       xml.bdd layer.bdd
       xml.psp layer.psp
       xml.satc layer.satc
-      xml.soil_aliminum layer.soil_aliminum
+      xml.soil_aluminum layer.soil_aluminum
       xml.soil_test_id layer.soil_test_id
       xml.soil_p_initial layer.soil_p_initial
     } # layer xml
@@ -1143,6 +1143,13 @@ class ProjectsController < ApplicationController
         else
           return "field could not be saved"
         end
+      when "climes"
+        p.elements.each do |f|
+          msg = upload_clime_new_version(field.id, f)
+          if msg != "OK"
+            return msg
+          end
+        end
       when "weather"
         msg = upload_weather_new_version(p, field.id)
         if msg != "OK"
@@ -1228,10 +1235,6 @@ class ProjectsController < ApplicationController
           weather.longitude = p.text
         when "weather_file"
           weather.weather_file = p.text
-          if weather.weather_file.include? "uploaded" then
-            #upload_clime_new_version()
-            #weather.weather_file = ""
-          end
         when "way_id"
           weather.way_id = p.text
       end
@@ -1411,6 +1414,22 @@ class ProjectsController < ApplicationController
       end
     end
   end
+
+  def upload_clime_new_version(field_id, node)
+    clime = Clime.new
+    clime.field_id = field_id
+    node.elements.each do |p|
+      case p.name
+        when "daily_weather"
+          clime.daily_weather = p.text
+      end # end case      
+    end   # end node
+    if clime.save
+      return "OK"
+    else
+      return "Weather uploaded record could not be saved"
+    end
+  end  # end def
 
   def upload_soil_new_version(field_id, node)
     soil = Soil.new
@@ -1595,7 +1614,7 @@ class ProjectsController < ApplicationController
         when "satc"
           layer.satc = p.text
         when "soil_aliminum"
-          layer.soil_aliminum = p.text
+          layer.soil_aluminum = p.text
         when "soil_test_id"
           layer.soil_test_id = p.text
         when "soil_p_initial"
