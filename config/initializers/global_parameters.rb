@@ -44,6 +44,7 @@
 #folder for Prism weather, wind, and wp1 files
 	PRISM = 'D:/Weather/weatherFiles/US'
 	PRISM1 = 'D:/Weather/1981-2015'
+	PRISM2018 = "D:/Weather/1981-2017/PRISM From Rewati/Weather"
 	FUTURE = 'D:/Syncplicity/Future_Weather'
 	#PRISM2 = 'E:/Weather/weatherFiles/borrar'
 	WP1 = 'D:/Weather/wp1File'
