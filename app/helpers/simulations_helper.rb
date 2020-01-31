@@ -135,7 +135,11 @@ module SimulationsHelper
           if @field.weather.weather_file.include? "Weather uploaded" then
             apex_string = @field.weather.weather_file
           else
-            apex_string = PRISM1 + "/" + @field.weather.weather_file 
+            if @field.weather.weather_final_year >= 2017 then
+              apex_string = PRISM2018 + "/" + @field.weather.weather_file
+            else
+              apex_string = PRISM1 + "/" + @field.weather.weather_file
+            end
           end
         end    
       end  # case i end 
