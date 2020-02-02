@@ -301,11 +301,12 @@ class LocationsController < ApplicationController
           if (@field.weather_id == nil or @field.weather == nil) then
             #create the weather for this field
             @weather = Weather.new
+            save_prism()
           else
             #update the weather for this field
             @weather = Weather.find(@field.weather_id)
           end #end weather validation
-          save_prism()
+          
           @field.weather_id = @weather.id
           # end
           if @field.save then
@@ -554,10 +555,10 @@ class LocationsController < ApplicationController
         apex_control.control_description_id = c.number
         case apex_control.control_description_id
           when 1
-            if @weather.weather_final_year or @weather.weather_initial_year == nil
+            if @weather.weather_final_year == nil or @weather.weather_initial_year == nil
               apex_control.value = c.default_value
             else
-              apex_control.value = @weather.weather_final_year - @weather.weather_initial_year + 2
+              apex_control.value = @weather.weather_final_year - @weather.weather_initial_year + 1
             end
           when 2
             if @weather.weather_initial_year == nil then

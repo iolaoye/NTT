@@ -1230,7 +1230,7 @@ module ScenariosHelper
 	sql = sql + " ORDER BY distance"
 	station = Station.find_by_sql(sql).first
 	if station != nil
-		return station.file_name + "," + station.initial_year.to_s + "," + station.final_year.to_s
+		return station.file_name + "," + station.initial_year.to_s + "," + (station.final_year + 1).to_s
 	else
 		return "Error saving weather file name"
 	end
