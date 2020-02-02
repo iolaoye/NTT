@@ -49,7 +49,7 @@
                       </tr>
                       <tr><td colspan="2"><tr><td ><label><%= t('location.option2A3')%></label></td></tr>
                       <tr><td colspan="4">
-                          <%= select_tag :stateselect, options_from_collection_for_select(@states, :id, :state_name), :include_blank => "Select State"%>
+                          <%= select_tag :stateselect, options_from_collection_for_select(@states, :id, :state_name), :include_blank => "Select State", :onchange => "findAddress()"%>
                           <input id="lblZoomCounty" type="hidden" />
                           <%= select_tag :countyselect, options_from_collection_for_select(@counties, :id, :county_name), :onchange => "findCounty()"%>
                           <option value="" id="lblZoomToConty"></option>

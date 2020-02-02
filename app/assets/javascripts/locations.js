@@ -502,7 +502,6 @@ function codeLatLngCounty(callback) {
 }
 
 function findAddress(address) {
-
     var addressStr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].text;
     var stateAbr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].value;
     var countiesAll = document.getElementById("countyselect");
@@ -946,17 +945,17 @@ function getBoundsForPoly(poly) {
 
 function findCounty(address) {
     var addressStr = document.getElementById("countyselect").value;
-    var stateAbr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].value;
+    var state = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].text;
+    //var stateAbr = document.getElementById("stateselect")[document.getElementById("stateselect").selectedIndex].value;
 
     if (!address && (addressStr != '')) {
         //var countyState = addressStr.split("-");
         //address = "County of " + addressStr;
         //address = countyState[1].trim() + " County, " + countyState[0];
-        address = document.getElementById("countyselect")[document.getElementById("countyselect").selectedIndex].text
+        address = document.getElementById("countyselect")[document.getElementById("countyselect").selectedIndex].text + " County, " + state
         //address = $("#countyselect")[0].selectedOptions[0].text + " County" + ", " + stateAbr;
     } else
         address = addressStr;
-
     if ((address != '') && geocoder) {
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
