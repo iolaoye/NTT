@@ -1256,18 +1256,26 @@ module ScenariosHelper
     if !(weather_data.include? "Error")
 	    data = weather_data.split(",")
 	    @weather.weather_file = data[0]
+	    if @weather.weather_file == nil then @weather.weather_file = "" end
 	    data[2].slice! "\r\n"
 	    @weather.simulation_final_year = data[2]
+	    if @weather.simulation_final_year == nil then @weather.simulation_final_year=0 end
 	    @weather.weather_final_year = @weather.simulation_final_year
 	    @weather.weather_initial_year = data[1]
+	    if @weather.weather_initial_year == nil then @weather.weather_initial_year == 0 end
 	    @weather.simulation_initial_year = @weather.weather_initial_year + 5
 	    @weather.way_id = 1
+	else
+		if @weather.weather_file == nil then @weather.weather_file = "" end
+		if @weather.simulation_final_year == nil then @weather.simulation_final_year = 0 end
+		if @weather.weather_initial_year == nil then @weather.weather_initial_year = 0 end
+		if @weather.weather_final_year == nil then @weather.weather_final_year = 0 end
+		if @weather.simulation_initial_year == nil then @weather.simulation_initial_year = 0 end
 	end
     if @weather.save
       return "OK"
     else
       retunr t('notices.no_weather_file')
     end
-  end
-  
+  end  
 end

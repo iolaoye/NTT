@@ -542,7 +542,6 @@ class LocationsController < ApplicationController
     end #end for create_layers
   end
 
-  #todo Update years of simulation + initialyear in weather.
   def load_controls()
     apex_controls = ApexControl.where(:project_id => @project.id)
     if apex_controls == [] then
@@ -553,14 +552,30 @@ class LocationsController < ApplicationController
       controls.each do |c|
         apex_control = ApexControl.new
         apex_control.control_description_id = c.number
-        apex_control.value = c.default_value
+        case apex_control.control_description_id
+          when 1
+            if @weather.weather_final_year or @weather.weather_initial_year == nil
+              apex_control.value = c.default_value
+            else
+              apex_control.value = @weather.weather_final_year - @weather.weather_initial_year + 2
+            end
+          when 2
+            if @weather.weather_initial_year == nil then
+              apex_control.value = c.default_value
+            else
+              apex_control.value = @weather.weather_initial_year
+            end
+          else
+            apex_control.value = c.default_value
+        end
+        
         apex_control.project_id = @project.id
-        if apex_control.control_description_id == 1 then
-          apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-        end
-        if apex_control.control_description_id == 2 then
-          apex_control.value = @weather.simulation_initial_year - 5
-        end
+        #if apex_control.control_description_id == 1 then
+        #  apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
+        #end
+        #if apex_control.control_description_id == 2 then
+          #apex_control.value = @weather.simulation_initial_year - 5
+        #end
         apex_control.save
       end # end control all
     end # end if
