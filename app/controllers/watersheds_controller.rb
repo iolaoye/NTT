@@ -188,6 +188,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds/1
   # GET /watersheds/1.json
   def simulate
+    msg = "OK"
     @errors = Array.new
     if (params[:commit].include?("FEM")) then
         msg = simulate_fem

@@ -1,5 +1,7 @@
 
 module SimulationsHelper
+  include ScenariosHelper
+
   PHMIN = 3.5
   PHMAX = 9.0
   OCMIN = 0.0 #change from 0.5 to 0 according to Ali. APEX calculate it if 0.
@@ -1003,65 +1005,56 @@ module SimulationsHelper
   	return msg
   end   # end create_subareas
 
-  def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
-    @last_soil2 = 0
-    last_owner1 = 0
-    i=0
-	  nirr = 0
-    @soils.each do |soil|
-      #create the operation file for this subarea.
-      nirr = create_operations(soil, operation_number)
-      #create the subarea file
-      bmp = Bmp.where(:scenario_id => params[:id]).find_by_bmpsublist_id(15)
-      if (bmp == nil) # todo if contour buffer this need to be different
-        #if !(bmps.CBCWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBBWidth > 0 && _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bmpsInfo.CBCrop > 0) then
-        #addSubareaFile(soil._scenariosInfo(currentScenarioNumber)._subareasInfo, operation_number, last_soil1, last_owner1, @soil_number, nirr, false)
-        #operation number is used to control subprojects. Therefore here is going to be 1.
-        add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)        
-        @soil_number += 1
-        i+=1
-      end
-	  msg = send_file_to_APEX(@subarea_file, "APEX.sub")
-	  return msg
-    end
-
-    if @last_soil2 > 0
-      @last_soil_sub = @last_soil2 - 1
-    else
-      @last_soil_sub = 0
-    end
-    @last_subarea = 0
-
-    #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
-	  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
-    buffer.each do |buf|
-      if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
-        #create the operation file for this subarea.
-        @last_subarea += 1
-        opcsFile.Add(buf.SubareaTitle)
-        opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
-        opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
-        operations = Operation.where(:scenario_id => params[:id])
-        #for Each oper In buf._operationsInfo
-        operations.each do |oper|
-          opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
-        end
-        opcsFile.Add("End " & buf.description)
-	    else
-        i -= 1
-      end
-      add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
-	    i+=1
-    end
-    @last_soil_sub = @last_soil2
-    last_owner = last_owner1
-    #todo check this one.
-    #$last_subarea += _fieldsInfo1(currentFieldNumber)._soilsInfo(i - 1)._scenariosInfo(currentScenarioNumber)._subareasInfo_subarea_info..Iops
-    #print_array_to_file(@subarea_file, "APEX.sub")
-    #msg = send_file_to_APEX(@subarea_file, "APEX.sub")
-    msg = "OK"
-    return msg
-  end  #end method create_subarea1
+  #def create_subareas1(operation_number) # operation_number is used for subprojects as for now it is just 1 - todo
+    #  @last_soil2 = 0
+    #  last_owner1 = 0
+    #  i=0
+  	#  nirr = 0
+    #  @soils.each do |soil|
+    #    #create the operation file for this subarea.
+    #    nirr = create_operations(soil, operation_number)
+    #    #create the subarea file
+    #    bmp = Bmp.where(:scenario_id => params[:id]).find_by_bmpsublist_id(15)
+    #    if (bmp == nil) # todo if contour buffer this need to be different
+    #      add_subarea_file(Subarea.find_by_soil_id_and_scenario_id(soil.id, @scenario.id), operation_number, last_owner1, i, nirr, false, @soils.count)        
+    #      @soil_number += 1
+    #      i+=1
+    #    end
+    #	  msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+    #	  return msg
+    #  end
+    #  if @last_soil2 > 0
+    #    @last_soil_sub = @last_soil2 - 1
+    #  else
+    #    @last_soil_sub = 0
+    #  end
+    #  @last_subarea = 0
+    #  #for Each buf In _fieldsInfo1(currentFieldNumber)._scenariosInfo(currentScenarioNumber)._bufferInfo
+  	#  buffer = Subarea.where("scenario_id = " + @scenario.id.to_s + " AND bmp_id != 'nil' AND bmp_id != 0 AND soil_id = 0")
+    #  buffer.each do |buf|
+    #    if !(buf.subarea_type == "PPDE" || buf.subarea_type == "PPTW" || buf.subarea_type == "AITW" || buf.subarea_type == "CBMain")
+    #      #create the operation file for this subarea.
+    #      @last_subarea += 1
+    #      opcsFile.Add(buf.SubareaTitle)
+    #      opcsFile.Add(".OPC " & buf.SubareaTitle + " file Operation:1  Date: " + @dtNow1)
+    #      opcsFile.Add(buf._operationsInfo(0).LuNumber.ToString.PadLeft(4))
+    #      operations = Operation.where(:scenario_id => params[:id])
+    #      #for Each oper In buf._operationsInfo
+    #      operations.each do |oper|
+    #        opcsFile.Add(sprintf("%3d", oper.year) + sprintf("%3d", oper.month) + sprintf("%3d", oper) + sprintf("%5d", oper.apex_code) + sprintf("%5d", 0) + sprintf("%5d", oper.apex_crop) + sprintf("%5d", oper.subtype) + sprintf("%8.2f", oper.opv1) + sprintf("%8.2f", oper.opv2))
+    #      end
+    #      opcsFile.Add("End " & buf.description)
+  	#    else
+    #      i -= 1
+    #    end
+    #    add_subarea_file(buf, operation_number, last_owner1, i, nirr, true, 0)
+  	#    i+=1
+    #  end
+    #  @last_soil_sub = @last_soil2
+    #  last_owner = last_owner1
+    #  msg = "OK"
+    #  return msg
+  #end  #end method create_subarea1
 
   def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
     j = i + 1
@@ -1086,6 +1079,9 @@ module SimulationsHelper
           else
             _subarea_info.iops = i + 1
           end
+        end
+        if session[:simulation] != "scenario" then
+          _subarea_info.iops = @soil_number + 1
         end
   			sLine += sprintf("%4d", _subarea_info.iops)   #operation
   		end
