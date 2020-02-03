@@ -588,6 +588,7 @@ module SimulationsHelper
         hsg = soil.group
       end
       layers.each do |layer|
+        break if layer_number > 10
         if layer_number == 1
           #validate if this layer is going to be used for Agriculture Lands
           if layer.depth <= 5 && layer.sand == 0 && layer.silt == 0 && layer.organic_matter > 25 && layer.bulk_density < 0.8
