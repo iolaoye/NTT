@@ -1336,7 +1336,7 @@ module SimulationsHelper
           so_new.apex_crop = so.apex_crop
           so_new.activity_id = 2
           so_new.type_id = 1
-          so_new.opv1 = bmp1.dry_manure
+          so_new.opv1 = (bmp1.dry_manure * LBS_TO_KG / AC_TO_HA).round(2)  #kg/ha of fertilizer applied converted from lbs/ac
           so_new.opv2 = 0.00
           so_new.opv3 = 0.00
           so_new.opv4 = 0.00
@@ -1512,9 +1512,6 @@ module SimulationsHelper
               found = true
             end
           end
-          #num_of_depths= @depth_ant.count - 1
-        #else
-          #num_of_depths= 0
         end
 
         if found == false then
