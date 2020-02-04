@@ -1323,14 +1323,37 @@ module SimulationsHelper
       last_op_id = 0
       cc_plt_date = 0
       cc_kill_date = 0
+      current_year = 1  #control the number of years in order to add fertilizer operation if autofertigation BMP present.
       #convert soil_operations active record to hash
+      cc_number = @scenario.operations.last.id
       @soil_operations.each do |so|
+        if current_year == so.year and bmp1.bmpsublist_id == 1 and bmp1.depth == 2 then     #in this case a new record should be added
+          so_new = SoilOperation.new
+          so_new.year = current_year
+          so_new.month = 7
+          so_new.day = 15
+          so_new.apex_operation = 580
+          so_new.apex_crop = so.apex_crop
+          so_new.activity_id = 2
+          so_new.type_id = 1
+          so_new.opv1 = bmp1.dry_manure
+          so_new.opv2 = 0.00
+          so_new.opv3 = 0.00
+          so_new.opv4 = 0.00
+          so_new.opv5 = 0.00
+          so_new.opv6 = 0.00
+          so_new.opv7 = 0.00
+          so_new.bmp_id = bmp1.id
+          cc_number += 1
+          cc_hash[cc_number] = so_new
+          current_year += 1
+        end
         cc_hash[so.id] = so
         last_op_id = so.id
       end
       c_cs = @scenario.operations.where(:activity_id => 1, :subtype_id => 1)  #cover crop operation
       c_cs_count = c_cs.count
-      cc_number = @scenario.operations.last.id
+      #cc_number = @scenario.operations.last.id
       @c_cs = false
       c_cs.each do |bmp| 
         if bmp != nil then
@@ -1553,19 +1576,25 @@ module SimulationsHelper
 		    bmp = Bmp.find_by_scenario_id_and_bmpsublist_id(@scenario.id, 18)
         #divide by 100 to convert percentage to fraction
         org_c = 0
-        if oper.activity_id == 2 then
-          case oper.type_id
+        if operation.activity_id == 2 then
+          case operation.type_id
           when 2 # solid Manure              
             org_c = 0.25               
           when 3  #liquid manure
             org_c = 0.10
           end#          
         end
-		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
-		    else
-			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
-		    end
+        if oper != nil then
+  		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
+  			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
+  		    else
+  			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
+  		    end
+        else
+          if operation.activity_id == 2 && operation.type_id == 1 && operation.apex_operation = 580 then
+            add_fert(1.00, 0.00, 0.00, 0.00, 1, 0, operation.type_id, org_c)
+          end
+        end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
         items[0] = @fert_code
         apex_string += sprintf("%8.2f", operation.opv1) #kg/ha of fertilizer applied

@@ -530,15 +530,17 @@ class BmpsController < ApplicationController
               subarea.fnp4 = 0
               @bmp.dry_manure = 0
             else
-              subarea.fnp4 = params[:bmp_ai][:n_rate].to_f * LBS_TO_KG
+              # 02/03/20. fnp4 and bft
+              subarea.fnp4 = 0
+              #subarea.fnp4 = params[:bmp_ai][:n_rate].to_f * LBS_TO_KG
               @bmp.dry_manure = params[:bmp_ai][:n_rate]
             end
         		if @bmp.depth == 1 then
         			subarea.idf4 = 0.0
         			subarea.bft = 0.0
         		else
-        			subarea.idf4 = 1.0
-        			subarea.bft = 0.8
+        			subarea.idf4 = 0.0
+        			subarea.bft = 0.0
         		end
   			  when "delete"
     				subarea.nirr = 0.0
@@ -551,6 +553,7 @@ class BmpsController < ApplicationController
     				subarea.armx = 0.0
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
+            subarea.fmx = 0.0
 			  end   # end case type
         if !subarea.save then
   			   return "Unable to save value in the subarea file"
@@ -559,71 +562,6 @@ class BmpsController < ApplicationController
     end # end subareas.each
     return "OK"
   end  # end method
-
-### ID: 2
-  def fertigation(type)
-    @soils = Soil.where(:field_id => params[:field_id])
-    @soils.each do |soil|
-      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
-      if subarea != nil then
-        case type
-          when "create", "update"
-            @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
-            case @bmp.irrigation_id
-              when 1
-                subarea.nirr = 1.0
-              when 2, 7, 8
-                subarea.nirr = 2.0
-              when 3
-                subarea.nirr = 5.0
-            end
-            subarea.vimx = 5000
-            subarea.bir = 0.8
-            subarea.iri = params[:bmp_ai][:days]
-            @bmp.days = subarea.iri
-            subarea.bir = params[:bmp_ai][:water_stress_factor]
-            subarea.bir = (100 - subarea.bir) / 100
-            @bmp.water_stress_factor = 1-subarea.bir
-            subarea.efi = 1.0 - params[:bmp_ai][:irrigation_efficiency].to_f
-            @bmp.irrigation_efficiency = params[:bmp_ai][:irrigation_efficiency].to_f
-            subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-            @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
-            subarea.fdsf = 0
-            @bmp.depth = params[:bmp_cb1]
-            if params[:bmp_ai][:safety_factor] == nil then
-            	subarea.fdsf = 0
-            else
-            	subarea.fdsf = params[:bmp_ai][:safety_factor]
-            end
-            if params[:bmp_ai][:dry_manure] == nil then
-              subarea.fnp4 = 0
-            else
-              subarea.fnp4 = params[:bmp_ai][:dry_manure].to_f * LBS_TO_KG
-            end
-            @bmp.safety_factor = subarea.fdsf
-            subarea.idf4 = 1.0
-            subarea.bft = 0.8
-          when "delete"
-            subarea.nirr = 0.0
-            subarea.vimx = 0.0
-            subarea.bir = 0.0
-            subarea.armx = 0.0
-            subarea.iri = 0.0
-            subarea.bir = 0.0
-            subarea.efi = 0.0
-            subarea.armx = 0.0
-            subarea.fdsf = 0.0
-            subarea.fnp4 = 0.0
-            if @bmp.bmpsublist_id == 2
-              subarea.idf4 = 0.0
-              subarea.bft = 0.0
-            end
-        end
-        if !subarea.save then return "Unable to save value in the subarea file" end
-	  end #end if subarea !nil
-    end # end soils.each
-    return "OK"
-  end # end method
 
 ### ID: 3
   def tile_drain(type)

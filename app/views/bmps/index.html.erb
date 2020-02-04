@@ -133,9 +133,9 @@
               <% else %>
                 <td class="field indent2" id = "td_n_rate" colspan="2">
               <% end %>
-               <%= label :days, t('operation.application_rate') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
-               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
-               <%= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
+               <%= label :days, t('result.annual') + " " + t('operation.application_rate') + " " + t('activerecord.attributes.apex.for') + " " + t('bmp.autofertigation') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
+               <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :step => 'any', :min => 1.00, :class => "gvTitleStyleNumber" %>
+               <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
           <% when 3 %>
