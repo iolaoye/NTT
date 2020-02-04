@@ -106,6 +106,7 @@ en:
         site:
           y_lat: "Ylat"
           x_log: "Xlog"
+        for: "for"
   date:
     abbr_day_names:
     - Sun
