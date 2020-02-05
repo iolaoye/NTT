@@ -18,20 +18,6 @@ module ProjectsHelper
     link_to "#{title} <span class='#{icon}'></span>".html_safe, {column: title, direction: direction}
   end
 
-  ######################### Duplicate charts #################################################
-  def duplicate_chart(chart_id, new_field_id)
-	#1. copy chart to new result
-		chart = Chart.find(chart_id)   #1. find chart to copy
-		new_chart = chart.dup
-		new_chart.field_id = new_field_id
-		new_chart.scenario_id = @new_scenario_id
-		if new_chart.save
-			"OK"
-		else
-			"Error Saving charts"
-		end # end if chart saved
-  end   # end duplicate location
-
   ######################### Duplicate results #################################################
   def duplicate_result(result)
 	#1. copy result to new result
@@ -96,13 +82,13 @@ module ProjectsHelper
   def duplicate_field(field_id, new_location_id)
 	#1. copy field to new field
 	field = Field.find(field_id)   #1. find field to copy
-  field_id = Hash.new
+  	field_id = Hash.new
 	new_field = field.dup
 	new_field.location_id = new_location_id
 	if new_field.save
-    field_id = Hash.new
-    field_id[field.id] = new_field.id
-    @field_ids.push(field_id)
+	    field_id = Hash.new
+	    field_id[field.id] = new_field.id
+	    @field_ids.push(field_id)
 		#duplicate site
 		new_site = field.site.dup
 		new_site.field_id = new_field.id
@@ -113,22 +99,8 @@ module ProjectsHelper
 			duplicate_soil(s.id, new_field.id)
 		end
 		duplicate_weather(field.id, new_field.id)
-		# duplicate results when soli_id => 0. totals
-		#results = field.results.where(:field_id => field.id, :soil_id => 0)
-		#results.each do |r|
-			#duplicate_result(r.id, new_field.id)
-		#end
-		# duplicate charts when soli_id => 0. totals
-		#charts = field.charts.where(:field_id => field.id, :soil_id => 0)
-		#charts.each do |c|
-			#duplicate_chart(c.id, new_field.id)
-		#end
 		field.scenarios.each do |s|
 			duplicate_scenario(s.id, "", new_field.id)
-			#charts = field.charts.where(:field_id => field.id, :scenario_id => s.id)
-			#charts.each do |c|
-				#duplicate_chart(c.id, new_field.id)
-			#end
 		end   # end scnearios.each
 		"OK"
 	else
@@ -208,60 +180,6 @@ module ProjectsHelper
 	end
 	if !new_operation.save
 		"Error saving operation"
-	end
-  end
-
-  ######################### Duplicate a bmp #################################################
-  def duplicate_bmp(bmp_id, name)
-	bmp = Bmp.find(bmp_id)
-	new_bmp = bmp.dup
-	new_bmp.scenario_id = @new_scenario_id
-	if new_bmp.save
-		# 4.1 copy subareas that belonge to a BMP
-		subareas = Subarea.where(:bmp_id => bmp.id)
-		if !(subareas.blank? || subareas == nil) then
-			subareas.each do |subarea|
-				new = subarea.dup
-				new.scenario_id = new_scenario.id
-				new.bmp_id = new_bmp.id
-				if !new.save
-					#todo send error message
-				else
-					#todo send error message
-				end
-			end    # end subareas.each
-		end # end if subareas
-
-		# 4.2 copy soil_operations that belonge to a BMP
-		soil_operations = SoilOperation.where(:bmp_id => bmp.id)
-		if !(soil_operations.blank? || soil_operations == nil) then
-			soil_operations.each do |soil_operation|
-				new = soil_operation.dup
-				new.scenario_id = new_scenario.id
-				new.bmp_id = new_bmp.id
-				if !new.save
-					return "Error Saving soil operation"
-				else
-					"OK"
-				end
-			end    # end subareas.each
-		end # end if subareas
-
-		# 4.3 copy climates that belonge to a BMP
-		climates = Climate.where(:bmp_id => bmp.id)
-		if !(climates.blank? || climates == nil) then
-			climates.each do |climate|
-				new = climate.dup
-				new.bmp_id = bmp.id
-				if !new.save
-					return "Error Saving climates"
-				else
-					"OK"
-				end
-			end    # end climate.each
-		end # end if climate
-	else
-		"Error saving bmp"
 	end
   end
 
