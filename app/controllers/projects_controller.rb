@@ -3546,6 +3546,7 @@ class ProjectsController < ApplicationController
     watershed = Watershed.new
     watershed.location_id = location_id
     node.elements.each do |p|
+      debugger
       case p.name
       when "name"
         watershed.name = p.text
@@ -3589,6 +3590,7 @@ class ProjectsController < ApplicationController
     watershed_scenario = WatershedScenario.new
     watershed_scenario.watershed_id = watershed_id
     node.elements.each do |p|
+      debugger
       case p.name
         when "field_id"
           @field_ids.each do |field_id|
