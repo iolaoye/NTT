@@ -1327,26 +1327,28 @@ module SimulationsHelper
       #convert soil_operations active record to hash
       cc_number = @scenario.operations.last.id
       @soil_operations.each do |so|
-        if current_year == so.year and bmp1.bmpsublist_id == 1 and bmp1.depth == 2 then     #in this case a new record should be added
-          so_new = SoilOperation.new
-          so_new.year = current_year
-          so_new.month = 7
-          so_new.day = 15
-          so_new.apex_operation = 580
-          so_new.apex_crop = so.apex_crop
-          so_new.activity_id = 2
-          so_new.type_id = 1
-          so_new.opv1 = (bmp1.dry_manure * LBS_TO_KG / AC_TO_HA).round(2)  #kg/ha of fertilizer applied converted from lbs/ac
-          so_new.opv2 = 0.00
-          so_new.opv3 = 0.00
-          so_new.opv4 = 0.00
-          so_new.opv5 = 0.00
-          so_new.opv6 = 0.00
-          so_new.opv7 = 0.00
-          so_new.bmp_id = bmp1.id
-          cc_number += 1
-          cc_hash[cc_number] = so_new
-          current_year += 1
+        if bmp1 != nil then
+          if current_year == so.year and bmp1.bmpsublist_id == 1 and bmp1.depth == 2 then     #in this case a new record should be added
+            so_new = SoilOperation.new
+            so_new.year = current_year
+            so_new.month = 7
+            so_new.day = 15
+            so_new.apex_operation = 580
+            so_new.apex_crop = so.apex_crop
+            so_new.activity_id = 2
+            so_new.type_id = 1
+            so_new.opv1 = (bmp1.dry_manure * LBS_TO_KG / AC_TO_HA).round(2)  #kg/ha of fertilizer applied converted from lbs/ac
+            so_new.opv2 = 0.00
+            so_new.opv3 = 0.00
+            so_new.opv4 = 0.00
+            so_new.opv5 = 0.00
+            so_new.opv6 = 0.00
+            so_new.opv7 = 0.00
+            so_new.bmp_id = bmp1.id
+            cc_number += 1
+            cc_hash[cc_number] = so_new
+            current_year += 1
+          end
         end
         cc_hash[so.id] = so
         last_op_id = so.id
