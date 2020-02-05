@@ -1986,10 +1986,13 @@ class ProjectsController < ApplicationController
           if p.text == "0"
             subarea.soil_id = 0
           else
-            if Soil.find_by_soil_id_old(p.text) == nil then
-              return "OK"
+            soil = Soil.find_by_soil_id_old(p.text)
+            if soil == nil then
+              next
+            else
+              subarea.soil_id = soil.id
+              soil.soil_id_old = 0
             end
-            subarea.soil_id = Soil.find_by_soil_id_old(p.text).id
           end
         when "number"
           subarea.number = p.text
