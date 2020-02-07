@@ -39,21 +39,24 @@ class AplcatParametersController < ApplicationController
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
 	@aplcat = Hash.new
-  @aplcat[t('aplcat.animal_growth_parameters')] = 1
-  @aplcat[t('aplcat.animal_manure_parameters')] = 2
-  @aplcat[t('aplcat.animal_parameters')] = 3
-  @aplcat[t('aplcat.animal_transport_input')] = 4
-  @aplcat[t('aplcat.co2_balance_input')] = 5
-  @aplcat[t('aplcat.environmental_parameters')] = 6
-  @aplcat[t('aplcat.forage_quantity_input')] = 7
-  @aplcat[t('aplcat.greenhouse_parameters')] = 8
-  @aplcat[t('aplcat.other_parameters')] = 9
-  @aplcat[t('aplcat.scenario_file')] = 10
-  @aplcat[t('aplcat.secondary_emissions_input')] = 11
-  @aplcat[t('aplcat.simulation_methods')] = 12
-  @aplcat[t('aplcat.simulation_parameters')] = 13
-  @aplcat[t('aplcat.divv_11')] = 14 #water estimation parameters
-	@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
+  #Commented sections are removed from the NTT interface for now.
+
+  #@aplcat[t('aplcat.animal_growth_parameters')] = 1
+  #@aplcat[t('aplcat.animal_manure_parameters')] = 2
+  @aplcat[t('aplcat.animal_parameters')] = 1
+  @aplcat[t('aplcat.animal_transport_input')] = 2
+  @aplcat[t('aplcat.co2_balance_input')] = 3
+  #@aplcat[t('aplcat.environmental_parameters')] = 6
+  @aplcat[t('aplcat.forage_quantity_input')] = 4
+  #@aplcat[t('aplcat.greenhouse_parameters')] = 8
+  #@aplcat[t('aplcat.other_parameters')] = 9
+  @aplcat[t('aplcat.runparm_aplcat_parameters')] = 5
+  @aplcat[t('aplcat.scenario_file')] = 6
+  @aplcat[t('aplcat.secondary_emissions_input')] = 7
+  @aplcat[t('aplcat.simulation_methods')] = 8
+  @aplcat[t('aplcat.simulation_parameters')] = 9
+  @aplcat[t('aplcat.divv_11')] = 10 #water estimation parameters
+	#@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
 
 	add_breadcrumb 'Aplcat'
   	if params[:id] == nil then
@@ -63,34 +66,36 @@ class AplcatParametersController < ApplicationController
 	end
 
 	case @type
-	when 2
-      add_breadcrumb 'Animal Growth and Nutrition Parameters'
+  when 2
+      add_breadcrumb 'Animal Transport Input'
 	when 3
-	  add_breadcrumb 'Animal Manure Parameters'
+	  add_breadcrumb 'CO2 Balance Input'
 	when 4
-	  add_breadcrumb 'Environmental Parameters'
+	  add_breadcrumb 'Forage Quantity Input'
 	when 5
-	  add_breadcrumb 'Greenhouse Parameters'
+    add_breadcrumb 'RunParm APLCAT Parametes'
 	when 6
-	  add_breadcrumb 'Water use and Pumping Parameters'
-	when 7
-	  add_breadcrumb 'Other Parameters'
-  when 8
-    add_breadcrumb 'Simulation Parameters'
-  when 9
-    add_breadcrumb 'Simulation Methods'
-  when 10
     add_breadcrumb 'Scenario File'
-  when 11
-    add_breadcrumb 'Water Estimation Parameters'
-  when 12
-    add_breadcrumb 'Forage Quantity Input'
-  when 13
-    add_breadcrumb 'Animal Transport Input'
-  when 14
-    add_breadcrumb 'CO2 Balance Input'
-  when 15
+	when 7
     add_breadcrumb 'Secondary Emissions Input'
+  when 8
+    add_breadcrumb 'Simulation Methods'
+  when 9
+    add_breadcrumb 'Simulation Parameters'
+  when 10
+    add_breadcrumb 'Water Estimation Parameters'
+  #when 10
+    #add_breadcrumb 'Scenario File'
+  #when 11
+    #add_breadcrumb 'Water Estimation Parameters'
+  #when 12
+    #add_breadcrumb 'Forage Quantity Input'
+  #when 13
+    #add_breadcrumb 'Animal Transport Input'
+  #when 14
+    #add_breadcrumb 'CO2 Balance Input'
+  #when 15
+    #add_breadcrumb 'Secondary Emissions Input'
 	else
 	  add_breadcrumb 'Animal Parameters'
 	end

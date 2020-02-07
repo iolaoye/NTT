@@ -32,6 +32,9 @@
     </tr>
 	  </table>
   </div>
+
+
+  <% if false %>
   <div id="div_1">
     <%= field_set_tag t('aplcat.animal_growth_parameters') , class:'fieldset' do %>
   	  <div class="field">
@@ -117,8 +120,9 @@
     </div>
 	<% end %>
   </div>
+  <% end %>
 
-  <div style='display:none' id="div_3">
+  <div id="div_1">
     <%= field_set_tag t('aplcat.animal_parameters'), class:'fieldset' do %>
 	  <div class="field">
 		<%=  t('aplcat.noc') %>
@@ -203,7 +207,7 @@
 	<%end%>
   </div>
 
-  <div style='display:none' id="div_4">
+  <div style='display:none' id="div_2">
     <%= field_set_tag t('aplcat.animal_transport_input'), class:'fieldset' do %>
     <div class="field" id="numbers">
       <%=  t('aplcat.totaltrip') %>
@@ -522,7 +526,7 @@
   <%end%>
   </div>
 
-  <div style='display:none' id="div_5">
+  <div style='display:none' id="div_3">
     <div class="field">
     <%= field_set_tag t('aplcat.co2_balance_input'), class:'fieldset' do %>
     <%= t('aplcat.selectp') %>
@@ -641,6 +645,7 @@
     </div>
   </div>
 
+  <% if false %>
   <div style='display:none' id="div_6">
     <%= field_set_tag t('aplcat.environmental_parameters') , class:'fieldset' do %>
 	  <div class="field">
@@ -653,8 +658,9 @@
 	  </div>
 	<% end %>
   </div>
+<% end %>
 
-  <div style='display:none' id="div_7">
+  <div style='display:none' id="div_4">
     <%= field_set_tag t('aplcat.forage_quantity_input'), class:'fieldset' do %>
     <div class="field">
     <%=  t('aplcat.forage_id_html') %>
@@ -747,6 +753,33 @@
     <% end %>
   </div>
 
+
+  <div style='display:none' id="div_5">
+    <%= field_set_tag t('aplcat.runparm_aplcat_parameters'), class:'fieldset' do %>
+    <div class="field">
+      <%= t('aplcat.running_drinking_water') %><br>
+      <%= radio_button_tag :running_drinking_water, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+      <%= radio_button_tag :running_drinking_water, "2"%> <%= t('graze.no') %><br>
+    </div>
+    <div class="field">
+      <%= t('aplcat.running_complete_stocker') %><br>
+      <%= radio_button_tag :running_complete_stocker, "1"%> <%= t('graze.yes') %><br>
+      <%= radio_button_tag :running_complete_stocker, "2", :checked => "checked"%> <%= t('graze.no') %><br>
+    </div>
+    <div class="field">
+      <%= t('aplcat.running_ghg') %><br>
+      <%= radio_button_tag :running_ghg, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+      <%= radio_button_tag :running_ghg, "2"%> <%= t('graze.no') %><br>
+    </div>
+    <div class="field">
+      <%= t('aplcat.running_transportation') %><br>
+      <%= radio_button_tag :running_transportation, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+      <%= radio_button_tag :running_transportation, "2"%> <%= t('graze.no') %><br>
+    </div>
+  <% end %>
+  </div>
+
+  <% if false %>
   <div style='display:none' id="div_8">
     <%= field_set_tag t('aplcat.greenhouse_parameters') , class:'fieldset' do %>
 	  <div class="field">
@@ -796,8 +829,9 @@
   </div>
 <% end %>
 </div>
+<% end %>
 
-<div style='display:none' id="div_10">
+<div style='display:none' id="div_6">
   <%= field_set_tag t('aplcat.scenario_file'), class:'fieldset' do %>
   <table>
     <thread>
@@ -852,11 +886,10 @@
   </th>
   </tr>
 </table>
-  </thread>
   <%end%>
   </div>
 
-  <div style='display:none' id="div_11">
+  <div style='display:none' id="div_7">
     <div class="field">
     <%= field_set_tag t('aplcat.secondary_emissions_input'), class:'fieldset' do %>
     <b><%= t("Engine related parameters for estimation of fuel consumption:") %></b><br><br>
@@ -1011,7 +1044,7 @@
   </div>
 </div>
 
-<div style='display:none' id="div_12">
+<div style='display:none' id="div_8">
   <%= field_set_tag t('aplcat.simulation_methods'), class:'fieldset' do %>
   <div class="field">
     <%= t('aplcat.mm_type') %><br>
@@ -1051,7 +1084,7 @@
 <%end%>
   </div>
 
-  <div style='display:none' id="div_13">
+  <div style='display:none' id="div_9">
     <%= field_set_tag t('aplcat.simulation_parameters'), class:'fieldset' do %>
     <div class="field">
 		<%=  t('aplcat.mrgauh') %>
@@ -1148,7 +1181,7 @@
 <% end %>
   </div>
 
-    <div style='display:none' id="div_14">
+    <div style='display:none' id="div_10">
       <%= field_set_tag t('aplcat.divv_11'), class:'fieldset' do %>
       <div class="field">
         <%=  t('aplcat.drinkg') %>
@@ -1287,6 +1320,7 @@
   <% end %>
     </div>
 
+    <% if false %>
     <div style='display:none' id="div_15">
       <%= field_set_tag t('aplcat.water_use_pumping_parameters'), class:'fieldset' do %>
   	  <div class="field">
@@ -1315,6 +1349,7 @@
   	  </div>
   	<% end %>
   </div>
+<% end %>
 
   <div class="actions">
     <%= hidden_field_tag(:type, @type) %>
@@ -1327,7 +1362,7 @@
 <script>
 	function show_div() {
 	    var div_id = ""
-		for(i=1; i<= 15; i++) {
+		for(i=1; i<= 10; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}
