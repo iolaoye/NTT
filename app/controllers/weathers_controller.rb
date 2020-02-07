@@ -10,8 +10,6 @@ include ScenariosHelper
     @weather.longitude = params[:weather][:longitude]
     weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
     if weather_data.include? "Error" then return "Error Saving coordinates" end
-
-    #weather_data = send_file_to_APEX(@weather.latitude.to_s + "|" + @weather.longitude.to_s, "Weather_file")
     data = weather_data.split(",")
     @weather.weather_file = data[0]
     data[2].slice! "\r\n"
@@ -32,8 +30,6 @@ include ScenariosHelper
 # GET /weathers/1.json
   def save_simulation
     @weather = Weather.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     @weather.simulation_initial_year = params[:weather][:simulation_initial_year]
     @weather.simulation_final_year = params[:weather][:simulation_final_year]
     apex_control1 = @project.apex_controls.find_by_control_description_id(1)
@@ -62,7 +58,6 @@ include ScenariosHelper
 # GET /weathers.json
   def index
     @weather = Weather.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @weathers }
@@ -74,8 +69,6 @@ include ScenariosHelper
 # GET /weathers/1.json
   def show
     @weather = Weather.find_by_field_id(params[:field_id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     if !(@weather == :nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -104,11 +97,7 @@ include ScenariosHelper
 # GET /weathers/1/edit
   def edit
     @weather = Weather.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    
-	
-	add_breadcrumb t('menu.weather')
+	  add_breadcrumb t('menu.weather')
     if !(@weather == nil) # no empty array
       if (@weather.way_id == nil)
         @way = ""
@@ -123,8 +112,6 @@ include ScenariosHelper
       @weather.simulation_final_year = 0
       @weather.weather_initial_year = 0
       @weather.weather_final_year = 0
-      #@weather.longitude = 0
-      #@weather.latitude = 0
       @weather.weather_file = ""
       @weather.save
     end
@@ -135,7 +122,6 @@ include ScenariosHelper
 # POST /weathers.json
   def create
     @weather = Weather.new(weather_params)
-
     respond_to do |format|
       if @weather.save
         format.html { redirect_to @weather, notice: t('models.weather') + " " + t('general.success') }
@@ -152,14 +138,12 @@ include ScenariosHelper
 # PATCH/PUT /weathers/1.json
   def update
     @weather = Weather.find(params[:id])
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
     if (params[:weather][:way_id] == "2")
       if params[:weather][:weather_file] == nil
-		if @weather.weather_file == nil || @weather.weather_file == ""
-			redirect_to edit_project_field_weather_path(@project, @field)
-			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
-		end
+    		if @weather.weather_file == nil || @weather.weather_file == ""
+    			redirect_to edit_project_field_weather_path(@project, @field)
+    			flash[:info] = t('general.please') + " " + t('general.select') + " " + t('models.file')
+    		end
       else
         @weather.way_id = 2
 		    msg = upload_weather
@@ -213,13 +197,8 @@ include ScenariosHelper
 ########################################### UPLOAD weather FILE IN TEXT FORMAT ##################
   def upload_weather
     msg = "Error loading file"
-    #name = params[:weather][:weather_file].original_filename
     name = "(Weather uploaded - uploading a new one will replace the current one)"
     # create the file path
-    #path = File.join(OWN, name)
-    # open the weather file for writing.
-    #weather_file = open(path, "w")
-    #File.open(path, "w") { |f| f.write(params[:weather][:weather_file].read) } 
     original_data = params[:weather][:weather_file].read
     input_file = original_data.split(/\r\n/)
     if input_file.count == 1 then 
@@ -230,7 +209,6 @@ include ScenariosHelper
     end
     i=0
     data = ""
-    #File.open(path, "r").each_line do |line|
     Clime.where(:field_id => @field.id).delete_all
     input_file.each do |line|
       #data = line.split(/\r\n/)
@@ -276,33 +254,19 @@ include ScenariosHelper
       daily_clime.field_id = @field.id
       daily_clime.daily_weather = "  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*"
       daily_clime.save
-      #weather_file.write("  " + year + month + day + sr + tmax + tmin + pcp + rh + ws + "*")
     end  # end do file.open
-  	#weather_file.close
-    #weather_file = open(path, "r")
-    #original_data = weather_file.read
-    #changed instead the file is going too be save in a table link to the field.
-
-    #client = Savon.client(wsdl: URL_SoilsInfo)
-    ###### create control, param, site, and weather files ########
-    #response = client.call(:apex_files, message: {"fileName" => "UploadWeather", "data" => name, "parm" => "", "site" => "", "wth" => original_data, "session_id" => session[:session_id]})
-    #if response.body[:apex_files_response][:apex_files_result] == "created" then
-      #verify that there are more than 5 years of weather period.
-      if @weather.simulation_initial_year >= @weather.weather_final_year then
-        @weather.simulation_initial_year = @weather.weather_initial_year
-        @weather.weather_initial_year -= 5 
-      end
-      @weather.weather_file = name
-      @weather.way_id = 2
-      @weather.save
-      if @weather.save then
-        return "OK"
-      else
-        return msg
-      end
-    #else
-      #return response.body[:apex_files_response][:apex_files_result]
-    #end
+    if @weather.simulation_initial_year >= @weather.weather_final_year then
+      @weather.simulation_initial_year = @weather.weather_initial_year
+      @weather.weather_initial_year -= 5 
+    end
+    @weather.weather_file = name
+    @weather.way_id = 2
+    @weather.save
+    if @weather.save then
+      return "OK"
+    else
+      return msg
+    end
     return
   end
   
