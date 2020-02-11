@@ -822,7 +822,7 @@ class ScenariosController < ApplicationController
 			aplcat.save
 		end
 	    msg = send_file_to_APEX("APLCAT", "APLCAT")  #this operation will create APLCAT+session folder from APLCAT folder
-      
+
           apex_string = "Animal Parameters" + "\n"
           apex_string += "\n"		# create string for the CowCalfProductionData.txt file
       		apex_string += aplcat.noc.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
@@ -1567,35 +1567,35 @@ class ScenariosController < ApplicationController
           #***Saved for future references
 
           #input file for APLCAT Results
-            apex_string += "Calf" + "\t" + "Repl_hef" + "\t" + "FC_hef" + "\t" + "Cow" + "\t" + "Bull" + "|" + "Calf" + "\t" + "Repl_hef" + "\t" + "FC_hef" + "\t" + "Cow" + "\t" + "Bull" + "\t" + "Results per animal" + "\n"
-            apex_string = "\n"
-            apex_string = "Animal growth Resuls" + "\n"
-            apex_string += aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "|" + aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "\t" + "Animal weights (lb | kg)" + "\n"
-            apex_string = "\n"
-            apex_string = "Feed Intake Rates" + "\n"
-            apex_string += aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "|" + aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "\t" + "Dry Matter Intake ('kg',daily | annual)" + "\n"
-            apex_string += aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "|" + aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "\t" + "Gross Energy Intake ('daily',Mcal | MJ)" + "\n"
-            apex_string = "\n"
-            apex_string = "Water Intake Results" + "\n"
-            apex_string += aplcatresult.calf_wi.to_s + "\t" + aplcatresult.rh_wi.to_s + "\t" + aplcatresult.fch_wi.to_s + "\t" + aplcatresult.cow_wi.to_s + "\t" + aplcatresult.bull_wi.to_s + "|" + aplcatresult.calf_wi.to_s + "\t" + aplcatresult.rh_wi.to_s + "\t" + aplcatresult.fch_wi.to_s + "\t" + aplcatresult.cow_wi.to_s + "\t" + aplcatresult.bull_wi.to_s + "\t" + "Water Intake ('L/year',Emb_feed | drinking)" + "\n"
-            apex_string = "\n"
-            apex_string = "Manure Excretion Results" + "\n"
-            apex_string += aplcatresult.calf_sme.to_s + "\t" + aplcatresult.rh_sme.to_s + "\t" + aplcatresult.fch_sme.to_s + "\t" + aplcatresult.cow_sme.to_s + "\t" + aplcatresult.bull_sme.to_s + "|" + aplcatresult.calf_sme.to_s + "\t" + aplcatresult.rh_sme.to_s + "\t" + aplcatresult.fch_sme.to_s + "\t" + aplcatresult.cow_sme.to_s + "\t" + aplcatresult.bull_sme.to_s + "\t" + "Solid manure excr. ('kg/year',manu | manu_N)" + "\n"
-            apex_string = "\n"
-            apex_string = "Nitrogen Balance Results" + "\n"
-            apex_string += aplcatresult.calf_ni.to_s + "\t" + aplcatresult.rh_ni.to_s + "\t" + aplcatresult.fch_ni.to_s + "\t" + aplcatresult.cow_ni.to_s + "\t" + aplcatresult.bull_ni.to_s + "|" + aplcatresult.calf_ni.to_s + "\t" + aplcatresult.rh_ni.to_s + "\t" + aplcatresult.fch_ni.to_s + "\t" + aplcatresult.cow_ni.to_s + "\t" + aplcatresult.bull_ni.to_s + "\t" + "Nitrogen Intake (g/day | kg/year)" + "\n"
-            apex_string += aplcatresult.calf_tne.to_s + "\t" + aplcatresult.rh_tne.to_s + "\t" + aplcatresult.fch_tne.to_s + "\t" + aplcatresult.cow_tne.to_s + "\t" + aplcatresult.bull_tne.to_s + "|" + aplcatresult.calf_tne.to_s + "\t" + aplcatresult.rh_tne.to_s + "\t" + aplcatresult.fch_tne.to_s + "\t" + aplcatresult.cow_tne.to_s + "\t" + aplcatresult.bull_tne.to_s + "\t" + "Total Nitrogen excretion (g/day | kg/year)" + "\n"
-            apex_string += aplcatresult.calf_tnr.to_s + "\t" + aplcatresult.rh_tnr.to_s + "\t" + aplcatresult.fch_tnr.to_s + "\t" + aplcatresult.cow_tnr.to_s + "\t" + aplcatresult.bull_tnr.to_s + "|" + aplcatresult.calf_tnr.to_s + "\t" + aplcatresult.rh_tnr.to_s + "\t" + aplcatresult.fch_tnr.to_s + "\t" + aplcatresult.cow_tnr.to_s + "\t" + aplcatresult.bull_tnr.to_s + "\t" + "Total Nitrogen retained (g/day | kg/year)" + "\n"
-            apex_string += aplcatresult.calf_fne.to_s + "\t" + aplcatresult.rh_fne.to_s + "\t" + aplcatresult.fch_fne.to_s + "\t" + aplcatresult.cow_fne.to_s + "\t" + aplcatresult.bull_fne.to_s + "|" + aplcatresult.calf_fne.to_s + "\t" + aplcatresult.rh_fne.to_s + "\t" + aplcatresult.fch_fne.to_s + "\t" + aplcatresult.cow_fne.to_s + "\t" + aplcatresult.bull_fne.to_s + "\t" + "Fecal Nitrogen excretion (g/day | kg/year)" + "\n"
-            apex_string += aplcatresult.calf_une.to_s + "\t" + aplcatresult.rh_une.to_s + "\t" + aplcatresult.fch_une.to_s + "\t" + aplcatresult.cow_une.to_s + "\t" + aplcatresult.bull_une.to_s + "|" + aplcatresult.calf_une.to_s + "\t" + aplcatresult.rh_une.to_s + "\t" + aplcatresult.fch_une.to_s + "\t" + aplcatresult.cow_une.to_s + "\t" + aplcatresult.bull_une.to_s + "\t" + "Urine Nitrogen excretion (g/day | kg/year)" + "\n"
-            apex_string = "\n"
-            apex_string = "Greenhouse Gas Emission" + "\n"
-            apex_string += aplcatresult.calf_eme.to_s + "\t" + aplcatresult.rh_eme.to_s + "\t" + aplcatresult.fch_eme.to_s + "\t" + aplcatresult.cow_eme.to_s + "\t" + aplcatresult.bull_eme.to_s + "|" + aplcatresult.calf_eme.to_s + "\t" + aplcatresult.rh_eme.to_s + "\t" + aplcatresult.fch_eme.to_s + "\t" + aplcatresult.cow_eme.to_s + "\t" + aplcatresult.bull_eme.to_s + "\t" + "AEnteric methane emission ('daily', g | Mcal)" + "\n"
-            apex_string += aplcatresult.calf_mme.to_s + "\t" + aplcatresult.rh_mme.to_s + "\t" + aplcatresult.fch_mme.to_s + "\t" + aplcatresult.cow_mme.to_s + "\t" + aplcatresult.bull_mme.to_s + "|" + aplcatresult.calf_mme.to_s + "\t" + aplcatresult.rh_mme.to_s + "\t" + aplcatresult.fch_mme.to_s + "\t" + aplcatresult.cow_mme.to_s + "\t" + aplcatresult.bull_mme.to_s + "\t" + "Manure methane emission (g/day | kg/year)" + "\n"
-            apex_string += "\n"
+            #apex_string += "Calf" + "\t" + "Repl_hef" + "\t" + "FC_hef" + "\t" + "Cow" + "\t" + "Bull" + "|" + "Calf" + "\t" + "Repl_hef" + "\t" + "FC_hef" + "\t" + "Cow" + "\t" + "Bull" + "\t" + "Results per animal" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Animal growth Resuls" + "\n"
+            #apex_string += aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "|" + aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "\t" + "Animal weights (lb | kg)" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Feed Intake Rates" + "\n"
+            #apex_string += aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "|" + aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "\t" + "Dry Matter Intake ('kg',daily | annual)" + "\n"
+            #apex_string += aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "|" + aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "\t" + "Gross Energy Intake ('daily',Mcal | MJ)" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Water Intake Results" + "\n"
+            #apex_string += aplcatresult.calf_wi.to_s + "\t" + aplcatresult.rh_wi.to_s + "\t" + aplcatresult.fch_wi.to_s + "\t" + aplcatresult.cow_wi.to_s + "\t" + aplcatresult.bull_wi.to_s + "|" + aplcatresult.calf_wi.to_s + "\t" + aplcatresult.rh_wi.to_s + "\t" + aplcatresult.fch_wi.to_s + "\t" + aplcatresult.cow_wi.to_s + "\t" + aplcatresult.bull_wi.to_s + "\t" + "Water Intake ('L/year',Emb_feed | drinking)" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Manure Excretion Results" + "\n"
+            #apex_string += aplcatresult.calf_sme.to_s + "\t" + aplcatresult.rh_sme.to_s + "\t" + aplcatresult.fch_sme.to_s + "\t" + aplcatresult.cow_sme.to_s + "\t" + aplcatresult.bull_sme.to_s + "|" + aplcatresult.calf_sme.to_s + "\t" + aplcatresult.rh_sme.to_s + "\t" + aplcatresult.fch_sme.to_s + "\t" + aplcatresult.cow_sme.to_s + "\t" + aplcatresult.bull_sme.to_s + "\t" + "Solid manure excr. ('kg/year',manu | manu_N)" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Nitrogen Balance Results" + "\n"
+            #apex_string += aplcatresult.calf_ni.to_s + "\t" + aplcatresult.rh_ni.to_s + "\t" + aplcatresult.fch_ni.to_s + "\t" + aplcatresult.cow_ni.to_s + "\t" + aplcatresult.bull_ni.to_s + "|" + aplcatresult.calf_ni.to_s + "\t" + aplcatresult.rh_ni.to_s + "\t" + aplcatresult.fch_ni.to_s + "\t" + aplcatresult.cow_ni.to_s + "\t" + aplcatresult.bull_ni.to_s + "\t" + "Nitrogen Intake (g/day | kg/year)" + "\n"
+            #apex_string += aplcatresult.calf_tne.to_s + "\t" + aplcatresult.rh_tne.to_s + "\t" + aplcatresult.fch_tne.to_s + "\t" + aplcatresult.cow_tne.to_s + "\t" + aplcatresult.bull_tne.to_s + "|" + aplcatresult.calf_tne.to_s + "\t" + aplcatresult.rh_tne.to_s + "\t" + aplcatresult.fch_tne.to_s + "\t" + aplcatresult.cow_tne.to_s + "\t" + aplcatresult.bull_tne.to_s + "\t" + "Total Nitrogen excretion (g/day | kg/year)" + "\n"
+            #apex_string += aplcatresult.calf_tnr.to_s + "\t" + aplcatresult.rh_tnr.to_s + "\t" + aplcatresult.fch_tnr.to_s + "\t" + aplcatresult.cow_tnr.to_s + "\t" + aplcatresult.bull_tnr.to_s + "|" + aplcatresult.calf_tnr.to_s + "\t" + aplcatresult.rh_tnr.to_s + "\t" + aplcatresult.fch_tnr.to_s + "\t" + aplcatresult.cow_tnr.to_s + "\t" + aplcatresult.bull_tnr.to_s + "\t" + "Total Nitrogen retained (g/day | kg/year)" + "\n"
+            #apex_string += aplcatresult.calf_fne.to_s + "\t" + aplcatresult.rh_fne.to_s + "\t" + aplcatresult.fch_fne.to_s + "\t" + aplcatresult.cow_fne.to_s + "\t" + aplcatresult.bull_fne.to_s + "|" + aplcatresult.calf_fne.to_s + "\t" + aplcatresult.rh_fne.to_s + "\t" + aplcatresult.fch_fne.to_s + "\t" + aplcatresult.cow_fne.to_s + "\t" + aplcatresult.bull_fne.to_s + "\t" + "Fecal Nitrogen excretion (g/day | kg/year)" + "\n"
+            #apex_string += aplcatresult.calf_une.to_s + "\t" + aplcatresult.rh_une.to_s + "\t" + aplcatresult.fch_une.to_s + "\t" + aplcatresult.cow_une.to_s + "\t" + aplcatresult.bull_une.to_s + "|" + aplcatresult.calf_une.to_s + "\t" + aplcatresult.rh_une.to_s + "\t" + aplcatresult.fch_une.to_s + "\t" + aplcatresult.cow_une.to_s + "\t" + aplcatresult.bull_une.to_s + "\t" + "Urine Nitrogen excretion (g/day | kg/year)" + "\n"
+            #apex_string = "\n"
+            #apex_string = "Greenhouse Gas Emission" + "\n"
+            #apex_string += aplcatresult.calf_eme.to_s + "\t" + aplcatresult.rh_eme.to_s + "\t" + aplcatresult.fch_eme.to_s + "\t" + aplcatresult.cow_eme.to_s + "\t" + aplcatresult.bull_eme.to_s + "|" + aplcatresult.calf_eme.to_s + "\t" + aplcatresult.rh_eme.to_s + "\t" + aplcatresult.fch_eme.to_s + "\t" + aplcatresult.cow_eme.to_s + "\t" + aplcatresult.bull_eme.to_s + "\t" + "AEnteric methane emission ('daily', g | Mcal)" + "\n"
+            #apex_string += aplcatresult.calf_mme.to_s + "\t" + aplcatresult.rh_mme.to_s + "\t" + aplcatresult.fch_mme.to_s + "\t" + aplcatresult.cow_mme.to_s + "\t" + aplcatresult.bull_mme.to_s + "|" + aplcatresult.calf_mme.to_s + "\t" + aplcatresult.rh_mme.to_s + "\t" + aplcatresult.fch_mme.to_s + "\t" + aplcatresult.cow_mme.to_s + "\t" + aplcatresult.bull_mme.to_s + "\t" + "Manure methane emission (g/day | kg/year)" + "\n"
+            #apex_string += "\n"
 
             #***** send file to server "
-            msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
+            #msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("Bull output file") then msg="OK" end
 		return msg
