@@ -196,7 +196,6 @@ class WatershedsController < ApplicationController
   		#update watershed_scenarios
   		@watershed_name = params[:commit]
   		@watershed_name.slice! "Add to "
-      debuygger
   		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
   		status = new_scenario()
   		@notice = nil
@@ -208,9 +207,9 @@ class WatershedsController < ApplicationController
   			when "error"
   				@errors.push("Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario'))
   		end
-    	else
-    		#run simulations
-    		if params[:select_watershed]
+    else
+    	#run simulations
+    	if params[:select_watershed]
     			params[:select_watershed].each do |ws|
     				@watershed = Watershed.find(ws)
     				if @watershed.watershed_scenarios.count == 0
@@ -263,18 +262,29 @@ class WatershedsController < ApplicationController
   			  		@state_abbreviation = State.find(state_id).state_abbreviation
   			  	end
             if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
-    				watershed_scenarios.each do |p|
-      				  @scenario = Scenario.find(p.scenario_id)
-      				  @field = Field.find(p.field_id)
+            fields = ""
+            watershed_scenarios.each do |p|
+              fields += "(" + @field.id.to_s + ":" + @field.coordinates + ")"   #generate the string to send to R program
+              #call R program
+              #read results and create the new watershed_scnearios hash to run scenarios
+              define_routing
+            end
+    				#watershed_scenarios.each do |p|
+            index = 
+            @new_inputing.each do |p|      				  
+      				  #@field = Field.find(p.field_id)
+                @field = Field.find(p)
+                #@scenario = Scenario.find(p.scenario_id)
+                @scenario = Scenario.find(@field.watershed_scenarios.first.scenario_id)
       					@grazing = @scenario.operations.find_by_activity_id([7, 9])
       					if @grazing == nil then
-      						@soils = Soil.where(:field_id => p.field_id).limit(1)
+      						@soils = Soil.where(:field_id => p).limit(1)
       					else
-      						@soils = Soil.where(:field_id => p.field_id).limit(1)
+      						@soils = Soil.where(:field_id => p).limit(1)
       					end
-      				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-      				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-      				  	j+=1
+      				  if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+      				  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+      				  j+=1
     				end # end watershed_scenarios.each
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
@@ -290,14 +300,69 @@ class WatershedsController < ApplicationController
     					@errors.push("Error running simulation for " + @watershed.name)
     				end
     			end   # end params[:select_watershed].each
-    		else
-    			@errors.push("Please select a watershed for simulation.")
-    		end	# end watershed present?
+    	else
+    		@errors.push("Please select a watershed for simulation.")
+    	end	# end watershed present?
   	end
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
   	watershed_scenarios_count(@watersheds)
     render "index"
+  end
+
+  ################################ defibne_routing #################################
+  # Read results from R routing program and order the fields accordingly
+  def define_routing
+    inputing  = [1698, 1709, 1710, 1711, 1712]
+    receiving = [1710, 1698, 1711, 0, 0]
+    order = Array.new
+    found = false
+    inputing.each do |input|
+      receiving.each do |receive|
+        if input == receive
+          found = true
+          break
+        end
+      end
+      if found == true then order.push(1) else order.push(0) end
+      found = false
+    end
+    first_one = true
+    next_one = 0
+    @new_inputing = Array.new
+    @relations = Array.new
+    loop do
+      for i in 0..inputing.count-1
+        if next_one == 0 then
+          # this is an upstream field. take that and put in the new array and delete it. and stat over.
+          if order[i] == 0 then
+            next_one = receiving[i]
+            @new_inputing.push(inputing[i])
+            order.delete_at(i)
+            inputing.delete_at(i)
+            receiving.delete_at(i)
+            if first_one == true then 
+              @relations.push(["+", "=", "="])
+              first_one = false
+            else
+              @relations.push(["-", "=", "="])
+            end
+            break
+          end
+        else
+          if next_one == inputing[i] then
+            next_one = receiving[i]
+            @new_inputing.push(inputing[i])
+            order.delete_at(i)
+            inputing.delete_at(i)
+            receiving.delete_at(i)
+            @relations.push(["-", ">", "<"])
+            break
+          end
+        end
+      end
+      if inputing.count <= 0 then break end
+    end
   end
 
   ################################ NEW #################################
