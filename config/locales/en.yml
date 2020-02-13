@@ -1368,6 +1368,11 @@ en:
       parameter21: Parameter 21
       parameter22: Parameter 22
       parameter23: Parameter 23
+      runparm_aplcat_parameters: RunParm APLCAT Parameters
+      running_drinking_water: Running drinking water estimation and energy requirement computation in Cow-Calf system.
+      running_complete_stocker: Running the complete stocker program.
+      running_ghg: Running GHG emission module for the Cow-Calf system.
+      running_transportation: Running transportation module for the Cow-Calf system.
   aplcat_result:
       aplcat_results: APLCAT Results
       aws: Animal weights
