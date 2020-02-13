@@ -23,6 +23,7 @@
 # URL to get soils information
 	#URL_SoilsInfo = 'http://nn.tarleton.edu/GetSoils/NTTservice.asmx?WSDL'
 	URL_SoilsInfo = 'http://ntt.ama.cbntt.org/RScript_Soil/GetSoils.asmx?WSDL'
+	URL_SoilsInfoDev = 'http://ntt.csu.cbntt.org/RScript_Soil/GetSoils.asmx?WSDL'
 	URL_NRCS = "http://SDMDataAccess.nrcs.usda.gov/Tabular/SDMTabularService.asmx?WSDL"
 
 #APEX folders.
