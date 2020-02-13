@@ -266,26 +266,45 @@ class WatershedsController < ApplicationController
             watershed_scenarios.each do |p|
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
+ 
+            #############  this block for the old way of simulating watersheds ##########################
+            #watershed_scenarios.each do |p|
+            #  @scenario = Scenario.find(p.scenario_id)
+            #  @field = Field.find(p.field_id)
+            #  @grazing = @scenario.operations.find_by_activity_id([7, 9])
+            #  if @grazing == nil then
+            #    @soils = Soil.where(:field_id => p.field_id).limit
+            #  else
+            #    @soils = Soil.where(:field_id => p.field_id).limit(1)
+            #  end
+            #    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+            #    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+            #    j+=1
+            #end # en
+            #############  this block for the old way of simulating watersheds ##########################
+
+
+            #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
-            #define_routing1(fields)
-
-
-            watershed_scenarios.each do |p|
-              @scenario = Scenario.find(p.scenario_id)
-              @field = Field.find(p.field_id)
-              @grazing = @scenario.operations.find_by_activity_id([7, 9])
-              if @grazing == nil then
-                @soils = Soil.where(:field_id => p.field_id).limit(1)
-              else
-                @soils = Soil.where(:field_id => p.field_id).limit(1)
-              end
+            define_routing1(fields)
+            @new_inputing.each do |p|               
+                #@field = Field.find(p.field_id)
+                @field = Field.find(p)
+                #@scenario = Scenario.find(p.scenario_id)
+                @scenario = Scenario.find(@field.watershed_scenarios.first.scenario_id)
+                @grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => p).limit(1)
+                else
+                  @soils = Soil.where(:field_id => p).limit(1)
+                end
                 if msg.eql?("OK") then msg = create_apex_soils() else return msg end
                 if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
                 j+=1
-            end # en
+            end # end watershed_scenarios.each
+            #############  this block for the new way of simulating watersheds ##########################
 
 
-            
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
@@ -390,15 +409,14 @@ class WatershedsController < ApplicationController
       return response.body[:get_routing_response][:get_routing_result]
     end
     rec = response.body[:get_routing_response][:get_routing_result].split(",")
-    debugger
     ie = Array.new
     io = Array.new
     nbsa = Array.new
     icmo = Array.new
-    ki = Array.new
+    @ki = Array.new
     ir = Array.new
     iy = Array.new
-    ix = Array.
+    ix = Array.new
     ia = Array.new
     chl = Array.new
     rchl = Array.new
@@ -408,60 +426,62 @@ class WatershedsController < ApplicationController
       io.push(field[1])
     end
     nn = ie.count - 1
-    for i in 1..nn
-      nbsa[i] = ie[i]                                                                 
-      ie[i]=i                                                                
-      if io[i] == 0 then icmo[i] = ie[i] end                                                                                                
-      ki[i]=i                                                                        
+    for i in 0..nn
+      nbsa[i] = ie[i]  #nbsa keep the entering fields
+      ie[i]=i          #ie will keep the sequence 1,2,3..etc
+      if io[i] == "0" then icmo[i] = ie[i] end   #if io is the oulet it goes to icmo
+      @ki[i]=i         # @ki will contain a sequence as in ie
     end
     nn0 = nn
     if nn >= 2 then
-      for i in 1..nn
-        for j in 1..nn
-          if nsba[i] != io[j] then next end
+      for i in 0..nn
+        ir[i] = 0
+        for j in 0..nn
+          if nbsa[i] != io[j] then next end
             ir[j] = ie[i]
         end
       end
-      for i in 1..nn
+      for i in 0..nn
         ii = ie[i] - i
         iy[ie[i]] = ii
         ie[i] = i
       end
-      for i in 1..nn
+      for i in 0..nn
         if ir[i] < 2 then next end
         ir[i] = ir[i] - iy[ir[i]]
       end
-      for i in 1..nn
+      for i in 0..nn
         ir[ie[i]] = ir[i]
       end
       for i in (nn..1).step(-1)
-        if ir[ki[i]] > 0 then next end
-        io[nn] = ie[ki[i]]
-        elim(ki,nn,i)
+        debugger
+        if ir[@ki[i]] > 0 then next end
+        io[nn] = ie[@ki[i]]
+        nn=elim(@ki,nn,i)
         break
       end
       i = nn0
       loop do
-        for j in 1..nn
-          if ir[ki[j]] == io[i] then break end
+        for j in 0..nn
+          if ir[@ki[j]] == io[i] then break end
         end
         if j > nn then
           ix[io[i]] = 1
           k = io[i]
           loop do
-            for j in 1..nn
-              if ir[ki[j]] == ir[k] then break end
+            for j in 0..nn
+              if ir[@ki[j]] == ir[k] then break end
             end
             if j <= nn then break end
               k = ir[k]
           end
           i = i - 1
-          io[i] = ie[ki[j]]
+          io[i] = ie[@ki[j]]
         else
           i = i - 1
-          io[i] = ie[ki[j]]
+          io[i] = ie[@ki[j]]
         end
-        elim(ki,nn,i)
+        nn = elim(@ki,nn,i)
       end
       ix[io[i]] = 1
       for i in 1..nn0
@@ -473,7 +493,7 @@ class WatershedsController < ApplicationController
       end
     end   # end if > 2
 
-    for i in 1 ..nn0
+    for i in 0..nn0
       if nn0 > 1 then
         i1 = [1, io[i]].max
       else
@@ -513,6 +533,7 @@ class WatershedsController < ApplicationController
     for j in 1..nn
       ki[j] = ki[j+1]
     end
+    return nn
   end
 
   ################################ NEW #################################
