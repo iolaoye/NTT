@@ -196,7 +196,6 @@ class WatershedsController < ApplicationController
   		#update watershed_scenarios
   		@watershed_name = params[:commit]
   		@watershed_name.slice! "Add to "
-      debuygger
   		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
   		status = new_scenario()
   		@notice = nil
@@ -208,9 +207,9 @@ class WatershedsController < ApplicationController
   			when "error"
   				@errors.push("Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario'))
   		end
-    	else
-    		#run simulations
-    		if params[:select_watershed]
+    else
+    	#run simulations
+    	if params[:select_watershed]
     			params[:select_watershed].each do |ws|
     				@watershed = Watershed.find(ws)
     				if @watershed.watershed_scenarios.count == 0
@@ -225,7 +224,7 @@ class WatershedsController < ApplicationController
     				if !File.exists?(dir_name)
     				  FileUtils.mkdir_p(dir_name)
     				end
-    				watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id)
+    				watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id).order(:field_id)
     				msg = create_control_file()			#this prepares the apexcont.dat file
     				if msg.eql?("OK") then msg = create_parameter_file() else return msg end			#this prepares the parms.dat file
     				#todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
@@ -263,19 +262,49 @@ class WatershedsController < ApplicationController
   			  		@state_abbreviation = State.find(state_id).state_abbreviation
   			  	end
             if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
-    				watershed_scenarios.each do |p|
-      				  @scenario = Scenario.find(p.scenario_id)
-      				  @field = Field.find(p.field_id)
-      					@grazing = @scenario.operations.find_by_activity_id([7, 9])
-      					if @grazing == nil then
-      						@soils = Soil.where(:field_id => p.field_id).limit(1)
-      					else
-      						@soils = Soil.where(:field_id => p.field_id).limit(1)
-      					end
-      				  	if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-      				  	if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-      				  	j+=1
-    				end # end watershed_scenarios.each
+            fields = ""
+            watershed_scenarios.each do |p|
+              fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
+            end
+ 
+            #############  this block for the old way of simulating watersheds ##########################
+            #watershed_scenarios.each do |p|
+            #  @scenario = Scenario.find(p.scenario_id)
+            #  @field = Field.find(p.field_id)
+            #  @grazing = @scenario.operations.find_by_activity_id([7, 9])
+            #  if @grazing == nil then
+            #    @soils = Soil.where(:field_id => p.field_id).limit
+            #  else
+            #    @soils = Soil.where(:field_id => p.field_id).limit(1)
+            #  end
+            #    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+            #    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+            #    j+=1
+            #end # en
+            #############  this block for the old way of simulating watersheds ##########################
+
+
+            #############  this block for the new way of simulating watersheds ##########################
+            #call R program. read results and create the new watershed_scnearios hash to run scenarios
+            define_routing1(fields)
+            @new_inputing.each do |p|               
+                #@field = Field.find(p.field_id)
+                @field = Field.find(p)
+                #@scenario = Scenario.find(p.scenario_id)
+                @scenario = Scenario.find(@field.watershed_scenarios.first.scenario_id)
+                @grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => p).limit(1)
+                else
+                  @soils = Soil.where(:field_id => p).limit(1)
+                end
+                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                j+=1
+            end # end watershed_scenarios.each
+            #############  this block for the new way of simulating watersheds ##########################
+
+
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
@@ -290,14 +319,226 @@ class WatershedsController < ApplicationController
     					@errors.push("Error running simulation for " + @watershed.name)
     				end
     			end   # end params[:select_watershed].each
-    		else
-    			@errors.push("Please select a watershed for simulation.")
-    		end	# end watershed present?
+    	else
+    		@errors.push("Please select a watershed for simulation.")
+    	end	# end watershed present?
   	end
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
   	watershed_scenarios_count(@watersheds)
     render "index"
+  end
+
+  ################################ defibne_routing #################################
+  # Read results from R routing program and order the fields accordingly
+  def define_routing(fields)
+    client = Savon.client(wsdl: URL_SoilsInfoDev)
+    ###### Get the fields routing from R program########
+    response = client.call(:get_routing, message: {"field_coordinates" => fields, "session" => session[:session_id]})
+    if response.body[:get_routing_response][:get_routing_result].include? "Error" then
+      return response.body[:get_routing_response][:get_routing_result]
+    end
+    rec = response.body[:get_routing_response][:get_routing_result].split(",")
+    inputing = Array.new
+    receiving = Array.new
+    rec.each do |r|
+      field = r.split(" ")
+      inputing.push(field[0])
+      receiving.push(field[1])
+    end
+    debugger
+    order = Array.new
+    found = false
+    inputing.each do |input|
+      receiving.each do |receive|
+        if input == receive
+          found = true
+          break
+        end
+      end
+      if found == true then order.push(1) else order.push(0) end
+      found = false
+    end
+    first_one = true
+    next_one = 0
+    @new_inputing = Array.new
+    @relations = Array.new
+    loop do
+      for i in 0..inputing.count-1
+        debugger
+        if next_one == 0 then
+          # this is an upstream field. take that and put in the new array and delete it. and stat over.
+          if order[i] == 0 then
+            next_one = receiving[i]
+            @new_inputing.push(inputing[i])
+            order.delete_at(i)
+            inputing.delete_at(i)
+            receiving.delete_at(i)
+            if first_one == true then 
+              @relations.push(["+", "=", "="])
+              first_one = false
+            else
+              @relations.push(["-", "=", "="])
+            end
+            break
+          end
+        else
+          if next_one == inputing[i] then
+            next_one = receiving[i]
+            @new_inputing.push(inputing[i])
+            order.delete_at(i)
+            inputing.delete_at(i)
+            receiving.delete_at(i)
+            @relations.push(["-", ">", "<"])
+            break
+          end
+        end
+      end
+      debugger
+      if inputing.count <= 0 then break end
+    end
+  end
+
+  ################################ defibne_routing #################################
+  # Read results from R routing program and order the fields accordingly
+  def define_routing1(fields)
+    client = Savon.client(wsdl: URL_SoilsInfoDev)
+    ###### Get the fields routing from R program########
+    response = client.call(:get_routing, message: {"field_coordinates" => fields, "session" => session[:session_id]})
+    if response.body[:get_routing_response][:get_routing_result].include? "Error" then
+      return response.body[:get_routing_response][:get_routing_result]
+    end
+    rec = response.body[:get_routing_response][:get_routing_result].split(",")
+    ie = Array.new
+    io = Array.new
+    nbsa = Array.new
+    icmo = Array.new
+    @ki = Array.new
+    ir = Array.new
+    iy = Array.new
+    ix = Array.new
+    ia = Array.new
+    chl = Array.new
+    rchl = Array.new
+    io.push(0)
+    ie.push(0)
+    rec.each do |r|
+      field = r.split(" ")
+      ie.push(field[0])
+      io.push(field[1])
+    end
+    debugger
+    nn = ie.count - 1
+    for i in 1..nn
+      nbsa[i] = ie[i]  #nbsa keep the entering fields
+      ie[i]=i          #ie will keep the sequence 1,2,3..etc
+      if io[i] == "0" then icmo[i] = ie[i] end   #if io is the oulet it goes to icmo
+      @ki[i]=i         # @ki will contain a sequence as in ie
+    end
+    nn0 = nn
+    if nn >= 2 then
+      for i in 1..nn
+        ir[i] = 0
+        for j in 1..nn
+          if nbsa[i] != io[j] then next end
+            ir[j] = ie[i]
+        end
+      end
+      for i in 1..nn
+        ii = ie[i] - i
+        iy[ie[i]] = ii
+        ie[i] = i
+      end
+      for i in 1..nn
+        if ir[i] < 2 then next end
+        ir[i] = ir[i] - iy[ir[i]]
+      end
+      for i in 1..nn
+        ir[ie[i]] = ir[i]
+      end
+      for i in (nn..1).step(-1)
+        debugger
+        if ir[@ki[i]] > 0 then next end
+        io[nn] = ie[@ki[i]]
+        nn=elim(nn,i)
+        break
+      end
+      i = nn0
+      loop do
+        debugger
+        for j in 1..nn
+          if ir[@ki[j]] == io[i] then break end
+        end
+        if j > nn then
+          ix[io[i]] = 1
+          k = io[i]
+          loop do
+            debugger
+            for j in 1..nn
+              if ir[@ki[j]] == ir[k] then break end
+            end
+            if j <= nn then break end
+            k = ir[k]
+          end
+          i = i - 1
+          io[i] = ie[@ki[j]]
+        else
+          i = i - 1
+          io[i] = ie[@ki[j]]
+        end
+        nn = elim(nn,j)
+      end
+      ix[io[i]] = 1
+      for i in 1..nn0
+        ii = ir[io[i]]
+        i1 = i + 1
+        for j in 1..nn0
+          if ir[io[j]] == ii then ia[io[j]] = 1 end
+        end
+      end
+    end   # end if > 2
+
+    for i in 1..nn0
+      if nn0 > 1 then
+        i1 = [1, io[i]].max
+      else
+        i1 = i
+        ix[i1] = 1
+      end
+      #todo
+      xx = wsa(field).sqrt
+      if ix[i1] > 0 then
+        if chl[i1] > 0 then 
+          rchl[i1] = chl[i1] 
+        else 
+          if rchl[i1] > 0 then 
+            chl[i1] = rchl[i1] 
+          else 
+            chl[i1] = 0.1732 * xx
+            rchl[i1] = chl[i1]
+          end
+        end
+      else
+        if rchl[i1] <= 0 then 
+          rchl[i1] = 0.1 * xx 
+        else
+          if chl[i1] <= 0 then 
+            chl[i1] = 0.1732 * xx 
+          else 
+            if (chk[i1]-rchl[i1]).abs <=0 then chl[i1] = 1.732 * rchl[i1] end
+          end
+        end
+      end
+      if ia[i1] > 0 then x1 = wsa[i1] * -1 else x1 = wsa[i1] end
+    end
+  end
+
+  def elim(nn,i)
+    nn = nn - 1
+    for j in i..nn
+      @ki[j] = @ki[j+1]
+    end
+    return nn
   end
 
   ################################ NEW #################################
