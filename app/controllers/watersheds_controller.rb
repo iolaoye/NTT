@@ -420,13 +420,16 @@ class WatershedsController < ApplicationController
     ia = Array.new
     chl = Array.new
     rchl = Array.new
+    io.push(0)
+    ie.push(0)
     rec.each do |r|
       field = r.split(" ")
       ie.push(field[0])
       io.push(field[1])
     end
+    debugger
     nn = ie.count - 1
-    for i in 0..nn
+    for i in 1..nn
       nbsa[i] = ie[i]  #nbsa keep the entering fields
       ie[i]=i          #ie will keep the sequence 1,2,3..etc
       if io[i] == "0" then icmo[i] = ie[i] end   #if io is the oulet it goes to icmo
@@ -434,46 +437,48 @@ class WatershedsController < ApplicationController
     end
     nn0 = nn
     if nn >= 2 then
-      for i in 0..nn
+      for i in 1..nn
         ir[i] = 0
-        for j in 0..nn
+        for j in 1..nn
           if nbsa[i] != io[j] then next end
             ir[j] = ie[i]
         end
       end
-      for i in 0..nn
+      for i in 1..nn
         ii = ie[i] - i
         iy[ie[i]] = ii
         ie[i] = i
       end
-      for i in 0..nn
+      for i in 1..nn
         if ir[i] < 2 then next end
         ir[i] = ir[i] - iy[ir[i]]
       end
-      for i in 0..nn
+      for i in 1..nn
         ir[ie[i]] = ir[i]
       end
       for i in (nn..1).step(-1)
         debugger
         if ir[@ki[i]] > 0 then next end
         io[nn] = ie[@ki[i]]
-        nn=elim(@ki,nn,i)
+        nn=elim(nn,i)
         break
       end
       i = nn0
       loop do
-        for j in 0..nn
+        debugger
+        for j in 1..nn
           if ir[@ki[j]] == io[i] then break end
         end
         if j > nn then
           ix[io[i]] = 1
           k = io[i]
           loop do
-            for j in 0..nn
+            debugger
+            for j in 1..nn
               if ir[@ki[j]] == ir[k] then break end
             end
             if j <= nn then break end
-              k = ir[k]
+            k = ir[k]
           end
           i = i - 1
           io[i] = ie[@ki[j]]
@@ -481,7 +486,7 @@ class WatershedsController < ApplicationController
           i = i - 1
           io[i] = ie[@ki[j]]
         end
-        nn = elim(@ki,nn,i)
+        nn = elim(nn,j)
       end
       ix[io[i]] = 1
       for i in 1..nn0
@@ -493,7 +498,7 @@ class WatershedsController < ApplicationController
       end
     end   # end if > 2
 
-    for i in 0..nn0
+    for i in 1..nn0
       if nn0 > 1 then
         i1 = [1, io[i]].max
       else
@@ -528,10 +533,10 @@ class WatershedsController < ApplicationController
     end
   end
 
-  def elim(ki,nn,i)
+  def elim(nn,i)
     nn = nn - 1
-    for j in 1..nn
-      ki[j] = ki[j+1]
+    for j in i..nn
+      @ki[j] = @ki[j+1]
     end
     return nn
   end
