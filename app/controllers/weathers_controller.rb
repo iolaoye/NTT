@@ -238,17 +238,17 @@ include ScenariosHelper
   	  if data.length < 7 then 
   		  return "There are missing empty values in this file in " + sprintf("%4d",data[0]) + sprintf("%4d",data[1]) + sprintf("%4d",data[2]) + ". Please fix the problem and try again."
       end 
-  	  if data[3].to_f < -90 then sr = sprintf("%7.1f",data[3]) else sr = sprintf("%7.2f",data[3]) end
-  	  if data[4].to_f < -90 then tmax = sprintf("%7.1f",data[4]) else tmax = sprintf("%7.2f",data[4]) end
-  	  if data[5].to_f < -90 then tmin = sprintf("%7.1f",data[5]) else tmin = sprintf("%7.2f",data[5]) end 
-  	  if data[6].to_f < -90 then pcp = sprintf("%7.1f",data[6]) else pcp = sprintf("%7.2f",data[6]) end
-      rh = sprintf("%7.2f",0)
-      ws = sprintf("%7.2f",0)
+  	  if data[3].to_f < -90 then sr = sprintf("%6.1f",data[3]) else sr = sprintf("%6.2f",data[3]) end     #solar radiation
+  	  if data[4].to_f < -90 then tmax = sprintf("%6.1f",data[4]) else tmax = sprintf("%6.2f",data[4]) end #temp max
+  	  if data[5].to_f < -90 then tmin = sprintf("%6.1f",data[5]) else tmin = sprintf("%6.2f",data[5]) end #
+  	  if data[6].to_f < -90 then pcp = sprintf("%6.1f",data[6]) else pcp = sprintf("%6.2f",data[6]) end
+      rh = sprintf("%6.2f",0)
+      ws = sprintf("%6.2f",0)
   	  case data.length
   		when 8
-  			if data[7].to_f < -90 then rh = sprintf("%7.1f",data[7]) else rh = sprintf("%7.2f",data[7]) end
+  			if data[7].to_f < -90 then rh = sprintf("%6.1f",data[7]) else rh = sprintf("%6.2f",data[7]) end
   		when 9
-  			if data[8].to_f < -90 then ws = sprintf("%7.1f",data[8]) else ws = sprintf("%7.2f",data[8]) end
+  			if data[8].to_f < -90 then ws = sprintf("%6.1f",data[8]) else ws = sprintf("%6.2f",data[8]) end
   	  end   # end case data.len
       daily_clime = Clime.new
       daily_clime.field_id = @field.id

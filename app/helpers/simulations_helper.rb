@@ -1357,39 +1357,47 @@ module SimulationsHelper
       c_cs_count = c_cs.count
       #cc_number = @scenario.operations.last.id
       @c_cs = false
-      c_cs.each do |bmp| 
-        if bmp != nil then
+      c_cs.each do |cover| 
+        if cover != nil then
           @c_cs = true
           s_o_new = SoilOperation.new
-          s_o_new.year = bmp.year
-          s_o_new.month = bmp.month_id
-          s_o_new.day = bmp.day
-          s_o_new.apex_operation = bmp.type_id
-          s_o_new.apex_crop = bmp.crop_id
-          s_o_new.activity_id = bmp.activity_id
-          s_o_new.opv1 = set_opval1(bmp)
+          s_o_new.year = cover.year
+          s_o_new.month = cover.month_id
+          s_o_new.day = cover.day
+          s_o_new.apex_operation = cover.type_id
+          s_o_new.apex_crop = cover.crop_id
+          s_o_new.activity_id = cover.activity_id
+          s_o_new.opv1 = set_opval1(cover)
           s_o_new.opv3 = 0
           s_o_new.opv4 = 0
-          s_o_new.opv5 = set_opval5(bmp)
+          s_o_new.opv5 = set_opval5(cover)
           s_o_new.opv6 = 0
           s_o_new.opv7 = 0
           last_op_id += 1
           s_o_new.id = last_op_id
           cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
           s_o_new_kill = SoilOperation.new
-          if last_year > bmp.year then  # validate if last_year is greater than cover crop planting year
-            soil_oper = @soil_operations.where(:year => bmp.year + 1).first
-            cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
-          else
-            soil_oper = @soil_operations.first
-            cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
+          cover_year = cover.year
+          loop do
+            if last_year > cover_year then  # validate if last_year is greater than cover crop planting year
+              soil_oper = @soil_operations.where(:year => cover_year + 1).first
+              if soil_oper == nil then
+                cover_year += 1
+                next
+              end
+              cc_kill_date = Date.parse(sprintf("%2d", soil_oper.year) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))
+            else
+              soil_oper = @soil_operations.first
+              cc_kill_date = Date.parse(sprintf("%2d", 1) + "/" + sprintf("%2d", soil_oper.month) + "/" + sprintf("%2d", soil_oper.day))          
+            end
+            break
           end
           cc_kill_date -= 2.days
           s_o_new_kill.year = cc_kill_date.year - 2000
           s_o_new_kill.month = cc_kill_date.month
           s_o_new_kill.day = cc_kill_date.day
           s_o_new_kill.apex_operation = 451
-          s_o_new_kill.apex_crop = Crop.find(bmp.crop_id).number
+          s_o_new_kill.apex_crop = Crop.find(cover.crop_id).number
           s_o_new_kill.activity_id = 5 
           s_o_new_kill.opv1 = 0
           s_o_new_kill.opv2 = 0
@@ -1402,7 +1410,7 @@ module SimulationsHelper
           s_o_new_kill.id = last_op_id
           cc_number += 1
           cc_hash[cc_number] = s_o_new_kill
-        end #if bmp  != nill
+        end #if cover  != nill
       end #end c_cs each
       cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:activity_id], v[:type_id]]}
       cc_hash_sorted.each do |soil_operation|
@@ -1419,7 +1427,7 @@ module SimulationsHelper
               j+=1
               c_c_k = true
             end
-          end # end bmp != nil
+          end # end c_cs_count > 0
           add_operation(soil_operation[1], irrigation_type, nirr, soil_percentage, j)
         end # end if soil_operation[1]
         j+=1
