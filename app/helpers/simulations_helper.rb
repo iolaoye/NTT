@@ -1322,7 +1322,7 @@ module SimulationsHelper
           s_o_new.opv5 = set_opval5(cover)
           s_o_new.opv6 = 0
           s_o_new.opv7 = 0
-          last_op_id += 1
+          last_op_id += 1 
           s_o_new.id = last_op_id
           cc_plt_date = Date.parse(sprintf("%2d", s_o_new.year) + "/" + sprintf("%2d", s_o_new.month) + "/" + sprintf("%2d", s_o_new.day))
           s_o_new_kill = SoilOperation.new
