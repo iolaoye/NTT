@@ -560,6 +560,7 @@ class ResultsController < ApplicationController
         if first_year == 0 then
             first_year = Field.find(params[:field_id]).weather.simulation_initial_year + 1
         end
+        debugger
         if @chart_type > 0 then
             chart_values = Chart.select("month_year, value")
                                 .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?",
@@ -594,7 +595,7 @@ class ResultsController < ApplicationController
             else
                 crop = Crop.find(params[:result7][:crop_id])
                 conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
-                chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year)
+                chart_values = CropResult.select("year as month_year", "(yldg+yldf) * " + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:month_year)
                 #chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
             end
         else  #get results for monthly sub1 > 0
