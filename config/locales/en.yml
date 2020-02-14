@@ -1246,6 +1246,18 @@ en:
       drinkm: Drinking water adjustment factor for weight:Mature bulls
       avgtm: Daily average temperature for each month
       avghm: Daily average relative humidity for each month
+      jan: January
+      feb: February
+      mar: March
+      apr: April
+      may: May
+      jun: June
+      jul: July
+      aug: August
+      sep: September
+      oct: October
+      nov: November
+      dec: December
       rhae: Relative humidity of air exhaled by animals (%)
       tabo: Temperature of air breathed out by animals (deg F)
       mpism: Moisture present in solid manure (%)
@@ -1344,6 +1356,9 @@ en:
       theta: Theta (unit conversion constant) [Adopted from FEM]
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
+      area: Area
+      fuel: Fuel
+      equipment: Equipment
       select_fmo: Select the number of Field Management operation
       parameter1: Parameter 1
       parameter2: Parameter 2
