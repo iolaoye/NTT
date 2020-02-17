@@ -193,7 +193,7 @@ class AplcatParametersController < ApplicationController
          :twelveth_area, :twelveth_equip, :twelveth_fuel, :thirteen_area, :thirteen_equip, :thirteen_fuel, :fourteen_area, :fourteen_equip, :fourteen_fuel,
          :fifteen_area, :fifteen_equip, :fifteen_fuel, :sixteen_area, :sixteen_equip, :sixteen_fuel, :seventeen_area, :seventeen_equip, :seventeen_fuel,
          :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos,
-         :mm_type_but, :nit, :fqd, :uovfi)
+         :mm_type_but, :nit, :fqd, :uovfi, :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation)
 
     end
 end
