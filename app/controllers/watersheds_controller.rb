@@ -255,7 +255,6 @@ class WatershedsController < ApplicationController
     				@herd_list = Array.new
     				@change_fert_for_grazing_line = Array.new
     		    @fert_code = 79
-    				j=0
     			  state_id = @project.location.state_id
     			  @state_abbreviation = "**"
   			  	if state_id != 0 and state_id != nil then
@@ -266,7 +265,8 @@ class WatershedsController < ApplicationController
             watershed_scenarios.each do |p|
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
- 
+            j=0
+   
             #############  this block for the old way of simulating watersheds ##########################
             #watershed_scenarios.each do |p|
             #  @scenario = Scenario.find(p.scenario_id)
@@ -287,8 +287,9 @@ class WatershedsController < ApplicationController
             #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
             define_routing(fields)
-            nn0 = @io.count
-            for i in 1..nn0
+            nn0 = @io.count-1
+            i = 1
+            while i <= nn0
               chl = 0
               rchl = 0
               if nn0 > 1 then
@@ -297,13 +298,11 @@ class WatershedsController < ApplicationController
                 i1 = i
                 @ix[i1] = 1
               end
-              debugger
               field = Field.find(@nbsa[i1])
-              xx = Math.sqrt(field.field_area)
+              field_area = field.field_area * AC_TO_HA
+              xx = Math.sqrt(field_area)
+              chl = xx * 0.1732
               if @ix[i1] > 0 then
-
-
-
                 if chl > 0 then 
                   rchl = chl
                 else  
@@ -324,13 +323,9 @@ class WatershedsController < ApplicationController
                     if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
                   end
                 end
-
-
-
-
-
               end
-              if @ia[i1] > 0 then x1 = field.field_area * -1 else x1 = field.field_area end
+              
+              if @ia[i1] > 0 then field_area = field_area * -1 end
               @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
               grazing = @scenario.operations.find_by_activity_id([7, 9])
               if @grazing == nil then
@@ -339,14 +334,12 @@ class WatershedsController < ApplicationController
                 @soils = Soil.where(:field_id => field.id).limit(1)
               end
               if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-              if msg.eql?("OK") then msg = create_subareas_watershed(j+1, x1, chl, rchl) else return msg end
+              if msg.eql?("OK") then msg = create_subareas_watershed(j+1, field_area, chl, rchl, field.id) else return msg end
               j+=1
+              i+=1
             end  # end for i 1 to nn0
 
-
             #############  this block for the new way of simulating watersheds ##########################
-
-
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
@@ -494,7 +487,7 @@ class WatershedsController < ApplicationController
   end
 
   #this is the new subarea creation method for watershed simulatons
-  def create_subareas_watershed(operation_number, area, chl, rchl)  # operation_number is used for subprojects. for simple scenarios is 1
+  def create_subareas_watershed(operation_number, area, chl, rchl, field_id)  # operation_number is used for subprojects. for simple scenarios is 1
     last_owner1 = 0
     i=0
     nirr = 0
@@ -508,7 +501,7 @@ class WatershedsController < ApplicationController
       soil = subarea.soil
       #if soil.selected then
       create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
-      add_subarea_file_watershed(area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+      add_subarea_file_watershed(field_id, area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
       i+=1
       @soil_number += 1
       #end  # end if soil.selected
@@ -518,7 +511,7 @@ class WatershedsController < ApplicationController
     buffer_type = 2
     bmp = 1
     subareas.each do |subarea|
-      add_subarea_file_watershed(area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
+      add_subarea_file_watershed(field_id, area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
       if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
         if subarea.subarea_type == "RF" then
           buffer_type = 1
@@ -536,19 +529,19 @@ class WatershedsController < ApplicationController
   end   # end create_subareas
   
   #This add single subarea information for watershed simulations
-  def add_subarea_file_watershed(area, chl, rchl, _subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
+  def add_subarea_file_watershed(field_id, area, chl, rchl, _subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
     j = i + 1
     #/line 1
     if buffer then
-      @subarea_file.push(sprintf("%8d", j) + "0000000000000000   " + _subarea_info.description + "\n")
+      @subarea_file.push(sprintf("%8d", field_id) + "0000000000000000   " + _subarea_info.description + "\n")
     else
-      @subarea_file.push(sprintf("%8d", j) + _subarea_info.description + "\n")
+      @subarea_file.push(sprintf("%8d", field_id) + _subarea_info.description + "\n")
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub
     last_owner1 = @last_soil2
     if buffer then
-      sLine = sprintf("%4d", _subarea_info.inps)  #soil
+      sLine = sprintf("%4d", @soil_number)  #soil
       if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
         sLine += sprintf("%4d", _subarea_info.iops) #operation
       else
@@ -572,7 +565,7 @@ class WatershedsController < ApplicationController
         sLine += sprintf("%4d", _subarea_info.iops)   #operation
       else
         #sLine = sprintf("%4d", @soil_number+1)  #soil
-        sLine = sprintf("%4d", _subarea_info.inps)  #soil
+        sLine = sprintf("%4d", @soil_number+1)  #soil
         sLine += sprintf("%4d", @soil_number+1)   #operation
       end
       sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
@@ -604,11 +597,11 @@ class WatershedsController < ApplicationController
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
-    _subarea_info.wsa = area
+    #_subarea_info.wsa = area
     if area == 0.00 then
-      _subarea_info.wsa = 0.01
+      area = 0.01
     end
-    sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
+    sLine = sprintf("%8.2f", area)
     sLine += sprintf("%8.4f", chl)
     sLine += sprintf("%8.2f", _subarea_info.chd)
     sLine += sprintf("%8.2f", _subarea_info.chs)
@@ -620,17 +613,6 @@ class WatershedsController < ApplicationController
     sLine += sprintf("%8.2f", _subarea_info.urbf)
     @subarea_file.push(sLine + "\n")
     #/line 5
-    if (_subarea_info.bmp_id == 0 || _subarea_info.bmp_id == nil)  && _subarea_info.subarea_type == "Soil"
-      if (_subarea_info.chl != _subarea_info.rchl && i > 0) || total_soils == 1 then
-        _subarea_info.rchl = _subarea_info.chl
-      end
-      if (operation_number > 1 && i == 0) then
-        _subarea_info.rchl = _subarea_info.rchl * 0.9
-        #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-        #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
-        #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
-      end
-    end
     sLine = sprintf("%8.4f", rchl)
     sLine += sprintf("%8.2f", _subarea_info.rchd)
     sLine += sprintf("%8.2f", _subarea_info.rcbw)
