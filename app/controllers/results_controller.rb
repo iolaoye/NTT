@@ -326,56 +326,63 @@ class ResultsController < ApplicationController
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
               @chart_type = 0
           @x = "Year"
-          @crops = Array.new
-              if params[:result5] != nil && params[:result5][:description_id] != "" then
-                @description = params[:result5][:description_id]
-                @group = params[:result5_category][:group_id]
-                    if params[:result5][:description_id] == "70" then
-                        crop = Crop.find(params[:result7][:crop_id])
-                        @title = crop.name
-                        @chart_type = params[:result7][:crop_id].to_i
-                        @y = crop.yield_unit
-                        @crop = crop.id
-                    else
-                        @title = Description.find(@description).description
-                        @chart_type = 0
-                        @y = Description.find(@description).unit
-                    end
-                if params[:result1] != nil
-                  if params[:result1][:scenario_id] != "" then
-                    @scenario1 = params[:result1][:scenario_id]
-                    @charts1 = get_chart_serie(@scenario1, 1)
-                    if @charts1.count > 0
-                      @present1 = true
-                    else
-                      #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
-                    end
-                  end
-                  if params[:result2][:scenario_id] != "" then
-                    @scenario2 = params[:result2][:scenario_id]
-                    @charts2 = get_chart_serie(@scenario2, 1)
-                    if @charts2.count > 0
-                      @present2 = true
-                    else
-                      #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
-                    end
-                  end
-                  if params[:result3][:scenario_id] != "" then
-                    @scenario3 = params[:result3][:scenario_id]
-                    @charts3 = get_chart_serie(@scenario3, 1)
-                    if @charts3.count > 0
-                      @present3 = true
-                    else
-                      #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
-                    end
-                  end
+          #@crops = Array.new
+          case true
+          when @scenario1 != nil && @scenario2 != nil && @scenario3!= nil && @scenario1 != "" && @scenario2 != "" && @scenario3 != ""
+            @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ? or scenario_id = ?",@scenario1, @scenario2, @scenario3).group(:name)
+          when @scenario1 != nil && @scenario2 != nil && @scenario1 != "" && @scenario2 != "" 
+            @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ?",@scenario1, @scenario2).group(:name)
+          when @scenario1 != nil && @scenario1 != ""
+            @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ?",@scenario1).group(:name)
+          end
+          if params[:result5] != nil && params[:result5][:description_id] != "" then
+            @description = params[:result5][:description_id]
+            @group = params[:result5_category][:group_id]
+            if params[:result5][:description_id] == "70" then
+                crop = Crop.find(params[:result7][:crop_id])
+                @title = crop.name
+                @chart_type = params[:result7][:crop_id].to_i
+                @y = crop.yield_unit
+                @crop = crop.id
+            else
+                @title = Description.find(@description).description
+                @chart_type = 0
+                @y = Description.find(@description).unit
+            end
+            if params[:result1] != nil
+              if params[:result1][:scenario_id] != "" then
+                @scenario1 = params[:result1][:scenario_id]
+                @charts1 = get_chart_serie(@scenario1, 1)
+                if @charts1.count > 0
+                  @present1 = true
+                else
+                  #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
-              else
-                @description = ""
-                @title = ""
-                @y = ""
               end
-
+              if params[:result2][:scenario_id] != "" then
+                @scenario2 = params[:result2][:scenario_id]
+                @charts2 = get_chart_serie(@scenario2, 1)
+                if @charts2.count > 0
+                  @present2 = true
+                else
+                  #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
+                end
+              end
+              if params[:result3][:scenario_id] != "" then
+                @scenario3 = params[:result3][:scenario_id]
+                @charts3 = get_chart_serie(@scenario3, 1)
+                if @charts3.count > 0
+                  @present3 = true
+                else
+                  #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
+                end
+              end
+            end
+          else
+            @description = ""
+            @title = ""
+            @y = ""
+          end
         when t("general.view") + " " + t('result.monthly') + "-" + t('result.charts')
           @x = "Month"
           if params[:result6] != nil && params[:result6][:description_id] != "" then
