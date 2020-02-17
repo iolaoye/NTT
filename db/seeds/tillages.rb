@@ -151,6 +151,7 @@ Tillage.create!({:id => 118,:code => 383,:dndc => 1,:name => 'PLASTIC',:operatio
 Tillage.create!({:id => 119,:code => 389,:dndc => 4,:name => 'RODWDR36',:operation => 0,:eqp => 'RODWEEDER/10 BAR HAR 36FT',:status => false,:abbreviation => 'TILL',:spanish_name =>  'RODWEEDER/10 BAR HAR 36FT',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 120,:code => 396,:dndc => 1,:name => 'TLOADSUG',:operation => 0,:eqp => 'TRANSLOADER SUGARCANE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'TRANSLOADER CANA DE AZUCAR',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 121,:code => 397,:dndc => 0,:name => 'BURNUNIT',:operation => 14,:eqp => 'BURNING UNIT',:status => true,:abbreviation => 'BURN',:spanish_name =>  'UNIDAD PARA QUEMA',:activity_id => 9}, :without_protection => true)
+Tillage.create!({:id => 209,:code => 402,:dndc => 0,:name => 'POTAHARV',:operation => 2,:eqp => 'POTATO HARVESTER',:status => true,:abbreviation => 'HARV',:spanish_name =>  'Cosecha de papas',:activity_id => 4}, :without_protection => true)
 Tillage.create!({:id => 122,:code => 417,:dndc => 0,:name => 'CANEPLNT',:operation => 5,:eqp => 'MECH Planter SUGARCANE',:status => false,:abbreviation => 'PLNT',:spanish_name =>  'PLANTADORA DE CANA DE AZUCAR',:activity_id => 1}, :without_protection => true)
 Tillage.create!({:id => 123,:code => 426,:dndc => 0,:name => 'GRAZE',:operation => 19,:eqp => 'GRAZING',:status => true,:abbreviation => 'GRAZ',:spanish_name =>  'Pastoreo',:activity_id => 2}, :without_protection => true)
 Tillage.create!({:id => 124,:code => 427,:dndc => 0,:name => 'STOP GRZ',:operation => 20,:eqp => 'STOP GRAZING',:status => false,:abbreviation => 'STOP',:spanish_name =>  'Parar Pastoreo',:activity_id => 3}, :without_protection => true)
@@ -207,4 +208,4 @@ Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operati
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 171,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp => 'DESTROY PUDDLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Destruir Puddle',:activity_id => 3}, :without_protection => true)
-#LAST id = 208 tillage code = 310 harvest sillage
+#LAST id = 209 tillage code = 402 harvest potato
