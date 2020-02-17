@@ -268,78 +268,80 @@ class WatershedsController < ApplicationController
             j=0
    
             #############  this block for the old way of simulating watersheds ##########################
-            #watershed_scenarios.each do |p|
-            #  @scenario = Scenario.find(p.scenario_id)
-            #  @field = Field.find(p.field_id)
-            #  @grazing = @scenario.operations.find_by_activity_id([7, 9])
-            #  if @grazing == nil then
-            #    @soils = Soil.where(:field_id => p.field_id).limit
-            #  else
-            #    @soils = Soil.where(:field_id => p.field_id).limit(1)
-            #  end
-            #    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-            #    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-            #    j+=1
-            #end # en
+            watershed_scenarios.each do |p|
+              @scenario = Scenario.find(p.scenario_id)
+              @field = Field.find(p.field_id)
+              @grazing = @scenario.operations.find_by_activity_id([7, 9])
+              if @grazing == nil then
+                @soils = Soil.where(:field_id => p.field_id).limit(1)
+              else
+                @soils = Soil.where(:field_id => p.field_id).limit(1)
+              end
+                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                j+=1
+            end # en
             #############  this block for the old way of simulating watersheds ##########################
 
 
             #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
-            define_routing(fields)
-            nn0 = @io.count-1
-            i = 1
-            while i <= nn0
-              chl = 0
-              rchl = 0
-              if nn0 > 1 then
-                i1 = [1, @io[i]].max
-              else
-                i1 = i
-                @ix[i1] = 1
-              end
-              field = Field.find(@nbsa[i1])
-              field_area = field.field_area * AC_TO_HA
-              xx = Math.sqrt(field_area)
-              chl = xx * 0.1732
-              if @ix[i1] > 0 then
-                if chl > 0 then 
-                  rchl = chl
-                else  
-                  if rchl > 0 then
-                    chl = rchl
-                  else   
-                    chl = 0.1732 * xx
+            <<-DOC
+              define_routing(fields)
+              nn0 = @io.count-1
+              i = 1
+              while i <= nn0
+                chl = 0
+                rchl = 0
+                if nn0 > 1 then
+                  i1 = [1, @io[i]].max
+                else
+                  i1 = i
+                  @ix[i1] = 1
+                end
+                field = Field.find(@nbsa[i1])
+                field_area = field.field_area * AC_TO_HA
+                xx = Math.sqrt(field_area)
+                chl = xx * 0.1732
+                if @ix[i1] > 0 then
+                  if chl > 0 then 
                     rchl = chl
+                  else  
+                    if rchl > 0 then
+                      chl = rchl
+                    else   
+                      chl = 0.1732 * xx
+                      rchl = chl
+                    end
+                  end
+                else  
+                  if rchl < 0.000000000001 then
+                    rchl = 0.1 * xx
+                  else          
+                    if chl < 0.000000000001 then
+                      chl = 0.1732 * xx
+                    else 
+                      if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
+                    end
                   end
                 end
-              else  
-                if rchl < 0.000000000001 then
-                  rchl = 0.1 * xx
-                else          
-                  if chl < 0.000000000001 then
-                    chl = 0.1732 * xx
-                  else 
-                    if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
-                  end
+                
+                if @ia[i1] > 0 then field_area = field_area * -1 end
+                @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
+                grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => field.id).limit(1)
+                else
+                  @soils = Soil.where(:field_id => field.id).limit(1)
                 end
-              end
-              
-              if @ia[i1] > 0 then field_area = field_area * -1 end
-              @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
-              grazing = @scenario.operations.find_by_activity_id([7, 9])
-              if @grazing == nil then
-                @soils = Soil.where(:field_id => field.id).limit(1)
-              else
-                @soils = Soil.where(:field_id => field.id).limit(1)
-              end
-              if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-              if msg.eql?("OK") then msg = create_subareas_watershed(j+1, field_area, chl, rchl, field.id) else return msg end
-              j+=1
-              i+=1
-            end  # end for i 1 to nn0
-
+                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                if msg.eql?("OK") then msg = create_subareas_watershed(j+1, field_area, chl, rchl, field.id) else return msg end
+                j+=1
+                i+=1
+              end  # end for i 1 to nn0
+            DOC
             #############  this block for the new way of simulating watersheds ##########################
+
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
