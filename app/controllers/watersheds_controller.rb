@@ -255,7 +255,6 @@ class WatershedsController < ApplicationController
     				@herd_list = Array.new
     				@change_fert_for_grazing_line = Array.new
     		    @fert_code = 79
-    				j=0
     			  state_id = @project.location.state_id
     			  @state_abbreviation = "**"
   			  	if state_id != 0 and state_id != nil then
@@ -266,44 +265,82 @@ class WatershedsController < ApplicationController
             watershed_scenarios.each do |p|
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
- 
+            j=0
+   
             #############  this block for the old way of simulating watersheds ##########################
-            #watershed_scenarios.each do |p|
-            #  @scenario = Scenario.find(p.scenario_id)
-            #  @field = Field.find(p.field_id)
-            #  @grazing = @scenario.operations.find_by_activity_id([7, 9])
-            #  if @grazing == nil then
-            #    @soils = Soil.where(:field_id => p.field_id).limit
-            #  else
-            #    @soils = Soil.where(:field_id => p.field_id).limit(1)
-            #  end
-            #    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-            #    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-            #    j+=1
-            #end # en
+            watershed_scenarios.each do |p|
+              @scenario = Scenario.find(p.scenario_id)
+              @field = Field.find(p.field_id)
+              @grazing = @scenario.operations.find_by_activity_id([7, 9])
+              if @grazing == nil then
+                @soils = Soil.where(:field_id => p.field_id).limit(1)
+              else
+                @soils = Soil.where(:field_id => p.field_id).limit(1)
+              end
+                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                j+=1
+            end # en
             #############  this block for the old way of simulating watersheds ##########################
 
 
             #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
-            define_routing1(fields)
-            @new_inputing.each do |p|               
-                #@field = Field.find(p.field_id)
-                @field = Field.find(p)
-                #@scenario = Scenario.find(p.scenario_id)
-                @scenario = Scenario.find(@field.watershed_scenarios.first.scenario_id)
-                @grazing = @scenario.operations.find_by_activity_id([7, 9])
-                if @grazing == nil then
-                  @soils = Soil.where(:field_id => p).limit(1)
+            <<-DOC
+              define_routing(fields)
+              nn0 = @io.count-1
+              i = 1
+              while i <= nn0
+                chl = 0
+                rchl = 0
+                if nn0 > 1 then
+                  i1 = [1, @io[i]].max
                 else
-                  @soils = Soil.where(:field_id => p).limit(1)
+                  i1 = i
+                  @ix[i1] = 1
+                end
+                field = Field.find(@nbsa[i1])
+                field_area = field.field_area * AC_TO_HA
+                xx = Math.sqrt(field_area)
+                chl = xx * 0.1732
+                if @ix[i1] > 0 then
+                  if chl > 0 then 
+                    rchl = chl
+                  else  
+                    if rchl > 0 then
+                      chl = rchl
+                    else   
+                      chl = 0.1732 * xx
+                      rchl = chl
+                    end
+                  end
+                else  
+                  if rchl < 0.000000000001 then
+                    rchl = 0.1 * xx
+                  else          
+                    if chl < 0.000000000001 then
+                      chl = 0.1732 * xx
+                    else 
+                      if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
+                    end
+                  end
+                end
+                
+                if @ia[i1] > 0 then field_area = field_area * -1 end
+                @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
+                grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => field.id).limit(1)
+                else
+                  @soils = Soil.where(:field_id => field.id).limit(1)
                 end
                 if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-                if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                if msg.eql?("OK") then msg = create_subareas_watershed(j+1, field_area, chl, rchl, field.id) else return msg end
                 j+=1
-            end # end watershed_scenarios.each
+                i+=1
+              end  # end for i 1 to nn0
+            DOC
             #############  this block for the new way of simulating watersheds ##########################
-
 
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
@@ -339,100 +376,43 @@ class WatershedsController < ApplicationController
       return response.body[:get_routing_response][:get_routing_result]
     end
     rec = response.body[:get_routing_response][:get_routing_result].split(",")
-    inputing = Array.new
-    receiving = Array.new
-    rec.each do |r|
-      field = r.split(" ")
-      inputing.push(field[0])
-      receiving.push(field[1])
-    end
-    debugger
-    order = Array.new
-    found = false
-    inputing.each do |input|
-      receiving.each do |receive|
-        if input == receive
-          found = true
-          break
-        end
-      end
-      if found == true then order.push(1) else order.push(0) end
-      found = false
-    end
-    first_one = true
-    next_one = 0
-    @new_inputing = Array.new
-    @relations = Array.new
-    loop do
-      for i in 0..inputing.count-1
-        debugger
-        if next_one == 0 then
-          # this is an upstream field. take that and put in the new array and delete it. and stat over.
-          if order[i] == 0 then
-            next_one = receiving[i]
-            @new_inputing.push(inputing[i])
-            order.delete_at(i)
-            inputing.delete_at(i)
-            receiving.delete_at(i)
-            if first_one == true then 
-              @relations.push(["+", "=", "="])
-              first_one = false
-            else
-              @relations.push(["-", "=", "="])
-            end
-            break
-          end
-        else
-          if next_one == inputing[i] then
-            next_one = receiving[i]
-            @new_inputing.push(inputing[i])
-            order.delete_at(i)
-            inputing.delete_at(i)
-            receiving.delete_at(i)
-            @relations.push(["-", ">", "<"])
-            break
-          end
-        end
-      end
-      debugger
-      if inputing.count <= 0 then break end
-    end
-  end
-
-  ################################ defibne_routing #################################
-  # Read results from R routing program and order the fields accordingly
-  def define_routing1(fields)
-    client = Savon.client(wsdl: URL_SoilsInfoDev)
-    ###### Get the fields routing from R program########
-    response = client.call(:get_routing, message: {"field_coordinates" => fields, "session" => session[:session_id]})
-    if response.body[:get_routing_response][:get_routing_result].include? "Error" then
-      return response.body[:get_routing_response][:get_routing_result]
-    end
-    rec = response.body[:get_routing_response][:get_routing_result].split(",")
     ie = Array.new
-    io = Array.new
-    nbsa = Array.new
+    @io = Array.new
+    @nbsa = Array.new
     icmo = Array.new
     @ki = Array.new
     ir = Array.new
     iy = Array.new
-    ix = Array.new
-    ia = Array.new
+    @ix = Array.new
+    @ia = Array.new
     chl = Array.new
     rchl = Array.new
-    io.push(0)
+    wsa = Array.new
+    chl = Array.new
+    rchl = Array.new
+    @io.push(0)
     ie.push(0)
+    icmo.push(0)
+    wsa.push(0)
+    chl.push(0)
+    rchl.push(0)
+    @ia.push(0)
+    @ix.push(0)
     rec.each do |r|
       field = r.split(" ")
       ie.push(field[0])
-      io.push(field[1])
+      @io.push(field[1])
+      icmo.push(0)
+      chl.push(0)
+      rchl.push(0)
+      @ia.push(0)
+      @ix.push(0)
     end
-    debugger
     nn = ie.count - 1
     for i in 1..nn
-      nbsa[i] = ie[i]  #nbsa keep the entering fields
+      @nbsa[i] = ie[i]  #nbsa keep the entering fields
       ie[i]=i          #ie will keep the sequence 1,2,3..etc
-      if io[i] == "0" then icmo[i] = ie[i] end   #if io is the oulet it goes to icmo
+      if @io[i] == "0" then icmo[i] = ie[i] end   #if io is the oulet it goes to icmo
       @ki[i]=i         # @ki will contain a sequence as in ie
     end
     nn0 = nn
@@ -440,7 +420,7 @@ class WatershedsController < ApplicationController
       for i in 1..nn
         ir[i] = 0
         for j in 1..nn
-          if nbsa[i] != io[j] then next end
+          if @nbsa[i] != @io[j] then next end
             ir[j] = ie[i]
         end
       end
@@ -457,81 +437,48 @@ class WatershedsController < ApplicationController
         ir[ie[i]] = ir[i]
       end
       for i in (nn..1).step(-1)
-        debugger
         if ir[@ki[i]] > 0 then next end
-        io[nn] = ie[@ki[i]]
+        @io[nn] = ie[@ki[i]]
         nn=elim(nn,i)
         break
       end
       i = nn0
-      loop do
-        debugger
-        for j in 1..nn
-          if ir[@ki[j]] == io[i] then break end
+      while nn > 0
+        j = 1
+        while j <= nn
+          if ir[@ki[j]] == @io[i] then break end
+          j += 1
         end
         if j > nn then
-          ix[io[i]] = 1
-          k = io[i]
+          @ix[@io[i]] = 1
+          k = @io[i]
           loop do
-            debugger
-            for j in 1..nn
+            j = 1
+            while j <= nn
               if ir[@ki[j]] == ir[k] then break end
+              j += 1
             end
             if j <= nn then break end
             k = ir[k]
           end
           i = i - 1
-          io[i] = ie[@ki[j]]
+          @io[i] = ie[@ki[j]]
         else
           i = i - 1
-          io[i] = ie[@ki[j]]
+          @io[i] = ie[@ki[j]]
         end
         nn = elim(nn,j)
       end
-      ix[io[i]] = 1
+      @ix[@io[1]] = 1
       for i in 1..nn0
-        ii = ir[io[i]]
+        ii = ir[@io[i]]
         i1 = i + 1
-        for j in 1..nn0
-          if ir[io[j]] == ii then ia[io[j]] = 1 end
+        for j in i1..nn0
+          if ir[@io[j]] == ii then @ia[@io[j]] = 1 end
         end
       end
     end   # end if > 2
-
-    for i in 1..nn0
-      if nn0 > 1 then
-        i1 = [1, io[i]].max
-      else
-        i1 = i
-        ix[i1] = 1
-      end
-      #todo
-      xx = wsa(field).sqrt
-      if ix[i1] > 0 then
-        if chl[i1] > 0 then 
-          rchl[i1] = chl[i1] 
-        else 
-          if rchl[i1] > 0 then 
-            chl[i1] = rchl[i1] 
-          else 
-            chl[i1] = 0.1732 * xx
-            rchl[i1] = chl[i1]
-          end
-        end
-      else
-        if rchl[i1] <= 0 then 
-          rchl[i1] = 0.1 * xx 
-        else
-          if chl[i1] <= 0 then 
-            chl[i1] = 0.1732 * xx 
-          else 
-            if (chk[i1]-rchl[i1]).abs <=0 then chl[i1] = 1.732 * rchl[i1] end
-          end
-        end
-      end
-      if ia[i1] > 0 then x1 = wsa[i1] * -1 else x1 = wsa[i1] end
-    end
-  end
+  end  # end method
 
   def elim(nn,i)
     nn = nn - 1
@@ -539,6 +486,274 @@ class WatershedsController < ApplicationController
       @ki[j] = @ki[j+1]
     end
     return nn
+  end
+
+  #this is the new subarea creation method for watershed simulatons
+  def create_subareas_watershed(operation_number, area, chl, rchl, field_id)  # operation_number is used for subprojects. for simple scenarios is 1
+    last_owner1 = 0
+    i=0
+    nirr = 0
+    if @grazing == nil and @soils.count > 1 then
+      subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
+    else
+      subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
+      subareas[0].wsa = @field.field_area * AC_TO_HA
+    end
+    subareas.each do |subarea|
+      soil = subarea.soil
+      #if soil.selected then
+      create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
+      add_subarea_file_watershed(field_id, area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, false, @soils.count)
+      i+=1
+      @soil_number += 1
+      #end  # end if soil.selected
+    end  # end subareas.each for soil_id > 0
+    #add subareas and operations for buffer BMPs.
+    subareas = @scenario.subareas.where("bmp_id > 0")
+    buffer_type = 2
+    bmp = 1
+    subareas.each do |subarea|
+      add_subarea_file_watershed(field_id, area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
+      if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
+        if subarea.subarea_type == "RF" then
+          buffer_type = 1
+        end
+        if !(subarea.subarea_type == "CB" and bmp > 1) then
+           create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
+           bmp += 1
+        end
+        i+=1
+        @soil_number += 1
+      end # end if bmp types PPDE and PPTW
+    end  # end subareas.each for buffers
+    msg = send_file_to_APEX(@subarea_file, "APEX.sub")
+    return msg
+  end   # end create_subareas
+  
+  #This add single subarea information for watershed simulations
+  def add_subarea_file_watershed(field_id, area, chl, rchl, _subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
+    j = i + 1
+    #/line 1
+    if buffer then
+      @subarea_file.push(sprintf("%8d", field_id) + "0000000000000000   " + _subarea_info.description + "\n")
+    else
+      @subarea_file.push(sprintf("%8d", field_id) + _subarea_info.description + "\n")
+    end
+    #/line 2
+    @last_soil2 = j + @last_soil_sub
+    last_owner1 = @last_soil2
+    if buffer then
+      sLine = sprintf("%4d", @soil_number)  #soil
+      if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
+        sLine += sprintf("%4d", _subarea_info.iops) #operation
+      else
+        #when @grazing the operation number should be the following because the subareas are reduce to 1
+        if @grazing != nil then
+          if session[:simulation] != "scenario" then
+            _subarea_info.iops = @soil_number + 1 
+          else
+            _subarea_info.iops = i + 1
+          end
+        end
+        if session[:simulation] != "scenario" then
+          _subarea_info.iops = @soil_number + 1
+        end
+        sLine += sprintf("%4d", _subarea_info.iops)   #operation
+      end
+      sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+    else
+      if session[:simulation] == "scenario" then
+        sLine = sprintf("%4d", _subarea_info.inps)  #soil
+        sLine += sprintf("%4d", _subarea_info.iops)   #operation
+      else
+        #sLine = sprintf("%4d", @soil_number+1)  #soil
+        sLine = sprintf("%4d", @soil_number+1)  #soil
+        sLine += sprintf("%4d", @soil_number+1)   #operation
+      end
+      sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
+    end
+    if _subarea_info.iow == 0 then
+      _subarea_info.iow = 1
+    end
+    sLine += sprintf("%4d", _subarea_info.ii)
+    sLine += sprintf("%4d", _subarea_info.iapl)
+    sLine += sprintf("%4d", 0) #column 6 line 1 is not used
+    sLine += sprintf("%4d", _subarea_info.nvcn)
+    sLine += sprintf("%4d", _subarea_info.iwth)
+    sLine += sprintf("%4d", _subarea_info.ipts)
+    sLine += sprintf("%4d", _subarea_info.isao)
+    sLine += sprintf("%4d", _subarea_info.luns)
+    sLine += sprintf("%4d", _subarea_info.imw)
+    @subarea_file.push(sLine + "\n")
+    #/line 3
+    sLine = sprintf("%8.2f", _subarea_info.sno)
+    sLine += sprintf("%8.2f", _subarea_info.stdo)
+    sLine += sprintf("%8.2f", _subarea_info.yct)
+    sLine += sprintf("%8.2f", _subarea_info.xct)
+    sLine += sprintf("%8.2f", _subarea_info.azm)
+    if @apex_version == 1501 then
+      sLine += sprintf("%8.2f", 0)   #add SAEL column
+    end
+    sLine += sprintf("%8.2f", _subarea_info.fl)
+    sLine += sprintf("%8.2f", _subarea_info.fw)
+    sLine += sprintf("%8.2f", _subarea_info.angl)
+    @subarea_file.push(sLine + "\n")
+    #/line 4
+    #_subarea_info.wsa = area
+    if area == 0.00 then
+      area = 0.01
+    end
+    sLine = sprintf("%8.2f", area)
+    sLine += sprintf("%8.4f", chl)
+    sLine += sprintf("%8.2f", _subarea_info.chd)
+    sLine += sprintf("%8.2f", _subarea_info.chs)
+    sLine += sprintf("%8.2f", _subarea_info.chn)
+    sLine += sprintf("%8.4f", _subarea_info.slp)
+    sLine += sprintf("%8.2f", _subarea_info.splg)
+    sLine += sprintf("%8.2f", _subarea_info.upn)
+    sLine += sprintf("%8.2f", _subarea_info.ffpq)
+    sLine += sprintf("%8.2f", _subarea_info.urbf)
+    @subarea_file.push(sLine + "\n")
+    #/line 5
+    sLine = sprintf("%8.4f", rchl)
+    sLine += sprintf("%8.2f", _subarea_info.rchd)
+    sLine += sprintf("%8.2f", _subarea_info.rcbw)
+    sLine += sprintf("%8.2f", _subarea_info.rctw)
+    sLine += sprintf("%8.2f", _subarea_info.rchs)
+    sLine += sprintf("%8.2f", _subarea_info.rchn)
+    sLine += sprintf("%8.4f", _subarea_info.rchc)
+    sLine += sprintf("%8.4f", _subarea_info.rchk)
+    sLine += sprintf("%8.0f", _subarea_info.rfpw)
+    sLine += sprintf("%8.4f", _subarea_info.rfpl)
+    if @apex_version == 1501 then
+      sLine += sprintf("%8.2f", 0)   #add SAT1 column
+      sLine += sprintf("%8.2f", 0)   #add FPS1 column
+    end    
+    @subarea_file.push(sLine + "\n")
+    #/line 6
+    sLine = sprintf("%8.2f", _subarea_info.rsee)
+    sLine += sprintf("%8.2f", _subarea_info.rsae)
+    sLine += sprintf("%8.2f", _subarea_info.rsve)
+    sLine += sprintf("%8.2f", _subarea_info.rsep)
+    sLine += sprintf("%8.2f", _subarea_info.rsap)
+    sLine += sprintf("%8.2f", _subarea_info.rsvp)
+    sLine += sprintf("%8.2f", _subarea_info.rsv)
+    sLine += sprintf("%8.2f", _subarea_info.rsrr)
+    sLine += sprintf("%8.2f", _subarea_info.rsys)
+    sLine += sprintf("%8.2f", _subarea_info.rsyn)
+    @subarea_file.push(sLine + "\n")
+    #/line 7
+    sLine = sprintf("%8.3f", _subarea_info.rshc)
+    sLine += sprintf("%8.2f", _subarea_info.rsdp)
+    sLine += sprintf("%8.2f", _subarea_info.rsbd)
+    if _subarea_info.pcof == nil then
+      _subarea_info.pcof = 0
+    end
+    sLine += sprintf("%8.2f", _subarea_info.pcof)
+    if _subarea_info.bcof == nil then
+      _subarea_info.bcof = 0
+    end
+    sLine += sprintf("%8.2f", _subarea_info.bcof)
+    sLine += sprintf("%8.2f", _subarea_info.bffl)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    sLine += sprintf("%8.2f", 0.00)
+    @subarea_file.push(sLine + "\n")
+      #/line 8
+    sLine = "  0"
+    if _subarea_info.nirr > 0 then
+      sLine += sprintf("%1d", _subarea_info.nirr)
+    else
+      #if not check if there is manual irrigaiton in the operations.
+      irrigation_op = _subarea_info.scenario.operations.find_by_activity_id(6)
+      if irrigation_op != nil then
+        sLine += sprintf("%1d", irrigation_op.type_id.to_s)
+      else
+        sLine += sprintf("%1d", _subarea_info.nirr)
+      end
+    end
+    sLine += sprintf("%4d", _subarea_info.iri)
+    sLine += sprintf("%4d", _subarea_info.ira)
+    sLine += sprintf("%4d", _subarea_info.lm)
+    sLine += sprintf("%4d", _subarea_info.ifd)
+    sLine += sprintf("%4d", _subarea_info.idr)
+    sLine += sprintf("%4d", _subarea_info.idf1)
+    sLine += sprintf("%4d", _subarea_info.idf2)
+    sLine += sprintf("%4d", _subarea_info.idf3)
+    sLine += sprintf("%4d", _subarea_info.idf4)
+    sLine += sprintf("%4d", _subarea_info.idf5)
+    if @apex_version == 1501 then
+      sLine += sprintf("%4d", 0)   #add idf6 column
+      sLine += sprintf("%4d", 0)   #add irrs column
+      sLine += sprintf("%4d", 0)   #add irrw column
+    end    
+    @subarea_file.push(sLine + "\n")
+    #/line 9
+    if _subarea_info.nirr > 0 then
+      sLine = sprintf("%8.2f", _subarea_info.bir)
+    else
+      sLine = sprintf("%8.2f", 0)
+    end
+    sLine += sprintf("%8.2f", _subarea_info.efi)
+    if _subarea_info.nirr > 0 then
+      sLine += sprintf("%8.2f", _subarea_info.vimx)
+    else
+      sLine += sprintf("%8.2f", 0)
+    end
+    sLine += sprintf("%8.2f", _subarea_info.armn)
+    if _subarea_info.nirr > 0 then
+      sLine += sprintf("%8.2f", _subarea_info.armx)
+      sLine += sprintf("%8.2f", _subarea_info.bft)
+    else
+      sLine += sprintf("%8.2f", 0)
+      sLine += sprintf("%8.2f", 0)
+    end
+    sLine += sprintf("%8.2f", _subarea_info.fnp4)
+    sLine += sprintf("%8.2f", _subarea_info.fmx)
+    sLine += sprintf("%8.2f", _subarea_info.drt)
+    sLine += sprintf("%8.2f", _subarea_info.fdsf)
+    @subarea_file.push(sLine + "\n")
+    #/line 10
+    if !buffer && @c_cs then
+      _subarea_info.pec -= 0.20
+    end
+    sLine = sprintf("%8.2f", _subarea_info.pec)
+    sLine += sprintf("%8.2f", _subarea_info.dalg)
+    sLine += sprintf("%8.2f", _subarea_info.vlgn)
+    sLine += sprintf("%8.2f", _subarea_info.coww)
+    sLine += sprintf("%8.2f", _subarea_info.ddlg)
+    sLine += sprintf("%8.2f", _subarea_info.solq)
+    sLine += sprintf("%8.2f", _subarea_info.sflg)
+    sLine += sprintf("%8.2f", _subarea_info.fnp2)
+    sLine += sprintf("%8.2f", _subarea_info.fnp5)
+    sLine += sprintf("%8.2f", _subarea_info.firg)
+    @subarea_file.push(sLine + "\n")
+    #/line 11
+    if @grazingb == true and _subarea_info.xtp1 == 0 then
+      sLine = sprintf("%4d", 1)
+    else
+      sLine = sprintf("%4d", _subarea_info.ny1)
+    end
+    sLine += sprintf("%4d", _subarea_info.ny2)
+    sLine += sprintf("%4d", _subarea_info.ny3)
+    sLine += sprintf("%4d", _subarea_info.ny4)
+    @subarea_file.push(sLine + "\n")
+    #/line 12
+    if @grazingb == true and _subarea_info.xtp1 == 0 then
+      sLine = sprintf("%8.2f", 0.01)
+    else
+      sLine = sprintf("%8.2f", _subarea_info.xtp1)
+    end
+    sLine += sprintf("%8.2f", _subarea_info.xtp2)
+    sLine += sprintf("%8.2f", _subarea_info.xtp3)
+    sLine += sprintf("%8.2f", _subarea_info.xtp4)
+    @subarea_file.push(sLine + "\n")
+
+    return "OK"
   end
 
   ################################ NEW #################################
