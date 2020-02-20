@@ -1053,8 +1053,7 @@ class ProjectsController < ApplicationController
     return msg
   end
 
-  def upload_field_info(node)
-    
+  def upload_field_info(node)   
     #begin
       field = Field.new
       field.location_id = session[:location_id]
@@ -1176,6 +1175,7 @@ class ProjectsController < ApplicationController
             return "scenario could not be saved"
           end
         end
+        field.soils.update_all(:soil_id_old => nil)
       end
     end
     return "OK"
@@ -1992,7 +1992,7 @@ class ProjectsController < ApplicationController
               next
             else
               subarea.soil_id = soil.id
-              soil.soil_id_old = 0
+              #soil.soil_id_old = 0
             end
           end
         when "number"
@@ -2209,7 +2209,6 @@ class ProjectsController < ApplicationController
           subarea.xtp9 = p.text
         when "xtp10"
           subarea.xtp10 = p.text
-
       end #end case
     end #end each
     if subarea.save then
