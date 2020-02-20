@@ -1145,6 +1145,7 @@ class ProjectsController < ApplicationController
         end
       when "climes"
         p.elements.each do |f|
+          #msg = "OK"
           msg = upload_clime_new_version(field.id, f)
           if msg != "OK"
             return msg
