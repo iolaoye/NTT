@@ -3002,21 +3002,21 @@ class ProjectsController < ApplicationController
           bmp.difference_precipitation = p.text
         when "climates"
           p.elements.each do |climate|
-            msg = upload_climate_new_version(climate, bmp.bmp_id)
+            msg = upload_climate_new_version(climate, bmp.id)
             if msg != "OK"
               return msg
             end
           end
         when "subareas"
           p.elements.each do |subarea|
-            msg = upload_subarea_new_version(bmp.bmp_id, scenario_id, subarea)
+            msg = upload_subarea_new_version(bmp.id, scenario_id, subarea)
             if msg != "OK"
               return msg
             end
           end
         when "soil_operations"
           p.elements.each do |soil_op|
-            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.bmp_id)
+            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.id)
             if msg != "OK"
               return msg
             end
