@@ -446,6 +446,10 @@ es:
     unit_acre: "unidad / ac"
     continues_grazing: Pastoreo Continuo
     rotational_grazing: Pastoreo Rotacional
+    whats_new: Lo Nuevo
+    presentations: Presentaciones
+    related_tools: Herramientas Relacionadas
+    updates: "ACTUALIZACIONES"
   welcome_note:
     thanks: 'Muchas gracias por usar este programa. La versión actual de “Nutrient Tracking Tool (NTT): La Nueva Generación” está diseñada para evaluar los impactos ambientales y económicos de diversas prácticas de gestión en materia de agua y calidad del aire a nivel de parcelas o fincas y pequeñas cuencas. NTT es un programa basado en Internet y no se requiere descargar ningún software. NTT importa las bases de datos necesarias, tales como el clima, el suelo, las operaciones, y la geometría del terreno en el área seleccionada (agrícola, forestal y urbana) para el usuario que utiliza la base de datos basadas en GIS y no-GIS existentes ​​en cualquier parte del territorio continental de los Estados Unidos. NTT simula el escenario inicial y numerosos escenarios de gestión de conservación utilizando el modelo APEX (Agricultural Policy/Extender; Williams et al. 2010) (Versión 0806). Por favor refierase a la sección “Acerca de NTT” para información correspondiente a las nuevas funciones y la ciencia en la versión actual de NTT. Para información detallada por favor referirse a el manual o puede contactar al Dr. Ali Saleh via e-mail a saleh@tarleton.edu o al teléfono (254) 968-9799.'
     note1: '1.  Aunque la base de datos de NTT esta disponible para EE.UU, el acceso a las bases de datos para la simulación de NTT se limita a donde NTT ha sido probado y verificado. Esto asegura a los usuarios que los resultados obtenidos a partir de esta versión de NTT es relativamente fiable para las condiciones en las que el programa ha sido verificado. Sin embargo, la última versión de NTT (www.nn.tarleton.edu/ntt) permite a los usuarios acceder a los datos en todo el territorio continental de Estados Unidos.'
@@ -453,6 +457,9 @@ es:
     final: 'Finalmente, como líder del proyecto NTT y con mi equipo de proyecto (Oscar Gallego y Edward Osei), nos gustaría darle las gracias a las fuentes de financiación y nuestros colegas, en particular, los agricultores y productores, por su contribución en el diseño de este programa.'
     name: 'Dr. Ali Saleh'
     initial_welcome: Bienvenido a el Nutrient Tracking Tool (NTT) – una herramienta para estimar perdiad de nutrientes y sedimento de cultivos y pastoreo. NTT fue desarrollado pro Texas Institute for Applied Environmental Research (TIAER) en Tarleton State University con fundos y suporte técnico de la ofcina de mercados del medio ambiente de USDA.
+    ceeot1: 'Comprehensive Economic Environmental Optimization Tool (CEEOT) es un software en Windows a escala de cuencas. CEEOT evalua los inpactos económicos y ambientales de prácticas de conservación a escala de fincas y cuencas. Por favor presione este enlace '
+    ceeot2: 'para mas información'
+    ntt: Nutrient Tracking Tool (NTT) es la versión básica y esta diseñada para usuarios comunes incluyendo productores y participantes de programas de Intercambio de Mercados de Nutrientes.
   menu:
     fem: FEM
     welcome: Bienvenido
@@ -498,7 +505,7 @@ es:
     description: 'Descripción del Proyecto'
   footer:
     instructions: Página de Instrucciones
-    contact_us: 'Contactarnos'
+    contact_us: 'Contactenos'
     about_ntt: 'Acerca de NTT'
     help: Ayuda
     Language: Idioma
@@ -571,7 +578,7 @@ es:
     load_scenario: Cargar Escenario
     last_simulation: Fecha de Simulación
     simulation_success: escenarios simulados con éxito en
-    other_scenario: Copiar Escenario de otra parcela
+    other_scenario: Copiar escenario de otro proyecto/parcela
     upload_scenarios: Carga tus propios escenarios
   location:
     new_location: Nueva Ubicación
@@ -2470,3 +2477,13 @@ es:
     sites: >
                 Esta es toda la información sobre el sitio de APEX.<br><br>
                 Para <strong>Editar</strong> este sitio, seleccione <strong><em>Editar</em></strong>
+  whats_new:
+    current_html: <strong>Diciembre 1, 2019:</strong><br> 1. Validación a nivel 1 ha sido completado para los 48 estados limítrofes. Los archivos de parámetros han sido actualizados en NTT. Ohio y Minnesota han sido validados usando datos escala de granja (validación de nivel 2). Donde se encuentren datos a nivel de granja iremos mejorando los parametros en NTT. Por favor revise la información de validación disponible seleccionando la opción <strong>validation</strong> en la parte inferior de las páginas. Manténgase ala tanto para mas información.
+                  <br>2. Actualmente, la inclinación de la superficie del suelo es calculada con base en un píxel centroide (30-m o menos) representado cada tipo de suelo dentro del área de interes (AOI). Ahora, la subrutina de inclinación modificada en NTT calculará la inclinación promedio para todos los píxeles existentes para cada tipo de suelo dentro del AOI. Esto mejora el valuor de la inclinación calculada para el AOI en la mayoria de los casos.
+                  <br><br><strong>Febrero 2020 (Versión 20-2):</strong><br>
+                  Una versión official de NTT (Versión 20-2) publicada con las siguientes Modificaciones
+                  <br>1.  El periodo de los datos del clima fueron expandidos haste Dec. 30 2018. El periodo de simulación de ahora va desde 1981 hasta Dec. de 2018.
+                  <br>2.  El mapa para la creación de los polígonos fue actualizado para ser mas rápido y mas confiable.
+                  <br>3.  La base de datos de los cultivos para las fechas de plantado/cosechado fueron acualizadas para diferentes regiones del país.
+                  <br>4.  La página de prácticas de conservación ahora incluye cercado. Cercado tiene el efecto de eliminar deposición de estiércol directamente en los rios y de hecho crea un buffer entre la cerca y el rio, el cual reduce erosión y flujo en la superficie.
+    intro: NTT ha sido actulizado y re-publicado como una herramienta a nivel nacional. NTT puede ahora ser usado para estimar perdida de nutrientes y sedimentos de operaciones de cultivo y pasteo a lo largo de los estadod limítrofes de los Estados Unidos. NTT esta constantemente siendo mejorado, asi que por favor visite esta página para informarse acerca de las últimas actualizaciones.

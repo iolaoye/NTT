@@ -15,7 +15,7 @@
           <%= image_tag 'pic1.jpg', :class => "first-slide" %>
           <div class="container">
             <div class="carousel-caption">
-              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <h1 class="intro">Nutrient Tracking Tool (Version 20-2)</h1>
               <p></p>
               <!-- <p>A couple of introductory sentences would go here, e.g. "NTT allows farmers to simulate BMPS and operations..." etc.</p> -->
             </div>
@@ -25,7 +25,7 @@
           <%= image_tag 'grazing.jpg', :class => "second-slide" %>
           <div class="container">
             <div class="carousel-caption">
-             <h1 class="intro">Nutrient Tracking Tool</h1>
+             <h1 class="intro">Nutrient Tracking Tool (Version 20-2)</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
@@ -35,7 +35,7 @@
           <%= image_tag 'pic3.jpg', :class => "third-slide" %>
           <div class="container">
             <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
+            <h1 class="intro">Nutrient Tracking Tool  (Version 20-2)</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
@@ -45,7 +45,7 @@
           <%= image_tag 'pic5.jpg', :class => "fourth-slide" %>
           <div class="container">
             <div class="carousel-caption">
-            <h1 class="intro">Nutrient Tracking Tool</h1>
+            <h1 class="intro">Nutrient Tracking Tool (Version 20-2)</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
@@ -55,7 +55,7 @@
           <%= image_tag 'corn2.png', :class => "fifth-slide" %>
           <div class="container">
             <div class="carousel-caption">
-              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <h1 class="intro">Nutrient Tracking Tool (Version 20-2)</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
@@ -65,7 +65,7 @@
         <%= image_tag 'pic9.png', :class => "sixth-slide" %>
           <div class="container">
             <div class="carousel-caption">
-              <h1 class="intro">Nutrient Tracking Tool</h1>
+              <h1 class="intro">Nutrient Tracking Tool (Version 20-2)</h1>
               <p></p>
               <!-- <p>This can be some different text from the first image, or the same.</p> -->
             </div>
@@ -95,16 +95,16 @@
   </div>
   <div id="welcome_info">
     <center style="margin-top:-3%">
-      <p><a href='#' id='icon1'><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br>About NTT</a></p>
-      <blink><p><a href='#' id='icon2'><%= image_tag 'future_icon.png', :style => "height: 50px;"%><br>What's New</a></p></blink>
+      <p><a href='#' id='icon1'><%= image_tag 'info_icon.png', :style => "height: 50px;" %><br><%= t('footer.about_ntt')%></a></p>
+      <blink><p><a href='#' id='icon2'><%= image_tag 'future_icon.png', :style => "height: 50px;"%><br><%= t('general.whats_new')%></a></p></blink>
       <!--<p><a href='#' onclick="show('popup2')"><%= image_tag 'what_how_icon.png', :style => "height: 55px;" %><br>Other Models</a></p>-->
-      <p><a href='#' id='icon3'><%= image_tag 'video2.png', :style => "height: 50px;" %><br>Presentations</a></p>
-      <p><a href='#' id='icon4'><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br>Contact Us</a></p>
+      <p><a href='#' id='icon3'><%= image_tag 'video2.png', :style => "height: 50px;" %><br><%= t('general.presentations') %></a></p>
+      <p><a href='#' id='icon4'><%= image_tag 'contact_icon.png', :style => "height: 45px" %><br><%= t('footer.contact_us')%></a></p>
     </center>
   </div>
   <!-- Info icon -->
   <div class="popup" id="popup1">
-    <p><strong>About NTT</strong><a class="close" id='close1'>×</a><br>
+    <p><strong><%= t('footer.about_ntt')%></strong><a class="close" id='close1'>×</a><br>
       <video width="100%" height="480" controls>
         <source src="/whats_new.mp4" type="video/mp4">
       </video><br>
@@ -114,22 +114,6 @@
         <p><strong><%=t('about.disclaimer0')%></strong></p>
         <p><%= raw t('about.disclaimer1') %></p>
   </div>
-  <!-- Benefits icon -->
-  <!--
-  <div class="popup" id="popup2">
-    <p><strong>Other Available Models</strong><a class="close" onclick="hide('popup2')">×</a><br><br>
-      In addition to this version of NTT, the following versions of NTT are available to use:
-      <ol>
-        <li>Field/small watershed models:</li>
-        <ol type='a'>
-          <li>NTT for education and research purposes: (<a href="http://NTT_RE@tiaer.tarleton.edu">http://ntt_re@tiaer.tarleton.edu</a>)</li>
-          <li>Last version of NTT: (<a href="http://nn.tarleton.edu/nttg2">nn.tarleton.edu/nttg2</a>)</li>
-        </ol>
-        <li></li>
-      </ol>
-    </p>
-  </div>
-  -->
   <!-- Video icon -->
   <div class="popup" id="popup3">
     <p><strong>Nutrient Tracking Tool (NTT): General Description</strong><a class="close" id='close3'>×</a><br>
@@ -138,58 +122,43 @@
       </div>
     </p>
   </div>
-  <!--<div class="popup" id="popup3">
-    <p><strong>Data Requirements</strong><a class="close" onclick="hide('popup3')">×</a><br><br>
-      NTT requires regional soils, climate and site-specific crop management information. NTT currently provides selections for all regions of U.S. and Puerto Rico
-      territory, but it has only been validated for a limited number of states and counties. As validation becomes possible in other parts of the country, parameter
-      files may be updated for additional counties in future versions.</p>
-  </div>-->
   <!-- Future icon -->
   <div class="popup" id="popup2">
-    <strong>What's New</strong><a class="close" id='close2'>×</a>
-    <p>NTT has been updated and re-released as a national-level tool. NTT can now be used to estimate nutrient and sediment losses from crop and pasture operations across the contiguous United  States.
-    NTT is constantly being improved, so please visit this page for the latest updates.</p><br>
-    <strong>UPDATES</strong><br>
-    <li> 7/10/2018: Ntt Validation (Stage 1) for the States of Indiana, Iowa, and Winconsin are completed. Please view validation icon at the bottom of NTT Welcome Page.</li>
-    <li> September 1, 2019. Tier 1 Validation has been completed for all of the lower 48 states. Parameter files have been updated in NTT. Ohio and Minnesota have been validated using field-scale data (Tier 2 Validation). Where we have field scale data we will continue to improve parameters in NTT. Please review the validation information available by clicking on “validation” on the bottom of the home page. Stay tuned for more updates.</li>
-    <li> Currently, the soil surface slope is calculated based on one centroid pixel  (30-m or lass)  representing each soil type within the area of interest (AOI). Now, the modified slope routine in NTT will calculate the average slope for all existing  pixels for each soil type within the AOI. This improve the value of calculated slope for AOI in most cases.</li>    
+    <strong><%=t('general.whats_new')%></strong><a class="close" id='close2'>×</a>
+    <div><%= t('whats_new.intro') %></div><br>
+    <strong><%=t('general.updates')%></strong><br>
+    <div style="text-align: left">
+      <%= t('whats_new.current_html') %>
+    </div>
   </div>
   <!-- Contact icon -->
   <div class="popup" id="popup4">
-    <p><strong>Contact Us</strong><a class="close" id='close4'>×</a><br><br>
+    <p><strong><%= t('footer.contact_us')%></strong><a class="close" id='close4'>×</a><br><br>
       For detailed information please refer to the manual or contact Dr. Ali Saleh by e-mail at <a href="mailto:saleh@tiaer.tarleton.edu">saleh@tiaer.tarleton.edu</a>
       or by phone (254) 968-9799. For technical support please contact Ali Saleh or Oscar Gallego at <a href="mailto:gallego@tarleton.edu">gallego@tarleton.edu</a>.</p>
   </div>
 </div>
-<div class="container-bottom" style="margin-top: 10%;">
-  <h3 style="clear: both;">Related Tools</h3>
+<div class="container-bottom" style="margin-top: 10%; text-align: center">
+  <h3 style="clear: both;"><%= t('general.related_tools')%></h3>
   <hr>
   <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
     <h4>CEEOT</h4>
-    <p style="font-family:verdana;">Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. Please visit <a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> for more information.</p>
+    <p style="font-family:verdana;"><%= t('welcome_note.ceeot1') %><a href="http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html">http://tiaer.tarleton.edu/modeling-analysis/applications_tools.html</a> <%=t('welcome_note.ceeot2') %></p>
   </div>
-  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
+  <div style="float: right; width: 31%; margin-right: 2%; margin-top: -1.7%">
     <% if ENV["APP_VERSION"] == "modified" %>
       <h4>NTT-RE</h4>
       <p style="font-family:verdana;">Nutrient Tracking Tool for Research and Education (NTT-RE) is more comprehensive version of the current version of NTT and intended to be used for Research and Education purposes. <a href="http://ntt-re.tiaer.tarleton.edu">Go to NTT-RE</a> </p>
     <% else %>
       <h4>NTT</h4>
-      <p style="font-family:verdana;">Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants. <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
+      <p style="font-family:verdana;"><%= t('welcome_note.ntt')%> <a href="http://ntt.tiaer.tarleton.edu">Go to NTT</a> </p>
     <% end %>
   </div>
-  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%">
+  <div style="float: left; width: 31%; margin-right: 2%; margin-top: -1.7%; display:none">
     <h4>NTT-G2</h4>
     <p style="font-family:verdana;">NTT v.2 is the previous version of NTT and is still accessible to users. <a href="http://nn.tarleton.edu/nttG2">Go to NTT v.2</a>. </p>
   </div>
   <br style="clear: left;" />
-  <!--
-
-  <div>
-    <h4>NTT-RE</h4>
-  </div>
-  <div>
-    <h4>NTT-G3</h4>
-  </div>-->
 </div>
 <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
