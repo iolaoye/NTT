@@ -164,7 +164,7 @@ module ProjectsHelper
 		duplicate_location(new_project.id)
 		msg = duplicate_apex_control(new_project.id)
 		if msg == "OK" then msg = duplicate_apex_parameter(new_project.id) else return msg end
-		if msg = "OK" then
+		if msg == "OK" then
 			#delete all of the old_soil_id from soils to avoid errors if the project is duplicated again
 			new_project.fields.each do |field|
 				field.soils.update_all(:soil_id_old => nil)
