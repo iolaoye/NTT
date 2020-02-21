@@ -663,6 +663,10 @@
   <div style='display:none' id="div_4">
     <%= field_set_tag t('aplcat.forage_quantity_input'), class:'fieldset' do %>
     <div class="field">
+      <%= t('aplcat.number_of_forage') %>
+      <%= f.number_field :number_of_forage, class: 'gvTitleStyleNumber', :value=> 1, :step=> 'any', min: 1 %>
+      </div>
+    <div class="field">
     <%=  t('aplcat.forage_id_html') %>
     <%= f.number_field :forage_id, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.forage_id'), :value=> 127, :step => 'any', min: 1, max: 177 %>
     </div>

@@ -1174,6 +1174,7 @@ en:
       greenhouse_parameters: Greenhouse Parameters
       simulation_parameters: Simulation Parameters
       forage_quantity_input: Forage Quality Input
+      number_of_forage: Number of growing forage for which quality data will be entered.
       forage_id_html: Forage Id (refer to <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>)
       jdi: 'Forage Quantity Improvement:'
       increase: Begin to increase

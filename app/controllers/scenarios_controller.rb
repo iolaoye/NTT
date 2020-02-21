@@ -1048,6 +1048,7 @@ class ScenariosController < ApplicationController
           apex_string += "\n"
           apex_string = "Input file for estimating Forage Quantity Input" + "\n"
       		apex_string += "\n"
+          apex_string += aplcat.number_of_forage.to_s + "\t" + "! " + t('aplcat.number_of_forage') + "\n"
           apex_string += aplcat.forage_id.to_s + "\t" + "! " + t('aplcat.forage_id_html') + "\n"
           apex_string += aplcat.jincrease.to_s + "\t" + "! " + t('aplcat.increase') + "\n"
           apex_string += aplcat.stabilization.to_s + "\t" + "! " + t('aplcat.stabilization') + "\n"
