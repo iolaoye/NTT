@@ -451,24 +451,19 @@
 		<div class="field" id="div_amount">
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
-		  	<%# change to show access animal to stream %>
-		  	<% if ENV["APP_VERSION"] == "" %>  <%#changed on 2/24/20 to allow fencing in modified version%>
-		  		<div style="display:none">
-		  	<% else %>
-		  		<div style="inline" id="div_access_to_stream">
-		  	<% end %>
-
-		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
-            <% if @operation.org_c == 1 %>
-                <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
-            <% else %>
-                <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
-            <% end %>
-            <% if @operation.org_c == 1 %>
-        		<div style="display:inline" id="div_hours_in_stream">
-            <% else %>
-            	<div style="display:none" id="div_hours_in_stream">
-            <% end %>
+		  	<%# change to show access animal to stream %>  <%#changed on 2/24/20 to allow fencing in modified version%>
+		  	<div style="inline" id="div_access_to_stream">
+			  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+	            <% if @operation.org_c == 1 %>
+	                <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+	            <% else %>
+	                <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+	            <% end %>
+	            <% if @operation.org_c == 1 %>
+	        		<div style="display:inline" id="div_hours_in_stream">
+	            <% else %>
+	            	<div style="display:none" id="div_hours_in_stream">
+	            <% end %>
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>
@@ -548,23 +543,18 @@
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 1, :step => 'any', :required => true %>
 		  	<%# change to show access animal to stream %>
-		  	<% if ENV["APP_VERSION"] == "modified" %>
-		  		<div style="display:none">
-		  	<% else %>
-		  		<div style="inline" id="div_access_to_stream">
-		  	<% end %>
-
-		  	<%= f.label :access_to_stream, t('operation.access_to_stream') %>
-            <% if @operation.org_c == 1 %>
-                <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
-            <% else %>
-                <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
-            <% end %>
-            <% if @operation.org_c == 1 %>
-        		<div style="display:inline" id="div_hours_in_stream">
-            <% else %>
-            	<div style="display:none" id="div_hours_in_stream">
-            <% end %>
+		  	<div style="inline" id="div_access_to_stream">
+		  		<%= f.label :access_to_stream, t('operation.access_to_stream') %>
+	            <% if @operation.org_c == 1 %>
+	                <input type="checkbox" id="access_to_stream", name="access[to_stream]", checked="" data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes" >
+	            <% else %>
+	                <input type="checkbox" id="access_to_stream", name="access[to_stream]", data-toggle="toggle" data-size="mini" data-onstyle="success" data-off="No" data-on="Yes">
+	            <% end %>
+	            <% if @operation.org_c == 1 %>
+	        		<div style="display:inline" id="div_hours_in_stream">
+	            <% else %>
+	            	<div style="display:none" id="div_hours_in_stream">
+	            <% end %>
 			  	<%= f.label :hours_in_stream, t('bmp.hours')%>
 			  	<%= f.number_field :nh3, :class => "gvTitleStyleNumber", min: 0, max: 24, :step => 'any' %>
 		  	</div>
