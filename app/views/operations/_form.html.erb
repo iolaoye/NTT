@@ -452,7 +452,7 @@
 		  	<%= f.label :animals, t('operation.animals') %>
 		  	<%= f.number_field :amount, :class => "gvTitleStyleNumber", min: 0, :step => 'any' %>
 		  	<%# change to show access animal to stream %>
-		  	<% if ENV["APP_VERSION"] == "modified" %>
+		  	<% if ENV["APP_VERSION"] == "" %>  <%#changed on 2/24/20 to allow fencing in modified version%>
 		  		<div style="display:none">
 		  	<% else %>
 		  		<div style="inline" id="div_access_to_stream">
