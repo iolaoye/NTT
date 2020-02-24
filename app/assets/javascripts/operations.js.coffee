@@ -203,12 +203,14 @@ updateTypes = ->
     when "7"   # continuous grazing
       url = "/fertilizers.json?id=animal"
       getGrazingFields()
+      $("#div_access_to_stream").show()
     when "9"   # rotational grazing
       url = "/fertilizers.json?id=animal"
       getGrazingFields()
       $("#div_grazed").show()
       $("#div_resttime").show()
       $("#operation_nh4_n").show()
+      $("#div_access_to_stream").show()
     when "12"   # liming
       $("#div_fertilizer").hide()
       $("#div_amount").show()
