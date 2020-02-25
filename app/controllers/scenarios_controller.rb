@@ -1730,7 +1730,7 @@ class ScenariosController < ApplicationController
       update_subareas(new_scenario, scenario)
   		#4. Copy operations info
   		scenario.operations.each do |operation|
-    			new_op = operation.dup
+    		new_op = operation.dup
   			new_op.scenario_id = new_scenario.id
   			new_op.save
   			add_soil_operation(new_op)
@@ -1769,7 +1769,7 @@ class ScenariosController < ApplicationController
         if msg.include? "Error"
           return
         end
-      end
+      end # end case
     else
       @errors.push "Please select file type to upload"
     end
@@ -1785,56 +1785,69 @@ class ScenariosController < ApplicationController
     # validates the xml file
     case true
     when @data.elements.length <= 0
-      @errors.push "XML files does not have nodes"
-      return
-    when @data.elements[0].name != "ntt"
-      @errors.push "Element[0] is not NTT - Please fix the xml file and try again."
-      return
+      msg = "XML files does not have nodes"
+      @errors.push msg
+      return msg
+    when @data.elements[0].name.downcase != "ntt"
+      msg = "Element[0] is not NTT - Please fix the xml file and try again."
+      @errors.push msg
+      return msg
     when @data.elements[0].elements.length <= 0
-      @errors.push "XML files does not have scenarios"
-      return
-    when @data.elements[0].elements[0].name != "scenario_info"
-      @errors.push "XML files does not have ScenarioInfo node"
-      return
+      msg = "XML files does not have scenarios"
+      @errors.push msg
+      return msg
+    when @data.elements[0].elements[0].name != "scenario"
+      msg = "XML files does not have ScenarioInfo node"
+      @errors.push msg
+      return msg
     end
-    @data.xpath("//scenario_info").each do |scn|
+    @data.xpath("//scenario").each do |scn|
       ActiveRecord::Base.transaction do
         begin
           scenario = Scenario.new
           scenario.name = scn.xpath("name").text
           scenario.field_id = @field.id
-          scenario.save
-          scn.xpath("operation_info").each do |opr|
-            operation = Operation.new
-            operation.scenario_id = scenario.id
-            operation.activity_id = opr.xpath("activity_id").text
-            operation.crop_id = opr.xpath("crop_id").text
-            operation.day = opr.xpath("day").text
-            operation.month_id = opr.xpath("month").text
-            operation.year = opr.xpath("year").text
-            operation.amount = opr.xpath("amount").text
-            operation.depth = opr.xpath("depth").text
-            operation.no3_n = opr.xpath("no3_n").text
-            operation.po4_p = opr.xpath("po4_p").text
-            operation.org_n = opr.xpath("org_n").text
-            operation.org_p = opr.xpath("org_p").text
-            operation.nh3 = opr.xpath("nh3").text
-            operation.subtype_id = opr.xpath("subtype_id").text
-            operation.moisture = opr.xpath("moisture").text
-            operation.org_c = opr.xpath("org_c").text
-            operation.nh4_n = opr.xpath("nh4").text
-            operation.rotation = opr.xpath("rotation").text
-            operation.save
-            msg = "Scenario " + scenario.name + " created succesfully"
-          end   # end node cicle
+          if scenario.save
+            #Copy subareas info by scenario
+            add_scenario_to_soils(scenario, false)
+            scn.xpath("operation").each do |opr|
+              operation = Operation.new
+              operation.scenario_id = scenario.id
+              operation.activity_id = opr.xpath("activity_id").text
+              operation.crop_id = opr.xpath("crop_id").text
+              operation.day = opr.xpath("day").text
+              operation.month_id = opr.xpath("month").text
+              operation.year = opr.xpath("year").text
+              operation.type_id = opr.xpath("type_id").text
+              operation.amount = opr.xpath("amout").text
+              operation.depth = opr.xpath("depth").text
+              operation.no3_n = opr.xpath("no3_n").text
+              operation.po4_p = opr.xpath("po4_p").text
+              operation.org_n = opr.xpath("org_n").text
+              operation.org_p = opr.xpath("org_p").text
+              operation.nh3 = opr.xpath("nh3").text
+              operation.subtype_id = opr.xpath("subtype_id").text
+              operation.moisture = opr.xpath("moisture").text
+              operation.org_c = opr.xpath("org_c").text
+              operation.nh4_n = opr.xpath("nh4").text
+              operation.rotation = opr.xpath("rotation").text
+              if operation.save
+                #create soil operations
+                add_soil_operation(operation)
+                #create subareas
+              end
+              msg = "Scenario " + scenario.name + " created succesfully"
+            end   # end node cicle
+          end  # if scenario.save
         rescue => e
           @errors.push = "Failed, Error: " + e.inspect
           raise ActiveRecord::Rollback
         ensure
-          return "OK"
+          next
         end
       end  # end transaction
     end  # end reading data elements.
+    return "OK"
   end
 
   def download
