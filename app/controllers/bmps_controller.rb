@@ -116,7 +116,7 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-    msg = "OK"
+    debugger
 	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -132,109 +132,105 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ai][:irrigation_id] == "") then
   			if !(params[:bmp_cb1] == nil)
   				if params[:bmp_cb1] == "1" then
-  					msg = create(1)   #autoirrigation
+  					create(1)   #autoirrigation
   				end
   				if params[:bmp_cb1] == "2" then
-  					msg = create(1)   #autofertigation
+  					create(1)   #autofertigation
   				end
   			end
   		end
       if !(params[:bmp_td] == nil)
   		  if !(params[:bmp_td][:depth] == "") then
-  			 msg = create(3)
+  			 create(3)
   		  end
       end
   	 	if !(params[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
     			if !(params[:bmp_ppnd][:width] == "") then
     				if params[:bmp_cb2] == "4" then
-    					msg = create(4)
+    					create(4)
     				end
     				if params[:bmp_cb2] == "5" then
-    					msg = create(4)
+    					create(4)
     				end
     				if params[:bmp_cb2] == "6" then
-    					msg = create(4)
+    					create(4)
     				end
     				if params[:bmp_cb2] == "7" then
-    					msg = create(4)
+    					create(4)
     				end
     			end
   		end
   		if !(params[:bmp_wl][:area] == "") then
-  			msg = create(8)
+  			create(8)
   		end
 		  # =>  pond
   		if params.has_key?(:select) && !params[:select][:"9"].nil? then
-  			msg = create(9)
+  			create(9)
   		end
 		  #stream fencing
 		  if params.has_key?(:select) && !params[:select][:"10"].nil? then
-  			msg = create(10)
+  			create(10)
   		end
   		if !(params[:bmp_sbs] == nil)
   			if params[:bmp_sbs][:id] == "1" then
-  				msg = create(11)
+  				create(11)
   			end
   		end
 		  #riparian forest
   		if !(params[:bmp_fs][:grass_field_portion] == "") then
   			if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "12" then
-  					msg = create(12)   #riparian forest
+  					create(12)   #riparian forest
   				end
         end
       end
       if !(params[:bmp_fs][:width] == "") then
         if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "13" then
-  					msg = create(13)   #filter strip
+  					create(13)   #filter strip
   				end
         end
 			end
 
   		if !(params[:bmp_ww][:width] == "") then
-  			msg = create(14)
+  			create(14)
   		end
       if !(params[:bmp_cb] == nil)
         if params[:bmp_cb][:width] > "1" then
-          msg = create(15)
+          create(15)
         end
       end
   		if !(params[:bmp_ll][:slope_reduction] == "") then
-  			msg = create(16)
+  			create(16)
   		end
   		if params.has_key?(:select) && !params[:select][:"17"].nil? then
-  			msg = create(17)
+  			create(17)
   		end
 		  if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
   			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
-  				msg = create(18)
+  				create(18)
   			end
 		  end
       if params.has_key?(:select) && !params[:select][:"19"].nil? then
       #cover crop (bmp_ccr)
-        msg = create(19)
+        create(19)
       end
       if params.has_key?(:select) && !params[:select][:"20"].nil? then
       #rotational grazing (bmp_rg)
-        msg = create(20)
+        create(20)
       end
   		if !(params[:select] == nil) and params[:select][:"21"] == "1" then
-  			msg = create(21)
+  			create(21)
   		end
       # =>  liming
       if params.has_key?(:select) && !params[:select][:"27"].nil? then
-        msg = create(27)
+        create(27)
       end
       # =>  Future Climate
       if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
-        msg = create(28)
+        create(28)
       end
-      if msg != "OK"
-        redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
-      else
   		  redirect_to project_field_scenarios_path(@project, @field)
-      end
 	  else
 		    redirect_to scenarios_path
 	  end # end if params[:button]
