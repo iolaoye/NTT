@@ -116,7 +116,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
-    debugger
 	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -230,7 +229,7 @@ class BmpsController < ApplicationController
       if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
         create(28)
       end
-  		  redirect_to project_field_scenarios_path(@project, @field)
+  		redirect_to project_field_scenarios_path(@project, @field)
 	  else
 		    redirect_to scenarios_path
 	  end # end if params[:button]
