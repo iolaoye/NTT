@@ -116,6 +116,7 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps
+    msg = "OK"
 	  if params[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -131,115 +132,109 @@ class BmpsController < ApplicationController
   		if !(params[:bmp_ai][:irrigation_id] == "") then
   			if !(params[:bmp_cb1] == nil)
   				if params[:bmp_cb1] == "1" then
-  					create(1)   #autoirrigation
+  					msg = create(1)   #autoirrigation
   				end
   				if params[:bmp_cb1] == "2" then
-  					create(1)   #autofertigation
+  					msg = create(1)   #autofertigation
   				end
   			end
   		end
       if !(params[:bmp_td] == nil)
   		  if !(params[:bmp_td][:depth] == "") then
-  			 create(3)
+  			 msg = create(3)
   		  end
       end
   	 	if !(params[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
     			if !(params[:bmp_ppnd][:width] == "") then
     				if params[:bmp_cb2] == "4" then
-    					create(4)
+    					msg = create(4)
     				end
     				if params[:bmp_cb2] == "5" then
-    					create(4)
+    					msg = create(4)
     				end
     				if params[:bmp_cb2] == "6" then
-    					create(4)
+    					msg = create(4)
     				end
     				if params[:bmp_cb2] == "7" then
-    					create(4)
+    					msg = create(4)
     				end
     			end
   		end
-    		#if !(params[:bmp_ppds][:width] == "") then
-  			#create(5)
-  		#end
-  		#if !(params[:bmp_ppde][:width] == "") then
-  		#	create(6)
-  		#end
-  		#if !(params[:bmp_pptw][:width] == "") then
-  		#	create(7)
-  		#end
   		if !(params[:bmp_wl][:area] == "") then
-  			create(8)
+  			msg = create(8)
   		end
 		  # =>  pond
   		if params.has_key?(:select) && !params[:select][:"9"].nil? then
-  			create(9)
+  			msg = create(9)
   		end
 		  #stream fencing
 		  if params.has_key?(:select) && !params[:select][:"10"].nil? then
-  		#if !(params[:bmp_sf][:number_of_animals] == "") then
-  			create(10)
+  			msg = create(10)
   		end
   		if !(params[:bmp_sbs] == nil)
   			if params[:bmp_sbs][:id] == "1" then
-  				create(11)
+  				msg = create(11)
   			end
   		end
 		  #riparian forest
   		if !(params[:bmp_fs][:grass_field_portion] == "") then
   			if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "12" then
-  					create(12)   #riparian forest
+  					msg = create(12)   #riparian forest
   				end
         end
       end
       if !(params[:bmp_fs][:width] == "") then
         if !(params[:bmp_cb3] == nil)
   				if params[:bmp_cb3] == "13" then
-  					create(13)   #filter strip
+  					msg = create(13)   #filter strip
   				end
         end
 			end
 
   		if !(params[:bmp_ww][:width] == "") then
-  			create(14)
+  			msg = create(14)
   		end
       if !(params[:bmp_cb] == nil)
         if params[:bmp_cb][:width] > "1" then
-          create(15)
+          msg = create(15)
         end
       end
   		if !(params[:bmp_ll][:slope_reduction] == "") then
-  			create(16)
+  			msg = create(16)
   		end
   		if params.has_key?(:select) && !params[:select][:"17"].nil? then
-  			create(17)
+  			msg = create(17)
   		end
 		  if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
   			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
-  				create(18)
+  				msg = create(18)
   			end
 		  end
       if params.has_key?(:select) && !params[:select][:"19"].nil? then
       #cover crop (bmp_ccr)
-        create(19)
+        msg = create(19)
       end
       if params.has_key?(:select) && !params[:select][:"20"].nil? then
       #rotational grazing (bmp_rg)
-        create(20)
+        msg = create(20)
       end
   		if !(params[:select] == nil) and params[:select][:"21"] == "1" then
-  			create(21)
+  			msg = create(21)
   		end
       # =>  liming
       if params.has_key?(:select) && !params[:select][:"27"].nil? then
-        create(27)
+        msg = create(27)
       end
       # =>  Future Climate
       if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
-        create(28)
+        msg = create(28)
       end
-  		redirect_to project_field_scenarios_path(@project, @field)
+      if msg != "OK"
+        redirect_to project_field_scenario_bmps_path(@project, @field, @scenario)
+      else
+  		  redirect_to project_field_scenarios_path(@project, @field)
+      end
 	  else
 		    redirect_to scenarios_path
 	  end # end if params[:button]
@@ -315,14 +310,12 @@ class BmpsController < ApplicationController
     #@state = Location.find(Location.find_by_project_id(@project.id)).state_id
     msg = input_fields("create", bmpsublist)
     if msg == "OK" then
-      if @bmp.save then
-    	 #sss
-      else
-    	 #nsnsns
+      if !@bmp.save then
+    	 return "Error saving BMP"
       end
     end
     if !(params[:select] == nil) && params[:select][:"21"] == "1" && bmpsublist == 21 then
-    	create_climate("create")
+    	msg = create_climate("create")
     end
     if msg == "OK" then
        if !@bmp.save then return "Error saving BMP" end

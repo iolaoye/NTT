@@ -730,6 +730,19 @@
     });
     function validationsBmpAi(i) {
       var ai_inputs = $('[name^=bmp_ai]').valueOf();
+
+
+
+      $('#bmp_cb1_2').change(function(){
+          if ($('#bmp_cb1_2')[0].checked) {
+            validateBmpAi.addValidation(ai_inputs[5].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("operation.application_rate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+          }
+      });
+
+
+
+
+
       $('#bmp_ai_irrigation_id').change(function(){
         if ($('#bmp_ai_irrigation_id').val() == 8) {
           validateBmpAi.addValidation(ai_inputs[5].name, "req", '<%= t("validate.required") %>' + " " + '<%= t("managepage.bmpdesc.auto.header") %>');

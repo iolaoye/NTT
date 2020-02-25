@@ -23,7 +23,8 @@ loading_screen = ->
 
 select_scenarios = ->
   query = window.location.pathname
-  project_id = query.split('/')[query.indexOf("projects")+1]
+  #project_id = query.split('/')[query.indexOf("projects")+1]
+  project_id = $("#project_id").val()
   field = $("#field_id").val()
   scenario = "#scenario_id"
   url = "/projects/" + project_id + "/fields/" + field + "/scenarios.json"
@@ -40,6 +41,25 @@ select_scenarios = ->
     items.push "<option value>Select Scenarios</option>"
     $(scenario).html items.join("")
     $(scenario).removeAttr("disabled")
+
+select_fields = ->
+  query = window.location.pathname
+  project = $("#project_id").val()
+  field = "#field_id"
+  url = "/projects/" + project + "/fields.json"
+  if project > 0
+    $.getJSON url, (fields) ->
+      items = []
+      items.push "<option value>Select Fields</option>"
+      $.each fields, (key, field) ->
+        items.push "<option value=\"" + field.id + "\">" + field.field_name + "</option>"
+      $(field).html items.join("")
+      $(field).removeAttr("disabled")
+  else
+    items = []
+    items.push "<option value>Select Fields</option>"
+    $(field).html items.join("")
+    $(field).removeAttr("disabled")
 
 $(document).ready ->
     $("#new_scenario").click ->
@@ -64,3 +84,5 @@ $(document).ready ->
         upload_user_scenarios()
     $("#field_id").change ->
         select_scenarios()
+    $("#project_id").change ->
+        select_fields()
