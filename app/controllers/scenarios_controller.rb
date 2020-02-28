@@ -813,6 +813,7 @@ class ScenariosController < ApplicationController
     msg = "OK"
     #find the aplcat parameters for the sceanrio selected
 		aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
+    debugger
 		grazing = GrazingParameter.where(:scenario_id => @scenario.id)
 		supplement = SupplementParameter.where(:scenario_id => @scenario.id)
     aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
@@ -1008,7 +1009,7 @@ class ScenariosController < ApplicationController
       		msg = send_file_to_APEX(apex_string, "InputAnimalTransport.txt")
 
           # create string for the CO2BalanceInput.txt file
-
+debugger
           apex_string = "CO2 Balance Input" + "\n"
           apex_string += "\n"
           apex_string = "Input file for estimating CO2 Balance Input" + "\n"
@@ -1038,10 +1039,9 @@ class ScenariosController < ApplicationController
           apex_string += aplcat.i_laco2f.to_s + "\t" + "! " + t('aplcat.i_laco2f') + "\n"
           apex_string += aplcat.i_socc.to_s + "\t" + "! " + t('aplcat.i_socc') + "\n"
           apex_string += "\n"
-
+debugger
           #***** send file to server "
       		msg = send_file_to_APEX(apex_string, "CO2BalanceInput.txt")
-
           # create string for the ForageQualityInput.txt file
 
           apex_string = "Forage Quality Input" + "\n"

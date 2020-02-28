@@ -266,7 +266,7 @@ class WatershedsController < ApplicationController
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
             j=0
-   
+            <<-DOC
             #############  this block for the old way of simulating watersheds ##########################
             watershed_scenarios.each do |p|
               @scenario = Scenario.find(p.scenario_id)
@@ -282,11 +282,10 @@ class WatershedsController < ApplicationController
                 j+=1
             end # en
             #############  this block for the old way of simulating watersheds ##########################
-
+            DOC
 
             #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
-            <<-DOC
               define_routing(fields)
               nn0 = @io.count-1
               i = 1
@@ -335,13 +334,12 @@ class WatershedsController < ApplicationController
                   @soils = Soil.where(:field_id => field.id).limit(1)
                 end
                 if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-                if msg.eql?("OK") then msg = create_subareas_watershed(j+1, field_area, chl, rchl, field.id) else return msg end
+                if msg.eql?("OK") then msg = create_subareas_watershed(i, field_area, chl, rchl, field.id) else return msg end
                 j+=1
                 i+=1
               end  # end for i 1 to nn0
-            DOC
-            #############  this block for the new way of simulating watersheds ##########################
 
+            #############  this block for the new way of simulating watersheds ##########################
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
@@ -407,6 +405,7 @@ class WatershedsController < ApplicationController
       rchl.push(0)
       @ia.push(0)
       @ix.push(0)
+      ir.push(0)
     end
     nn = ie.count - 1
     for i in 1..nn
@@ -418,7 +417,7 @@ class WatershedsController < ApplicationController
     nn0 = nn
     if nn >= 2 then
       for i in 1..nn
-        ir[i] = 0
+        #ir[i] = 0
         for j in 1..nn
           if @nbsa[i] != @io[j] then next end
             ir[j] = ie[i]
@@ -513,7 +512,7 @@ class WatershedsController < ApplicationController
     buffer_type = 2
     bmp = 1
     subareas.each do |subarea|
-      add_subarea_file_watershed(field_id, area, chl, rchl, subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
+      add_subarea_file_watershed(field_id, subarea.wsa, subarea.chl, subarea.rchl, subarea, operation_number, last_owner1, i, nirr, true, @soils.count)
       if !(subarea.subarea_type == "PPDE" || subarea.subarea_type == "PPTW") then
         if subarea.subarea_type == "RF" then
           buffer_type = 1
@@ -522,7 +521,6 @@ class WatershedsController < ApplicationController
            create_operations(subarea.bmp_id, 0, operation_number, buffer_type)
            bmp += 1
         end
-        i+=1
         @soil_number += 1
       end # end if bmp types PPDE and PPTW
     end  # end subareas.each for buffers
@@ -543,7 +541,7 @@ class WatershedsController < ApplicationController
     @last_soil2 = j + @last_soil_sub
     last_owner1 = @last_soil2
     if buffer then
-      sLine = sprintf("%4d", @soil_number)  #soil
+      sLine = sprintf("%4d", operation_number)  #soil
       if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
         sLine += sprintf("%4d", _subarea_info.iops) #operation
       else
@@ -567,7 +565,7 @@ class WatershedsController < ApplicationController
         sLine += sprintf("%4d", _subarea_info.iops)   #operation
       else
         #sLine = sprintf("%4d", @soil_number+1)  #soil
-        sLine = sprintf("%4d", @soil_number+1)  #soil
+        sLine = sprintf("%4d", operation_number)  #soil
         sLine += sprintf("%4d", @soil_number+1)   #operation
       end
       sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
@@ -599,11 +597,16 @@ class WatershedsController < ApplicationController
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
-    #_subarea_info.wsa = area
-    if area == 0.00 then
-      area = 0.01
+    _subarea_info.wsa = area.round(2)
+    if _subarea_info.wsa == 0.00 then
+      _subarea_info.wsa = 0.01
     end
-    sLine = sprintf("%8.2f", area)
+    if _subarea_info.wsa > 0 && i > 0 && !buffer then
+      sLine = sprintf("%8.2f", _subarea_info.wsa * -1)
+    else
+      sLine = sprintf("%8.2f", _subarea_info.wsa)
+    end
+    sLine = sprintf("%8.2f", _subarea_info.wsa)
     sLine += sprintf("%8.4f", chl)
     sLine += sprintf("%8.2f", _subarea_info.chd)
     sLine += sprintf("%8.2f", _subarea_info.chs)
