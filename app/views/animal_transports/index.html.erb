@@ -1,0 +1,80 @@
+<div class="page-header"><h1><%= t("Animal Transports") %></h1></div>
+<br>
+<div class="field">
+  <%=  t('aplcat.freqtrip') %>
+  <%= number_field :freqtrip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.freqtrip'), :step => 'any', :min => 1, :max => 10 %>
+  </div>
+  <div class="field">
+    <%= t('aplcat.cattlepro') %><br>
+    <%= radio_button_tag :cattlepro, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+    <%= radio_button_tag :cattlepro, "2"%> <%= t('graze.no') %><br>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.purpose') %>
+    <%= text_field :purpose, :maxlength => "25", :title => t('aplcat_tooltip.purpose'), :placeholder => "Enter Text Here" %>
+  </div>
+  <div class="field">
+    <%= t("Transportation:") %><br>
+    <%= radio_button_tag :trans_1, "1"%> <%= t('aplcat.trans_feeder') %><br>
+    <%= radio_button_tag :trans_1, "2"%> <%= t('aplcat.trans_finish') %><br>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.categories_trans') %>
+    <%= number_field :categories_trans_1, class: 'gvTitleStyleNumber', :min => 1, :step => 'any' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.categories_slaug') %>
+    <%= number_field :categories_slaug_1, class: 'gvTitleStyleNumber', :min => 50.0, :max => 2000.0, :step => '0.1' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.avg_marweight') %>
+    <%= number_field :avg_marweight_1, class: 'gvTitleStyleNumber', :min => 1, :title => t('aplcat_tooltip.avg_marweight'), :step => 'any' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.num_animal') %>
+    <%= number_field :num_animal_1, class: 'gvTitleStyleNumber', :min => 1, :title => t('aplcat_tooltip.num_animal'), :step => 'any' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.mortality_rate') %>
+    <%= number_field :mortality_rate_1, class: 'gvTitleStyleNumber', :min => 0.01, :max => 5.00, :title => t('aplcat_tooltip.mortality_rate'), :step => '0.01' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.distance') %>
+    <%= number_field :distance_1, class: 'gvTitleStyleNumber', :min => 0.01, :title => t('aplcat_tooltip.distance'), :step => '0.01' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.trailer') %>
+    <%= text_field :trailer_1, :title => t('aplcat_tooltip.trailer'), :pattern => "[a-zA-Z]{2}[0-9]{2}" %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.trucks') %>
+    <%= text_field :trucks_1, :title => t('aplcat_tooltip.trucks'), :pattern => "[0-9][a-zA-Z]" %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.fuel_type') %>
+    <%= text_field :fuel_type_1, :title => t('aplcat_tooltip.fuel_type'), :pattern => "[a-zA-Z]{4}[0-9]" %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.same_vehicle') %><br>
+    <%= radio_button_tag :same_vehicle_1, "1"%> <%= t("Yes") %><br>
+    <%= radio_button_tag :same_vehicle_1, "2"%> <%= t("No") %><br>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.loading') %><br>
+    <%= radio_button_tag :loading_1, "1"%> <%= t('aplcat.thoughtless') %><br>
+    <%= radio_button_tag :loading_1, "2"%> <%= t('aplcat.arranged') %><br>
+    <%= radio_button_tag :loading_1, "3"%> <%= t('aplcat.floor_space') %><br>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.carcass') %>
+    <%= number_field :carcass_1, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.carcass'), :step => '0.1' %>
+  </div>
+  <div class="field">
+    <%=  t('aplcat.boneless_beef') %>
+    <%= number_field :boneless_beef_1, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.boneless_beef'), :step => '0.1' %>
+  </div>
+
+  <div class="actions">
+    <%= hidden_field_tag(:type, @type) %>
+    <%= link_to t('general.back'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :class => "btn btn-primary"  %>
+  </div>
