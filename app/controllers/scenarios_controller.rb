@@ -1010,7 +1010,7 @@ class ScenariosController < ApplicationController
           # create string for the CO2BalanceInput.txt file
           apex_string = "This is the input file showing other sources and sink of greenhouse gas emissions in beef cattle production" + "\n"
       		apex_string += "\n"
-          apex_string = "Parameters for native range"
+          apex_string += "Parameters for native range"
           apex_string += "\n"
           apex_string += aplcat.n_tfa.to_s + "\t" + "! " + t('aplcat.n_tfa') + "\n"
           apex_string += aplcat.n_sr.to_s + "\t" + "! " + t('aplcat.n_sr') + "\n"
@@ -1026,7 +1026,7 @@ class ScenariosController < ApplicationController
           apex_string += aplcat.n_laco2f.to_s + "\t" + "! " + t('aplcat.n_laco2f') + "\n"
           apex_string += aplcat.n_socc.to_s + "\t" + "! " + t('aplcat.n_socc') + "\n"
           apex_string += "\n"
-          apex_string = "Parameters for introduced pasture"
+          apex_string += "Parameters for introduced pasture"
           apex_string += "\n"
           apex_string += aplcat.i_tfa.to_s + "\t" + "! " + t('aplcat.i_tfa') + "\n"
           apex_string += aplcat.i_sr.to_s + "\t" + "! " + t('aplcat.i_sr') + "\n"
