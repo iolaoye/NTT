@@ -821,6 +821,7 @@ class ScenariosController < ApplicationController
 			aplcat.scenario_id = params[:select_scenario][0]
 			aplcat.save
 		end
+
 	  msg = send_file_to_APEX("APLCAT", "APLCAT")  #this operation will create APLCAT+session folder from APLCAT folder
     #apex_string = "Animal Parameters" + "\n"
     #apex_string += "\n"		# create string for the CowCalfProductionData.txt file
@@ -1621,6 +1622,7 @@ class ScenariosController < ApplicationController
 
       #***** send file to server "
       #msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
+
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("Bull output file") then msg="OK" end
 		return msg
