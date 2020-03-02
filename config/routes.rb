@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :animal_transports
   resources :climes
   resources :aplcat_results
   resources :fem_results
@@ -101,11 +102,13 @@ NTTG3::Application.routes.draw do
         post :download_aplcat, on: :collection
         post :download_fem, on: :collection
         resources :aplcat_parameters do
+          get 'animal_transports', on: :member
 	        get 'aplcat', on: :member
 		    end
 		    resources :grazing_parameters
 		    resources :supplement_parameters
         resources :aplcat_results
+        resources :animal_transports
         post :simulate, on: :collection
         resources :operations do
           get :list, on: :collection

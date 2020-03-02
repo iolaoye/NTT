@@ -207,6 +207,45 @@
 	<%end%>
   </div>
 
+
+  <div style='display:none' id="div_2">
+    <%= field_set_tag t('aplcat.animal_transport_input'), class:'fieldset' do %>
+    <div class="table-responsive">
+      <div class="panel panel-default">
+        <table class="table table-striped">
+          <thead>
+            <tr class='gvHeaderStyle'>
+              <th class="gvCellStyleTitle">Frequency of trip</th>
+              <th class="gvCellStyleTitle">Trip related to cattle production</th>
+              <th class="gvCellStyleTitle">Purpose of the trip</th>
+              <th class="gvCellStyleTitle">Transportation</th>
+              <th class="gvCellStyleTitle">Categories of animal transported</th>
+              <th class="gvCellStyleTitle">Categories of animals finished and ready for slaughter</th>
+              <th class="gvCellStyleTitle">Average market weight of each animal (lb)</th>
+              <th class="gvCellStyleTitle">Number of animals in each category</th>
+              <th class="gvCellStyleTitle">Mortality rate of cattle</th>
+              <th class="gvCellStyleTitle">Distance moved (miles)</th>
+              <th class="gvCellStyleTitle">Trailer selected for moving</th>
+              <th class="gvCellStyleTitle">Truck selected for moving</th>
+              <th class="gvCellStyleTitle">Fuel type</th>
+              <th class="gvCellStyleTitle">Same vehicle?</th>
+              <th class="gvCellStyleTitle">Loading pressure equation</th>
+              <th class="gvCellStyleTitle">Proportion of live animal becoming carcass (%)</th>
+              <th class="gvCellStyleTitle">Proportion of carcass becoming boneless beef (%)</th>
+              <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+            </tr>
+          </thead>
+
+
+          </table>
+          </div>
+          <br>
+          <%= link_to 'New Animal Transport', project_field_scenario_animal_transports_path(@project, @field, @scenario), :class => 'btn btn-success' %>
+          </div>
+    <% end %>
+    </div>
+
+  <% if false %>
   <div style='display:none' id="div_2">
     <%= field_set_tag t('aplcat.animal_transport_input'), class:'fieldset' do %>
     <div class="field" id="numbers">
@@ -525,6 +564,7 @@
     </div>
   <%end%>
   </div>
+  <%end%>
 
   <div style='display:none' id="div_3">
     <div class="field">

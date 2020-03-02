@@ -1,0 +1,27 @@
+<%= form_for [@project, @field, @scenario, @animal_transport] do |f| %>
+  <% if @animal_transport.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(@animal_transport.errors.count, "error") %> prohibited this animal_transport from being saved:</h2>
+        <ul>
+			<% @animal_transport.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+        </ul>
+    </div>
+  <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% end %>
