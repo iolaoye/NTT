@@ -125,7 +125,9 @@ getGrazingFields = ->
     $("#div_start_date")[0].children[0].innerText = "Start Year"
     $("#div_type")[0].children[0].innerText = "Animal Type"
     if $("#div_access_to_stream")[0] != undefined
-      $("#div_access_to_stream")[0].style.display = "inline"    
+      $("#div_access_to_stream")[0].style.display = "inline"
+    if $("#access_to_stream").val()
+      $("#div_hours_in_stream").show()
 
 updateTypes = ->
   $("#operation_nh4_n").hide()

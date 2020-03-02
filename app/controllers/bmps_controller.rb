@@ -159,15 +159,6 @@ class BmpsController < ApplicationController
     				end
     			end
   		end
-    		#if !(params[:bmp_ppds][:width] == "") then
-  			#create(5)
-  		#end
-  		#if !(params[:bmp_ppde][:width] == "") then
-  		#	create(6)
-  		#end
-  		#if !(params[:bmp_pptw][:width] == "") then
-  		#	create(7)
-  		#end
   		if !(params[:bmp_wl][:area] == "") then
   			create(8)
   		end
@@ -177,7 +168,6 @@ class BmpsController < ApplicationController
   		end
 		  #stream fencing
 		  if params.has_key?(:select) && !params[:select][:"10"].nil? then
-  		#if !(params[:bmp_sf][:number_of_animals] == "") then
   			create(10)
   		end
   		if !(params[:bmp_sbs] == nil)
@@ -315,14 +305,12 @@ class BmpsController < ApplicationController
     #@state = Location.find(Location.find_by_project_id(@project.id)).state_id
     msg = input_fields("create", bmpsublist)
     if msg == "OK" then
-      if @bmp.save then
-    	 #sss
-      else
-    	 #nsnsns
+      if !@bmp.save then
+    	 return "Error saving BMP"
       end
     end
     if !(params[:select] == nil) && params[:select][:"21"] == "1" && bmpsublist == 21 then
-    	create_climate("create")
+    	msg = create_climate("create")
     end
     if msg == "OK" then
        if !@bmp.save then return "Error saving BMP" end

@@ -5,7 +5,7 @@ check_soil_test = ->
       $("#layer_soil_p_initial").val('')
    else
       $("#layer_soil_p_initial").attr("disabled", false)
-   if $("#layer_soil_test_id").val() == "5"
+   if $("#layer_soil_test_id").val() == "7"
       $("#div_soil_al").prop('required',true)
       $("#div_soil_al").toggle(true)
    else

@@ -441,6 +441,10 @@ en:
     unit_acre: "unit / ac"
     continues_grazing: Continuous Grazing
     rotational_grazing: Rotational Grazing
+    whats_new: What's New
+    presentations: Presentations
+    related_tools: Related Tools
+    updates: "UPDATES"
   welcome_note:
     header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
@@ -452,6 +456,9 @@ en:
     body7: 'This version of NTT is available in<br> both English and Spanish.'
     name: 'Dr. Ali Saleh'
     initial_welcome: Welcome to the Nutrient Tracking Tool (NTT) – a tool to estimate nutrient and sediment losses from crop and pasture. NTT was developed by the Texas Institute for Applied Environmental Research (TIAER) at Tarleton State University with funding and technical support from USDA’s Office of Environmental Markets.
+    ceeot1: 'Comprehensive Economic Environmental Optimization Tool (CEEOT) is a stand-alone watershed-scale tool. CEEOT evaluates the economic and environmental impacts of conservation practices at the farm and watershed scales. Please visit '
+    ceeot2: 'for more information.'
+    ntt: Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants.
   menu:
     fem: FEM
     welcome: Welcome
@@ -575,7 +582,7 @@ en:
     load_scenario: Load Scenario
     last_simulation: Simulation date
     simulation_success: scenarios simulated successfully in
-    other_scenario: Copy Scenario from other field
+    other_scenario: Copy Scenario from other project/field
     upload_scenarios: Upload your own scenarios
   location:
     new_location: New Location
@@ -1227,8 +1234,8 @@ en:
       srwc: Simulate realistic weight change in proportion to availability of animal
       byos: Beginning year of simulation
       eyos: Ending year of simulation
-      syes: Yes, Simulate
-      sno: No, Don't simulate
+      syes: 'Yes, Simulate'
+      sno: 'No, Dont simulate'
       scenario_file: Scenario File
       mdogfc: Minimum days of gestation for cows
       mxdogfc: Maximum days of gestation for cows
@@ -1263,7 +1270,7 @@ en:
       tabo: Temperature of air breathed out by animals (deg F)
       mpism: Moisture present in solid manure (%)
       spilm: Solids present in liquid manure (urine) (%)
-      pom: Proportion of manure (solid+liquid) moisture evaporated (%) [30-40% literature value]
+      pom: 'Proportion of manure (solid+liquid) moisture evaporated (%) [30-40% literature value]'
       srinr: "Stocking rate in native range: number of animals/acre"
       sriip: "Stocking rate in introduced pasture: number of animals/acre"
       pogu: Proportion of groundwater used (%) in animal production
@@ -2714,3 +2721,13 @@ en:
               <strong>Stage 4.</strong> The final results are evaluated and presented to local stakeholders (if any) and collaborators. The results of the parameterization (for all stages) would be available on the NTT site.
               <br><br>
     no_validated: <strong>This state has not been validated yet</strong>
+  whats_new:
+    current_html: <strong>December 1, 2019:</strong><br> 1. Tier 1 Validation has been completed for all of the lower 48 states. Parameter files have been updated in NTT. Ohio and Minnesota have been validated using field-scale data (Tier 2 Validation). Where we have field scale data we will continue to improve parameters in NTT. Please review the validation information available by clicking on <strong>validation</strong> on the bottom of the home page. Stay tuned for more updates.
+                  <br>2. Currently, the soil surface slope is calculated based on one centroid pixel (30-m or less) representing each soil type within the area of interest (AOI). Now, the modified slope routine in NTT will calculate the average slope for all existing pixels for each soil type within the AOI. This improve the value of calculated slope for AOI in most cases.
+                  <br><br><strong>February 2020 (version 20-2):</strong><br>
+                  An official version of NTT (Version 20-2) released with following modifications
+                  <br>1.  The weather data period was expanded to Dec. 30 2018. NTT simulation period now spans between 1981 and Dec. of 2018.
+                  <br>2.  The mapping system was upgraded to make it faster and more reliable.
+                  <br>3.  The crop database planting/harvest dates was updated for different regions of country.
+                  <br>4.  The conservation practices page now includes fencing. Fencing has the effect of eliminating direct manure deposits into the stream and creating a de-facto buffer between the fence and the stream that reduces erosion and surface runoff.
+    intro: NTT has been updated and re-released as a national-level tool. NTT can now be used to estimate nutrient and sediment losses from crop and pasture operations across the contiguous United  States. NTT is constantly being improved, so please visit this page for the latest updates.

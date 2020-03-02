@@ -562,7 +562,7 @@ class ProjectsController < ApplicationController
       xml.month operation.month_id
       xml.year operation.year
       xml.type_id operation.type_id
-      xml.amout operation.amount
+      xml.amount operation.amount
       xml.depth operation.depth
       xml.no3_n operation.no3_n
       xml.po4_p operation.po4_p
@@ -1053,8 +1053,7 @@ class ProjectsController < ApplicationController
     return msg
   end
 
-  def upload_field_info(node)
-    
+  def upload_field_info(node)   
     #begin
       field = Field.new
       field.location_id = session[:location_id]
@@ -1145,6 +1144,7 @@ class ProjectsController < ApplicationController
         end
       when "climes"
         p.elements.each do |f|
+          #msg = "OK"
           msg = upload_clime_new_version(field.id, f)
           if msg != "OK"
             return msg
@@ -1175,6 +1175,7 @@ class ProjectsController < ApplicationController
             return "scenario could not be saved"
           end
         end
+        field.soils.update_all(:soil_id_old => nil)
       end
     end
     return "OK"
@@ -1991,7 +1992,7 @@ class ProjectsController < ApplicationController
               next
             else
               subarea.soil_id = soil.id
-              soil.soil_id_old = 0
+              #soil.soil_id_old = 0
             end
           end
         when "number"
@@ -2208,7 +2209,6 @@ class ProjectsController < ApplicationController
           subarea.xtp9 = p.text
         when "xtp10"
           subarea.xtp10 = p.text
-
       end #end case
     end #end each
     if subarea.save then
@@ -2362,7 +2362,7 @@ class ProjectsController < ApplicationController
           operation.type_id = p.text
         when "subtype_id"
           operation.subtype_id = p.text
-        when "amout"
+        when "amount"
           operation.amount = p.text
         when "depth"
           operation.depth = p.text
@@ -2941,6 +2941,7 @@ class ProjectsController < ApplicationController
   def upload_bmp_info_new_version(scenario_id, new_bmp)
     bmp = Bmp.new
     bmp.scenario_id = scenario_id
+    if !bmp.save then return "Error saving Bmp" end
     new_bmp.elements.each do |p|
       case p.name
         when "bmp_id"
@@ -3001,21 +3002,21 @@ class ProjectsController < ApplicationController
           bmp.difference_precipitation = p.text
         when "climates"
           p.elements.each do |climate|
-            msg = upload_climate_new_version(climate, bmp.bmp_id)
+            msg = upload_climate_new_version(climate, bmp.id)
             if msg != "OK"
               return msg
             end
           end
         when "subareas"
           p.elements.each do |subarea|
-            msg = upload_subarea_new_version(bmp.bmp_id, scenario_id, subarea)
+            msg = upload_subarea_new_version(bmp.id, scenario_id, subarea)
             if msg != "OK"
               return msg
             end
           end
         when "soil_operations"
           p.elements.each do |soil_op|
-            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.bmp_id)
+            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.id)
             if msg != "OK"
               return msg
             end
