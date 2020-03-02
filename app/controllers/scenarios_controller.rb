@@ -813,7 +813,6 @@ class ScenariosController < ApplicationController
     msg = "OK"
     #find the aplcat parameters for the sceanrio selected
 		aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
-    debugger
 		grazing = GrazingParameter.where(:scenario_id => @scenario.id)
 		supplement = SupplementParameter.where(:scenario_id => @scenario.id)
     aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
@@ -1009,11 +1008,10 @@ class ScenariosController < ApplicationController
       		msg = send_file_to_APEX(apex_string, "InputAnimalTransport.txt")
 
           # create string for the CO2BalanceInput.txt file
-debugger
-          apex_string = "CO2 Balance Input" + "\n"
-          apex_string += "\n"
-          apex_string = "Input file for estimating CO2 Balance Input" + "\n"
+          apex_string = "This is the input file showing other sources and sink of greenhouse gas emissions in beef cattle production" + "\n"
       		apex_string += "\n"
+          apex_string = "Parameters for native range"
+          apex_string += "\n"
           apex_string += aplcat.n_tfa.to_s + "\t" + "! " + t('aplcat.n_tfa') + "\n"
           apex_string += aplcat.n_sr.to_s + "\t" + "! " + t('aplcat.n_sr') + "\n"
           apex_string += aplcat.n_arnfa.to_s + "\t" + "! " + t('aplcat.n_arnfa') + "\n"
@@ -1022,10 +1020,14 @@ debugger
           apex_string += aplcat.n_npfar.to_s + "\t" + "! " + t('aplcat.n_pfar') + "\n"
           apex_string += aplcat.n_co2enfp.to_s + "\t" + "! " + t('aplcat.n_co2enfp') + "\n"
           apex_string += aplcat.n_co2enfa.to_s + "\t" + "! " + t('aplcat.n_co2enfa') + "\n"
+          apex_string += aplcat.n_co2epfp.to_s + "\t" + "! " + t('aplcat.n_co2epfp') + "\n"
           apex_string += aplcat.n_lamf.to_s + "\t" + "! " + t('aplcat.n_lamf') + "\n"
           apex_string += aplcat.n_lan2of.to_s + "\t" + "! " + t('aplcat.n_lan2of') + "\n"
           apex_string += aplcat.n_laco2f.to_s + "\t" + "! " + t('aplcat.n_laco2f') + "\n"
           apex_string += aplcat.n_socc.to_s + "\t" + "! " + t('aplcat.n_socc') + "\n"
+          apex_string += "\n"
+          apex_string = "Parameters for introduced pasture"
+          apex_string += "\n"
           apex_string += aplcat.i_tfa.to_s + "\t" + "! " + t('aplcat.i_tfa') + "\n"
           apex_string += aplcat.i_sr.to_s + "\t" + "! " + t('aplcat.i_sr') + "\n"
           apex_string += aplcat.i_arnfa.to_s + "\t" + "! " + t('aplcat.i_arnfa') + "\n"
@@ -1034,12 +1036,12 @@ debugger
           apex_string += aplcat.i_npfar.to_s + "\t" + "! " + t('aplcat.i_pfar') + "\n"
           apex_string += aplcat.i_co2enfp.to_s + "\t" + "! " + t('aplcat.i_co2enfp') + "\n"
           apex_string += aplcat.i_co2enfa.to_s + "\t" + "! " + t('aplcat.i_co2enfa') + "\n"
+          apex_string += aplcat.i_co2epfp.to_s + "\t" + "! " + t('aplcat.i_co2epfp') + "\n"
           apex_string += aplcat.i_lamf.to_s + "\t" + "! " + t('aplcat.i_lamf') + "\n"
           apex_string += aplcat.i_lan2of.to_s + "\t" + "! " + t('aplcat.i_lan2of') + "\n"
           apex_string += aplcat.i_laco2f.to_s + "\t" + "! " + t('aplcat.i_laco2f') + "\n"
           apex_string += aplcat.i_socc.to_s + "\t" + "! " + t('aplcat.i_socc') + "\n"
           apex_string += "\n"
-debugger
           #***** send file to server "
       		msg = send_file_to_APEX(apex_string, "CO2BalanceInput.txt")
           # create string for the ForageQualityInput.txt file
