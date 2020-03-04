@@ -5,21 +5,15 @@
 
 cont = false
 	
-	file = "db/seeds/counties.rb"
+	file = "db/seeds/trucks.rb"
+	load file
+
+	file = "db/seeds/trailers.rb"
+	load file
+
+	file = "db/seeds/fuels.rb"
 	load file
 	
-	file = "db/seeds/tillages.rb"
-	load file
-
-	file = "db/seeds/animals.rb"
-	load file
-
-	#file = "db/seeds/stations.rb"
-	#load file
-
-	file = "db/seeds/crops.rb"
-	load file
-
 if cont then
 
 	file = "db/seeds/activities.rb"
@@ -73,6 +67,9 @@ if cont then
 	file = "db/seeds/fertilizer_types.rb"
 	load file
 
+	file = "db/seeds/fuels.rb"
+	load file
+
 	file = "db/seeds/grazing_parameters.rb"
 	load file
 
@@ -113,6 +110,12 @@ if cont then
 	load file
 
 	file = "db/seeds/tillages.rb"
+	load file
+
+	file = "db/seeds/trailers.rb"
+	load file
+
+	file = "db/seeds/trucks.rb"
 	load file
 
 	file = "db/seeds/types.rb"

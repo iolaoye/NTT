@@ -1,19 +1,14 @@
 class AnimalTransportsController < ApplicationController
   before_action :set_params
 
-
-
   def set_params
     @field = Field.find(params[:field_id])
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
   end
 
-
-
   def index
     @animal_transports = AnimalTransport.where(:scenario_id => params[:scenario_id])
-
     add_breadcrumb 'Aplcat'
     add_breadcrumb 'Animal Transport'
     respond_to do |format|
@@ -21,8 +16,6 @@ class AnimalTransportsController < ApplicationController
       format.json { render json: @animal_transports }
     end
   end
-
-
 
   def show
     @animal_transport = AnimalTransport.find(params[:id])
@@ -37,7 +30,7 @@ class AnimalTransportsController < ApplicationController
   # GET /animal_transport/new.json
   def new
     @animal_transport = AnimalTransport.new
-
+    @categories = Category.where(:animal_transport_id => @animal_transport.id)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @animal_transport }

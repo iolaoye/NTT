@@ -1,0 +1,13 @@
+Truck.delete_all
+Truck.create!({:id => 1,:description => "Cars only",:code => "1c"}, :without_protection => true)
+Truck.create!({:id => 2,:description => "Minivan, SUV, small pickup - Dodge Dakota, Chevrolet Colorado, GMC Canyon",:code => "1t"}, :without_protection => true)
+Truck.create!({:id => 3,:description => "Large SUV, standard pickup     Ram 1500, Silverado 1500, F-150",:code => "2a"}, :without_protection => true)
+Truck.create!({:id => 4,:description => "Large pickup, multipurpose     Ram 2500, Silverado 2500, F-250",:code => "2b"}, :without_protection => true)
+Truck.create!({:id => 5,:description => "Utility van, multipurpose      Ram 3500, F-350, GMC 3500",:code => "3"}, :without_protection => true)
+Truck.create!({:id => 6,:description => "Delivery,Large walk-in,bucket  F-450, GMC 4500, Ram 4500",:code => "4"}, :without_protection => true)
+Truck.create!({:id => 7,:description => "Delivery,Large walk-in,bucket  GMC 5500, Ram 5500, F-550",:code => "5"}, :without_protection => true)
+Truck.create!({:id => 8,:description => "Delivery,Large walk-in,bucket  F-650, Chevy Kodiak, GMC TopKick",:code => "6"}, :without_protection => true)
+Truck.create!({:id => 9,:description => "Tractor trailer,tow, refrig",:code => "7"}, :without_protection => true)
+Truck.create!({:id => 10,:description => "Straight truck, Tow, Dump",:code => "8a"}, :without_protection => true)
+Truck.create!({:id => 11,:description => "Combi truck,Tractor-trailer",:code => "8b"}, :without_protection => true)
+Truck.create!({:id => 12,:description => "Freight Train-single car",:code => "T"}, :without_protection => true)

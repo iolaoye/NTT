@@ -29,39 +29,38 @@
       <tbody>
         <% i=1 %>
         <% @grazing_parameters.each do |grazing_parameter| %>
-				<% if (i % 2 == 0) %>
-					<tr class="gvRowStyleEven">
-				<% else %>
-					<tr class="gvRowStyleOdd">
-				<% end %>
-        <td><%= grazing_parameter.code %></td>
-        <td><%= grazing_parameter.starting_julian_day %></td>
-        <td><%= grazing_parameter.ending_julian_day %></td>
-        <td><%= grazing_parameter.for_dmi_cows %></td>
-        <td><%= grazing_parameter.for_dmi_bulls %></td>
-        <td><%= grazing_parameter.for_dmi_heifers %></td>
-        <td><%= grazing_parameter.for_dmi_calves %></td>
-        <td><%= grazing_parameter.for_dmi_rheifers %></td>
-        <td><%= grazing_parameter.green_water_footprint %></td>
-        <td><%= grazing_parameter.dmi_code %></td>
-        <td><%= grazing_parameter.dmi_cows %></td>
-        <td><%= grazing_parameter.dmi_bulls %></td>
-        <td><%= grazing_parameter.dmi_heifers %></td>
-        <td><%= grazing_parameter.dmi_calves %></td>
-        <td><%= grazing_parameter.dmi_rheifers %></td>
-        <td><%= grazing_parameter.green_water_footprint_supplement %></td>
-        <td>
-            <%= link_to image_tag("view.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
-            <%= link_to image_tag("edit.png"), edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
-            <%= link_to image_tag("delete.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
-            </td>
-      </tr>
-      <% i = i + 1 %>
-      <% end %>
-	  </tbody>
+  				<% if (i % 2 == 0) %>
+  					<tr class="gvRowStyleEven">
+  				<% else %>
+  					<tr class="gvRowStyleOdd">
+  				<% end %>
+          <td><%= grazing_parameter.code %></td>
+          <td><%= grazing_parameter.starting_julian_day %></td>
+          <td><%= grazing_parameter.ending_julian_day %></td>
+          <td><%= grazing_parameter.for_dmi_cows %></td>
+          <td><%= grazing_parameter.for_dmi_bulls %></td>
+          <td><%= grazing_parameter.for_dmi_heifers %></td>
+          <td><%= grazing_parameter.for_dmi_calves %></td>
+          <td><%= grazing_parameter.for_dmi_rheifers %></td>
+          <td><%= grazing_parameter.green_water_footprint %></td>
+          <td><%= grazing_parameter.dmi_code %></td>
+          <td><%= grazing_parameter.dmi_cows %></td>
+          <td><%= grazing_parameter.dmi_bulls %></td>
+          <td><%= grazing_parameter.dmi_heifers %></td>
+          <td><%= grazing_parameter.dmi_calves %></td>
+          <td><%= grazing_parameter.dmi_rheifers %></td>
+          <td><%= grazing_parameter.green_water_footprint_supplement %></td>
+          <td>
+              <%= link_to image_tag("view.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
+              <%= link_to image_tag("edit.png"), edit_project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter) %>
+              <%= link_to image_tag("delete.png"), project_field_scenario_grazing_parameter_path(@project, @field, @scenario, grazing_parameter), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+              </td>
+          </tr>
+          <% i = i + 1 %>
+        <% end %>
+	   </tbody>
     </table>
   </div>
-  </div>
-
-<%= link_to 'New Grazing parameter', new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>
+</div>
+<%= link_to 'New Animal Transport', new_project_field_scenario_animal_transport_path(@project, @field, @scenario), :class => 'btn btn-success' %>
 <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :title => t('aplcat_tooltip.go_to_ap'), :class => 'btn btn-primary' %>
