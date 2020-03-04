@@ -44,6 +44,7 @@ class AnimalTransportsController < ApplicationController
   # POST /animal_transport
   # POST /animal_transport.json
   def create
+    debugger
     @animal_transport = AnimalTransport.new(animal_transport_params)
     @animal_transport.scenario_id = params[:scenario_id]
     respond_to do |format|
@@ -88,7 +89,7 @@ class AnimalTransportsController < ApplicationController
   private
 
   def animal_transport_params
-    params.require(:animal_transport).permit(:trip_number)
+    params.require(:animal_transport).permit(:freqtrip, :cattlepro, :purpose, :trans, :categories_trans, :avg_marweight, :num_animal, :categories_slaug, :mortality_rate, :distance, :trailer_id, :truck_id, :fuel_id, :same_vehicle, :loading, :carcass, :boneless_beef)
   end
 
 end
