@@ -16,7 +16,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.freqtrip') %>
-            <%= number_field :freqtrip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.freqtrip'), :step => 'any', :min => 1, :max => 10 %>
+            <%= f.number_field :freq_trip, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.freqtrip'), :step => 'any', :min => 1, :max => 10 %>
           </div>
         </td>
       </tr>
@@ -24,8 +24,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.cattlepro') %><br>
-            <%= radio_button_tag :cattlepro, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
-            <%= radio_button_tag :cattlepro, "2"%> <%= t('graze.no') %><br>
+            <%= f.radio_button :cattle_pro, "1", :checked => "checked"%> <%= t('graze.yes') %><br>
+            <%= f.radio_button :cattle_pro, "2"%> <%= t('graze.no') %><br>
           </div>
         </td>
       </tr>
@@ -33,9 +33,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.purpose') %><br>
-            <%= radio_button_tag :purpose, "1", :checked => "checked"%> <%= t('aplcat.buying') %><br>
-            <%= radio_button_tag :purpose, "2"%> <%= t('aplcat.selling') %><br>
-            <%#= text_field :purpose, :maxlength => "25", :title => t('aplcat_tooltip.purpose'), :placeholder => "Enter Text Here" %>
+            <%= f.radio_button :purpose, "1", :checked => "checked"%> <%= t('aplcat.buying') %><br>
+            <%= f.radio_button :purpose, "2"%> <%= t('aplcat.selling') %><br>
           </div>
         </td>
       </tr>
@@ -43,8 +42,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t("Transportation:") %><br>
-            <%= radio_button_tag :trans, "1", :checked => "checked"%> <%= t('aplcat.trans_feeder') %><br>
-            <%= radio_button_tag :trans, "2"%> <%= t('aplcat.trans_finish') %><br>
+            <%= f.radio_button :trans, "1", :checked => "checked"%> <%= t('aplcat.trans_feeder') %><br>
+            <%= f.radio_button :trans, "2"%> <%= t('aplcat.trans_finish') %><br>
           </div>
         </td>
       </tr>
@@ -52,60 +51,15 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.categories_trans') %>
-            <%= f.number_field :categories_trans, :min => 1, :max => 10, :step => 1 %>
+            <%= f.number_field :categories_trans, class: 'gvTitleStyleNumber', :min => 1, :max => 10, :step => 1 %>
           </div>
-          
-
-
-          <div>
-            <table class="toggable borders">
-              <tr><td colspan="5" style="display:none"><%= 'Average market weight of each animal (lb)' %></td></tr>
-              <tr>
-                <td class="indent" id="tdweight1" <%="style=display:none;" unless @categories[0] != nil %> <%=number_field_tag "weight1", @categories[0].weight unless @categories != nil %>
-                </td>
-                <td class="indent" id="tdweight2" <%=style="display:none" unless @categories[1] != nil %>><%= number_field_tag "weight2", @categories[1].weight unless @categories != nil %></td>
-                <td class="indent" id="tdweight3" <%=style="display:none" unless @categories[1] != nil %>><%= number_field_tag "weight3", @categories[2].weight unless @categories != nil %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight4", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight5", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight6", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight7", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight8", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight9", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "weight10", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-              </tr>
-              <tr><td colspan="5" style="display:none"><%= 'Number of animals in each category' %></td></tr>
-              <tr>
-                <td class="indent" <%=style="display:none" unless @categories[0] != nil %>><%= number_field_tag "animals1", @categories[0].weight unless @categories != nil %></td>              
-                <td class="indent" <%=style="display:none" unless @categories[0] != nil %>><%= number_field_tag "animals2", @categories[0].weight unless @categories != nil %></td>
-                <td class="indent" <%=style="display:none" unless @categories[0] != nil %>><%= number_field_tag "animals3", @categories[0].weight unless @categories != nil %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals3", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals4", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals5", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals6", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals7", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals8", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals9", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-                <td class="indent" colspan="2" style="display:none"><%= number_field_tag "animals10", class: 'gvCellStyleNumber', :min => 1, :step => 1 %></td>
-            </tr>
-            </table>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="indent" colspan="2">
-          <div class="field">
-            <%=  t('aplcat.categories_slaug') %>
-            <%= number_field :categories_slaug, class: 'gvTitleStyleNumber', :min => 50.0, :max => 2000.0, :step => '0.1' %>
-          </div>
-        </td>
-      </tr>
         </td>
       </tr>
       <tr>
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.avg_marweight') %>
-            <%= number_field :avg_marweight, class: 'gvTitleStyleNumber', :min => 1, :title => t('aplcat_tooltip.avg_marweight'), :step => 'any' %>
+            <%= f.number_field :avg_marweight, class: 'gvSmallStyleNumber', :min => 1, :max => 10000, :title => t('aplcat_tooltip.avg_marweight'), :step => 'any' %>
           </div>
         </td>
       </tr>
@@ -113,15 +67,56 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.num_animal') %>
-            <%= number_field :num_animal, class: 'gvTitleStyleNumber', :min => 1, :title => t('aplcat_tooltip.num_animal'), :step => 'any' %>
+            <%= f.number_field :num_animal, class: 'gvTitleStyleNumber', :min => 1, :title => t('aplcat_tooltip.num_animal'), :step => 'any' %>
           </div>
         </td>
       </tr>
       <tr>
         <td class="indent" colspan="2">
           <div class="field">
+            <%=  t('aplcat.categories_slaug') %>
+            <%= f.number_field :categories_slaug, class: 'gvTitleStyleNumber', :min => 50.0, :max => 2000.0, :step => '0.1' %>
+          </div>
+          <div>
+            <table class="toggable borders">
+              <tr><td>Average market weight of each animal (lb)</td></tr>
+              <tr>
+                <td class="indent"> 
+                  <%=number_field_tag "weight1", @categories.count > 0 ? @categories[0].weight : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "weight2", @categories.count > 1 ? @categories[1].weight : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "weight3", @categories.count > 2 ? @categories[2].weight : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "weight4", @categories.count > 3 ? @categories[3].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight5", @categories.count > 4 ? @categories[4].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight6", @categories.count > 5 ? @categories[5].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight7", @categories.count > 6 ? @categories[6].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight8", @categories.count > 7 ? @categories[7].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight9", @categories.count > 8 ? @categories[8].weight : 0, class: 'gvSmallStyleNumber'%>
+                  <%=number_field_tag "weight10", @categories.count > 9 ? @categories[9].weight : 0, class: 'gvSmallStyleNumber'%>
+                </td>
+              </tr>
+              <tr><td>Number of animals in each category</td></tr>
+              <tr>
+                <td>
+                  <%=number_field_tag "animals1", @categories.count > 0 ? @categories[0].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals2", @categories.count > 9 ? @categories[1].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals3", @categories.count > 1 ? @categories[2].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals4", @categories.count > 2 ? @categories[3].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals5", @categories.count > 3 ? @categories[4].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals6", @categories.count > 4 ? @categories[5].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals7", @categories.count > 5 ? @categories[6].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals8", @categories.count > 6 ? @categories[7].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals9", @categories.count > 7 ? @categories[8].animals : 0, class: 'gvSmallStyleNumber' %>
+                  <%=number_field_tag "animals10", @categories.count > 9 ? @categories[9].animals : 0, class: 'gvSmallStyleNumber' %>  
+                </td>                
+            </table>
+          </div>
+        </td>
+      </tr>>
+      <tr>
+        <td class="indent" colspan="2">
+          <div class="field">
             <%=  t('aplcat.mortality_rate') %>
-            <%= number_field :mortality_rate, class: 'gvTitleStyleNumber', :min => 0.01, :max => 5.00, :title => t('aplcat_tooltip.mortality_rate'), :step => '0.01' %>
+            <%= f.number_field :mortality_rate, class: 'gvTitleStyleNumber', :min => 0.01, :max => 5.00, :title => t('aplcat_tooltip.mortality_rate'), :step => '0.01' %>
           </div>
         </td>
       </tr>
@@ -129,15 +124,15 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.distance') %>
-            <%= number_field :distance, class: 'gvTitleStyleNumber', :min => 0.01, :title => t('aplcat_tooltip.distance'), :step => '0.01' %>
+            <%= f.number_field :distance, class: 'gvTitleStyleNumber', :min => 0.01, :title => t('aplcat_tooltip.distance'), :step => '0.01' %>
           </div>
         </td>
       </tr>
       <tr>
         <td class="indent" colspan="2">
           <div class="field">
-            <%=  t('aplcat.trailers') %>
-            <%= collection_select :trailer, :trailer_id, Trailer.all, :id, :description, {:prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id}%>
+            <%=  t('aplcat.trailers') %>           
+            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
           </div>
         </td>
       </tr>
@@ -145,7 +140,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.trucks') %>
-            <%= collection_select :truck, :truck_id, Truck.all, :id, :description, {:prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.truck_id}%>
+            <%= f.select :truck_id, Truck.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.truck_id%>
           </div>
         </td>
       </tr>
@@ -153,7 +148,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.fuel_type') %>
-           <%= collection_select :fuel, :fuel_id, Fuel.all, :id, :description, {:prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.fuel_id}%>
+           <%= f.select :fuel_id, Fuel.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.fuel_id%>
           </div>
         </td>
       </tr>
@@ -161,8 +156,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.same_vehicle') %><br>
-            <%= radio_button_tag :same_vehicle, "1", :checked => "checked"%> <%= t("Yes") %><br>
-            <%= radio_button_tag :same_vehicle, "2"%> <%= t("No") %><br>
+            <%= f.radio_button :same_vehicle, "1", :checked => "checked"%> <%= t("Yes") %><br>
+            <%= f.radio_button :same_vehicle, "2"%> <%= t("No") %><br>
           </div>
         </td>
       </tr>
@@ -170,9 +165,9 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.loading') %><br>
-            <%= radio_button_tag :loading, "1", :checked => "checked"%> <%= t('aplcat.thoughtless') %><br>
-            <%= radio_button_tag :loading, "2"%> <%= t('aplcat.arranged') %><br>
-            <%= radio_button_tag :loading, "3"%> <%= t('aplcat.floor_space') %><br>
+            <%= f.radio_button :loading, "1", :checked => "checked"%> <%= t('aplcat.thoughtless') %><br>
+            <%= f.radio_button :loading, "2"%> <%= t('aplcat.arranged') %><br>
+            <%= f.radio_button :loading, "3"%> <%= t('aplcat.floor_space') %><br>
           </div>
         </td>
       </tr>
@@ -180,7 +175,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.carcass') %>
-            <%= number_field :carcass, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.carcass'), :step => '0.1' %>
+            <%= f.number_field :carcass, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.carcass'), :step => '0.1' %>
           </div>
         </td>
       </tr>
@@ -188,7 +183,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%=  t('aplcat.boneless_beef') %>
-            <%= number_field :boneless_beef, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.boneless_beef'), :step => '0.1' %>
+            <%= f.number_field :boneless_beef, class: 'gvTitleStyleNumber', :min => 30.0, :max => 65.0, :title => t('aplcat_tooltip.boneless_beef'), :step => '0.1' %>
           </div>
         </td>
       </tr>

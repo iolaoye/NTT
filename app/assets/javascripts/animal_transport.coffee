@@ -4,8 +4,9 @@
 
 display_control = ->
     for i in [1..$("#animal_transport_categories_trans").val()]
-        $("#tdweight" + i).toggle(true)
-        $("#tdweight" + i)[0].style.display = ""
+        #$("#tdweight" + i).toggle(true)
+        $("#tdweight" + i)[0].style.display = "inline"
+        $("#weight" + i).val(0)
 
 $(document).ready ->
     $("#animal_transport_categories_trans").change ->

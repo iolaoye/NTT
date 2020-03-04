@@ -1,18 +1,4 @@
 class AddColumnsToAnimalTransport < ActiveRecord::Migration[5.2]
-	def change
-	  	if !(ActiveRecord::Base.connection.column_exists?(:animal_transports, :animal_transport_id))
-	    	add_column :animal_transports, :freq_trip, :integer
-	    end
-	  	if !(ActiveRecord::Base.connection.column_exists?(:animal_transports, :weight))
-	    	add_column :animal_transports, :cattle_pro, :real
-	    end
-	    if !(ActiveRecord::Base.connection.column_exists?(:animal_transports, :animals))
-	    	add_column :animal_transports, :purpose, :integer
-	    end  
-	end
-end
-
-class AddColumnsToAnimalTransport < ActiveRecord::Migration[5.2]
   def change
   	if !(ActiveRecord::Base.connection.column_exists?(:animal_transports, :freq_trip))
     	add_column :animal_transports, :freq_trip, :integer
