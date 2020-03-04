@@ -1,4 +1,7 @@
 NTTG3::Application.routes.draw do
+  resources :fuels
+  resources :trailers
+  resources :trucks
   resources :animal_transports
   resources :climes
   resources :aplcat_results
