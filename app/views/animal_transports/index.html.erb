@@ -10,7 +10,6 @@
           <th class="gvCellStyleTitle">Transportation</th>
           <th class="gvCellStyleTitle">Categories of animal transported</th>
           <th class="gvCellStyleTitle">Categories of animals finished and ready for slaughter</th>
-          <th class="gvCellStyleTitle">Average market weight of each animal (lb)</th>
           <th class="gvCellStyleTitle">Number of animals in each category</th>
           <th class="gvCellStyleTitle">Mortality rate of cattle</th>
           <th class="gvCellStyleTitle">Distance moved (miles)</th>
@@ -24,27 +23,29 @@
           <th class="gvCellStyleTitle"><%= t('general.actions') %></th>
         </tr>
       </thead>
-      <% @animal_transports.each do |animal_transports| %>
+      <% @animal_transports.each do |animal_transport| %>
         <tr>
-          <td><%= animal_transports.freq_trip %></td>
-          <td><%= animal_transports.cattle_pro %></td>
-          <td><%= animal_transports.purpose %></td>
-          <td><%= animal_transports.trans %></td>
-          <td><%= animal_transports.categories_trans %></td>
-          <td><%= animal_transports.categories_slaug %></td>
-          <td><%= animal_transports.animal_category_id %></td>
-          <td><%= animal_transports.mortality_rate %></td>
-          <td><%= animal_transports.distance %></td>
-          <td><%= animal_transports.trailer_id %></td>
-          <td><%= animal_transports.truck_id %></td>
-          <td><%= animal_transports.fuel_id %></td>
-          <td><%= animal_transports.same_vehicle %></td>
-          <td><%= animal_transports.loading %></td>
-          <td><%= animal_transports.carcass %></td>
-          <td><%= animal_transports.boneless_beef %></td>
-          <%= link_to image_tag("view.png"), project_field_scenario_animal_transport_path(@project, @field, @scenario, animal_transport_) %>
-          <%= link_to image_tag("edit.png"), edit_project_field_scenario_animal_transport__path(@project, @field, @scenario, animal_transport_) %>
-          <%= link_to image_tag("delete.png"), project_field_scenario_animal_transport__path(@project, @field, @scenario, animal_transport_), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+          <td><%= animal_transport.freq_trip %></td>
+          <td><%= animal_transport.cattle_pro %></td>
+          <td><%= animal_transport.purpose %></td>
+          <td><%= animal_transport.trans %></td>
+          <td><%= animal_transport.categories_trans %></td>
+          <td><%= animal_transport.categories_slaug %></td>
+          <td><%= animal_transport.num_animal %></td>
+          <td><%= animal_transport.mortality_rate %></td>
+          <td><%= animal_transport.distance %></td>
+          <td><%= animal_transport.trailer_id %></td>
+          <td><%= animal_transport.truck_id %></td>
+          <td><%= animal_transport.fuel_id %></td>
+          <td><%= animal_transport.same_vehicle %></td>
+          <td><%= animal_transport.loading %></td>
+          <td><%= animal_transport.carcass %></td>
+          <td><%= animal_transport.boneless_beef %></td>
+          <td>
+          <%= link_to image_tag("view.png"), project_field_scenario_animal_transport_path(@project, @field, @scenario, animal_transport) %>
+          <%= link_to image_tag("edit.png"), edit_project_field_scenario_animal_transport_path(@project, @field, @scenario, animal_transport) %>
+          <%= link_to image_tag("delete.png"), project_field_scenario_animal_transport_path(@project, @field, @scenario, animal_transport), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+          </td>
         </tr>
       <% end %>
     </table>
