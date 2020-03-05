@@ -49,6 +49,16 @@ class AnimalTransportsController < ApplicationController
     @animal_transport.scenario_id = params[:scenario_id]
     respond_to do |format|
       if @animal_transport.save
+        for i in 0..@animal_transport.categories_slaug - 1
+          new_cat = Category.new
+          new_cat.animal_transport_id = @animal_transport.id
+          new_cat.weight
+          new_cat.animals
+          if !new_cat.save 
+            format.html { render action: "new" }
+            format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+          end
+        end
         format.html { redirect_to @animal_transport, notice: 'animal_transport was successfully created.' }
         format.json { render json: @animal_transport, status: :created, location: @animal_transport }
       else
@@ -64,6 +74,21 @@ class AnimalTransportsController < ApplicationController
     @animal_transport = AnimalTransport.find(params[:id])
     respond_to do |format|
       if @animal_transport.update_attributes(animal_transport_params)
+        #delete all of the categories for this animal transport and create them again
+        categories = Category.where(:animal_transport_id => @animal_transport.id)
+        categories.delete_all
+        for i in 1..@animal_transport.categories_slaug
+          new_cat = Category.new
+          new_cat.animal_transport_id = @animal_transport.id
+          weight_symbol = ("weight" + i.to_s).to_sym
+          animals_symbol = ("animals" + i.to_s).to_sym
+          new_cat.weight = params[weight_symbol]
+          new_cat.animals = params[animals_symbol]
+          if !new_cat.save 
+            format.html { render action: "new" }
+            format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+          end
+        end
         format.html { redirect_to project_field_scenario_animal_transports_path(@project, @field, @scenario), notice: 'animal_transport was successfully updated.' }
         format.json { head :no_content }
       else
