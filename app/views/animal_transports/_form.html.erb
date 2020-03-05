@@ -86,31 +86,31 @@
               <tr><td>Average market weight of each animal (lb)</td></tr>
               <tr>
                 <td class="indent"> 
-                  <%=number_field_tag "weight1", @categories.count > 0 ? @categories[0].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 0%>
-                  <%=number_field_tag "weight2", @categories.count > 1 ? @categories[1].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 1 %>
-                  <%=number_field_tag "weight3", @categories.count > 2 ? @categories[2].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 2 %>
-                  <%=number_field_tag "weight4", @categories.count > 3 ? @categories[3].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 3%>
-                  <%=number_field_tag "weight5", @categories.count > 4 ? @categories[4].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 4%>
-                  <%=number_field_tag "weight6", @categories.count > 5 ? @categories[5].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 5%>
-                  <%=number_field_tag "weight7", @categories.count > 6 ? @categories[6].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 6%>
-                  <%=number_field_tag "weight8", @categories.count > 7 ? @categories[7].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 7%>
-                  <%=number_field_tag "weight9", @categories.count > 8 ? @categories[8].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 8%>
-                  <%=number_field_tag "weight10", @categories.count > 9 ? @categories[9].weight : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 9%>
+                  <%=number_field_tag "weight1", @categories.count > 0 ? @categories[0].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 0 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight2", @categories.count > 1 ? @categories[1].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 1 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight3", @categories.count > 2 ? @categories[2].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 2 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight4", @categories.count > 3 ? @categories[3].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 3 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight5", @categories.count > 4 ? @categories[4].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 4 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight6", @categories.count > 5 ? @categories[5].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 5 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight7", @categories.count > 6 ? @categories[6].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 6 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight8", @categories.count > 7 ? @categories[7].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 7 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight9", @categories.count > 8 ? @categories[8].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 8 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight10", @categories.count > 9 ? @categories[9].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 9 ? "display:inline" : "display:none"%>
                 </td>
               </tr>
               <tr><td>Number of animals in each category</td></tr>
               <tr>
                 <td>
-                  <%=number_field_tag "animals1", @categories.count > 0 ? @categories[0].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 0 %>
-                  <%=number_field_tag "animals2", @categories.count > 1 ? @categories[1].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 1 %>
-                  <%=number_field_tag "animals3", @categories.count > 2 ? @categories[2].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 2 %>
-                  <%=number_field_tag "animals4", @categories.count > 3 ? @categories[3].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 3 %>
-                  <%=number_field_tag "animals5", @categories.count > 4 ? @categories[4].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 4 %>
-                  <%=number_field_tag "animals6", @categories.count > 5 ? @categories[5].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 5 %>
-                  <%=number_field_tag "animals7", @categories.count > 6 ? @categories[6].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 6 %>
-                  <%=number_field_tag "animals8", @categories.count > 7 ? @categories[7].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 7 %>
-                  <%=number_field_tag "animals9", @categories.count > 8 ? @categories[8].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 8 %>
-                  <%=number_field_tag "animals10", @categories.count > 9 ? @categories[9].animals : 0, class: 'gvSmallStyleNumber', :style=>"display:none" unless @categories.count > 9 %>  
+                  <%=number_field_tag "animals1", @categories.count > 0 ? @categories[0].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 0 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals2", @categories.count > 1 ? @categories[1].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 1 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals3", @categories.count > 2 ? @categories[2].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 2 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals4", @categories.count > 3 ? @categories[3].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 3 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals5", @categories.count > 4 ? @categories[4].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 4 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals6", @categories.count > 5 ? @categories[5].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 5 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals7", @categories.count > 6 ? @categories[6].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 6 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals8", @categories.count > 7 ? @categories[7].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 7 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals9", @categories.count > 8 ? @categories[8].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 8 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "animals10", @categories.count > 9 ? @categories[9].animals : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 9 ? "display:inline" : "display:none"%>
                 </td> 
               </tr>               
             </table>
