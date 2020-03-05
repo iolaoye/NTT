@@ -39,12 +39,12 @@ class AnimalTransportsController < ApplicationController
 
   def edit
     @animal_transport = AnimalTransport.find(params[:id])
+    @categories = Category.where(:animal_transport_id => @animal_transport.id)
   end
 
   # POST /animal_transport
   # POST /animal_transport.json
   def create
-    debugger
     @animal_transport = AnimalTransport.new(animal_transport_params)
     @animal_transport.scenario_id = params[:scenario_id]
     respond_to do |format|
@@ -62,10 +62,9 @@ class AnimalTransportsController < ApplicationController
   # PATCH/PUT /animal_transport/1.json
   def update
     @animal_transport = AnimalTransport.find(params[:id])
-
     respond_to do |format|
       if @animal_transport.update_attributes(animal_transport_params)
-        format.html { redirect_to project_field_scenario_animal_transport_path(@project, @field, @scenario), notice: 'animal_transport was successfully updated.' }
+        format.html { redirect_to project_field_scenario_animal_transports_path(@project, @field, @scenario), notice: 'animal_transport was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -81,7 +80,7 @@ class AnimalTransportsController < ApplicationController
     @animal_transport.destroy
 
     respond_to do |format|
-      format.html { redirect_to project_field_scenario_animal_transport_path(@project, @field, @scenario) }
+      format.html { redirect_to project_field_scenario_animal_transports_path(@project, @field, @scenario) }
       format.json { head :no_content }
     end
   end
@@ -89,7 +88,7 @@ class AnimalTransportsController < ApplicationController
   private
 
   def animal_transport_params
-    params.require(:animal_transport).permit(:freqtrip, :cattlepro, :purpose, :trans, :categories_trans, :avg_marweight, :num_animal, :categories_slaug, :mortality_rate, :distance, :trailer_id, :truck_id, :fuel_id, :same_vehicle, :loading, :carcass, :boneless_beef)
+    params.require(:animal_transport).permit(:freq_trip, :cattle_pro, :purpose, :trans, :categories_trans, :avg_marweight, :num_animal, :categories_slaug, :mortality_rate, :distance, :trailer_id, :truck_id, :fuel_id, :same_vehicle, :loading, :carcass, :boneless_beef)
   end
 
 end
