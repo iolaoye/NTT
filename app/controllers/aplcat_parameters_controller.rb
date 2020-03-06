@@ -43,18 +43,18 @@ class AplcatParametersController < ApplicationController
     #@aplcat[t('aplcat.animal_growth_parameters')] = 1
     #@aplcat[t('aplcat.animal_manure_parameters')] = 2
     @aplcat[t('aplcat.animal_parameters')] = 1
-    @aplcat[t('aplcat.animal_transport_input')] = 2
-    @aplcat[t('aplcat.co2_balance_input')] = 3
+    #@aplcat[t('aplcat.animal_transport_input')] = 2
+    @aplcat[t('aplcat.co2_balance_input')] = 2
     #@aplcat[t('aplcat.environmental_parameters')] = 6
-    @aplcat[t('aplcat.forage_quantity_input')] = 4
+    @aplcat[t('aplcat.forage_quantity_input')] = 3
     #@aplcat[t('aplcat.greenhouse_parameters')] = 8
     #@aplcat[t('aplcat.other_parameters')] = 9
-    @aplcat[t('aplcat.runparm_aplcat_parameters')] = 5
-    @aplcat[t('aplcat.scenario_file')] = 6
-    @aplcat[t('aplcat.secondary_emissions_input')] = 7
-    @aplcat[t('aplcat.simulation_methods')] = 8
-    @aplcat[t('aplcat.simulation_parameters')] = 9
-    @aplcat[t('aplcat.divv_11')] = 10 #water estimation parameters
+    @aplcat[t('aplcat.runparm_aplcat_parameters')] = 4
+    @aplcat[t('aplcat.scenario_file')] = 5
+    @aplcat[t('aplcat.secondary_emissions_input')] = 6
+    @aplcat[t('aplcat.simulation_methods')] = 7
+    @aplcat[t('aplcat.simulation_parameters')] = 8
+    @aplcat[t('aplcat.divv_11')] = 9 #water estimation parameters
   	#@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
 
   	add_breadcrumb 'Aplcat'

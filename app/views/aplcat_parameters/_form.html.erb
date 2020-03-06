@@ -528,7 +528,7 @@
   </div>
   <%end%>
 
-  <div style='display:none' id="div_3">
+  <div style='display:none' id="div_2">
     <div class="field">
     <%= field_set_tag t('aplcat.co2_balance_input'), class:'fieldset' do %>
     <%= t('aplcat.selectp') %>
@@ -662,7 +662,7 @@
   </div>
 <% end %>
 
-  <div style='display:none' id="div_4">
+  <div style='display:none' id="div_3">
     <%= field_set_tag t('aplcat.forage_quantity_input'), class:'fieldset' do %>
     <div class="field">
       <%= t('aplcat.number_of_forage') %>
@@ -760,7 +760,7 @@
   </div>
 
 
-  <div style='display:none' id="div_5">
+  <div style='display:none' id="div_4">
     <%= field_set_tag t('aplcat.runparm_aplcat_parameters'), class:'fieldset' do %>
     <div class="field">
       <%= t('aplcat.running_drinking_water') %><br>
@@ -837,7 +837,7 @@
 </div>
 <% end %>
 
-<div style='display:none' id="div_6">
+<div style='display:none' id="div_5">
   <%= field_set_tag t('aplcat.scenario_file'), class:'fieldset' do %>
   <table>
     <thread>
@@ -895,7 +895,7 @@
   <%end%>
   </div>
 
-  <div style='display:none' id="div_7">
+  <div style='display:none' id="div_6">
     <div class="field">
     <%= field_set_tag t('aplcat.secondary_emissions_input'), class:'fieldset' do %>
     <b><%= t("Engine related parameters for estimation of fuel consumption:") %></b><br><br>
@@ -1050,7 +1050,7 @@
   </div>
 </div>
 
-<div style='display:none' id="div_8">
+<div style='display:none' id="div_7">
   <%= field_set_tag t('aplcat.simulation_methods'), class:'fieldset' do %>
   <div class="field">
     <%= t('aplcat.mm_type') %><br>
@@ -1090,7 +1090,7 @@
 <%end%>
   </div>
 
-  <div style='display:none' id="div_9">
+  <div style='display:none' id="div_8">
     <%= field_set_tag t('aplcat.simulation_parameters'), class:'fieldset' do %>
     <div class="field">
 		<%=  t('aplcat.mrgauh') %>
@@ -1187,7 +1187,7 @@
 <% end %>
   </div>
 
-    <div style='display:none' id="div_10">
+    <div style='display:none' id="div_9">
       <%= field_set_tag t('aplcat.divv_11'), class:'fieldset' do %>
       <div class="field">
         <%=  t('aplcat.drinkg') %>
@@ -1368,7 +1368,7 @@
 <script>
 	function show_div() {
 	    var div_id = ""
-		for(i=1; i<= 10; i++) {
+		for(i=1; i<= 9; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
 		}
