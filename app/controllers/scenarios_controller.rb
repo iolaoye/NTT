@@ -1314,7 +1314,7 @@ class ScenariosController < ApplicationController
 		apex_string += "| " + t('graze.ejd') + "\n"
 		#for i in 0..grazing.count-1
 			#apex_string += sprintf("%d", grazing[i].for_button) + "\t"
-	#	end
+	 #	end
 		#apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%.2f", grazing[i].for_dmi_cows) + "\t"
@@ -1386,7 +1386,7 @@ class ScenariosController < ApplicationController
 		#for j in 0..supplement.count-1
 			#apex_string += sprintf("%d", supplement[j].for_button) + "\t"
 		#end
-	#	apex_string += "| " + t('graze.dmi_code') + "\n"
+    #	apex_string += "| " + t('graze.dmi_code') + "\n"
 		for j in 0..supplement.count-1
 			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
 		end
@@ -1703,7 +1703,7 @@ class ScenariosController < ApplicationController
           @erros.push "Bad file_data: #{@filename.class.name}: # {@filename.inspect}"
           return
         end
-        upload_scenarios_txt
+        msg = upload_scenarios_txt
       when "3"
         @data = Nokogiri::XML(params[:scenarios])
         msg = upload_scenarios_xml
@@ -1720,6 +1720,61 @@ class ScenariosController < ApplicationController
       format.html { render action: "index" }
       format.json { render json: @scenarios }
     end
+  end
+
+  def upload_scenarios_txt
+    ActiveRecord::Base.transaction do
+      begin
+        operations = @data.split(/\n/)
+        if operations.count <= 0 then return "The file does not contain operations" end
+        first = true
+        operations.each do |operation|
+          opr = operation.split(",")
+          if opr.count <= 0 then return "The file does not contain operations" end
+          if !first then if @scenario.name != opr[0] then first = true end end
+          if first then
+            @scenario = Scenario.new
+            @scenario.name = opr[0]
+            @scenario.field_id = @field.id
+            first = false
+            if !@scenario.save then return "Error saving new scenario" end
+            #Copy subareas info by scenario
+            add_scenario_to_soils(@scenario, false)
+          end
+          operation = Operation.new
+          operation.scenario_id = @scenario.id
+          operation.activity_id = opr[1]
+          operation.crop_id = opr[2]
+          operation.month_id = opr[3]
+          operation.day = opr[4]
+          operation.year = opr[5]
+          operation.type_id = opr[6]
+          operation.amount = opr[7]
+          operation.depth = opr[8]
+          operation.no3_n = opr[9]
+          operation.po4_p = opr[10]
+          operation.org_n = opr[11]
+          operation.org_p = opr[12]
+          operation.nh3 = opr[13]
+          operation.subtype_id = opr[14]
+          operation.moisture = opr[15]
+          operation.org_c = opr[16]
+          operation.nh4_n = opr[17]
+          operation.rotation = opr[18]
+          if operation.save
+            #create soil operations
+            add_soil_operation(operation)
+            #create subareas
+          end
+        end. # end operations.each
+        msg = "Scenario " + @scenario.name + " created succesfully"
+      rescue => e
+        @errors.push = "Failed, Error: " + e.inspect
+        raise ActiveRecord::Rollback
+      ensure
+        next
+      end
+    end  # end transaction    
   end
 
   def upload_scenarios_xml

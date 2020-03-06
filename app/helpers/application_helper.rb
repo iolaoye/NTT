@@ -37,7 +37,7 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("/grazing_parameters"))
 				true
-			elsif request.url.include?(url_for("/supplement_parameters"))
+			elsif request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
 				true
 			else
 				false
@@ -57,7 +57,7 @@ module ApplicationHelper
 				if request.url.include?(url_for("/aplcat_parameters"))
 					@scenario_name = Scenario.find(params[:scenario_id]).name
 					true
-				elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters"))
+				elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
 					@scenario_name = Scenario.find(params[:scenario_id]).name
 					true
 				end
@@ -85,9 +85,17 @@ module ApplicationHelper
 		end
 
 		def aplcats_submenu
-			if request.url.include?(url_for('aplcat_parameters'))
+			if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
 				true
-			elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))
+			elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
+				true
+			else
+				false
+			end
+		end
+
+		def aplcats_sub_submenu
+			if request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters')) || request.url.include?(url_for('aplcat_parameters'))  || request.url.include?(url_for('animal_transports'))
 				true
 			else
 				false
