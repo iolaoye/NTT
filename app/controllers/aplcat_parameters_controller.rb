@@ -44,7 +44,7 @@ class AplcatParametersController < ApplicationController
     #@aplcat[t('aplcat.animal_manure_parameters')] = 2
     @aplcat[t('aplcat.animal_parameters')] = 1
     #@aplcat[t('aplcat.animal_transport_input')] = 2
-    @aplcat[t('aplcat.co2_balance_input')] = 2
+    @aplcat[t('aplcat.co2_balance_input')] = 3
     #@aplcat[t('aplcat.environmental_parameters')] = 6
     @aplcat[t('aplcat.forage_quantity_input')] = 3
     #@aplcat[t('aplcat.greenhouse_parameters')] = 8
@@ -66,7 +66,7 @@ class AplcatParametersController < ApplicationController
 
   	case @type
     when 2
-        add_breadcrumb 'Animal Transport Input'
+        #add_breadcrumb 'Animal Transport Input'
   	when 3
   	  add_breadcrumb 'CO2 Balance Input'
   	when 4

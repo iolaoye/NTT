@@ -8,10 +8,15 @@ s_f = spTransform(s_f_org, CRS("+proj=longlat +datum=WGS84"))
 polys = attr(s_f_org,'polygons')
 npoly<-length(polys)
 for (i in 1:npoly){
-    ncoords<-length(s_f@polygons[[i]]@Polygons[[1]]@coords)/2
-    cat(paste0(" Field: AOI",i,"|"))
-    for(j in 1:ncoords) {
-        cat(paste0(s_f@polygons[[i]]@Polygons[[1]]@coords[j,1],",",s_f@polygons[[i]]@Polygons[[1]]@coords[j,2]),"")
+	sub_polys = length(s_f@polygons[[i]]@Polygons)
+	for(l in 1:sub_polys) {
+    	ncoords<-length(s_f@polygons[[i]]@Polygons[[l]]@coords)/2
+    	field_name = as.character(s_f$FIELD[i])
+    	if(identical(character(0), field_name)) { cat(paste0(" Field: AOI",i,"_",l,"|")) }
+    	else cat(paste0(" Field: ",field_name,"_",l,"|"))
+    	for(j in 1:ncoords) {
+        	cat(paste0(s_f@polygons[[i]]@Polygons[[l]]@coords[j,1],",",s_f@polygons[[i]]@Polygons[[l]]@coords[j,2]),"")
+    	}
     }
 }
 

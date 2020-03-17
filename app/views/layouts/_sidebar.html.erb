@@ -79,17 +79,57 @@
             <%= link_to t('menu.bmps') + " (" + Bmp.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_bmps_path(@project, @field, @scenario) %>
           </li>
           <% if aplcat == 1 %>
-  					<li class="<%= controller_name == "aplcat_parameters" ? "active" : controller_name == "grazing_parameters" ? "active" : controller_name == "supplement_parameters" ? "active" : "" %>">
-              <% if controller_name == "aplcat_parameters" or controller_name == "grazing_parameters" or controller_name == "supplement_parameters" %>
+          <% if aplcats_submenu %>
+  					<li class="<%= controller_name == "aplcat_parameters" ? "active" : controller_name == "grazing_parameters" ? "active" : controller_name == "supplement_parameters" ? "active" : controller_name == "animal_transports" ? "active" : "" %>">
+              <% if controller_name == "aplcat_parameters" or controller_name == "grazing_parameters" or controller_name == "supplement_parameters"  or controller_name == "animal_transports" %>
                 <div class="sub-header-icon">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 </div>
               <% end %>
               <%# unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
   			      <% unless ENV["APP_VERSION"] == "modified" %>
-                 <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+                <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+                <% if aplcats_sub_submenu %>
+                  <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
+                    <li class="<%= controller_name == "aplcat_parameters" ? "active" : "" %>">
+                      <% if controller_name == "aplcat_parameters" %>
+                        <div class="sub-sub-header-icon">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                      <%= link_to t('menu.tabular_parameters') + " (" + AplcatParameter.where(:scenario_id => @scenario.id).count.to_s + ")", edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+                    </li>
+                    <li class="<%= controller_name == "grazing_parameters" ? "active" : "" %>">
+                      <% if controller_name == "grazing_parameters" %>
+                        <div class="sub-sub-header-icon">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                      <%= link_to t('menu.grazing_parameters') + " (" + GrazingParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_grazing_parameters_path(@project, @field, @scenario) %>
+                    </li>
+                    <li class="<%= controller_name == "supplement_parameters" ? "active" : "" %>">
+                      <% if controller_name == "supplement_parameters" %>
+                        <div class="sub-sub-header-icon">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                      <%= link_to t('menu.supplement_parameters') + " (" + SupplementParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_supplement_parameters_path(@project, @field, @scenario) %>
+                    </li>
+                   </li>
+                    <li class="<%= controller_name == "animal_transport" ? "active" : "" %>">
+                      <% if controller_name == "animal_transport" %>
+                        <div class="sub-sub-header-icon">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </div>
+                      <% end %>
+                      <%= link_to t('menu.animal_transport') + " (" + AnimalTransport.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_animal_transports_path(@project, @field, @scenario) %>
+                    </li>
+
+                  </ul>
+                <% end %>
               <% end %>
             </li>
+          <% end %>
           <% end %>
         </ul>
 	    <% else %>

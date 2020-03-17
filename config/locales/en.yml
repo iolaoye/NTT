@@ -1150,7 +1150,7 @@ en:
       pmme: Proportion of manure (solid+liquid) moisture evaporated (%)
       rhaeba: Relative humidity of air exhaled by animals (%)
       toaboba: Temperature of air breathed out by animals (deg F)
-      vsim: Volatile solids in manure [kg of dry organic matter]
+      vsim: "Volatile solids in manure [kg of dry organic matter]"
       foue: Fraction of urinary energy expressed as fraction of GE
       ash: Ash content in manure (fraction of dry matter intake)
       mmppfm: Maximum methane production potential for the manure (Bo)
