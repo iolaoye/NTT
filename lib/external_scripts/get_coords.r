@@ -11,7 +11,9 @@ for (i in 1:npoly){
 	sub_polys = length(s_f@polygons[[i]]@Polygons)
 	for(l in 1:sub_polys) {
     	ncoords<-length(s_f@polygons[[i]]@Polygons[[l]]@coords)/2
-    	cat(paste0(" Field: AOI",i,"_",l,"|"))
+    	field_name = as.character(s_f$FIELD[i])
+    	if(identical(character(0), field_name)) { cat(paste0(" Field: AOI",i,"_",l,"|")) }
+    	else cat(paste0(" Field: ",field_name,"_",l,"|"))
     	for(j in 1:ncoords) {
         	cat(paste0(s_f@polygons[[i]]@Polygons[[l]]@coords[j,1],",",s_f@polygons[[i]]@Polygons[[l]]@coords[j,2]),"")
     	}
