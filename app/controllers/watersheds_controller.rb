@@ -267,8 +267,10 @@ class WatershedsController < ApplicationController
             end
             j=0
 
-            <<-DOC
 
+
+            debugger
+        if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
             #############  this block for the old way of simulating watersheds ##########################
             watershed_scenarios.each do |p|
               @scenario = Scenario.find(p.scenario_id)
@@ -284,7 +286,10 @@ class WatershedsController < ApplicationController
                 j+=1
             end # en
             #############  this block for the old way of simulating watersheds ##########################
-            DOC
+        
+
+        else
+
 
             #############  this block for the new way of simulating watersheds ##########################
             #call R program. read results and create the new watershed_scnearios hash to run scenarios
@@ -342,8 +347,9 @@ class WatershedsController < ApplicationController
                 j+=1
                 i+=1
               end  # end for i 1 to nn0
-
             #############  this block for the new way of simulating watersheds ##########################
+        end
+
 
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
