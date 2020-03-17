@@ -523,8 +523,7 @@
         <%= radio_button_tag :codepurpose, "2"%> <%= t('aplcat.selling') %><br>
       </div>
     <%end%>
-  </div>
-
+</div>
   <div style='display:none' id="div_3">
     <%= field_set_tag t('aplcat.co2_balance_input'), class:'fieldset' do %>
       <%= t('aplcat.selectp') %>
@@ -753,7 +752,6 @@
       </div>
     <% end %>
   </div>
-
   <div style='display:none' id="div_5">
     <%= field_set_tag t('aplcat.runparm_aplcat_parameters'), class:'fieldset' do %>
       <div class="field">
@@ -887,7 +885,6 @@
       </table>
     <%end%>
   </div>
-
   <div style='display:none' id="div_7">
     <div class="field">
       <%= field_set_tag t('aplcat.secondary_emissions_input'), class:'fieldset' do %>
@@ -1080,7 +1077,7 @@
     <%end%>
   </div>
 
-  <div style='display:none' id="div_9">
+  <div style='display:none' id="div_8">
     <%= field_set_tag t('aplcat.simulation_parameters'), class:'fieldset' do %>
       <div class="field">
   		<%=  t('aplcat.mrgauh') %>
@@ -1176,7 +1173,6 @@
   	  </div>
     <% end %>
   </div>
-
   <div style='display:none' id="div_10">
     <%= field_set_tag t('aplcat.divv_11'), class:'fieldset' do %>
       <div class="field">
@@ -1357,7 +1353,7 @@
 
 <script>
 	function show_div() {
-    var div_id = ""
+  var div_id = ""
 		for(i=1; i<= 10; i++) {
 			div_id = "div_".concat(i);
 		    document.getElementById(div_id).style.display="none";
