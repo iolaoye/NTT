@@ -1,5 +1,5 @@
 class AnimalTransportsController < ApplicationController
-  before_action :set_params
+  #before_action :set_params
 
   def set_params
     @field = Field.find(params[:field_id])
@@ -49,17 +49,19 @@ class AnimalTransportsController < ApplicationController
     @animal_transport.scenario_id = params[:scenario_id]
     respond_to do |format|
       if @animal_transport.save
-        for i in 0..@animal_transport.categories_slaug - 1
-          new_cat = Category.new
-          new_cat.animal_transport_id = @animal_transport.id
-          new_cat.weight
-          new_cat.animals
-          if !new_cat.save 
-            format.html { render action: "new" }
-            format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+        if @animal_transport.categories_slaug != nil
+          for i in 1..@animal_transport.categories_slaug
+            new_cat = Category.new
+            new_cat.animal_transport_id = @animal_transport.id
+            new_cat.weight
+            new_cat.animals
+            if !new_cat.save 
+              format.html { render action: "new" }
+              format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+            end
           end
         end
-        format.html { redirect_to @animal_transport, notice: 'animal_transport was successfully created.' }
+        format.html { redirect_to project_field_scenario_animal_transports_path(@project, @field, @scenario), notice: 'animal_transport was added successfully.' }
         format.json { render json: @animal_transport, status: :created, location: @animal_transport }
       else
         format.html { render action: "new" }
@@ -77,16 +79,18 @@ class AnimalTransportsController < ApplicationController
         #delete all of the categories for this animal transport and create them again
         categories = Category.where(:animal_transport_id => @animal_transport.id)
         categories.delete_all
-        for i in 1..@animal_transport.categories_slaug
-          new_cat = Category.new
-          new_cat.animal_transport_id = @animal_transport.id
-          weight_symbol = ("weight" + i.to_s).to_sym
-          animals_symbol = ("animals" + i.to_s).to_sym
-          new_cat.weight = params[weight_symbol]
-          new_cat.animals = params[animals_symbol]
-          if !new_cat.save 
-            format.html { render action: "new" }
-            format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+        if @animal_transport.categories_slaug != nil
+          for i in 1..@animal_transport.categories_slaug
+            new_cat = Category.new
+            new_cat.animal_transport_id = @animal_transport.id
+            weight_symbol = ("weight" + i.to_s).to_sym
+            animals_symbol = ("animals" + i.to_s).to_sym
+            new_cat.weight = params[weight_symbol]
+            new_cat.animals = params[animals_symbol]
+            if !new_cat.save 
+              format.html { render action: "new" }
+              format.json { render json: @animal_transport.errors, status: :unprocessable_entity }
+            end
           end
         end
         format.html { redirect_to project_field_scenario_animal_transports_path(@project, @field, @scenario), notice: 'animal_transport was successfully updated.' }
