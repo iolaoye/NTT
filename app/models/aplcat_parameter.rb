@@ -24,33 +24,37 @@ class AplcatParameter < ActiveRecord::Base
          :ninth_area, :ninth_equip, :ninth_fuel, :tenth_area, :tenth_equip, :tenth_fuel, :eleventh_area, :eleventh_equip, :eleventh_fuel,
          :twelveth_area, :twelveth_equip, :twelveth_fuel, :thirteen_area, :thirteen_equip, :thirteen_fuel, :fourteen_area, :fourteen_equip, :fourteen_fuel,
          :fifteen_area, :fifteen_equip, :fifteen_fuel, :sixteen_area, :sixteen_equip, :sixteen_fuel, :seventeen_area, :seventeen_equip, :seventeen_fuel,
-         :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos
+         :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos, :number_of_forage,
+         :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :mm_type_but, :nit, :fqd, :uovfi, :srwc, :byos, :eyos
 
   #associations
 	  belongs_to :scenario
 
   after_initialize do
 	  if self.new_record?
-    self.nocrh = 25
-    self.abc = 1
-		self.abwc = 1300
+	  	#1. animal parameters
 		self.noc = 100
-		self.abwh =  900
-		self.abwmb =  1500
-		self.adwgbc = 1.7
 		self.nomb = 8
 		self.norh = 25
-		self.prb =  20.0
+    	self.nocrh = 25
+    	self.prb =  20.0
 		self.prh =  10.0
+		self.abwc = 1300
+		self.abwmb =  1500
+		self.abwh =  900
+		self.abwrh = 700
+		self.adwgbc = 1.7
 		self.adwgbh = 1.50
-		self.mrga = 2.0
 		self.jdcc = 142
 		self.gpc = 283
 		self.tpwg = 100
 		self.csefa = 90
 		self.srop = 80
 		self.bwoc = 80
-		self.jdbs = 274   #juliand day of buying/selling
+		self.jdbs = 27
+    	self.abc = 1
+		self.mrga = 2.0
+		#old variables not used right now.
 		self.dmd = 80 #dry matter digestibility
 		self.dmi = 2.3
 		self.napanr = 0.61
@@ -79,6 +83,141 @@ class AplcatParameter < ActiveRecord::Base
 		self.tnggbc = 5
 		self.mm_type = 1
 		self.fmbmm = 0.76
+		#2. CO2 Balance Input
+		self.n_tfa = 1463
+		self.n_sr = 4.68
+		self.n_arnfa = 1463
+		self.n_arpfa = 0
+		self.n_nfar = 118.5
+		self.n_npfar = 0
+		sefl.n_co2enfp = 3.31
+		self.n_co2enfa = 0
+		self.n_co2epfp = 1.03
+		self.n_lamf = -63
+		self.n_lan2of = 1213
+		self.n_laco2f = 0
+		self.n_socc = -3600
+		self.i_tfa = 1463
+		self.i_sr = 4.68
+		self.i_arnfa = 1463
+		self.i_arpfa = 0
+		self.i_nfar = 118.5
+		self.i_npfar = 0
+		sefl.i_co2enfp = 3.31
+		self.i_co2enfa = 0
+		self.i_co2epfp = 1.03
+		self.i_lamf = -63
+		self.i_lan2of = 1213
+		self.i_laco2f = 0
+		self.i_socc = -3600
+		#3. Forage Quatilyt Input
+		self.number_of_forage = 1
+		self.forage_id = 127
+		self.jincrease = 91
+		self.stabilization = 105
+		self.decline = 120
+		self.opt4 = 134
+		self.cpl_lowest = 3.3
+		self.cpl_highest = 4.6
+		self.tdn_lowest = 5.2
+		self.tdn_highest = 5.7
+		self.ndf_lowest = 0
+		sefl.ndf_highest = 0
+		self.adf_lowest = 2.0
+		self.adf_highest = 5.5
+		self.fir_lowest = 1.8
+		self.fir_highest = 2.5
+		#4. RunParm APLCAT Parameter
+		self.running_drinking_water = true
+		self.running_complete_stocker = false
+		sefl.running_ghg = true
+		self.running_transportation = true
+		#5. Scenario File
+		self.mdogfc = 283
+		self.mxdogfc = 284
+		self.cwsoj = 81
+		self.cweoj = 83
+		self.ewc = 1
+		self.nodew = 7
+		self.byosm = 2012
+		self.eyosm = 2014
+		#6. Secundary Emissions Input
+		self.theta = 1
+		self.fge = 1
+		self.fde = 1
+		self.first_area = 0
+		self.first_equip = 0
+		self.first_fuel = 1
+		#7. Simulation Methods
+		self.mm_type_but = 1
+		self.nit = 1
+		self.fqd = 1
+		self.uovfi = 1
+		self.srwc = 1
+		self.byos = 2018
+		self.eyos = 2019
+		#8. Simulation Parameters
+		self.mrgauh = 2.0
+		self.plac = 62
+		self.pcbb = 62
+		self.fmbmm = 0.76
+		self.domd = 87
+		self.vsim = 1.5
+		self.faueea = 0.04
+		self.acim = 0.004
+		self.mmppm = 0.17
+		self.cffm = 0.5
+		self.fnemm = 1.0
+		self.effd = 0.01
+		self.ptbd = 0.15
+		self.pocib = 0.0
+		self.bneap = 0.9
+		self.cneap = 0.8
+		self.hneap = 0.7
+		self.pobw = 0.95
+		self.posw = 0.956
+		self.posb = 0.891
+		self.poad = 0.8
+		self.poada = 0.6
+		self.cibo = 0.2
+		#Water Estimation parameters
+		self.drinkg = 0.033
+		self.drinkl = 0.015
+		self.drinkm = 0.019
+		self.tjan = 42.0
+		self.tfeb = 45.9
+		self.tmar = 54.1
+		self.tapr = 62.6
+		self.tmay = 71.6
+		self.tjun = 79.5
+		self.tjul = 84.4
+		self.taug = 84
+		self.tsep = 75.7
+		self.toct = 64.5
+		self.tnov = 52.7
+		self.tdec = 42.8
+		self.hjan = 66.5
+		self.hfeb = 66.0
+		self.hmar = 62.5
+		self.hapr = 63.0
+		self.hmay = 68.5
+		self.hjun = 66.5
+		self.hjul = 60.5
+		self.haug = 60.5
+		self.hsep = 65.5
+		self.hoct = 65.5
+		self.hnov = 65.0
+		self.hdec = 66.0
+		self.rhae = 95
+		self.tabo = 95
+		self.mpism = 88
+		self.spilm = 5
+		self.pom = 40
+		self.srinr = 0.078
+		sefl.sriip = 0.214
+		self.pogu = 100
+		self.adoa = 46.8
+		self.ape = 55
  	  end
   end
 end

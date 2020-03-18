@@ -239,7 +239,7 @@ en:
     people: Person
     project: Project
     result: Result
-    scenario: scenario
+    scenario: Scenario
     session: Session
     site: Site
     soil_operation: Soil operation
@@ -315,6 +315,7 @@ en:
       prompt: Please select
       field: Select Field
       scenario: Select Scenario
+      project: Select Project
     submit:
       create: Save
       submit: Save
