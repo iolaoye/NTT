@@ -34,9 +34,9 @@ class AplcatParametersController < ApplicationController
 
   # GET /aplcat_parameters/1/edit
   def edit
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@scenario = Scenario.find(params[:scenario_id])
   	@aplcat = Hash.new
     #Commented sections are removed from the NTT interface for now.
 
@@ -58,7 +58,7 @@ class AplcatParametersController < ApplicationController
   	#@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
 
   	add_breadcrumb 'Aplcat'
-    	if params[:id] == nil then
+    if params[:id] == nil then
   		@type = 1
   	else
   		@type = params[:id].to_i
@@ -98,8 +98,7 @@ class AplcatParametersController < ApplicationController
   	else
   	  add_breadcrumb 'Animal Parameters'
   	end
-
-      @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:scenario_id])
+    @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:scenario_id])
   	if @aplcat_parameter == nil then
   		new()
   	end
@@ -126,9 +125,9 @@ class AplcatParametersController < ApplicationController
   def update
     saved = false
     #@type = params[:type]
-    @field = Field.find(params[:field_id])
-    @project = Project.find(params[:project_id])
-    @scenario = Scenario.find(params[:scenario_id])
+    #@field = Field.find(params[:field_id])
+    #@project = Project.find(params[:project_id])
+    #@scenario = Scenario.find(params[:scenario_id])
   	@aplcat_parameter = AplcatParameter.find_by_id(params[:id])
   	if @aplcat_parameter == nil then
   		@aplcat_parameter = AplcatParameter.new(aplcat_parameter_params)
@@ -191,7 +190,7 @@ class AplcatParametersController < ApplicationController
          :ninth_area, :ninth_equip, :ninth_fuel, :tenth_area, :tenth_equip, :tenth_fuel, :eleventh_area, :eleventh_equip, :eleventh_fuel,
          :twelveth_area, :twelveth_equip, :twelveth_fuel, :thirteen_area, :thirteen_equip, :thirteen_fuel, :fourteen_area, :fourteen_equip, :fourteen_fuel,
          :fifteen_area, :fifteen_equip, :fifteen_fuel, :sixteen_area, :sixteen_equip, :sixteen_fuel, :seventeen_area, :seventeen_equip, :seventeen_fuel,
-         :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos,
+         :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos, :srwc,
          :mm_type_but, :nit, :fqd, :uovfi, :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :number_of_forage)
 
     end
