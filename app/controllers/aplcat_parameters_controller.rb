@@ -32,19 +32,15 @@ class AplcatParametersController < ApplicationController
     #end
   end
 
-  # GET /aplcat_parameters/1/edit
-  def edit
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
-    #@scenario = Scenario.find(params[:scenario_id])
-  	@aplcat = Hash.new
+  #Set the list of dropdownlist control in aplcat.
+  def aplcat_list
+    @aplcat = Hash.new
     #Commented sections are removed from the NTT interface for now.
-
     #@aplcat[t('aplcat.animal_growth_parameters')] = 1
     #@aplcat[t('aplcat.animal_manure_parameters')] = 2
     @aplcat[t('aplcat.animal_parameters')] = 1
     #@aplcat[t('aplcat.animal_transport_input')] = 2
-    @aplcat[t('aplcat.co2_balance_input')] = 3
+    @aplcat[t('aplcat.co2_balance_input')] = 2
     #@aplcat[t('aplcat.environmental_parameters')] = 6
     @aplcat[t('aplcat.forage_quantity_input')] = 3
     #@aplcat[t('aplcat.greenhouse_parameters')] = 8
@@ -55,8 +51,12 @@ class AplcatParametersController < ApplicationController
     @aplcat[t('aplcat.simulation_methods')] = 7
     @aplcat[t('aplcat.simulation_parameters')] = 8
     @aplcat[t('aplcat.divv_11')] = 9 #water estimation parameters
-  	#@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
+    #@aplcat[t('aplcat.water_use_pumping_parameters')] = 15
+  end
 
+  # GET /aplcat_parameters/1/edit
+  def edit
+    aplcat_list
   	add_breadcrumb 'Aplcat'
     if params[:id] == nil then
   		@type = 1
@@ -65,40 +65,40 @@ class AplcatParametersController < ApplicationController
   	end
 
   	case @type
-    when 2
+      when 2
+          #add_breadcrumb 'Animal Transport Input'
+    	when 2
+    	  add_breadcrumb 'CO2 Balance Input'
+    	when 3
+    	  add_breadcrumb 'Forage Quantity Input'
+    	when 4
+        add_breadcrumb 'RunParm APLCAT Parametes'
+    	when 5
+        add_breadcrumb 'Scenario File'
+    	when 6
+        add_breadcrumb 'Secondary Emissions Input'
+      when 7
+        add_breadcrumb 'Simulation Methods'
+      when 8
+        add_breadcrumb 'Simulation Parameters'
+      when 9
+        add_breadcrumb 'Water Estimation Parameters'
+      #when 10
+        #add_breadcrumb 'Scenario File'
+      #when 11
+        #add_breadcrumb 'Water Estimation Parameters'
+      #when 12
+        #add_breadcrumb 'Forage Quantity Input'
+      #when 13
         #add_breadcrumb 'Animal Transport Input'
-  	when 3
-  	  add_breadcrumb 'CO2 Balance Input'
-  	when 4
-  	  add_breadcrumb 'Forage Quantity Input'
-  	when 5
-      add_breadcrumb 'RunParm APLCAT Parametes'
-  	when 6
-      add_breadcrumb 'Scenario File'
-  	when 7
-      add_breadcrumb 'Secondary Emissions Input'
-    when 8
-      add_breadcrumb 'Simulation Methods'
-    when 9
-      add_breadcrumb 'Simulation Parameters'
-    when 10
-      add_breadcrumb 'Water Estimation Parameters'
-    #when 10
-      #add_breadcrumb 'Scenario File'
-    #when 11
-      #add_breadcrumb 'Water Estimation Parameters'
-    #when 12
-      #add_breadcrumb 'Forage Quantity Input'
-    #when 13
-      #add_breadcrumb 'Animal Transport Input'
-    #when 14
-      #add_breadcrumb 'CO2 Balance Input'
-    #when 15
-      #add_breadcrumb 'Secondary Emissions Input'
+      #when 14
+        #add_breadcrumb 'CO2 Balance Input'
+      #when 15
+        #add_breadcrumb 'Secondary Emissions Input'
   	else
   	  add_breadcrumb 'Animal Parameters'
   	end
-    @aplcat_parameter = AplcatParameter.find_by_scenario_id(params[:scenario_id])
+    @aplcat_parameter = AplcatParameter.find_by_scenario_id(@scenario.id) 
   	if @aplcat_parameter == nil then
   		new()
   	end
@@ -124,10 +124,6 @@ class AplcatParametersController < ApplicationController
   # PATCH/PUT /aplcat_parameters/1.json
   def update
     saved = false
-    #@type = params[:type]
-    #@field = Field.find(params[:field_id])
-    #@project = Project.find(params[:project_id])
-    #@scenario = Scenario.find(params[:scenario_id])
   	@aplcat_parameter = AplcatParameter.find_by_id(params[:id])
   	if @aplcat_parameter == nil then
   		@aplcat_parameter = AplcatParameter.new(aplcat_parameter_params)
@@ -137,11 +133,17 @@ class AplcatParametersController < ApplicationController
   		if @aplcat_parameter.update_attributes(aplcat_parameter_params) then saved = true end
   	end
 
-    if saved
-      redirect_to edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, @aplcat_parameter), notice: 'Aplcat parameter was successfully updated.', :method => 'GET'
-    else
-      format.html { render action: "edit" }
-  	end
+    aplcat_list
+    respond_to do |format|
+      if saved
+        flash[:notice] = 'Aplcat parameter was successfully saved.' 
+        format.html { render action: "edit", :object => @aplcat_parameter }
+        #redirect_to edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, @aplcat_parameter), notice: 'Aplcat parameter was successfully updated.', :method => 'GET'
+      else
+
+        format.html { render action: "edit", :object => @aplcat_parameter }
+    	end
+    end
   end
 
   # DELETE /aplcat_parameters/1

@@ -161,8 +161,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.same_vehicle') %><br>
-            <%= f.radio_button :same_vehicle, "1", :checked => "checked"%> <%= t("Yes") %><br>
-            <%= f.radio_button :same_vehicle, "2"%> <%= t("No") %><br>
+            <%= f.radio_button :same_vehicle, true%> <%= t("Yes") %><br>
+            <%= f.radio_button :same_vehicle, false%> <%= t("No") %><br>
           </div>
         </td>
       </tr>
