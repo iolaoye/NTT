@@ -92,9 +92,8 @@ class ScenariosController < ApplicationController
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
     else
-
       @scenarios_selected = params[:select_scenario]
-      apex_version = 806
+      @apex_version = 806
     end
     ActiveRecord::Base.transaction do
   	  @scenarios_selected.each do |scenario_id|
@@ -944,7 +943,8 @@ class ScenariosController < ApplicationController
       anim_string += Trailer.find(at.trailer_id).code + "\t" + "! " + t('aplcat.trailer') + "\n"
       anim_string += Truck.find(at.truck_id).code + "\t" + "! " + t('aplcat.trucks') + "\n"
       anim_string += Fuel.find(at.fuel_id).code + "\t" + "! " + t('aplcat.fuel_type') + "\n"
-      anim_string += at.same_vehicle = true ? "1" : "0" + "\t" + "! " + t('aplcat.same_vehicle') + "\n"
+      anim_string += at.same_vehicle == true ? "1" : "0" 
+      anim_string += "\t" + "! " + t('aplcat.same_vehicle') + "\n"
       anim_string += at.loading.to_s + "\t" + "! " + t('aplcat.loading') + "\n"
       anim_string += at.carcass.to_s + "\t" + "! " + t('aplcat.carcass') + "\n"
       anim_string += at.boneless_beef.to_s + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
@@ -999,7 +999,7 @@ class ScenariosController < ApplicationController
     #apex_string = "Input file for estimating Forage Quantity Input" + "\n"
 		#apex_string += "\n"
     apex_string = "1" + "\t" + "\t" + "\t" + "! " + t('aplcat.parameter1') + "\n"
-    apex_string += aplcat.forage_id.to_s + "\t" + "\t" + "\t" + "! " + t('aplcat.forage_id_html') + "\n"
+    apex_string += aplcat.forage_id.to_s + "\t" + "\t" + "\t" + "! " + t('aplcat.parameter2') + "\n"
     apex_string += aplcat.jincrease.to_s + "  " + aplcat.stabilization.to_s + "\t" + " " + aplcat.decline.to_s + "  " + aplcat.opt4.to_s + "\t" + t('aplcat.parameter3') + "\n"
     #apex_string += "\n"
     #apex_string += "Crude protein levels (% DM) of forage" + "\n"
@@ -1069,24 +1069,47 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
     #apex_string += "First" + "\n"
     apex_string += aplcat.first_area.to_s + " " + "\t" 
-    apex_string += aplcat.first_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.first_equip.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.first_equip.to_s + " " +"\t" 
+    apex_string += aplcat.first_fuel.to_s + " " +"\t" + "\n"
     #apex_string += "Second" + "\n"
     apex_string += aplcat.second_area.to_s + " " +"\t" 
-    apex_string += aplcat.second_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.second_equip.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.second_equip.to_s + " " +"\t" 
+    apex_string += aplcat.second_fuel.to_s + " " +"\t" + "\n"
     #apex_string += "Third" + "\n"
     apex_string += aplcat.third_area.to_s + " " + "\t" 
-    apex_string += aplcat.third_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.third_equip.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.third_equip.to_s + " " +"\t" 
+    apex_string += aplcat.third_fuel.to_s + " " +"\t" + "\n"
     #apex_string += "Fourth" + "\n"
     apex_string += aplcat.fourth_area.to_s + " " +"\t" 
     apex_string += aplcat.fourth_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.fourth_equip.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.fourth_fuel.to_s + " " +"\t" + "\n"
     #apex_string += "Fifth" + "\n"
     apex_string += aplcat.fifth_area.to_s + " " +"\t" 
-    apex_string += aplcat.fifth_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.fifth_equip.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.fifth_equip.to_s + " " +"\t" 
+    apex_string += aplcat.fifth_fuel.to_s + " " +"\t" + "\n"
+
+
+    #apex_string += "Fifth" + "\n"
+    apex_string += aplcat.sixth_area.to_s + " " +"\t" 
+    apex_string += aplcat.sixth_equip.to_s + " " +"\t" 
+    apex_string += aplcat.sixth_fuel.to_s + " " +"\t" + "\n"
+    #apex_string += "Fifth" + "\n"
+    apex_string += aplcat.seventh_area.to_s + " " +"\t" 
+    apex_string += aplcat.seventh_equip.to_s + " " +"\t" 
+    apex_string += aplcat.seventh_fuel.to_s + " " +"\t" + "\n"
+    #apex_string += "Fifth" + "\n"
+    apex_string += aplcat.eighth_area.to_s + " " +"\t" 
+    apex_string += aplcat.eighth_equip.to_s + " " +"\t" 
+    apex_string += aplcat.eighth_fuel.to_s + " " +"\t" + "\n"
+    #apex_string += "Fifth" + "\n"
+    apex_string += aplcat.ninth_area.to_s + " " +"\t" 
+    apex_string += aplcat.ninth_equip.to_s + " " +"\t" 
+    apex_string += aplcat.ninth_fuel.to_s + " " +"\t" + "\n"
+    #apex_string += "Fifth" + "\n"
+    apex_string += aplcat.tenth_area.to_s + " " +"\t" 
+    apex_string += aplcat.tenth_equip.to_s + " " +"\t" 
+    apex_string += aplcat.tenth_fuel.to_s + " " +"\t" + "\n"
+
     apex_string += "\n"
     #***** send file to server "
 		msg = send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt")
@@ -1240,10 +1263,18 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.adoa.to_s + "\t" + "! " + t('aplcat.adoa') + "\n"
     apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
     apex_string += "\n"
-
     #***** send file to server "
 		msg = send_file_to_APEX(apex_string, "WaterEstCowCalf.txt")
 
+    apex_string = "!!  This is the run parameter input file for running the model Animal Production Life Cycle Analysis Tool (APLCAT)" + "\n"
+    apex_string += "!!  Enter 0 for not running any particular module" + "\n" + "\n"
+
+    apex_string += aplcat.running_drinking_water.to_s + "\t" + "! " + t('aplcat.running_drinking_water') + "\n"
+    apex_string += aplcat.running_complete_stocker.to_s + "\t" + "! " + t('aplcat.running_complete_stocker') + "\n"
+    apex_string += aplcat.running_ghg.to_s + "\t" + "! " + t('aplcat.running_ghg') + "\n"
+    apex_string += aplcat.running_transportation.to_s + "\t" + "! " + t('aplcat.running_transportation') + "\n"
+    #***** send file to server "
+    msg = send_file_to_APEX(apex_string, "RunParmAPLCAT.txt")
     #***Saved for future references
     #apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
     #apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.parameter2') + "\n"
@@ -1743,29 +1774,110 @@ class ScenariosController < ApplicationController
           end
           operation = Operation.new
           operation.scenario_id = @scenario.id
-          operation.activity_id = opr[1]
-          operation.crop_id = opr[2]
+          operation.crop_id = opr[1]          
+          operation.year = opr[2]
           operation.month_id = opr[3]
           operation.day = opr[4]
-          operation.year = opr[5]
-          operation.type_id = opr[6]
-          operation.amount = opr[7]
-          operation.depth = opr[8]
-          operation.no3_n = opr[9]
-          operation.po4_p = opr[10]
-          operation.org_n = opr[11]
-          operation.org_p = opr[12]
-          operation.nh3 = opr[13]
-          operation.subtype_id = opr[14]
-          operation.moisture = opr[15]
-          operation.org_c = opr[16]
-          operation.nh4_n = opr[17]
-          operation.rotation = opr[18]
-          if operation.save
-            #create soil operations
-            add_soil_operation(operation)
-            #create subareas
+          operation.rotation = opr[5]
+          operation.activity_id = opr[6]
+
+          case operation.activity_id
+            when 1   #planting
+              operation.type_id = opr[7]
+              operation.amount = opr[8]
+            when 2   #fertilizer
+              operation.type_id = opr[7]
+              operation.subtype_id = opr[8]
+              operation.amount = opr[9]
+              operation.depth = opr[10]
+              operation.no3_n = opr[11]
+              operation.po4_p = opr[12]
+              operation.moisture = opr[13]
+              if operation.type_id != 1 then
+                calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
+                operation.no3_n = params[:operation][:no3_n]
+                operation.po4_p = params[:operation][:po4_p]
+                operation.org_n = params[:operation][:org_n]
+                operation.org_p = params[:operation][:org_p]
+              end            
+            when 3   #Tillage
+              operation.type_id = opr[7]
+            when 4   #Harvest
+            when 5   #Killing
+            when 6   #irrigation
+              operation.type_id = opr[7]
+              operation.amount = opr[8]
+              operation.depth = opr[9]
+            when 7   #Continues grazing
+              operation.type_id = opr[7]
+              operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
+              operation.org_c = opr[9]  #access to strea? yes=1 
+              operation.depth = opr[11] #hours in field
+              operation.nh3 = opr[10]   #hours in stream
+            when 9   #Rotational grazing
+              operation.type_id = opr[7]
+              operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
+              operation.org_c = opr[9]  #access to strea? yes=1 
+              operation.depth = opr[11] #hours in field
+              operation.nh3 = opr[10]   #hours in stream
+              operation.moisture = opr[12]
+              operation.nh4_n = opr[13]
+            when 11  #burn
+            when 12  #Lime
+              operation.amount = opr[7]
           end
+          if operation.save
+            #saves start grazing operation in SoilOperation table
+            if operation.activity_id != 9 && operation.activity_id != 10 then
+              msg = add_soil_operation(operation)
+            end
+            saved = true
+            #operations should be created in soils too. but not for rotational grazing
+            if msg.eql?("OK")
+              soil_op_saved = true
+            else
+              soil_op_saved = false
+              raise ActiveRecord::Rollback
+            end
+            if operation.activity_id == 7 || operation.activity_id == 9 then
+              operation_id = operation.id
+              operation1 = Operation.new
+              if operation.activity_id == 7 then
+                operation1.activity_id = 8
+                operation1.year = opr[12]
+                operation1.month_id = opr[13]
+                operation1.day = opr[14]
+              else
+                operation1.activity_id = 10
+                operation1.year = opr[14]
+                operation1.month_id = opr[15]
+                operation1.day = opr[16]
+              end           
+              operation1.type_id = operation_id
+              operation1.scenario_id = operation.scenario_id
+              operation1.amount = 0
+              operation1.depth = 0
+              operation1.no3_n = 0
+              operation1.po4_p = 0
+              operation1.org_n = 0
+              operation1.org_p = 0
+              operation1.nh3 = 0
+              operation1.subtype_id = 0
+              operation1.rotation = operation.rotation
+              operation1.save
+              if operation1.activity_id == 8 then
+                msg = add_soil_operation(operation1)
+                if msg.eql?("OK")
+                  soil_op_saved = true
+                else
+                  soil_op_saved = false
+                  raise ActiveRecord::Rollback
+                end
+              end
+            end
+          end
+
+
         end. # end operations.each
         msg = "Scenario " + @scenario.name + " created succesfully"
       rescue => e

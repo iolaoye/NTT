@@ -88,7 +88,8 @@
               <% end %>
               <%# unless ENV["APP_VERSION"] == "modified" || ENV["APP_VERSION"] == "standard" %>
   			      <% unless ENV["APP_VERSION"] == "modified" %>
-                <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1) %>
+                <%#= aplcat_parameter_record %>
+                <%= link_to t('menu.aplcat'), edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 0) %>
                 <% if aplcats_sub_submenu %>
                   <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
                     <li class="<%= controller_name == "aplcat_parameters" ? "active" : "" %>">
