@@ -6,15 +6,23 @@
 <% end %>
 <%= form_tag({action: :upload_scenarios}, multipart: true) do %>
   <div>
-  	<div class="page-header"><h1><%= t('project.upload_project') %></h1></div>
-	  	<td><%= label :name, 'Excel ' + t('models.file') %></td>
-	  	<td><%= radio_button("type", "file", "1")%></td>
-	  	<td><%= label :name, 'Text/CVS ' + t('models.file') %></td>
-	  	<td><%= radio_button("type", "file", "2")%></td>
-	  	<td><%= label :name, 'XML ' + t('models.file') %></td>
-	  	<td><%= radio_button("type", "file", "3")%></td>       
+    <table>
+  	  <tr><th><h2><%= t('project.upload_project') %></h2></th></tr>
+	  	<tr>
+        <td><%= label :name, 'Excel ' + t('models.file') %></td>
+	  	  <td><%= radio_button("type", "file", "1")%></td>
+      </tr>
+	  	<tr>
+        <td><%= label :name, 'Text/CVS ' + t('models.file') %></td>
+	  	  <td><%= radio_button("type", "file", "2")%></td>
+      </tr>
+	  	<tr>
+        <td><%= label :name, 'XML ' + t('models.file') %></td>
+	  	  <td><%= radio_button("type", "file", "3")%></td>
+      </tr>    
         <br>
-        <%= file_field_tag :scenarios, {:required => true} %>
+      <tr><td>  <%= file_field_tag :scenarios, {:required => true} %></td></tr> 
+        </table>
   </div>
   </br>
   <div class="actions">
