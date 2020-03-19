@@ -266,10 +266,7 @@ class WatershedsController < ApplicationController
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
             j=0
-
-
-
-            debugger
+#todo remove this condition when move to production.
         if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
             #############  this block for the old way of simulating watersheds ##########################
             watershed_scenarios.each do |p|

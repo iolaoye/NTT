@@ -851,431 +851,443 @@ module ScenariosHelper
 		end
 	end
 
-  def set_opval5(operation)
-    case operation.activity_id
-      when 1 #planting
-        lu_number = Crop.find(operation.crop_id).lu_number
-        if lu_number != nil then
-          if operation.amount == 0 then
-            if operation.crop_id == Crop_Road then
-              return 0
-            end
-          else
-          	if operation.amount == nil then
-          		operation.amount = 0
-          	end
-            #if operation.amount / FT2_TO_M2 < 1 then
-              #return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
-            #else
-              #return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
-            #end
-            if lu_number == 28 then
-              return (operation.amount / AC_TO_HA).round(0) #plant population converte from ac to ha if it is tree
-	         else
-	          return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
-            end
-          end
-        end
-      else
-        return 0
-    end #end case
-  end
-
-  #end set_val5
-
-  def set_opval1(operation)
-    opv1 = 1.0
-    case operation.activity_id
-    when 1 #planting take heat units
-		#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
-        #client = Savon.client(wsdl: URL_Weather)
-        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
-        #opv1 = response.body[:get_hu_response][:get_hu_result]
-		#this code will take Heat Units from database according to Ali 11/2/216
-		opv1 = Crop.find(operation.crop_id).heat_units
-      #opv1 = 2.2
-    when 2 #fertilizer - converte amount applied
-      	case operation.type_id
-      	when 1
-			opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
-        when 2
-        	if operation.moisture == nil then
-        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
-        		operation.save
-        	end
-        	opv1 = (operation.amount * 2247 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
-        when 3
-        	if operation.moisture == nil then
-        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
-        		operation.save
-        	end
-          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
-        end
-    when 6 #irrigation
-        opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
-    when 7, 9 #grazing
-    	#since it is grazing just one soil is used. So, the area for that subarea is the total are for the field.
-    	#if @scenario == nil then 
-    		#opv1 = Scenario.find(operation.scenario_id).subareas[0].wsa / operation.amount
-    	#else
-    		#opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
-    	#end
-    	opv1 = @field.field_area * AC_TO_HA / operation.amount
-    when 12 #liming
-        opv1 = operation.amount / LBS_AC_TO_T_HA #converts input lbs/ac to APEX t/ha
-    end
-    return opv1
-  end
-
-  #end ser_opval1
-
-  def set_opval4(operation)
-    opv4 = 0.0
-    case operation.activity_id
-      when 6 #irrigation efficiency. Converted from % to fraction
-        opv4 = 1 - operation.depth/100 unless operation.depth == nil
-    end
-    return opv4
-  end
-  #end set_opval4
-
-  def set_opval2(soil_id, operation)
-    opv2 = 0.0
-    case operation.activity_id
-      when 1 #planting. Take curve number
-        case Soil.find(soil_id).group[0, 1]  #group could be like C/D. [0, 1] will take just C.
-          when "A"
-            opv2 = Crop.find(operation.crop_id).soil_group_a
-          when "B"
-            opv2 = Crop.find(operation.crop_id).soil_group_b
-          when "C"
-            opv2 = Crop.find(operation.crop_id).soil_group_c
-          when "D"
-            opv2 = Crop.find(operation.crop_id).soil_group_d
-        end #end case Soil
-        if opv2 > 0 then
-          opv2 = opv2 * -1
-        end
-      when 2 #fertilizer - convert depth
-        opv2 = operation.depth * IN_TO_MM unless operation.depth == nil
-    end #end case operation
-    return opv2
-  end #end set_opval2
-
-  def calculate_centroid()
-    #https://en.wikipedia.org/wiki/Centroid.
-    centroid_structure = Struct.new(:cy, :cx)
-    centroid = centroid_structure.new(0.0, 0.0)
-    points = @field.coordinates.split(" ")
-    i=0
-
-    points.each do |point|
-      i+=1
-      centroid.cx += point.split(",")[0].to_f
-      centroid.cy += point.split(",")[1].to_f
-    end
-    centroid.cx = centroid.cx / (i)
-    centroid.cy = centroid.cy / (i)
-    return centroid
-  end
-
-  def add_soil_operation(operation)
-    #@project = Project.find(params[:project_id])
-    #@field = Field.find(params[:field_id])
-    #@scenario = Scenario.find(params[:scenario_id])
-    soils = @field.soils
-    #soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
-    msg = "OK"
-    soils.each do |soil|
-      if msg.eql?("OK")
-        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
-      else
-        break
-      end
-    end
-    return msg
-  end
-
-  def request_soils()
-  	#soil1 = "AL001"
- 	#soil2 = "328057"
- 	#soil3 = "AaB"
- 	#sql = "SELECT "
-   #sql = sql + "hydgrp as horizdesc2,compname as seriesname,albedodry_r as albedo,comppct_r as compct," 
-   #sql = sql + "sandtotal_r as sand, silttotal_r as silt, 100-(sandtotal_r+silttotal_r) as clay, dbthirdbar_r as bd,om_r as om,"
-   #sql = sql + "texdesc as texture,ph1to1h2o_r as ph,hzdepb_r as ldep,drainagecl as horizgen,ecec_r as cec, muname, slope_r"
-   #sql = sql + "FROM sacatalog sac "
-   #sql = sql + "INNER JOIN legend l ON l.areasymbol = sac.areasymbol AND l.areatypename = 'Non-MLRA Soil Survey Area' "
-   #sql = sql + "INNER JOIN mapunit mu ON mu.lkey = l.lkey "
-   #sql = sql + "LEFT OUTER JOIN component c ON c.mukey = mu.mukey "
-   #sql = sql + "LEFT OUTER JOIN chorizon ch ON ch.cokey = c.cokey "
-   #sql = sql + "LEFT OUTER JOIN chtexturegrp chtgrp ON chtgrp.chkey = ch.chkey "
-   #sql = sql + "LEFT OUTER JOIN chtexture cht ON cht.chtgkey = chtgrp.chtgkey "
-   #sql = sql + "LEFT OUTER JOIN chtexturemod chtmod ON chtmod.chtkey = cht.chtkey "
-   #sql = sql + "WHERE l.areasymbol='" + soil1 + "' AND mu.mukey='" + soil2 + "' AND musym='" + soil3 + "' AND hydgrp<>'' "
-   #sql = sql + "ORDER BY mu.mukey, compname, hzdepb_r"
-   #sql = "SELECT mukey FROM mapunit WHERE mukey = 328057"
-    #client = Savon.client(wsdl: URL_NRCS)
- 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
- 	#response = client.call(:run_query, message: { "query" => sql })
-    client = Savon.client(wsdl: URL_SoilsInfo, read_timeout: 500)
- 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
- 	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => session[:session_id]})
-    if !(response.body[:send_soils_response][:send_soils_result].downcase.include? "error") then
-      msg = "OK"
-      msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
-      return msg
-    else
-      return response.body[:send_soils_response][:send_soils_result]
-    end
-  end
-
-  ###################################### create_soil ######################################
-  ## Create soils receiving from map for each field.
-  def create_new_soils(data)
-    msg = "OK"
-    #delete all of the soils for this field
-    soils1 = @field.soils.destroy_all
-    #soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
-    total_percentage = 0
-
-    if data.include? "Error" or data.include? "error"
-      	return t('notices.no_soils')
-    end
-    data.each do |soil|
-      #todo check for erros to soils level as well as layers level.
-      if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
-        next
-      end #
-      @soil = @field.soils.new
-      @soil.key =  soil[1]["mukey"]
-      @soil.symbol = soil[1]["musym"]
-      @soil.group = soil[1]["hydgrpdcd"]
-      @soil.name = soil[1]["muname"]
-      @soil.albedo = soil[1]["albedo"]
-      @soil.slope = soil[1]["slope"]
-      if @soil.slope == 0 then
-        @soil.slope = 0.01
-        msg = t('soil.no_slope_msg')
-      end
-      @soil.percentage = soil[1]["pct"]
-      @soil.percentage = @soil.percentage.round(2)
-      @soil.drainage_id = soil[1]["drain"]
-      @soil.tsla = 10
-      @soil.xids = 1
-      @soil.wtmn = 0
-      @soil.wtbl = 0
-      @soil.ztk = 1
-      @soil.zqt = 2
-      if @soil.drainage_id != nil then
-        case true
-          when 1
-            @soil.wtmx = 0
-          when 2
-            @soil.wtmx = 4
-            @soil.wtmn = 1
-            @soil.wtbl = 2
-          when 3
-            @soil.wtmx = 4
-            @soil.wtmn = 1
-            @soil.wtbl = 2
-          else
-            @soil.wtmx = 0
-        end
-      end
-
-      if @soil.save then
-        msg = create_layers(soil[1])
-      else
-        msg = "Soils was not saved " + @soil.name
-      end
-    end #end for create_soils
-    soils = @field.soils.order(percentage: :desc)
-
-    i=1
-    soils.each do |soil|
-      if (i <= 3) then
-        soil.selected = true
-        soil.save
-      end
-      i+=1
-    end
-    scenarios = Scenario.where(:field_id => @field.id)
-    scenarios.each do |scenario|
-      add_scenario_to_soils(scenario, true)
-      operations = Operation.where(:scenario_id => scenario.id)
-      operations.each do |operation|
-        soils.each do |soil|
-          update_soil_operation(SoilOperation.new, soil.id, operation)
-        end # end soils each
-      end # end operations.each
-      ### if there is contour buffer BMP the subareas need to be added. for each scenario
-      @bmp = scenario.bmps.find_by_bmpsublist_id(15) 
-      if @bmp != nil then
-      	#call subroutine to add the subareas for CB
-      	add_cb(scenario)
-      end
-    end #end Scenario each do
-    @field.field_average_slope = @field.soils.average(:slope)
-    @field.updated = false
-    if @field.save then
-    	return msg
-    else
-    	return "Error saving soils"
-    end
-  end
-
-  ###################################### create_soil layers ######################################
-  ### if there is contour buffer BMP the subareas need to be added. for each scenario ###
-  def add_cb(scenario)
-    total_width = @bmp.width + @bmp.crop_width
-    total_strips = ((@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)).to_i
-    buffer_area = @bmp.width / total_width 
-    crop_area = @bmp.crop_width / total_width 
-    if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
-    subareas = scenario.subareas
-    number = subareas.count + 1
-    iops = subareas[subareas.count-1].iops + 1
-    inps = subareas[subareas.count-1].inps + 1
-    iow = subareas[subareas.count-1].iow + 1
-    areas = Array.new
-    iops = 0
-    crop = Crop.find(@bmp.crop_id)
-    add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, scenario.id)
-    (total_strips*2).times do |i|
-      j=0
-      subareas.each do |s|
-        if i == 0 then  # update the current subareas. And save the initial areas in an array to calculate further areas.
-          areas[j] = s.wsa
-          s.rchl = s.chl
-          s.wsa = s.wsa / total_strips * crop_area
-          if j > 0 && s.wsa > 0 then
-            s.wsa *= -1
-          end
-          s.save
-          j += 1
-          iops = s.iops
-        else
-          s_new = s.dup
-          s_new.rchl = s_new.chl
-          s_new.number = number
-          number += 1
-          #s_new.iops = iops
-          #s_new.inps = inps
-          #s_new.iow = iow
-          s_new.subarea_type = "CB"
-          #if s_new.chl == s_new.rchl then
-            #s_new.rchl *= 0.90
-          #end
-          s_new.bmp_id = @bmp.id
-          if i.even? then
-            s_new.wsa = areas[j] / total_strips * crop_area
-            s_new.description = "0000000000000000  .sub Contour Main Crop Strip"
-            s_new.wsa *= -1
-          else
-            s_new.wsa = areas[j] / total_strips * buffer_area
-            s_new.description = "0000000000000000  .sub Contour Buffer Grass Strip"
-            s_new.iops = iops + 1
-            if j > 0 then
-              s_new.wsa *= -1
-            else
-              s_new.rchl = s_new.chl * 0.9
-            end
-          end
-          j += 1
-          s_new.save
-        end
-      end
-    end
-   end
-
-  ###################################### create_soil layers ######################################
-  ## Create layers receiving from map for each soil.
-  def create_layers(layers)
-  	if layers == nil then return t('notices.no_layers') end
-    for l in 1..layers["lay_number"].to_i
-      layer_number = "layer" + l.to_s
-      layer = @soil.layers.new
-      layer.sand = layers[layer_number]["sand"]
-      layer.silt = layers[layer_number]["silt"]
-      layer.clay = 100 - layer.sand - layer.silt
-      layer.bulk_density = layers[layer_number]["bd"]
-      layer.organic_matter = layers[layer_number]["om"]
-      if layer.organic_matter < 0.5 then 
-      	layer.organic_matter = 0.5
-      end
-      layer.ph = layers[layer_number]["ph"]
-      layer.depth = layers[layer_number]["depth"]
-      layer.depth /= IN_TO_CM
-      layer.depth = layer.depth.round(2)
-      layer.cec = layers[layer_number]["cec"]
-      layer.soil_p = 0
-      if layer.save then
-        msg = "OK"
-      else
-        msg = "Error saving some layers"
-      end
-    end #end for create_layers
-    return msg
-  end
-
-  def get_weather_file_name(lat, lon)
-  	lat_less = lat - LAT_DIF
-	lat_plus = lat + LAT_DIF
-	lon_less = lon - LON_DIF
-	lon_plus = lon + LON_DIF
-	sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
-	sql = sql + " FROM stations"
-	sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
-	sql = sql + " ORDER BY distance"
-	station = Station.find_by_sql(sql).first
-	if station != nil
-		return station.file_name + "," + station.initial_year.to_s + "," + (station.final_year + 1).to_s
-	else
-		return "Error saving weather file name"
+	def set_opval5(operation)
+	    case operation.activity_id
+	      when 1 #planting
+	        lu_number = Crop.find(operation.crop_id).lu_number
+	        if lu_number != nil then
+	          if operation.amount == 0 then
+	            if operation.crop_id == Crop_Road then
+	              return 0
+	            end
+	          else
+	          	if operation.amount == nil then
+	          		operation.amount = 0
+	          	end
+	            #if operation.amount / FT2_TO_M2 < 1 then
+	              #return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
+	            #else
+	              #return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
+	            #end
+	            if lu_number == 28 then
+	              return (operation.amount / AC_TO_HA).round(0) #plant population converte from ac to ha if it is tree
+		         else
+		          return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
+	            end
+	          end
+	        end
+	      else
+	        return 0
+	    end #end case
 	end
-    #client = Savon.client(wsdl: URL_SoilsInfo)
-    ###### create control, param, site, and weather files ########
-    #response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
-    #if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
-      #return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
-    #else
-      #return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
-    #end
-  end
 
-################################  Save Prism data #################################
-# GET /weathers/1
-# GET /weathers/1.json
-  def save_prism
-    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
-    centroid = calculate_centroid()
-    @weather.latitude = centroid.cy
-    @weather.longitude = centroid.cx
-    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
-    if !(weather_data.include? "Error")
-	    data = weather_data.split(",")
-	    @weather.weather_file = data[0]
-	    if @weather.weather_file == nil then @weather.weather_file = "" end
-	    data[2].slice! "\r\n"
-	    @weather.simulation_final_year = data[2]
-	    if @weather.simulation_final_year == nil then @weather.simulation_final_year=0 end
-	    @weather.weather_final_year = @weather.simulation_final_year
-	    @weather.weather_initial_year = data[1]
-	    if @weather.weather_initial_year == nil then @weather.weather_initial_year == 0 end
-	    @weather.simulation_initial_year = @weather.weather_initial_year + 5
-	    @weather.way_id = 1
-	else
-		if @weather.weather_file == nil then @weather.weather_file = "" end
-		if @weather.simulation_final_year == nil then @weather.simulation_final_year = 0 end
-		if @weather.weather_initial_year == nil then @weather.weather_initial_year = 0 end
-		if @weather.weather_final_year == nil then @weather.weather_final_year = 0 end
-		if @weather.simulation_initial_year == nil then @weather.simulation_initial_year = 0 end
+	def set_opval1(operation)
+	    opv1 = 1.0
+	    case operation.activity_id
+	    when 1 #planting take heat units
+			#this code will calculate Heat Unist base on location and crop - Was taken back to take from database- Ali 11/2/2016 
+	        #client = Savon.client(wsdl: URL_Weather)
+	        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
+	        #opv1 = response.body[:get_hu_response][:get_hu_result]
+			#this code will take Heat Units from database according to Ali 11/2/216
+			opv1 = Crop.find(operation.crop_id).heat_units
+	      #opv1 = 2.2
+	    when 2 #fertilizer - converte amount applied
+	      	case operation.type_id
+	      	when 1
+				opv1 = (operation.amount * LBS_TO_KG / AC_TO_HA).round(2) #kg/ha of fertilizer applied converted from lbs/ac
+	        when 2
+	        	if operation.moisture == nil then
+	        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+	        		operation.save
+	        	end
+	        	opv1 = (operation.amount * 2247 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+	        when 3
+	        	if operation.moisture == nil then
+	        		operation.moisture = Fertilizer.find(operation.subtype_id).dry_matter
+	        		operation.save
+	        	end
+	          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
+	        end
+	    when 6 #irrigation
+	        opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
+	    when 7, 9 #grazing
+	    	#since it is grazing just one soil is used. So, the area for that subarea is the total are for the field.
+	    	#if @scenario == nil then 
+	    		#opv1 = Scenario.find(operation.scenario_id).subareas[0].wsa / operation.amount
+	    	#else
+	    		#opv1 = @scenario.subareas[0].wsa / operation.amount  #since it is grazing just first subarea is used.
+	    	#end
+	    	opv1 = @field.field_area * AC_TO_HA / operation.amount
+	    when 12 #liming
+	        opv1 = operation.amount / LBS_AC_TO_T_HA #converts input lbs/ac to APEX t/ha
+	    end
+	    return opv1
 	end
-    if @weather.save
-      return "OK"
-    else
-      retunr t('notices.no_weather_file')
-    end
-  end  
+
+	def set_opval4(operation)
+	    opv4 = 0.0
+	    case operation.activity_id
+	      when 6 #irrigation efficiency. Converted from % to fraction
+	        opv4 = 1 - operation.depth/100 unless operation.depth == nil
+	    end
+	    return opv4
+	end
+
+	def set_opval2(soil_id, operation)
+	    opv2 = 0.0
+	    case operation.activity_id
+	      when 1 #planting. Take curve number
+	        case Soil.find(soil_id).group[0, 1]  #group could be like C/D. [0, 1] will take just C.
+	          when "A"
+	            opv2 = Crop.find(operation.crop_id).soil_group_a
+	          when "B"
+	            opv2 = Crop.find(operation.crop_id).soil_group_b
+	          when "C"
+	            opv2 = Crop.find(operation.crop_id).soil_group_c
+	          when "D"
+	            opv2 = Crop.find(operation.crop_id).soil_group_d
+	        end #end case Soil
+	        if opv2 > 0 then
+	          opv2 = opv2 * -1
+	        end
+	      when 2 #fertilizer - convert depth
+	        opv2 = operation.depth * IN_TO_MM unless operation.depth == nil
+	    end #end case operation
+	    return opv2
+	end #end set_opval2
+
+	def calculate_centroid()
+	    #https://en.wikipedia.org/wiki/Centroid.
+	    centroid_structure = Struct.new(:cy, :cx)
+	    centroid = centroid_structure.new(0.0, 0.0)
+	    points = @field.coordinates.split(" ")
+	    i=0
+
+	    points.each do |point|
+	      i+=1
+	      centroid.cx += point.split(",")[0].to_f
+	      centroid.cy += point.split(",")[1].to_f
+	    end
+	    centroid.cx = centroid.cx / (i)
+	    centroid.cy = centroid.cy / (i)
+	    return centroid
+	end
+
+	def add_soil_operation(operation)
+	    #@project = Project.find(params[:project_id])
+	    #@field = Field.find(params[:field_id])
+	    #@scenario = Scenario.find(params[:scenario_id])
+	    soils = @field.soils
+	    #soils = Soil.where(:field_id => Scenario.find(@operation.scenario_id).field_id)
+	    msg = "OK"
+	    soils.each do |soil|
+	      if msg.eql?("OK")
+	        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+	      else
+	        break
+	      end
+	    end
+	    return msg
+	end
+
+	def request_soils()
+	  	#soil1 = "AL001"
+	 	#soil2 = "328057"
+	 	#soil3 = "AaB"
+	 	#sql = "SELECT "
+	   #sql = sql + "hydgrp as horizdesc2,compname as seriesname,albedodry_r as albedo,comppct_r as compct," 
+	   #sql = sql + "sandtotal_r as sand, silttotal_r as silt, 100-(sandtotal_r+silttotal_r) as clay, dbthirdbar_r as bd,om_r as om,"
+	   #sql = sql + "texdesc as texture,ph1to1h2o_r as ph,hzdepb_r as ldep,drainagecl as horizgen,ecec_r as cec, muname, slope_r"
+	   #sql = sql + "FROM sacatalog sac "
+	   #sql = sql + "INNER JOIN legend l ON l.areasymbol = sac.areasymbol AND l.areatypename = 'Non-MLRA Soil Survey Area' "
+	   #sql = sql + "INNER JOIN mapunit mu ON mu.lkey = l.lkey "
+	   #sql = sql + "LEFT OUTER JOIN component c ON c.mukey = mu.mukey "
+	   #sql = sql + "LEFT OUTER JOIN chorizon ch ON ch.cokey = c.cokey "
+	   #sql = sql + "LEFT OUTER JOIN chtexturegrp chtgrp ON chtgrp.chkey = ch.chkey "
+	   #sql = sql + "LEFT OUTER JOIN chtexture cht ON cht.chtgkey = chtgrp.chtgkey "
+	   #sql = sql + "LEFT OUTER JOIN chtexturemod chtmod ON chtmod.chtkey = cht.chtkey "
+	   #sql = sql + "WHERE l.areasymbol='" + soil1 + "' AND mu.mukey='" + soil2 + "' AND musym='" + soil3 + "' AND hydgrp<>'' "
+	   #sql = sql + "ORDER BY mu.mukey, compname, hzdepb_r"
+	   #sql = "SELECT mukey FROM mapunit WHERE mukey = 328057"
+	    #client = Savon.client(wsdl: URL_NRCS)
+	 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
+	 	#response = client.call(:run_query, message: { "query" => sql })
+	    client = Savon.client(wsdl: URL_SoilsInfo, read_timeout: 500)
+	 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
+	 	response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => session[:session_id]})
+	    if !(response.body[:send_soils_response][:send_soils_result].downcase.include? "error") then
+	      msg = "OK"
+	      msg = create_new_soils(YAML.load(response.body[:send_soils_response][:send_soils_result]))
+	      return msg
+	    else
+	      return response.body[:send_soils_response][:send_soils_result]
+	    end
+	end
+
+	###################################### create_soil ######################################
+	## Create soils receiving from map for each field.
+	def create_new_soils(data)
+	    msg = "OK"
+	    #delete all of the soils for this field
+	    soils1 = @field.soils.destroy_all
+	    #soils1.destroy_all #will delete Subareas and SoilOperations linked to these soils
+	    total_percentage = 0
+
+	    if data.include? "Error" or data.include? "error"
+	      	return t('notices.no_soils')
+	    end
+	    data.each do |soil|
+	      #todo check for erros to soils level as well as layers level.
+	      if soil[0] == "soils" || soil[1]["lay_number"] == 0 then
+	        next
+	      end #
+	      @soil = @field.soils.new
+	      @soil.key =  soil[1]["mukey"]
+	      @soil.symbol = soil[1]["musym"]
+	      @soil.group = soil[1]["hydgrpdcd"]
+	      @soil.name = soil[1]["muname"]
+	      @soil.albedo = soil[1]["albedo"]
+	      @soil.slope = soil[1]["slope"]
+	      if @soil.slope == 0 then
+	        @soil.slope = 0.01
+	        msg = t('soil.no_slope_msg')
+	      end
+	      @soil.percentage = soil[1]["pct"]
+	      @soil.percentage = @soil.percentage.round(2)
+	      @soil.drainage_id = soil[1]["drain"]
+	      @soil.tsla = 10
+	      @soil.xids = 1
+	      @soil.wtmn = 0
+	      @soil.wtbl = 0
+	      @soil.ztk = 1
+	      @soil.zqt = 2
+	      if @soil.drainage_id != nil then
+	        case true
+	          when 1
+	            @soil.wtmx = 0
+	          when 2
+	            @soil.wtmx = 4
+	            @soil.wtmn = 1
+	            @soil.wtbl = 2
+	          when 3
+	            @soil.wtmx = 4
+	            @soil.wtmn = 1
+	            @soil.wtbl = 2
+	          else
+	            @soil.wtmx = 0
+	        end
+	      end
+
+	      if @soil.save then
+	        msg = create_layers(soil[1])
+	      else
+	        msg = "Soils was not saved " + @soil.name
+	      end
+	    end #end for create_soils
+	    soils = @field.soils.order(percentage: :desc)
+
+	    i=1
+	    soils.each do |soil|
+	      if (i <= 3) then
+	        soil.selected = true
+	        soil.save
+	      end
+	      i+=1
+	    end
+	    scenarios = Scenario.where(:field_id => @field.id)
+	    scenarios.each do |scenario|
+	      add_scenario_to_soils(scenario, true)
+	      operations = Operation.where(:scenario_id => scenario.id)
+	      operations.each do |operation|
+	        soils.each do |soil|
+	          update_soil_operation(SoilOperation.new, soil.id, operation)
+	        end # end soils each
+	      end # end operations.each
+	      ### if there is contour buffer BMP the subareas need to be added. for each scenario
+	      @bmp = scenario.bmps.find_by_bmpsublist_id(15) 
+	      if @bmp != nil then
+	      	#call subroutine to add the subareas for CB
+	      	add_cb(scenario)
+	      end
+	    end #end Scenario each do
+	    @field.field_average_slope = @field.soils.average(:slope)
+	    @field.updated = false
+	    if @field.save then
+	    	return msg
+	    else
+	    	return "Error saving soils"
+	    end
+	end
+
+	###################################### create_soil layers ######################################
+	### if there is contour buffer BMP the subareas need to be added. for each scenario ###
+	def add_cb(scenario)
+	    total_width = @bmp.width + @bmp.crop_width
+	    total_strips = ((@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)).to_i
+	    buffer_area = @bmp.width / total_width 
+	    crop_area = @bmp.crop_width / total_width 
+	    if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
+	    subareas = scenario.subareas
+	    number = subareas.count + 1
+	    iops = subareas[subareas.count-1].iops + 1
+	    inps = subareas[subareas.count-1].inps + 1
+	    iow = subareas[subareas.count-1].iow + 1
+	    areas = Array.new
+	    iops = 0
+	    crop = Crop.find(@bmp.crop_id)
+	    add_buffer_operation(139, crop.number, 0, crop.heat_units, 0, 33, 2, scenario.id)
+	    (total_strips*2).times do |i|
+	      j=0
+	      subareas.each do |s|
+	        if i == 0 then  # update the current subareas. And save the initial areas in an array to calculate further areas.
+	          areas[j] = s.wsa
+	          s.rchl = s.chl
+	          s.wsa = s.wsa / total_strips * crop_area
+	          if j > 0 && s.wsa > 0 then
+	            s.wsa *= -1
+	          end
+	          s.save
+	          j += 1
+	          iops = s.iops
+	        else
+	          s_new = s.dup
+	          s_new.rchl = s_new.chl
+	          s_new.number = number
+	          number += 1
+	          #s_new.iops = iops
+	          #s_new.inps = inps
+	          #s_new.iow = iow
+	          s_new.subarea_type = "CB"
+	          #if s_new.chl == s_new.rchl then
+	            #s_new.rchl *= 0.90
+	          #end
+	          s_new.bmp_id = @bmp.id
+	          if i.even? then
+	            s_new.wsa = areas[j] / total_strips * crop_area
+	            s_new.description = "0000000000000000  .sub Contour Main Crop Strip"
+	            s_new.wsa *= -1
+	          else
+	            s_new.wsa = areas[j] / total_strips * buffer_area
+	            s_new.description = "0000000000000000  .sub Contour Buffer Grass Strip"
+	            s_new.iops = iops + 1
+	            if j > 0 then
+	              s_new.wsa *= -1
+	            else
+	              s_new.rchl = s_new.chl * 0.9
+	            end
+	          end
+	          j += 1
+	          s_new.save
+	        end
+	      end
+	    end
+	end
+
+	###################################### create_soil layers ######################################
+	## Create layers receiving from map for each soil.
+	def create_layers(layers)
+	  	if layers == nil then return t('notices.no_layers') end
+	    for l in 1..layers["lay_number"].to_i
+	      layer_number = "layer" + l.to_s
+	      layer = @soil.layers.new
+	      layer.sand = layers[layer_number]["sand"]
+	      layer.silt = layers[layer_number]["silt"]
+	      layer.clay = 100 - layer.sand - layer.silt
+	      layer.bulk_density = layers[layer_number]["bd"]
+	      layer.organic_matter = layers[layer_number]["om"]
+	      if layer.organic_matter < 0.5 then 
+	      	layer.organic_matter = 0.5
+	      end
+	      layer.ph = layers[layer_number]["ph"]
+	      layer.depth = layers[layer_number]["depth"]
+	      layer.depth /= IN_TO_CM
+	      layer.depth = layer.depth.round(2)
+	      layer.cec = layers[layer_number]["cec"]
+	      layer.soil_p = 0
+	      if layer.save then
+	        msg = "OK"
+	      else
+	        msg = "Error saving some layers"
+	      end
+	    end #end for create_layers
+	    return msg
+	end
+
+	def get_weather_file_name(lat, lon)
+	  	lat_less = lat - LAT_DIF
+		lat_plus = lat + LAT_DIF
+		lon_less = lon - LON_DIF
+		lon_plus = lon + LON_DIF
+		sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
+		sql = sql + " FROM stations"
+		sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+		sql = sql + " ORDER BY distance"
+		station = Station.find_by_sql(sql).first
+		if station != nil
+			return station.file_name + "," + station.initial_year.to_s + "," + (station.final_year + 1).to_s
+		else
+			return "Error saving weather file name"
+		end
+	    #client = Savon.client(wsdl: URL_SoilsInfo)
+	    ###### create control, param, site, and weather files ########
+	    #response = client.call(:get_weather_file_name, message: {"nlat" => lat, "nlon" => lon})
+	    #if response.body[:get_weather_file_name_response][:get_weather_file_name_result].include? ".wth" then
+	      #return response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+	    #else
+	      #return "Error" + response.body[:get_weather_file_name_response][:get_weather_file_name_result]
+	    #end
+	end
+
+	################################  Save Prism data #################################
+	# GET /weathers/1
+	# GET /weathers/1.json
+  	def save_prism
+	    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+	    centroid = calculate_centroid()
+	    @weather.latitude = centroid.cy
+	    @weather.longitude = centroid.cx
+	    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
+	    if !(weather_data.include? "Error")
+		    data = weather_data.split(",")
+		    @weather.weather_file = data[0]
+		    if @weather.weather_file == nil then @weather.weather_file = "" end
+		    data[2].slice! "\r\n"
+		    @weather.simulation_final_year = data[2]
+		    if @weather.simulation_final_year == nil then @weather.simulation_final_year=0 end
+		    @weather.weather_final_year = @weather.simulation_final_year
+		    @weather.weather_initial_year = data[1]
+		    if @weather.weather_initial_year == nil then @weather.weather_initial_year == 0 end
+		    @weather.simulation_initial_year = @weather.weather_initial_year + 5
+		    @weather.way_id = 1
+		else
+			if @weather.weather_file == nil then @weather.weather_file = "" end
+			if @weather.simulation_final_year == nil then @weather.simulation_final_year = 0 end
+			if @weather.weather_initial_year == nil then @weather.weather_initial_year = 0 end
+			if @weather.weather_final_year == nil then @weather.weather_final_year = 0 end
+			if @weather.simulation_initial_year == nil then @weather.simulation_initial_year = 0 end
+		end
+	    if @weather.save
+	      return "OK"
+	    else
+	      retunr t('notices.no_weather_file')
+	    end
+	end
+
+	def calculate_nutrients(total_n_con, moisture, total_p_con, activity_id, type_id, subtype_id)
+	    if activity_id == "2" && type_id != "1"
+	      if type_id == "2" #solid manure
+	        total_n = (total_n_con/2000)/((100-moisture)/100)
+	        total_p = ((total_p_con*PO4_TO_P2O5)/2000)/((100-moisture)/100)
+	      elsif type_id == "3" #liquid manure
+	        total_n = (total_n_con*0.011982)/(100-moisture)
+	        total_p = (total_p_con*PO4_TO_P2O5*0.011982)/(100-moisture)
+	      end
+	      fert_type = Fertilizer.find(subtype_id)
+	      params[:operation][:no3_n] = total_n * fert_type.qn * 100  #convert fraction to percentage. When fert line is being changed (simuilation_helper/add_operation)
+	      params[:operation][:org_n] = total_n * fert_type.yn * 100
+	      params[:operation][:po4_p] = total_p * fert_type.qp * 100
+	      params[:operation][:org_p] = total_p * fert_type.yp * 100
+	    end
+  	end
 end
