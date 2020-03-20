@@ -921,7 +921,7 @@ class ScenariosController < ApplicationController
       apex_string += at.freq_trip.to_s + "    "
       file_name = "Trip" + i.to_s + "_cc.txt"
       apex_string += file_name + "    " 
-      apex_string += at.cattle_pro == true ? "1   " : "0   "
+      apex_string += at.cattlepro == true ? "1   " : "0   "
       apex_string += at.purpose == 0 ? "Buying " : "Selling"  + "    " 
       apex_string += at.purpose.to_s  + "    " + "\n"
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
@@ -1322,20 +1322,15 @@ class ScenariosController < ApplicationController
 		#apex_string += aplcat.ptdife.to_s + "\t" + "! " + t('aplcat.ptdife') + "\n"
     #apex_string += aplcat.byosm.to_s + "\t" + "! " + t('aplcat.byosm') + "\n"
     #***Saved for future references
-
-		apex_string = "\n"
-		apex_string += "Data on animal feed (grasses, hay and concentrates)" + "\n"
-		apex_string += "\n"
-    apex_string = grazing.forage == true ? "1" : "0"
-		apex_string += sprintf("%d", grazing.count)
-		for i in 0..grazing.count-1
-			apex_string += "\t"
-		end
-		apex_string += "| " + t('graze.total') + "\n"
+		#apex_string = "\n"
+		#apex_string += "Data on animal feed (grasses, hay and concentrates)" + "\n"
+		#apex_string += "\n"
+    apex_string = (aplcat.forage == true ? "1" : "0") + "\t" + "| " + t('graze.forage') + "\n"
+    apex_string += grazing.count.to_s + "\t" + "| " + t('graze.total') + "\n"		
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].code) + "\t"
 		end
-		apex_string += "| " + t('graze.code_for') + "\n"
+		apex_string += "| " + t('graze.code_for_html') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].starting_julian_day) + "\t"
 		end
@@ -1344,10 +1339,10 @@ class ScenariosController < ApplicationController
 			apex_string += sprintf("%d", grazing[i].ending_julian_day) + "\t"
 		end
 		apex_string += "| " + t('graze.ejd') + "\n"
-		#for i in 0..grazing.count-1
-			#apex_string += sprintf("%d", grazing[i].for_button) + "\t"
-	 #	end
-		#apex_string += "| " + t('graze.dmi_code') + "\n"
+		for i in 0..grazing.count-1
+			apex_string += sprintf("%d", grazing[i].for_button) + "\t"
+	 	end
+		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%.2f", grazing[i].for_dmi_cows) + "\t"
 		end
@@ -1375,7 +1370,11 @@ class ScenariosController < ApplicationController
     for i in 0..grazing.count-1
       apex_string += sprintf("%.2f", grazing[i].dmi_code) + "\t"
     end
-    apex_string += "| " + t('graze.code_supp') + "\n"
+    apex_string += "| " + t('graze.code_supp_html') + "\n"
+    for i in 0..grazing.count-1
+      apex_string += sprintf("%d", grazing[i].supplement_button) + "\t"
+    end
+    apex_string += "| " + t('graze.dmi_code') + "\n"
     for i in 0..grazing.count-1
 			apex_string += sprintf("%.2f", grazing[i].dmi_cows) + "\t"
 		end

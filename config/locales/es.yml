@@ -1166,6 +1166,7 @@ es:
       avg_rh: Humedad relativa diaria por cas mes
       grazing: Pastoreo
       supplement_parameters: Parameteros de suplemento
+      animal_feed_parameters: Alimentación Animal
   grazing:
       type:
       start_julian:
