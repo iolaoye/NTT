@@ -25,7 +25,7 @@ class AplcatParameter < ActiveRecord::Base
          :twelveth_area, :twelveth_equip, :twelveth_fuel, :thirteen_area, :thirteen_equip, :thirteen_fuel, :fourteen_area, :fourteen_equip, :fourteen_fuel,
          :fifteen_area, :fifteen_equip, :fifteen_fuel, :sixteen_area, :sixteen_equip, :sixteen_fuel, :seventeen_area, :seventeen_equip, :seventeen_fuel,
          :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos, :number_of_forage,
-         :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :mm_type_but, :nit, :fqd, :uovfi, :srwc, :byos, :eyos
+         :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :mm_type_but, :nit, :fqd, :uovfi, :srwc, :byos, :eyos, :forage
 
   #validations
   	validate :lowests
@@ -34,6 +34,8 @@ class AplcatParameter < ActiveRecord::Base
 
   	after_initialize do
 	  	if self.new_record?
+	  		#Grazing
+	  		sefl.forage = false
 		  	#1. animal parameters
 			self.noc = 100
 			self.nomb = 8

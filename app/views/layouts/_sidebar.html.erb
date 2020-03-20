@@ -106,16 +106,18 @@
                           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                         </div>
                       <% end %>
-                      <%= link_to t('menu.grazing_parameters') + " (" + GrazingParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_grazing_parameters_path(@project, @field, @scenario) %>
+                      <%= link_to t('aplcat.animal_feed_parameters') + " (" + GrazingParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_grazing_parameters_path(@project, @field, @scenario) %>
                     </li>
-                    <li class="<%= controller_name == "supplement_parameters" ? "active" : "" %>">
-                      <% if controller_name == "supplement_parameters" %>
-                        <div class="sub-sub-header-icon">
-                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                        </div>
-                      <% end %>
-                      <%= link_to t('menu.supplement_parameters') + " (" + SupplementParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_supplement_parameters_path(@project, @field, @scenario) %>
-                    </li>
+                    <!--
+                      <li class="<%= controller_name == "supplement_parameters" ? "active" : "" %>">
+                        <% if controller_name == "supplement_parameters" %>
+                          <div class="sub-sub-header-icon">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                          </div>
+                        <% end %>
+                        <%= link_to t('menu.supplement_parameters') + " (" + SupplementParameter.where(:scenario_id => @scenario.id).count.to_s + ")", project_field_scenario_supplement_parameters_path(@project, @field, @scenario) %>
+                      </li>
+                    -->
                    </li>
                     <li class="<%= controller_name == "animal_transport" ? "active" : "" %>">
                       <% if controller_name == "animal_transport" %>

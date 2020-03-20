@@ -62,5 +62,5 @@
     </table>
   </div>
 </div>
-<%= link_to 'New Grazing Parameters', new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>
+<%= link_to 'New ' + t('aplcat.animal_feed_parameters'), new_project_field_scenario_grazing_parameter_path(@project, @field, @scenario), :class => 'btn btn-success' %>
 <%= link_to 'Back', edit_project_field_scenario_aplcat_parameter_path(@project, @field, @scenario, 1), :title => t('aplcat_tooltip.go_to_ap'), :class => 'btn btn-primary' %>
