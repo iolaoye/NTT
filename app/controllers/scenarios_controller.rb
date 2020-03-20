@@ -813,7 +813,7 @@ class ScenariosController < ApplicationController
     #find the aplcat parameters for the sceanrio selected
 		aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
 		grazing = GrazingParameter.where(:scenario_id => @scenario.id)
-		supplement = SupplementParameter.where(:scenario_id => @scenario.id)
+		#supplement = SupplementParameter.where(:scenario_id => @scenario.id)
     aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
     animal_transport = AnimalTransport.where(:scenario_id => @scenario.id)
 		if aplcat == nil then
@@ -1326,6 +1326,7 @@ class ScenariosController < ApplicationController
 		apex_string = "\n"
 		apex_string += "Data on animal feed (grasses, hay and concentrates)" + "\n"
 		apex_string += "\n"
+    apex_string = grazing.forage == true ? "1" : "0"
 		apex_string += sprintf("%d", grazing.count)
 		for i in 0..grazing.count-1
 			apex_string += "\t"
@@ -1402,7 +1403,9 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
 		apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
 		apex_string += "\n"
-    for j in 0..supplement.count-1
+
+=begin
+    for= j in 0..supplement.count-1
 			apex_string += sprintf("%d", supplement[j].code) + "\t"
 		end
 		apex_string += "| " + t('supplement.code') + "\n"
@@ -1470,6 +1473,8 @@ class ScenariosController < ApplicationController
 			apex_string += sprintf("%d", supplement[j].green_water_footprint_supplement) + "\t"
 		end
 		apex_string += "| " + t('graze.gwfs') + "\n"
+=end
+
 		apex_string += "\n"
 		apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 11 lines:" + "\n"
 		apex_string += "\n"
@@ -1486,7 +1491,7 @@ class ScenariosController < ApplicationController
     apex_string += "Line 11: " + t('graze.ln10') + "\n"
 		apex_string += "\n"
 		#***** send file to server "
-		msg = send_file_to_APEX(apex_string, "EmissionInputCowCalf.txt")
+		msg = send_file_to_APEX(apex_string, "BeefCattleNutrition.txt")
 
 		#***Saved for future references
 		#apex_string = "Input file for estimating drinking water requirement of cattle" + "\n"

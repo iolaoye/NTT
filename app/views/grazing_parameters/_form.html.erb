@@ -12,8 +12,8 @@
   <br>
   <div>
     <%=  t('graze.forage') %><br>
-    <%= radio_button_tag :forage, "1"%> <%= t('graze.yes') %><br>
-    <%= radio_button_tag :forage, "2"%> <%= t('graze.no') %><br>
+    <%= f.radio_button :forage, "1"%> <%= t('graze.yes') %><br>
+    <%= f.radio_button :forage, "2"%> <%= t('graze.no') %><br>
   </div>
   <!--<div class="field">
     <%=  t('graze.total') %><br>
