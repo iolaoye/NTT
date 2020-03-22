@@ -406,6 +406,7 @@ class WatershedsController < ApplicationController
     rchl.push(0)
     @ia.push(0)
     @ix.push(0)
+    ir.push(0)
     rec.each do |r|
       field = r.split(" ")
       ie.push(field[0])
@@ -415,9 +416,7 @@ class WatershedsController < ApplicationController
       rchl.push(0)
       @ia.push(0)
       @ix.push(0)
-
       ir.push(0)
-
     end
     nn = ie.count - 1
     for i in 1..nn
