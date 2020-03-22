@@ -440,7 +440,6 @@ class WatershedsController < ApplicationController
         ie[i] = i
       end
       for i in 1..nn
-        debugger
         if ir[i] < 2 then next end
         ir[i] = ir[i] - iy[ir[i]]
       end
