@@ -35,7 +35,7 @@ class AplcatParameter < ActiveRecord::Base
   	after_initialize do
 	  	if self.new_record?
 	  		#Grazing
-	  		sefl.forage = false
+	  		self.forage = false
 		  	#1. animal parameters
 			self.noc = 100
 			self.nomb = 8
