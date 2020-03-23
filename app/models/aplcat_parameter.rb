@@ -123,8 +123,8 @@ class AplcatParameter < ActiveRecord::Base
 			self.opt4 = 134
 			self.cpl_lowest = 3.3
 			self.cpl_highest = 4.6
-			self.tdn_lowest = 5.2
-			self.tdn_highest = 5.7
+			self.tdn_lowest = 22
+			self.tdn_highest = 90
 			self.ndf_lowest = 0
 			self.ndf_highest = 0
 			self.adf_lowest = 2.0
