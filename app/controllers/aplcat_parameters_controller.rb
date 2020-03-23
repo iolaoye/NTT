@@ -23,6 +23,7 @@ class AplcatParametersController < ApplicationController
   # GET /aplcat_parameters/new
   # GET /aplcat_parameters/new.json
   def new
+    aplcat_list
     @aplcat_parameter = AplcatParameter.new
     @aplcat_parameter.scenario_id = params[:scenario_id]
     @aplcat_parameter.save
