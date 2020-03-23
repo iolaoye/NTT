@@ -711,10 +711,10 @@
       <table>
         <tr>
           <th><%=  t('aplcat.lowest') %><br>
-            <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lcpl'), :step => '0.1'%>
+            <%= f.number_field :tdn_lowest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.lcpl'), :step => '0.1', min: 21, max: 99%>
           </th>
           <th><%=  t('aplcat.highest') %><br>
-            <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.htdn'), :step => '0.1'%>
+            <%= f.number_field :tdn_highest, class: 'gvTitleStyleNumber', :title => t('aplcat_tooltip.htdn'), :step => '0.1', min: 21, max: 99%>
           </th>
         </tr>
       </table>
