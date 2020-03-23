@@ -179,8 +179,8 @@ class AplcatParametersController < ApplicationController
          :n_nfar, :n_npfar, :n_co2enfa, :n_co2epfp, :n_co2enfp, :n_lamf, :n_lan2of, :n_laco2f, :n_socc, :i_tfa, :i_sr, :i_arnfa, :i_arpfa,
          :i_nfar, :i_npfar, :i_co2enfa, :i_co2epfp, :i_co2enfp, :i_lamf, :i_lan2of, :i_laco2f, :i_socc, :cpl_lowest, :cpl_highest, :tdn_lowest,
          :tdn_highest, :ndf_lowest, :ndf_highest, :adf_lowest, :adf_highest, :fir_lowest, :fir_highest, :theta, :fge, :fde, :first_area, :second_area,
-         :third_area, :fourth_area, :fifth_area, :first_equip, :second_equip, :third_equip, :fourth_equip, :fifth_equip, :first_fuel, :second_fuel,
-         :third_fuel, :fourth_fuel, :fifth_fuel, :trans_1, :categories_trans_1, :categories_slaug_1, :avg_marweight_1, :num_animal_1, :mortality_rate_1,
+         :third_area, :fourth_area, :fifth_area, :first_equip, :second_equip, :third_equip, :fourth_equip, :fifth_equip, :first_fuel_id, :second_fuel_id,
+         :third_fuel_id, :fourth_fuel_id, :fifth_fuel_id, :trans_1, :categories_trans_1, :categories_slaug_1, :avg_marweight_1, :num_animal_1, :mortality_rate_1,
          :distance_1, :trailer_1, :trucks_1, :fuel_type_1, :same_vehicle_1, :loading_1, :carcass_1, :boneless_beef_1, :trans_2, :categories_trans_2,
          :categories_slaug_2, :avg_marweight_2, :num_animal_2, :mortality_rate_2, :distance_2, :trailer_2, :trucks_2, :fuel_type_2, :same_vehicle_2, :loading_2,
          :carcass_2, :boneless_beef_2, :trans_3, :categories_trans_3, :categories_slaug_3, :avg_marweight_3, :num_animal_3, :mortality_rate_3, :distance_3,
@@ -188,12 +188,12 @@ class AplcatParametersController < ApplicationController
          :avg_marweight_4, :num_animal_4, :mortality_rate_4, :distance_4, :trailer_4, :trucks_4, :fuel_type_4, :same_vehicle_4, :loading_4, :carcass_4, :boneless_beef_4,
          :second_avg_marweight_1, :second_num_animal_1, :second_avg_marweight_2, :second_num_animal_2, :second_avg_marweight_3, :second_num_animal_3, :second_avg_marweight_4, :second_num_animal_4,
          :tjan, :tfeb, :tmar, :tapr, :tmay, :tjun, :tjul, :taug, :tsep, :toct, :tnov, :tdec, :hjan, :hfeb, :hmar, :hapr, :hmay, :hjun, :hjul, :haug, :hsep, :hoct, :hnov, :hdec, :mm_type,
-         :mm_type_amp, :sixth_area, :sixth_equip, :sixth_fuel, :seventh_area, :seventh_equip, :seventh_fuel, :eighth_area, :eighth_equip, :eighth_fuel,
-         :ninth_area, :ninth_equip, :ninth_fuel, :tenth_area, :tenth_equip, :tenth_fuel, :eleventh_area, :eleventh_equip, :eleventh_fuel,
-         :twelveth_area, :twelveth_equip, :twelveth_fuel, :thirteen_area, :thirteen_equip, :thirteen_fuel, :fourteen_area, :fourteen_equip, :fourteen_fuel,
-         :fifteen_area, :fifteen_equip, :fifteen_fuel, :sixteen_area, :sixteen_equip, :sixteen_fuel, :seventeen_area, :seventeen_equip, :seventeen_fuel,
-         :eighteen_area, :eighteen_equip, :eighteen_fuel, :ninteen_area, :ninteen_equip, :ninteen_fuel, :twenty_area, :twenty_equip, :twenty_fuel, :byos, :eyos, :srwc,
-         :mm_type_but, :nit, :fqd, :uovfi, :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :number_of_forage, :forage)
+         :mm_type_amp, :sixth_area, :sixth_equip, :sixth_fuel_id, :seventh_area, :seventh_equip, :seventh_fuel_id, :eighth_area, :eighth_equip, :eighth_fuel_id,
+         :ninth_area, :ninth_equip, :ninth_fuel_id, :tenth_area, :tenth_equip, :tenth_fuel_id, :eleventh_area, :eleventh_equip, :eleventh_fuel_id,
+         :twelveth_area, :twelveth_equip, :twelveth_fuel_id, :thirteen_area, :thirteen_equip, :thirteen_fuel_id, :fourteen_area, :fourteen_equip, :fourteen_fuel_id,
+         :fifteen_area, :fifteen_equip, :fifteen_fuel_id, :sixteen_area, :sixteen_equip, :sixteen_fuel_id, :seventeen_area, :seventeen_equip, :seventeen_fuel_id,
+         :eighteen_area, :eighteen_equip, :eighteen_fuel_id, :ninteen_area, :ninteen_equip, :ninteen_fuel_id, :twenty_area, :twenty_equip, :twenty_fuel_id, :byos, :eyos, :srwc,
+         :mm_type_but, :nit, :fqd, :uovfi, :running_drinking_water, :running_complete_stocker, :running_ghg, :running_transportation, :number_of_forage, :forage, :fuel_id)
 
     end
 end
