@@ -108,6 +108,7 @@ class AplcatParametersController < ApplicationController
   # POST /aplcat_parameters
   # POST /aplcat_parameters.json
   def create
+    aplcat_list
     @aplcat_parameter = AplcatParameter.new(aplcat_parameter_params)
     @aplcat_parameter.scenario_id = params[:scenario_id]
     respond_to do |format|
