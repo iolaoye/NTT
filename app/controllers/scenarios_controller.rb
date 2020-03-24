@@ -920,9 +920,9 @@ class ScenariosController < ApplicationController
       apex_string += i.to_s + "    "
       apex_string += at.freq_trip.to_s + "    "
       file_name = "Trip" + i.to_s + "_cc.txt"
-      apex_string += file_name + "    " 
+      apex_string += file_name + "    "
       apex_string += at.cattlepro == true ? "1   " : "0   "
-      apex_string += at.purpose == 0 ? "Buying " : "Selling"  + "    " 
+      apex_string += at.purpose == 0 ? "Buying " : "Selling"  + "    "
       apex_string += at.purpose.to_s  + "    " + "\n"
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
       anim_string += at.categories_trans.to_s + "\t" + "! " + t('aplcat.categories_trans') + "\n"
@@ -943,7 +943,7 @@ class ScenariosController < ApplicationController
       anim_string += Trailer.find(at.trailer_id).code + "\t" + "! " + t('aplcat.trailer') + "\n"
       anim_string += Truck.find(at.truck_id).code + "\t" + "! " + t('aplcat.trucks') + "\n"
       anim_string += Fuel.find(at.fuel_id).code + "\t" + "! " + t('aplcat.fuel_type') + "\n"
-      anim_string += at.same_vehicle == true ? "1" : "0" 
+      anim_string += at.same_vehicle == true ? "1" : "0"
       anim_string += "\t" + "! " + t('aplcat.same_vehicle') + "\n"
       anim_string += at.loading.to_s + "\t" + "! " + t('aplcat.loading') + "\n"
       anim_string += at.carcass.to_s + "\t" + "! " + t('aplcat.carcass') + "\n"
@@ -1068,47 +1068,85 @@ class ScenariosController < ApplicationController
     apex_string += t('aplcat.area') + " " + "\t" + t('aplcat.equipment') + " " + "\t" + t('aplcat.fuel') + "\n"
     apex_string += "\n"
     #apex_string += "First" + "\n"
-    apex_string += aplcat.first_area.to_s + " " + "\t" 
-    apex_string += aplcat.first_equip.to_s + " " +"\t" 
-    apex_string += aplcat.first_fuel.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.first_area.to_s + " " + "\t"
+    apex_string += aplcat.first_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.first_fuel_id).code + " " +"\t" + "\n"
     #apex_string += "Second" + "\n"
-    apex_string += aplcat.second_area.to_s + " " +"\t" 
-    apex_string += aplcat.second_equip.to_s + " " +"\t" 
-    apex_string += aplcat.second_fuel.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.second_area.to_s + " " +"\t"
+    apex_string += aplcat.second_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.second_fuel_id).code + " " +"\t" + "\n"
     #apex_string += "Third" + "\n"
-    apex_string += aplcat.third_area.to_s + " " + "\t" 
-    apex_string += aplcat.third_equip.to_s + " " +"\t" 
-    apex_string += aplcat.third_fuel.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.third_area.to_s + " " + "\t"
+    apex_string += aplcat.third_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.third_fuel_id).code + " " +"\t" + "\n"
     #apex_string += "Fourth" + "\n"
-    apex_string += aplcat.fourth_area.to_s + " " +"\t" 
-    apex_string += aplcat.fourth_fuel.to_s + " " +"\t" 
-    apex_string += aplcat.fourth_fuel.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.fourth_area.to_s + " " +"\t"
+    apex_string += aplcat.fourth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.fourth_fuel_id).code + " " +"\t" + "\n"
     #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.fifth_area.to_s + " " +"\t" 
-    apex_string += aplcat.fifth_equip.to_s + " " +"\t" 
-    apex_string += aplcat.fifth_fuel.to_s + " " +"\t" + "\n"
-
-
-    #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.sixth_area.to_s + " " +"\t" 
-    apex_string += aplcat.sixth_equip.to_s + " " +"\t" 
-    apex_string += aplcat.sixth_fuel.to_s + " " +"\t" + "\n"
-    #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.seventh_area.to_s + " " +"\t" 
-    apex_string += aplcat.seventh_equip.to_s + " " +"\t" 
-    apex_string += aplcat.seventh_fuel.to_s + " " +"\t" + "\n"
-    #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.eighth_area.to_s + " " +"\t" 
-    apex_string += aplcat.eighth_equip.to_s + " " +"\t" 
-    apex_string += aplcat.eighth_fuel.to_s + " " +"\t" + "\n"
-    #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.ninth_area.to_s + " " +"\t" 
-    apex_string += aplcat.ninth_equip.to_s + " " +"\t" 
-    apex_string += aplcat.ninth_fuel.to_s + " " +"\t" + "\n"
-    #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.tenth_area.to_s + " " +"\t" 
-    apex_string += aplcat.tenth_equip.to_s + " " +"\t" 
-    apex_string += aplcat.tenth_fuel.to_s + " " +"\t" + "\n"
+    apex_string += aplcat.fifth_area.to_s + " " +"\t"
+    apex_string += aplcat.fifth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.fifth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Sixth" + "\n"
+    apex_string += aplcat.sixth_area.to_s + " " +"\t"
+    apex_string += aplcat.sixth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.sixth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Seventh" + "\n"
+    apex_string += aplcat.seventh_area.to_s + " " +"\t"
+    apex_string += aplcat.seventh_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.seventh_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Eighth" + "\n"
+    apex_string += aplcat.eighth_area.to_s + " " +"\t"
+    apex_string += aplcat.eighth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.eighth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Ninth" + "\n"
+    apex_string += aplcat.ninth_area.to_s + " " +"\t"
+    apex_string += aplcat.ninth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.ninth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.tenth_area.to_s + " " +"\t"
+    apex_string += aplcat.tenth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.tenth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.eleventh_area.to_s + " " +"\t"
+    apex_string += aplcat.eleventh_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.eleventh_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.twelveth_area.to_s + " " +"\t"
+    apex_string += aplcat.twelveth_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.twelveth_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.thirteen_area.to_s + " " +"\t"
+    apex_string += aplcat.thirteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.thirteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.fourteen_area.to_s + " " +"\t"
+    apex_string += aplcat.fourteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.fourteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.fifteen_area.to_s + " " +"\t"
+    apex_string += aplcat.fifteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.fifteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.sixteen_area.to_s + " " +"\t"
+    apex_string += aplcat.sixteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.sixteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.seventeen_area.to_s + " " +"\t"
+    apex_string += aplcat.seventeen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.seventeen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.eighteen_area.to_s + " " +"\t"
+    apex_string += aplcat.eighteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.eighteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.ninteen_area.to_s + " " +"\t"
+    apex_string += aplcat.ninteen_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.ninteen_fuel_id).code + " " +"\t" + "\n"
+    #apex_string += "Tenth" + "\n"
+    apex_string += aplcat.twenty_area.to_s + " " +"\t"
+    apex_string += aplcat.twenty_equip.to_s + " " +"\t"
+    apex_string += Fuel.find(aplcat.twenty_fuel_id).code + " " +"\t" + "\n"
 
     apex_string += "\n"
     #***** send file to server "
@@ -1224,32 +1262,32 @@ class ScenariosController < ApplicationController
     #apex_string += "\n"
     #apex_string += "Daily Average Temperature for each months" + "\n"
 		#apex_string += "\n"
-    apex_string += aplcat.tjan.to_s + "  " 
-    apex_string += aplcat.tfeb.to_s + "  " 
-    apex_string += aplcat.tmar.to_s + "  " 
-    apex_string += aplcat.tapr.to_s + "  " 
-    apex_string += aplcat.tmay.to_s + "  " 
-    apex_string += aplcat.tjun.to_s + "  " 
-    apex_string += aplcat.tjul.to_s + "  " 
-    apex_string += aplcat.taug.to_s + "  " 
-    apex_string += aplcat.tsep.to_s + "  " 
-    apex_string += aplcat.toct.to_s + "  " 
-    apex_string += aplcat.tnov.to_s + "  " 
+    apex_string += aplcat.tjan.to_s + "  "
+    apex_string += aplcat.tfeb.to_s + "  "
+    apex_string += aplcat.tmar.to_s + "  "
+    apex_string += aplcat.tapr.to_s + "  "
+    apex_string += aplcat.tmay.to_s + "  "
+    apex_string += aplcat.tjun.to_s + "  "
+    apex_string += aplcat.tjul.to_s + "  "
+    apex_string += aplcat.taug.to_s + "  "
+    apex_string += aplcat.tsep.to_s + "  "
+    apex_string += aplcat.toct.to_s + "  "
+    apex_string += aplcat.tnov.to_s + "  "
     apex_string += aplcat.tdec.to_s + "  " + "! " + t("aplcat.parameter4") + "\n"
     #apex_string += "\n"
     #apex_string += "Daily Average Humidity for each months" + "\n"
 		#apex_string += "\n"
-    apex_string += aplcat.hjan.to_s + "  " 
-    apex_string += aplcat.hfeb.to_s + "  " 
-    apex_string += aplcat.hmar.to_s + "  " 
-    apex_string += aplcat.hapr.to_s + "  " 
-    apex_string += aplcat.hmay.to_s + "  " 
-    apex_string += aplcat.hjun.to_s + "  " 
-    apex_string += aplcat.hjul.to_s + "  " 
-    apex_string += aplcat.haug.to_s + "  " 
-    apex_string += aplcat.hsep.to_s + "  " 
-    apex_string += aplcat.hoct.to_s + "  " 
-    apex_string += aplcat.hnov.to_s + "  " 
+    apex_string += aplcat.hjan.to_s + "  "
+    apex_string += aplcat.hfeb.to_s + "  "
+    apex_string += aplcat.hmar.to_s + "  "
+    apex_string += aplcat.hapr.to_s + "  "
+    apex_string += aplcat.hmay.to_s + "  "
+    apex_string += aplcat.hjun.to_s + "  "
+    apex_string += aplcat.hjul.to_s + "  "
+    apex_string += aplcat.haug.to_s + "  "
+    apex_string += aplcat.hsep.to_s + "  "
+    apex_string += aplcat.hoct.to_s + "  "
+    apex_string += aplcat.hnov.to_s + "  "
     apex_string += aplcat.hdec.to_s + "  " + "! " + t("aplcat.parameter5") + "\n"
     #apex_string += aplcat.avgtm.to_s + "\t" + "! " + t('aplcat.avgtm') + "\n"
     apex_string += aplcat.rhae.to_s + "\t" + "! " + t('aplcat.rhae') + "\n"
@@ -1326,7 +1364,7 @@ class ScenariosController < ApplicationController
 		#apex_string += "Data on animal feed (grasses, hay and concentrates)" + "\n"
 		#apex_string += "\n"
     apex_string = (aplcat.forage == true ? "1" : "0") + "\t" + "| " + t('graze.forage') + "\n"
-    apex_string += grazing.count.to_s + "\t" + "| " + t('graze.total') + "\n"		
+    apex_string += grazing.count.to_s + "\t" + "| " + t('graze.total') + "\n"
 		for i in 0..grazing.count-1
 			apex_string += sprintf("%d", grazing[i].code) + "\t"
 		end
@@ -1340,7 +1378,7 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += "| " + t('graze.ejd') + "\n"
 		for i in 0..grazing.count-1
-			apex_string += sprintf("%d", grazing[i].for_button).to_s + "\t"
+			#apex_string += sprintf("%d", grazing[i].for_button).to_s + "\t" #No for_button anymore at the moment.
 	 	end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
@@ -1372,7 +1410,7 @@ class ScenariosController < ApplicationController
     end
     apex_string += "| " + t('graze.code_supp_html') + "\n"
     for i in 0..grazing.count-1
-      apex_string += sprintf("%d", grazing[i].supplement_button).to_s + "\t"
+      #apex_string += sprintf("%d", grazing[i].supplement_button).to_s + "\t" #No supplement_button at the moment.
     end
     apex_string += "| " + t('graze.dmi_code') + "\n"
     for i in 0..grazing.count-1
@@ -1778,7 +1816,7 @@ class ScenariosController < ApplicationController
           end
           operation = Operation.new
           operation.scenario_id = @scenario.id
-          operation.crop_id = opr[1]          
+          operation.crop_id = opr[1]
           operation.year = opr[2]
           operation.month_id = opr[3]
           operation.day = opr[4]
@@ -1803,7 +1841,7 @@ class ScenariosController < ApplicationController
                 operation.po4_p = params[:operation][:po4_p]
                 operation.org_n = params[:operation][:org_n]
                 operation.org_p = params[:operation][:org_p]
-              end            
+              end
             when 3   #Tillage
               operation.type_id = opr[7]
             when 4   #Harvest
@@ -1815,13 +1853,13 @@ class ScenariosController < ApplicationController
             when 7   #Continues grazing
               operation.type_id = opr[7]
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
-              operation.org_c = opr[9]  #access to strea? yes=1 
+              operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
               operation.nh3 = opr[10]   #hours in stream
             when 9   #Rotational grazing
               operation.type_id = opr[7]
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
-              operation.org_c = opr[9]  #access to strea? yes=1 
+              operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
               operation.nh3 = opr[10]   #hours in stream
               operation.moisture = opr[12]
@@ -1856,7 +1894,7 @@ class ScenariosController < ApplicationController
                 operation1.year = opr[14]
                 operation1.month_id = opr[15]
                 operation1.day = opr[16]
-              end           
+              end
               operation1.type_id = operation_id
               operation1.scenario_id = operation.scenario_id
               operation1.amount = 0
@@ -1890,7 +1928,7 @@ class ScenariosController < ApplicationController
       ensure
         next
       end
-    end  # end transaction    
+    end  # end transaction
   end
 
   def upload_scenarios_xml
