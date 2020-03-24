@@ -372,7 +372,17 @@ class WatershedsController < ApplicationController
     render "index"
   end
 
-  ################################ defibne_routing #################################
+  ################################ define_routing #################################
+  def validate_routing(rec)
+    #validate that a field is not being routing to the one receibing
+    for i in 1..rec.count - 1
+      rec1 = rec[i][5,4] + " " + rec[i][0,4]
+      if rec1 == rec[i-1]
+        rec[i][5,4] = "0"
+      end
+    end
+    return rec
+  end
   # Read results from R routing program and order the fields accordingly
   def define_routing(fields)
     client = Savon.client(wsdl: URL_SoilsInfoDev)
@@ -407,6 +417,8 @@ class WatershedsController < ApplicationController
     @ia.push(0)
     @ix.push(0)
     ir.push(0)
+    #validate to avoid autorouting
+    rec = validate_routing(rec)
     rec.each do |r|
       field = r.split(" ")
       ie.push(field[0])
@@ -550,7 +562,7 @@ class WatershedsController < ApplicationController
     if buffer then
       @subarea_file.push(sprintf("%8d", field_id) + "0000000000000000   " + _subarea_info.description + "\n")
     else
-      @subarea_file.push(sprintf("%8d", field_id) + _subarea_info.description + "\n")
+      @subarea_file.push(sprintf("%8d", field_id) + _subarea_info.description + Field.find(field_id).field_name + "\n")
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub

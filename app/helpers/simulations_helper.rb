@@ -1010,9 +1010,9 @@ module SimulationsHelper
     j = i + 1
     #/line 1
     if buffer then
-      @subarea_file.push(sprintf("%8d", j) + "0000000000000000   " + _subarea_info.description + "\n")
+      @subarea_file.push(sprintf("%8d", j) + "0000000000000000   " + _subarea_info.description + @field.field_name + "\n")
     else
-      @subarea_file.push(sprintf("%8d", j) + _subarea_info.description + "\n")
+      @subarea_file.push(sprintf("%8d", j) + _subarea_info.description + @field.field_name + "\n")
     end
     #/line 2
     @last_soil2 = j + @last_soil_sub
