@@ -1082,86 +1082,125 @@ class ScenariosController < ApplicationController
     apex_string += t('aplcat.area') + " " + "\t" + t('aplcat.equipment') + " " + "\t" + t('aplcat.fuel') + "\n"
     apex_string += "\n"
     #apex_string += "First" + "\n"
-    apex_string += aplcat.first_area.to_s + " " + "\t"
-    apex_string += aplcat.first_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.first_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.first_area != nil then
+      apex_string += aplcat.first_area.to_s + " " + "\t"
+      apex_string += aplcat.first_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.first_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Second" + "\n"
-    apex_string += aplcat.second_area.to_s + " " +"\t"
-    apex_string += aplcat.second_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.second_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.second_area != nil then
+      apex_string += aplcat.second_area.to_s + " " +"\t"
+      apex_string += aplcat.second_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.second_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Third" + "\n"
-    apex_string += aplcat.third_area.to_s + " " + "\t"
-    apex_string += aplcat.third_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.third_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.third_area != nil then
+      apex_string += aplcat.third_area.to_s + " " + "\t"
+      apex_string += aplcat.third_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.third_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Fourth" + "\n"
-    apex_string += aplcat.fourth_area.to_s + " " +"\t"
-    apex_string += aplcat.fourth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.fourth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.fourth_area != nil then
+      apex_string += aplcat.fourth_area.to_s + " " +"\t"
+      apex_string += aplcat.fourth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.fourth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Fifth" + "\n"
-    apex_string += aplcat.fifth_area.to_s + " " +"\t"
-    apex_string += aplcat.fifth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.fifth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.fifth_area != nil then
+      apex_string += aplcat.fifth_area.to_s + " " +"\t"
+      apex_string += aplcat.fifth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.fifth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Sixth" + "\n"
-    apex_string += aplcat.sixth_area.to_s + " " +"\t"
-    apex_string += aplcat.sixth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.sixth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.sixth_area != nil then
+      apex_string += aplcat.sixth_area.to_s + " " +"\t"
+      apex_string += aplcat.sixth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.sixth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Seventh" + "\n"
-    apex_string += aplcat.seventh_area.to_s + " " +"\t"
-    apex_string += aplcat.seventh_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.seventh_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.seventh_area != nil then
+      apex_string += aplcat.seventh_area.to_s + " " +"\t"
+      apex_string += aplcat.seventh_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.seventh_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Eighth" + "\n"
-    apex_string += aplcat.eighth_area.to_s + " " +"\t"
-    apex_string += aplcat.eighth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.eighth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.eighth_area != nil then
+      apex_string += aplcat.eighth_area.to_s + " " +"\t"
+      apex_string += aplcat.eighth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.eighth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Ninth" + "\n"
-    apex_string += aplcat.ninth_area.to_s + " " +"\t"
-    apex_string += aplcat.ninth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.ninth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.ninth_area != nil then
+      apex_string += aplcat.ninth_area.to_s + " " +"\t"
+      apex_string += aplcat.ninth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.ninth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.tenth_area.to_s + " " +"\t"
-    apex_string += aplcat.tenth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.tenth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.tenth_area != nil then
+      apex_string += aplcat.tenth_area.to_s + " " +"\t"
+      apex_string += aplcat.tenth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.tenth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.eleventh_area.to_s + " " +"\t"
-    apex_string += aplcat.eleventh_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.eleventh_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.eleventh_area != nil then
+      apex_string += aplcat.eleventh_area.to_s + " " +"\t"
+      apex_string += aplcat.eleventh_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.eleventh_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.twelveth_area.to_s + " " +"\t"
-    apex_string += aplcat.twelveth_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.twelveth_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.twelveth_area != nil then
+      apex_string += aplcat.twelveth_area.to_s + " " +"\t"
+      apex_string += aplcat.twelveth_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.twelveth_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.thirteen_area.to_s + " " +"\t"
-    apex_string += aplcat.thirteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.thirteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.thirteen_area != nil then
+      apex_string += aplcat.thirteen_area.to_s + " " +"\t"
+      apex_string += aplcat.thirteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.thirteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.fourteen_area.to_s + " " +"\t"
-    apex_string += aplcat.fourteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.fourteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.fourteen_area != nil then
+      apex_string += aplcat.fourteen_area.to_s + " " +"\t"
+      apex_string += aplcat.fourteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.fourteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.fifteen_area.to_s + " " +"\t"
-    apex_string += aplcat.fifteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.fifteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.fifteen_area != nil then
+      apex_string += aplcat.fifteen_area.to_s + " " +"\t"
+      apex_string += aplcat.fifteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.fifteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.sixteen_area.to_s + " " +"\t"
-    apex_string += aplcat.sixteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.sixteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.sixteen_area != nil then
+      apex_string += aplcat.sixteen_area.to_s + " " +"\t"
+      apex_string += aplcat.sixteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.sixteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.seventeen_area.to_s + " " +"\t"
-    apex_string += aplcat.seventeen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.seventeen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.seventeen_area != nil then
+      apex_string += aplcat.seventeen_area.to_s + " " +"\t"
+      apex_string += aplcat.seventeen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.seventeen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.eighteen_area.to_s + " " +"\t"
-    apex_string += aplcat.eighteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.eighteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.eighteen_area != nil then
+      apex_string += aplcat.eighteen_area.to_s + " " +"\t"
+      apex_string += aplcat.eighteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.eighteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.ninteen_area.to_s + " " +"\t"
-    apex_string += aplcat.ninteen_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.ninteen_fuel_id).code + " " +"\t" + "\n"
+    if aplcat.ninteen_area != nil then
+      apex_string += aplcat.ninteen_area.to_s + " " +"\t"
+      apex_string += aplcat.ninteen_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.ninteen_fuel_id).code + " " +"\t" + "\n"
+    end
     #apex_string += "Tenth" + "\n"
-    apex_string += aplcat.twenty_area.to_s + " " +"\t"
-    apex_string += aplcat.twenty_equip.to_s + " " +"\t"
-    apex_string += Fuel.find(aplcat.twenty_fuel_id).code + " " +"\t" + "\n"
-
+    if aplcat.twenty_area != nil then
+      apex_string += aplcat.twenty_area.to_s + " " +"\t"
+      apex_string += aplcat.twenty_equip.to_s + " " +"\t"
+      apex_string += Fuel.find(aplcat.twenty_fuel_id).code + " " +"\t" + "\n"
+    end
     apex_string += "\n"
     #***** send file to server "
     unless
