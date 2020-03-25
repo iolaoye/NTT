@@ -822,7 +822,7 @@ class ScenariosController < ApplicationController
 			aplcat.save
 		end
 
-	  msg = send_file_to_APEX("APLCAT", "APLCAT")  #this operation will create APLCAT+session folder from APLCAT folder
+    msg = send_file_to_APEX("APLCAT", "APLCAT") #this operation will create APLCAT+session folder from APLCAT folder
     #apex_string = "Animal Parameters" + "\n"
     #apex_string += "\n"		# create string for the CowCalfProductionData.txt file
 		apex_string = aplcat.noc.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
@@ -911,8 +911,10 @@ class ScenariosController < ApplicationController
     apex_string += "Parameter 20" + "\t" + "integer" + "(1 to 31)" + "\n"
     apex_string += "\n"
 		#***** send file to server "
-		msg = send_file_to_APEX(apex_string, "CowCalfProductionData.txt")
-
+    unless
+      msg = send_file_to_APEX(apex_string, "CowCalfProductionData.txt") then
+    return "There is an error creating APLCAT txt file. Check Animal Parameters."
+  end
     # create string for the InputAnimalTransport.txt file
     i = 1
     apex_string = animal_transport.count.to_s +  "\n"
@@ -922,8 +924,8 @@ class ScenariosController < ApplicationController
       file_name = "Trip" + i.to_s + "_cc.txt"
       apex_string += file_name + "    "
       apex_string += at.cattlepro == true ? "1   " : "0   "
-      apex_string += at.purpose == 0 ? "Buying " : "Selling"  + "    "
-      apex_string += at.purpose.to_s  + "    " + "\n"
+      apex_string += at.purpose == 0 ? "Buying " : "Selling"
+      apex_string += "    " + at.purpose.to_s  + "    " + "\n"
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
       anim_string += at.categories_trans.to_s + "\t" + "! " + t('aplcat.categories_trans') + "\n"
       anim_string += at.categories_slaug.to_s + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
@@ -953,8 +955,10 @@ class ScenariosController < ApplicationController
       i += 1
     end
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "InputAnimalTransport.txt")
-
+    unless
+      msg = send_file_to_APEX(apex_string, "InputAnimalTransport.txt") then
+    return "There is an error creating APLCAT txt file. Check Animal Transport Input."
+  end
     # create string for the CO2BalanceInput.txt file
     apex_string = "This is the input file showing other sources and sink of greenhouse gas emissions in beef cattle production" + "\n"
 		apex_string += "\n"
@@ -991,7 +995,11 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.i_socc.to_s + "\t" + "! " + t('aplcat.i_socc') + "\n"
     apex_string += "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "CO2BalanceInput.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "CO2BalanceInput.txt") then
+    return "There is an error creating APLCAT txt file. Check CO2 Balance Input."
+  end
+
     # create string for the ForageQualityInput.txt file
 
     #apex_string = "Forage Quality Input" + "\n"
@@ -1033,7 +1041,10 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.fir_lowest.to_s + "\t" + + "  " + aplcat.fir_highest.to_s + "\t"  + "\t" + t('aplcat.parameter8') + "\n"
     apex_string += "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "ForageQualityInput.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "ForageQualityInput.txt") then
+    return "There is an error creating APLCAT txt file. Check Forage Quality Input."
+  end
 
     # create string for the SimFileAPLCAT.txt file
     #apex_string = "Scenario File" + "\n"
@@ -1050,7 +1061,10 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.eyos.to_s + "\t" + "! " + t('aplcat.eyos') + "\n"
     apex_string += "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "SimFileAPLCAT.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "SimFileAPLCAT.txt") then
+    return "There is an error creating APLCAT txt file. Check Scenario Files."
+  end
 
     # create string for the InputSecondaryEmissions.txt file
     #apex_string = "Secondary Emissions Input" + "\n"
@@ -1150,7 +1164,10 @@ class ScenariosController < ApplicationController
 
     apex_string += "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt")
+    unless
+    msg = send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt") then
+    return "There is an error creating APLCAT txt file. Check Secondary Emissions Input."
+  end
 
     # create string for the SimulMethods.txt file
     #apex_string = "Simulation Methods" + "\n"
@@ -1165,7 +1182,10 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.byos.to_s + "\t" + "! " + t('aplcat.byos') + "\n"
     apex_string += aplcat.eyos.to_s + "\t" + "! " + t('aplcat.eyos') + "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "SimulMethods.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "SimulMethods.txt") then
+    return "There is an error creating APLCAT txt file. Check Simulation Methods."
+  end
 
     # create string for the SimulParms.txt file
     #apex_string = "Simulation Parameters" + "\n"
@@ -1248,7 +1268,10 @@ class ScenariosController < ApplicationController
     apex_string += "Parameter 20" + "\t" + "real" + "0 to 1" + "\n"
     apex_string += "\n"
 		#***** send file to server "
-		msg = send_file_to_APEX(apex_string, "SimulParms.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "SimulParms.txt") then
+    return "There is an error creating APLCAT txt file. Check Simulation Parameters."
+  end
 
     # create string for the WaterEstCowCalf.txt file
     #apex_string = "Water Estimation Parameters" + "\n"
@@ -1302,7 +1325,11 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.ape.to_s + "\t" + "! " + t('aplcat.ape') + "\n"
     apex_string += "\n"
     #***** send file to server "
-		msg = send_file_to_APEX(apex_string, "WaterEstCowCalf.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "WaterEstCowCalf.txt") then
+    return "There is an error creating APLCAT txt file. Check Water Estimation Parameters."
+  end
+
 
     apex_string = "!!  This is the run parameter input file for running the model Animal Production Life Cycle Analysis Tool (APLCAT)" + "\n"
     apex_string += "!!  Enter 0 for not running any particular module" + "\n" + "\n"
@@ -1312,7 +1339,11 @@ class ScenariosController < ApplicationController
     apex_string += aplcat.running_ghg.to_s + "\t" + "! " + t('aplcat.running_ghg') + "\n"
     apex_string += aplcat.running_transportation.to_s + "\t" + "! " + t('aplcat.running_transportation') + "\n"
     #***** send file to server "
-    msg = send_file_to_APEX(apex_string, "RunParmAPLCAT.txt")
+    unless
+      msg = send_file_to_APEX(apex_string, "RunParmAPLCAT.txt") then
+    return "There is an error creating APLCAT txt file. Check RunParm APLCAT."
+  end
+
     #***Saved for future references
     #apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
     #apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.parameter2') + "\n"
