@@ -1448,7 +1448,7 @@ class ScenariosController < ApplicationController
 		end
 		apex_string += "| " + t('graze.ejd') + "\n"
 		for i in 0..grazing.count-1
-			#apex_string += sprintf("%d", grazing[i].for_button).to_s + "\t" #No for_button anymore at the moment.
+			apex_string += sprintf("%d", grazing[i].for_button).to_s + "\t" #No for_button anymore at the moment.
 	 	end
 		apex_string += "| " + t('graze.dmi_code') + "\n"
 		for i in 0..grazing.count-1
@@ -1480,7 +1480,7 @@ class ScenariosController < ApplicationController
     end
     apex_string += "| " + t('graze.code_supp_html') + "\n"
     for i in 0..grazing.count-1
-      #apex_string += sprintf("%d", grazing[i].supplement_button).to_s + "\t" #No supplement_button at the moment.
+      apex_string += sprintf("%d", grazing[i].supplement_button).to_s + "\t" #No supplement_button at the moment.
     end
     apex_string += "| " + t('graze.dmi_code') + "\n"
     for i in 0..grazing.count-1
