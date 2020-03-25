@@ -1679,7 +1679,7 @@ class ScenariosController < ApplicationController
 
 	    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
 	    if msg.include?("Bull output file") then msg="OK" end
-		return msg
+		  return msg
   	end
 
   ################################  copy scenario selected  #################################
@@ -1856,17 +1856,17 @@ class ScenariosController < ApplicationController
 
           case operation.activity_id
             when 1   #planting
-              operation.type_id = opr[7]
-              operation.amount = opr[8]
+              operation.type_id = opr[7]  #planting code 
+              operation.amount = opr[8]  #pseeding 
             when 2   #fertilizer
-              operation.type_id = opr[7]
-              operation.subtype_id = opr[8]
-              operation.amount = opr[9]
-              operation.depth = opr[10]
-              operation.no3_n = opr[11]
-              operation.po4_p = opr[12]
+              operation.type_id = opr[7]  #fertilizer category (commercial - manure)
+              operation.subtype_id = opr[8]  #fertilizewr id
+              operation.amount = opr[9]  #amount pallied lbs/ac
+              operation.depth = opr[10]  #application depth 
+              operation.no3_n = opr[11]  #N %
+              operation.po4_p = opr[12]  #P % 
               operation.moisture = opr[13]
-              if operation.type_id != 1 then
+              if operation.type_id != 1 then  #for manure application
                 calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
                 operation.no3_n = params[:operation][:no3_n]
                 operation.po4_p = params[:operation][:po4_p]
@@ -1874,21 +1874,21 @@ class ScenariosController < ApplicationController
                 operation.org_p = params[:operation][:org_p]
               end
             when 3   #Tillage
-              operation.type_id = opr[7]
+              operation.type_id = opr[7]  #tillage code 
             when 4   #Harvest
             when 5   #Killing
             when 6   #irrigation
-              operation.type_id = opr[7]
-              operation.amount = opr[8]
-              operation.depth = opr[9]
+              operation.type_id = opr[7]  #irrigation code 
+              operation.amount = opr[8]  #volume  
+              operation.depth = opr[9]  #irrigation efficiency
             when 7   #Continues grazing
-              operation.type_id = opr[7]
+              operation.type_id = opr[7]  #animal code 
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
               operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
               operation.nh3 = opr[10]   #hours in stream
             when 9   #Rotational grazing
-              operation.type_id = opr[7]
+              operation.type_id = opr[7]  #animal code 
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
               operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
@@ -1897,7 +1897,7 @@ class ScenariosController < ApplicationController
               operation.nh4_n = opr[13]
             when 11  #burn
             when 12  #Lime
-              operation.amount = opr[7]
+              operation.amount = opr[7]  #application rate 
           end
           if operation.save
             #saves start grazing operation in SoilOperation table
@@ -1949,8 +1949,6 @@ class ScenariosController < ApplicationController
               end
             end
           end
-
-
         end. # end operations.each
         msg = "Scenario " + @scenario.name + " created succesfully"
       rescue => e
@@ -1999,23 +1997,103 @@ class ScenariosController < ApplicationController
               operation.day = opr.xpath("day").text
               operation.month_id = opr.xpath("month").text
               operation.year = opr.xpath("year").text
-              operation.type_id = opr.xpath("type_id").text
-              operation.amount = opr.xpath("amout").text
-              operation.depth = opr.xpath("depth").text
-              operation.no3_n = opr.xpath("no3_n").text
-              operation.po4_p = opr.xpath("po4_p").text
-              operation.org_n = opr.xpath("org_n").text
-              operation.org_p = opr.xpath("org_p").text
-              operation.nh3 = opr.xpath("nh3").text
-              operation.subtype_id = opr.xpath("subtype_id").text
-              operation.moisture = opr.xpath("moisture").text
-              operation.org_c = opr.xpath("org_c").text
-              operation.nh4_n = opr.xpath("nh4").text
               operation.rotation = opr.xpath("rotation").text
+              case operation.activity_id
+                when 1   #planting
+                  operation.type_id = opr.xpath("type_id").text
+                  operation.amount = opr.xpath("amout").text
+                when 2   #fertilizer
+                  operation.type_id = opr.xpath("type_id").text
+                  operation.subtype_id = opr.xpath("subtype_id").text
+                  operation.amount = opr.xpath("amout").text
+                  operation.depth = opr.xpath("depth").text
+                  operation.no3_n = opr.xpath("no3_n").text
+                  operation.po4_p = opr.xpath("po4_p").text
+                  operation.moisture = opr[13]
+                  if operation.type_id != 1 then
+                    calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
+                    operation.no3_n = params[:operation][:no3_n]
+                    operation.po4_p = params[:operation][:po4_p]
+                    operation.org_n = params[:operation][:org_n]
+                    operation.org_p = params[:operation][:org_p]
+                  end            
+                when 3   #Tillage
+                  operation.type_id = opr.xpath("type_id").text
+                when 4   #Harvest
+                when 5   #Killing
+                when 6   #irrigation
+                  operation.type_id = opr.xpath("type_id").text
+                  operation.amount = opr.xpath("amout").text
+                  operation.depth = opr.xpath("depth").text
+                when 7   #Continues grazing
+                  operation.type_id = opr.xpath("type_id").text
+                  operation.amount = opr.xpath("amount").text
+                  operation.subtype_id = (Date.new(opr.xpath("year_end").text.to_i,opr.xpath("month_end").text.to_i,opr.xpath("day_end").text.to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
+                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 
+                  operation.depth = opr.xpath("hours_field").text #hours in field
+                  operation.nh3 = opr.xpath("hours_stream").text   #hours in stream
+                when 9   #Rotational grazing
+                  operation.type_id = opr.xpath("type_id").text
+                  operation.amount = opr.xpath("amount").text
+                  operation.subtype_id = (Date.new(opr.xpath("year_end").text.to_i,opr.xpath("month_end").text.to_i,opr.xpath("day_end").text.to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
+                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 
+                  operation.depth = opr.xpath("hours_field").text #hours in field
+                  operation.nh3 = opr.xpath("hours_stream").text   #hours in stream
+                  operation.moisture = opr.xpath("days_per_padock").text   ## of consecutive days grazed in each paddock
+                  operation.nh4_n = opr.xpath("rest_time").text   #paddock rest time between grazing (days)
+                when 11  #burn
+                when 12  #Lime
+                  operation.amount = opr[7]
+              end   #end case
               if operation.save
-                #create soil operations
-                add_soil_operation(operation)
-                #create subareas
+                #saves start grazing operation in SoilOperation table
+                if operation.activity_id != 9 && operation.activity_id != 10 then
+                  msg = add_soil_operation(operation)
+                end
+                saved = true
+                #operations should be created in soils too. but not for rotational grazing
+                if msg.eql?("OK")
+                  soil_op_saved = true
+                else
+                  soil_op_saved = false
+                  raise ActiveRecord::Rollback
+                end
+                if operation.activity_id == 7 || operation.activity_id == 9 then
+                  operation_id = operation.id
+                  operation1 = Operation.new
+                  if operation.activity_id == 7 then
+                    operation1.activity_id = 8
+                    operation1.year = opr[12]
+                    operation1.month_id = opr[13]
+                    operation1.day = opr[14]
+                  else
+                    operation1.activity_id = 10
+                    operation1.year = opr[14]
+                    operation1.month_id = opr[15]
+                    operation1.day = opr[16]
+                  end           
+                  operation1.type_id = operation_id
+                  operation1.scenario_id = operation.scenario_id
+                  operation1.amount = 0
+                  operation1.depth = 0
+                  operation1.no3_n = 0
+                  operation1.po4_p = 0
+                  operation1.org_n = 0
+                  operation1.org_p = 0
+                  operation1.nh3 = 0
+                  operation1.subtype_id = 0
+                  operation1.rotation = operation.rotation
+                  operation1.save
+                  if operation1.activity_id == 8 then
+                    msg = add_soil_operation(operation1)
+                    if msg.eql?("OK")
+                      soil_op_saved = true
+                    else
+                      soil_op_saved = false
+                      raise ActiveRecord::Rollback
+                    end
+                  end
+                end
               end
               msg = "Scenario " + scenario.name + " created succesfully"
             end   # end node cicle
@@ -2025,7 +2103,7 @@ class ScenariosController < ApplicationController
           raise ActiveRecord::Rollback
         ensure
           next
-        end
+        end   #end begin/rescue/ensure
       end  # end transaction
     end  # end reading data elements.
     return "OK"

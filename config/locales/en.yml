@@ -1580,8 +1580,8 @@ en:
     yes: 'Yes'
     no: 'No'
     total: 'Total number of feedings in a year'
-    code_for_html: What the animal eat; Forage ID from <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>
-    code_supp_html: 'What the animal eat; Suplement/concentrate ID from <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>'
+    code_for_html: What the animal eat; Forage ID from
+    code_supp_html: What the animal eat; Suplement/concentrate ID from
     sjd: 'Starting julian day for the feeding period'
     ejd: 'Ending julian day for the feeding period'
     dmi_code: 'Basis of Dry Matter Intake (DMI)'
