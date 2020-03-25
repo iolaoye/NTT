@@ -926,28 +926,28 @@ class ScenariosController < ApplicationController
       apex_string += at.purpose.to_s  + "    " + "\n"
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
       anim_string += at.categories_trans.to_s + "\t" + "! " + t('aplcat.categories_trans') + "\n"
-      anim_string += at.categories_slaug.to_s + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
-      anim_string += at.avg_marweight.to_s + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
-      anim_string += at.num_animal.to_s + "\t" + "! " + t('aplcat.num_animal') + "\n"
+      anim_string += sprintf("%1.f", at.categories_slaug) + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
+      anim_string += sprintf("%d", at.avg_marweight) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+      anim_string += sprintf("%d", at.num_animal) + "\t" + "! " + t('aplcat.num_animal') + "\n"
       categories = Category.where(:animal_transport_id => at.id)
       categories.each do |cat|
-        anim_string += cat.weight.to_s + " " + "\t"
+        anim_string += sprintf("%d", cat.weight) + " " + "\t"
       end
       anim_string += "\n"
       categories.each do |cat|
-        anim_string += cat.animals.to_s + " " + "\t"
+        anim_string += sprintf("%d", cat.animals) + " " + "\t"
       end
       anim_string += "\n"
-      anim_string += at.mortality_rate.to_s + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
-      anim_string += at.distance.to_s + "\t" + "! " + t('aplcat.distance') + "\n"
+      anim_string += sprintf("%.2f", at.mortality_rate) + "\t" + "! " + t('aplcat.mortality_rate') + "\n"
+      anim_string += sprintf("%.2f", at.distance) + "\t" + "! " + t('aplcat.distance') + "\n"
       anim_string += Trailer.find(at.trailer_id).code + "\t" + "! " + t('aplcat.trailer') + "\n"
       anim_string += Truck.find(at.truck_id).code + "\t" + "! " + t('aplcat.trucks') + "\n"
       anim_string += Fuel.find(at.fuel_id).code + "\t" + "! " + t('aplcat.fuel_type') + "\n"
       anim_string += at.same_vehicle == true ? "1" : "0" 
       anim_string += "\t" + "! " + t('aplcat.same_vehicle') + "\n"
       anim_string += at.loading.to_s + "\t" + "! " + t('aplcat.loading') + "\n"
-      anim_string += at.carcass.to_s + "\t" + "! " + t('aplcat.carcass') + "\n"
-      anim_string += at.boneless_beef.to_s + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
+      anim_string += sprintf("%.1f", at.carcass) + "\t" + "! " + t('aplcat.carcass') + "\n"
+      anim_string += sprintf("%.1f", at.boneless_beef) + "\t" + "! " + t('aplcat.boneless_beef') + "\n"
       #***** send each trip file to server
       msg = send_file_to_APEX(anim_string, file_name)
       i += 1
