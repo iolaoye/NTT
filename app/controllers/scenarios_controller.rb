@@ -929,7 +929,7 @@ class ScenariosController < ApplicationController
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
       anim_string += at.categories_trans.to_s + "\t" + "! " + t('aplcat.categories_trans') + "\n"
       anim_string += at.categories_slaug.to_s + "\t" + "! " + t('aplcat.categories_slaug') + "\n"
-      anim_string += at.avg_marweight.to_s + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
+      anim_string += sprintf("%d",at.avg_marweight) + "\t" + "! " + t('aplcat.avg_marweight') + "\n"
       anim_string += at.num_animal.to_s + "\t" + "! " + t('aplcat.num_animal') + "\n"
       categories = Category.where(:animal_transport_id => at.id)
       categories.each do |cat|
