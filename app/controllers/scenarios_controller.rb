@@ -924,7 +924,7 @@ class ScenariosController < ApplicationController
       file_name = "Trip" + i.to_s + "_cc.txt"
       apex_string += file_name + "    "
       apex_string += at.cattlepro == true ? "1    " : "0    "
-      apex_string += at.purpose == 0 ? "Buying_animals " : "Selling_animal"
+      apex_string += at.purpose == 0 ? "Buying_animals" : "Selling_animal"
       apex_string += "    " + at.purpose.to_s  + "\t" + "!Parm " + (i+1).to_s + " (a,b,c,d,e,and f)" + "\n"
       anim_string = at.trans.to_s + "\t" + "! " + t("aplcat.trans_feeder") + "\n"
       anim_string += at.categories_trans.to_s + "\t" + "! " + t('aplcat.categories_trans') + "\n"
