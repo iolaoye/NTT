@@ -96,10 +96,10 @@ class ApexParametersController < ApplicationController
   end
 
   def reset
-  parameters = Parameter.where(:state_id => @project.location.state_id)
-	if parameters == nil or parameters.blank? then
-		parameters = Parameter.where(:state_id => 99)
-	end
+    parameters = Parameter.where(:state_id => @project.location.state_id)
+  	if parameters == nil or parameters.blank? then
+  		parameters = Parameter.where(:state_id => 99)
+  	end
 
     @apex_parameters = ApexParameter.where(:project_id => @project.id)
     @apex_parameters.delete_all()
