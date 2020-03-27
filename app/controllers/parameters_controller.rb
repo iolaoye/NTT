@@ -2,8 +2,10 @@ class ParametersController < ApplicationController
   # GET /parameters
   # GET /parameters.json
   def index
-    @parameters = Parameter.all
-
+    @parameters = Parameter.select("default_value").where(:state_id => params[:state_id])
+    if @parameters.blank? || @parameters == nil then
+      @parameters = Parameter.select("default_value").where(:state_id => 99)
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @parameters }

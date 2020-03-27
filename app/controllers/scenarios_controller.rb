@@ -913,8 +913,8 @@ class ScenariosController < ApplicationController
 		#***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "CowCalfProductionData.txt") then
-    return "There is an error creating APLCAT txt file. Check Animal Parameters."
-  end
+      return "There is an error creating APLCAT txt file. Check Animal Parameters."
+    end
     # create string for the InputAnimalTransport.txt file
     i = 1
     apex_string = animal_transport.count.to_s +  "\n"
@@ -957,8 +957,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "InputAnimalTransport.txt") then
-    return "There is an error creating APLCAT txt file. Check Animal Transport Input."
-  end
+      return "There is an error creating APLCAT txt file. Check Animal Transport Input."
+      end
     # create string for the CO2BalanceInput.txt file
     apex_string = "This is the input file showing other sources and sink of greenhouse gas emissions in beef cattle production" + "\n"
 		apex_string += "\n"
@@ -997,11 +997,10 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "CO2BalanceInput.txt") then
-    return "There is an error creating APLCAT txt file. Check CO2 Balance Input."
-  end
+      return "There is an error creating APLCAT txt file. Check CO2 Balance Input."
+    end
 
     # create string for the ForageQualityInput.txt file
-
     #apex_string = "Forage Quality Input" + "\n"
     #apex_string += "\n"
     #apex_string = "Input file for estimating Forage Quantity Input" + "\n"
@@ -1043,8 +1042,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "ForageQualityInput.txt") then
-    return "There is an error creating APLCAT txt file. Check Forage Quality Input."
-  end
+      return "There is an error creating APLCAT txt file. Check Forage Quality Input."
+    end
 
     # create string for the SimFileAPLCAT.txt file
     #apex_string = "Scenario File" + "\n"
@@ -1063,8 +1062,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "SimFileAPLCAT.txt") then
-    return "There is an error creating APLCAT txt file. Check Scenario Files."
-  end
+      return "There is an error creating APLCAT txt file. Check Scenario Files."
+    end
 
     # create string for the InputSecondaryEmissions.txt file
     #apex_string = "Secondary Emissions Input" + "\n"
@@ -1204,9 +1203,9 @@ class ScenariosController < ApplicationController
     apex_string += "\n"
     #***** send file to server "
     unless
-    msg = send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt") then
-    return "There is an error creating APLCAT txt file. Check Secondary Emissions Input."
-  end
+      msg = send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt") then
+      return "There is an error creating APLCAT txt file. Check Secondary Emissions Input."
+    end
 
     # create string for the SimulMethods.txt file
     #apex_string = "Simulation Methods" + "\n"
@@ -1223,8 +1222,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "SimulMethods.txt") then
-    return "There is an error creating APLCAT txt file. Check Simulation Methods."
-  end
+      return "There is an error creating APLCAT txt file. Check Simulation Methods."
+    end
 
     # create string for the SimulParms.txt file
     #apex_string = "Simulation Parameters" + "\n"
@@ -1309,8 +1308,8 @@ class ScenariosController < ApplicationController
 		#***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "SimulParms.txt") then
-    return "There is an error creating APLCAT txt file. Check Simulation Parameters."
-  end
+      return "There is an error creating APLCAT txt file. Check Simulation Parameters."
+    end
 
     # create string for the WaterEstCowCalf.txt file
     #apex_string = "Water Estimation Parameters" + "\n"
@@ -1366,9 +1365,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "WaterEstCowCalf.txt") then
-    return "There is an error creating APLCAT txt file. Check Water Estimation Parameters."
-  end
-
+      return "There is an error creating APLCAT txt file. Check Water Estimation Parameters."
+    end
 
     apex_string = "!!  This is the run parameter input file for running the model Animal Production Life Cycle Analysis Tool (APLCAT)" + "\n"
     apex_string += "!!  Enter 0 for not running any particular module" + "\n" + "\n"
@@ -1380,8 +1378,8 @@ class ScenariosController < ApplicationController
     #***** send file to server "
     unless
       msg = send_file_to_APEX(apex_string, "RunParmAPLCAT.txt") then
-    return "There is an error creating APLCAT txt file. Check RunParm APLCAT."
-  end
+      return "There is an error creating APLCAT txt file. Check RunParm APLCAT."
+    end
 
     #***Saved for future references
     #apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
@@ -1511,76 +1509,76 @@ class ScenariosController < ApplicationController
 		apex_string += "Data on animalfeed (Supplement/Concentrate)" + "\n"
 		apex_string += "\n"
 
-=begin
-    for= j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].code) + "\t"
-		end
-		apex_string += "| " + t('supplement.code') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].starting_julian_day) + "\t"
-		end
-		apex_string += "| " + t('graze.sjd') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].ending_julian_day) + "\t"
-		end
-		apex_string += "| " + t('graze.ejd') + "\n"
-		#for j in 0..supplement.count-1
-			#apex_string += sprintf("%d", supplement[j].for_button) + "\t"
-		#end
-    #	apex_string += "| " + t('graze.dmi_code') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_cows') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].for_dmi_bulls) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_bulls') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].for_dmi_heifers) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_heifers') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].for_dmi_calves) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_calves') + "\n"
-    for j in 0..supplement.count-1
-      apex_string += sprintf("%.2f", supplement[j].for_dmi_rheifers) + "\t"
-    end
-    apex_string += "| " + t('graze.dmi_rheifers') + "\n"
-		for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].green_water_footprint) + "\t"
-		end
-		apex_string += "| " + t('graze.gwff') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
-		end
-		apex_string += "| " + t('graze.code_supp') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_cows') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_bulls') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_heifers') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_calves') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%.2f", supplement[j].dmi_rheifers) + "\t"
-		end
-		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
-    for j in 0..supplement.count-1
-			apex_string += sprintf("%d", supplement[j].green_water_footprint_supplement) + "\t"
-		end
-		apex_string += "| " + t('graze.gwfs') + "\n"
-=end
+    <<-DOC
+        for= j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].code) + "\t"
+    		end
+    		apex_string += "| " + t('supplement.code') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].starting_julian_day) + "\t"
+    		end
+    		apex_string += "| " + t('graze.sjd') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].ending_julian_day) + "\t"
+    		end
+    		apex_string += "| " + t('graze.ejd') + "\n"
+    		#for j in 0..supplement.count-1
+    			#apex_string += sprintf("%d", supplement[j].for_button) + "\t"
+    		#end
+        #	apex_string += "| " + t('graze.dmi_code') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].for_dmi_cows) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_cows') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].for_dmi_bulls) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].for_dmi_heifers) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].for_dmi_calves) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_calves') + "\n"
+        for j in 0..supplement.count-1
+          apex_string += sprintf("%.2f", supplement[j].for_dmi_rheifers) + "\t"
+        end
+        apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+    		for j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].green_water_footprint) + "\t"
+    		end
+    		apex_string += "| " + t('graze.gwff') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].dmi_code) + "\t"
+    		end
+    		apex_string += "| " + t('graze.code_supp') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].dmi_cows) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_cows') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].dmi_bulls) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_bulls') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].dmi_heifers) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_heifers') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].dmi_calves) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_calves') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%.2f", supplement[j].dmi_rheifers) + "\t"
+    		end
+    		apex_string += "| " + t('graze.dmi_rheifers') + "\n"
+        for j in 0..supplement.count-1
+    			apex_string += sprintf("%d", supplement[j].green_water_footprint_supplement) + "\t"
+    		end
+    		apex_string += "| " + t('graze.gwfs') + "\n"
+    DOC
 
 		apex_string += "\n"
 		apex_string += "IMPORTANT NOTE: Details of parameters defined in the above 11 lines:" + "\n"
