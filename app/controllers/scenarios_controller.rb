@@ -1031,7 +1031,7 @@ class ScenariosController < ApplicationController
     #apex_string += "\n"
     #apex_string += aplcat.adf_lowest.to_s + "\t" + "! " + t('aplcat.lowest') + "\n"
     #apex_string += aplcat.adf_highest.to_s + "\t" + "! " + t('aplcat.highest') + "\n"
-    apex_string += aplcat.adf_lowest.to_s + "\t" + + "  " + aplcat.adf_highest.to_s + "\t"  + "\t" + t('aplcat.parameter7') + "\n"
+    apex_string += aplcat.adf_higest.to_s + "\t" + + "  " + aplcat.adf_lowhest.to_s + "\t"  + "\t" + t('aplcat.parameter7') + "\n"
     #apex_string += "\n"
     #apex_string += "Feed intake rates (% of body weight)" + "\n"
     #apex_string += "\n"
