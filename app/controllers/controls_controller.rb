@@ -2,7 +2,10 @@ class ControlsController < ApplicationController
   # GET /controls
   # GET /controls.json
   def index
-    @controls = Control.all
+    @controls = Control.select("default_value").where(:state_id => params[:state_id])
+    if @controls.blank? || @controls == nil then
+      @controls = Control.select("default_value").where(:state_id => 99)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
