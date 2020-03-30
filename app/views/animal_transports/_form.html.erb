@@ -37,8 +37,8 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.purpose') %><br>
-            <%= f.radio_button :purpose, "1", :checked => "checked"%> <%= t('aplcat.buying') %><br>
-            <%= f.radio_button :purpose, "2"%> <%= t('aplcat.selling') %><br>
+            <%= f.radio_button :purpose, "0", :checked => "checked"%> <%= t('aplcat.buying') %><br>
+            <%= f.radio_button :purpose, "1"%> <%= t('aplcat.selling') %><br>
           </div>
         </td>
       </tr>
@@ -86,16 +86,16 @@
               <tr><td>Average market weight of each animal (lb)</td></tr>
               <tr>
                 <td class="indent"> 
-                  <%=number_field_tag "weight1", @categories.count > 0 ? @categories[0].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 0 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight2", @categories.count > 1 ? @categories[1].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 1 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight3", @categories.count > 2 ? @categories[2].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 2 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight4", @categories.count > 3 ? @categories[3].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 3 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight5", @categories.count > 4 ? @categories[4].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 4 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight6", @categories.count > 5 ? @categories[5].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 5 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight7", @categories.count > 6 ? @categories[6].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 6 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight8", @categories.count > 7 ? @categories[7].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 7 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight9", @categories.count > 8 ? @categories[8].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 8 ? "display:inline" : "display:none"%>
-                  <%=number_field_tag "weight10", @categories.count > 9 ? @categories[9].weight : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 9 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight1", @categories.count > 0 ? number_with_precision(@categories[0].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 0 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight2", @categories.count > 1 ? number_with_precision(@categories[1].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 1 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight3", @categories.count > 2 ? number_with_precision(@categories[2].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 2 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight4", @categories.count > 3 ? number_with_precision(@categories[3].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 3 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight5", @categories.count > 4 ? number_with_precision(@categories[4].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 4 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight6", @categories.count > 5 ? number_with_precision(@categories[5].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 5 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight7", @categories.count > 6 ? number_with_precision(@categories[6].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 6 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight8", @categories.count > 7 ? number_with_precision(@categories[7].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 7 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight9", @categories.count > 8 ? number_with_precision(@categories[8].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 8 ? "display:inline" : "display:none"%>
+                  <%=number_field_tag "weight10", @categories.count > 9 ? number_with_precision(@categories[9].weight, precision: 0) : 0, class: 'gvSmallStyleNumber', :style=>@categories.count > 9 ? "display:inline" : "display:none"%>
                 </td>
               </tr>
               <tr><td>Number of animals in each category</td></tr>
@@ -137,7 +137,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.trailers') %>           
-            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
+            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.fullname, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
           </div>
         </td>
       </tr>
