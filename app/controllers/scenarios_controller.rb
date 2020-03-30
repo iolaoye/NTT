@@ -1893,15 +1893,15 @@ class ScenariosController < ApplicationController
 
           case operation.activity_id
             when 1   #planting
-              operation.type_id = opr[7]  #planting code 
-              operation.amount = opr[8]  #pseeding 
+              operation.type_id = opr[7]  #planting code
+              operation.amount = opr[8]  #pseeding
             when 2   #fertilizer
               operation.type_id = opr[7]  #fertilizer category (commercial - manure)
               operation.subtype_id = opr[8]  #fertilizewr id
               operation.amount = opr[9]  #amount pallied lbs/ac
-              operation.depth = opr[10]  #application depth 
+              operation.depth = opr[10]  #application depth
               operation.no3_n = opr[11]  #N %
-              operation.po4_p = opr[12]  #P % 
+              operation.po4_p = opr[12]  #P %
               operation.moisture = opr[13]
               if operation.type_id != 1 then  #for manure application
                 calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
@@ -1911,21 +1911,21 @@ class ScenariosController < ApplicationController
                 operation.org_p = params[:operation][:org_p]
               end
             when 3   #Tillage
-              operation.type_id = opr[7]  #tillage code 
+              operation.type_id = opr[7]  #tillage code
             when 4   #Harvest
             when 5   #Killing
             when 6   #irrigation
-              operation.type_id = opr[7]  #irrigation code 
-              operation.amount = opr[8]  #volume  
+              operation.type_id = opr[7]  #irrigation code
+              operation.amount = opr[8]  #volume
               operation.depth = opr[9]  #irrigation efficiency
             when 7   #Continues grazing
-              operation.type_id = opr[7]  #animal code 
+              operation.type_id = opr[7]  #animal code
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
               operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
               operation.nh3 = opr[10]   #hours in stream
             when 9   #Rotational grazing
-              operation.type_id = opr[7]  #animal code 
+              operation.type_id = opr[7]  #animal code
               operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
               operation.org_c = opr[9]  #access to strea? yes=1
               operation.depth = opr[11] #hours in field
@@ -1934,7 +1934,7 @@ class ScenariosController < ApplicationController
               operation.nh4_n = opr[13]
             when 11  #burn
             when 12  #Lime
-              operation.amount = opr[7]  #application rate 
+              operation.amount = opr[7]  #application rate
           end
           if operation.save
             #saves start grazing operation in SoilOperation table
@@ -2053,7 +2053,7 @@ class ScenariosController < ApplicationController
                     operation.po4_p = params[:operation][:po4_p]
                     operation.org_n = params[:operation][:org_n]
                     operation.org_p = params[:operation][:org_p]
-                  end            
+                  end
                 when 3   #Tillage
                   operation.type_id = opr.xpath("type_id").text
                 when 4   #Harvest
@@ -2066,14 +2066,14 @@ class ScenariosController < ApplicationController
                   operation.type_id = opr.xpath("type_id").text
                   operation.amount = opr.xpath("amount").text
                   operation.subtype_id = (Date.new(opr.xpath("year_end").text.to_i,opr.xpath("month_end").text.to_i,opr.xpath("day_end").text.to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
-                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 
+                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1
                   operation.depth = opr.xpath("hours_field").text #hours in field
                   operation.nh3 = opr.xpath("hours_stream").text   #hours in stream
                 when 9   #Rotational grazing
                   operation.type_id = opr.xpath("type_id").text
                   operation.amount = opr.xpath("amount").text
                   operation.subtype_id = (Date.new(opr.xpath("year_end").text.to_i,opr.xpath("month_end").text.to_i,opr.xpath("day_end").text.to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
-                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 
+                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1
                   operation.depth = opr.xpath("hours_field").text #hours in field
                   operation.nh3 = opr.xpath("hours_stream").text   #hours in stream
                   operation.moisture = opr.xpath("days_per_padock").text   ## of consecutive days grazed in each paddock
@@ -2108,7 +2108,7 @@ class ScenariosController < ApplicationController
                     operation1.year = opr[14]
                     operation1.month_id = opr[15]
                     operation1.day = opr[16]
-                  end           
+                  end
                   operation1.type_id = operation_id
                   operation1.scenario_id = operation.scenario_id
                   operation1.amount = 0
