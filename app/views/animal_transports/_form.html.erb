@@ -137,7 +137,7 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.trailers') %>           
-            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
+            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.fullname, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
           </div>
         </td>
       </tr>
