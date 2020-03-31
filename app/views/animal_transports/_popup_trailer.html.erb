@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<span class="btn btn-primary" onclick="this.parentElement.style.display='none';">close</span>
+<h1>Trailers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%=t('general.select')%></th>
+      <th><%=t('apex.code')%></th>
+      <th><%=t('pdf.description')%></th>     
+    </tr>
+  </thead>
+
+  <tbody>
+    <% Trailer.all.each do |trailer| %>
+      <tr>
+        <td><input type="text" id="trailer" name=<%=trailer.id.to_s%>  value=<%=t('general.select')%> class='btn btn-primary' readonly></td>
+        <td ><%= trailer.code %></td>
+        <td><%= trailer.description %></td>
+    <% end %>
+  </tbody>
+</table>%

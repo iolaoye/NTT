@@ -136,8 +136,20 @@
       <tr>
         <td class="indent" colspan="2">
           <div class="field">
-            <%= t('aplcat.trailers') %>           
-            <%= f.select :trailer_id, Trailer.all.collect {|u| [u.fullname, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
+            <%= t('aplcat.trailers') %>  
+            <strong><a href="#" id="trigger_trailer" style="color:blue;"><%=t('general.select')%></a></strong>
+            <% trailer = Trailer.find(@animal_transport.trailer_id) %>
+            <table>
+              <tr>
+                <th><%=t('apex.code')%></th>
+                <th><%=t('pdf.description')%></th>
+              <tr>
+                <td style="display:none"><%= f.number_field :trailer_id, :readonly => true %>   </td>
+                <td><%= text_field_tag :code_trailer, trailer.code, :readonly => true%></td>
+                <td><%= text_field_tag :description_trailer, trailer.description, :readonly => true %></td>
+              </tr>
+            </table>                 
+            <%#= f.select :trailer_id, Trailer.all.collect {|u| [u.fullname, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.trailer_id%>
           </div>
         </td>
       </tr>
@@ -145,7 +157,20 @@
         <td class="indent" colspan="2">
           <div class="field">
             <%= t('aplcat.trucks') %>
-            <%= f.select :truck_id, Truck.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.truck_id%>
+            <strong><a href="#" id="trigger_truck" style="color:blue;"><%=t('general.select')%></a></strong>
+            <% truck = Truck.find(@animal_transport.truck_id) %>
+            <table>
+              <tr>
+                <th><%=t('apex.code')%></th>
+                <th><%=t('pdf.description')%></th>
+              <tr>
+                <td style="display:none"><%= f.number_field :truck_id, :readonly => true %>   </td>
+                <td><%= text_field_tag :code_truck, truck.code, :readonly => true%></td>
+                <td><%= text_field_tag :description_truck, truck.description, :readonly => true %></td>
+              </tr>
+            </table>                 
+
+            <%#= f.select :truck_id, Truck.all.collect {|u| [u.description, u.id]}, :prompt => t('general.select') + " " + t('general.one'), :selected => @animal_transport.truck_id%>
           </div>
         </td>
       </tr>
@@ -198,4 +223,31 @@
     <%= f.submit:class => "btn btn-primary" %>
     <%= link_to t('general.back'), project_field_scenario_animal_transports_path(@project, @field, @scenario), :class => "btn btn-primary"  %>
   </div>
+  <div id="pop-up_truck" ><%= render 'popup_truck' %></div>
+  <div id="pop-up_trailer" ><%= render 'popup_trailer' %></div>
 <% end %>
+
+<script>
+  $(function() {
+    var moveLeft = 200;
+    var moveDown = -220;
+    $('a#trigger_truck').hover(function(e) {
+      $('div#pop-up_truck').show();
+      }, function() {     
+    });
+
+    $('a#trigger_trailer').hover(function(e) {
+      $('div#pop-up_trailer').show();
+      }, function() {      
+    });
+
+    $('a#trigger_truck').mousemove(function(e) {
+      $("div#pop-up_truck").css('top', e.pageY + moveDown).css('left', moveLeft);
+    });
+
+    $('a#trigger_trailer').mousemove(function(e) {
+      $("div#pop-up_trailer").css('top', e.pageY + moveDown).css('left', moveLeft);
+    });
+  });
+</script>
+
