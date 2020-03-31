@@ -8,6 +8,10 @@ class TrailersController < ApplicationController
 
   # GET /trailers/1
   def show
+    trailer = Trailer.find(params[:id])
+    respond_to do |format|
+      format.json { render json: trailer }
+    end
   end
 
   # GET /trailers/new
