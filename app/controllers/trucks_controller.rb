@@ -8,6 +8,10 @@ class TrucksController < ApplicationController
 
   # GET /trucks/1
   def show
+    truck = Truck.find(params[:id])
+    respond_to do |format|
+      format.json { render json: truck }
+    end
   end
 
   # GET /trucks/new

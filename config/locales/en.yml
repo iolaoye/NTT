@@ -426,7 +426,7 @@ en:
     format: Format
     remove: Remove
     management: Management
-    yes: Yes
+    yes: "Yes"
     home: Home
     switch: Switch
     optional: optional
@@ -446,6 +446,7 @@ en:
     presentations: Presentations
     related_tools: Related Tools
     updates: "UPDATES"
+    close: Close
   welcome_note:
     header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
