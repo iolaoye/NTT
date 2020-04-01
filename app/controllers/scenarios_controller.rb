@@ -2037,8 +2037,8 @@ class ScenariosController < ApplicationController
               operation.rotation = opr.xpath("rotation").text
               case operation.activity_id
                 when 1   #planting
-                  operation.type_id = opr.xpath("type_id").text. #planting method
-                  operation.amount = opr.xpath("amount").text. #seeding/ft2
+                  operation.type_id = opr.xpath("type_id").text #planting method
+                  operation.amount = opr.xpath("amount").text #seeding/ft2
                 when 2   #fertilizer
                   operation.type_id = opr.xpath("type_id").text.  #fertilizer category (commercial/manure)
                   operation.subtype_id = opr.xpath("subtype_id").text  #fertilizer code
