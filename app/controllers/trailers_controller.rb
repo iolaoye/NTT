@@ -57,6 +57,6 @@ class TrailersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def trailer_params
-      params.require(:trailer).permit(:code, :description)
+      params.require(:trailer).permit(:code, :description, :length, :width, :payload, :suggestion, :height)
     end
 end
