@@ -1398,6 +1398,12 @@ en:
       running_complete_stocker: Running the complete stocker program.
       running_ghg: Running GHG emission module for the Cow-Calf system.
       running_transportation: Running transportation module for the Cow-Calf system.
+      trailer: Trailer
+      height: Height
+      length: Length (ft)
+      width: Width (in)
+      payload: Payload (lb)
+      suggestion: Vehicle
   aplcat_result:
       aplcat_results: APLCAT Results
       aws: Animal weights

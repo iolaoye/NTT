@@ -6,8 +6,12 @@
   <thead>
     <tr>
       <th><%=t('general.select')%></th>
-      <th><%=t('apex.code')%></th>
-      <th><%=t('pdf.description')%></th>     
+      <th><center><%=t('apex.code')%></center></th><th></th>
+      <th><center><%=t('aplcat.trailer')%></center></th>
+      <th><center><%=t('aplcat.length')%></center></th><th style="width: 15px;"></th>
+      <th><center><%=t('aplcat.width')%></center></th><th style="width: 15px;"></th>
+      <th><center><%=t('aplcat.payload')%></center></th><th style="width: 15px;"></th>
+      <th><center><%=t('aplcat.suggestion')%></center></th><th style="width: 15px;"></th>
     </tr>
   </thead>
 
@@ -15,8 +19,12 @@
     <% Trailer.all.each do |trailer| %>
       <tr>
         <td><input type="text" id="trailer" name=<%=trailer.id.to_s%>  value=<%=t('general.select')%> class='btn btn-primary' readonly></td>
-        <td ><%= trailer.code %></td>
-        <td><%= trailer.description %></td>
+        <td><center><%= trailer.code %></center></td><td></td>
+        <td><center><%= trailer.description %></center></td>
+        <td><center><%= trailer.length %></center></td><td></td>
+        <td><center><%= trailer.width %></center></td><td></td>
+        <td><center><%= trailer.payload %></center></td><td></td>
+        <td><center><%= trailer.suggestion %></center></td><td></td>
     <% end %>
   </tbody>
 </table>%
