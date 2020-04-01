@@ -1,30 +1,31 @@
 <p id="notice"><%= notice %></p>
 <span class="btn btn-primary" onclick="this.parentElement.style.display='none';">close</span>
-<h1>Trailers</h1>
+<h1><%=t('aplcat.trailer')%></h1>
 
-<table>
+<table class="table table-sm">
   <thead>
     <tr>
       <th><%=t('general.select')%></th>
-      <th><center><%=t('apex.code')%></center></th><th></th>
-      <th><center><%=t('aplcat.trailer')%></center></th>
-      <th><center><%=t('aplcat.length')%></center></th><th style="width: 15px;"></th>
-      <th><center><%=t('aplcat.width')%></center></th><th style="width: 15px;"></th>
-      <th><center><%=t('aplcat.payload')%></center></th><th style="width: 15px;"></th>
-      <th><center><%=t('aplcat.suggestion')%></center></th><th style="width: 15px;"></th>
+      <th><%=t('apex.code')%></th>
+      <th><%=t('aplcat.trailer')%></th>
+      <th><%=t('aplcat.length')%></th>
+      <th><%=t('aplcat.width')%></th>
+      <th><%=t('aplcat.payload')%></th>
+      <th><%=t('aplcat.suggestion')%></th>
     </tr>
   </thead>
 
   <tbody>
-    <% Trailer.all.each do |trailer| %>
+    <% Trailer.all.order("code").each do |trailer| %>
       <tr>
         <td><input type="text" id="trailer" name=<%=trailer.id.to_s%>  value=<%=t('general.select')%> class='btn btn-primary' readonly></td>
-        <td><center><%= trailer.code %></center></td><td></td>
-        <td><center><%= trailer.description %></center></td>
-        <td><center><%= trailer.length %></center></td><td></td>
-        <td><center><%= trailer.width %></center></td><td></td>
-        <td><center><%= trailer.payload %></center></td><td></td>
-        <td><center><%= trailer.suggestion %></center></td><td></td>
+        <td><%= trailer.code %></td>
+        <td><%= trailer.description %></td>
+        <td><%= trailer.length %></td>
+        <td><%= trailer.width %></td>
+        <td><%= trailer.payload %></td>
+        <td><%= trailer.suggestion %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>%
