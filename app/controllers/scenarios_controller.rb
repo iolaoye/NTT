@@ -1894,7 +1894,7 @@ class ScenariosController < ApplicationController
           case operation.activity_id
             when 1   #planting
               operation.type_id = opr[7]  #planting code 
-              operation.amount = opr[8]  #pseeding 
+              operation.amount = opr[8]  #seeding/ft2
             when 2   #fertilizer
               operation.type_id = opr[7]  #fertilizer category (commercial - manure)
               operation.subtype_id = opr[8]  #fertilizewr id
@@ -2037,17 +2037,17 @@ class ScenariosController < ApplicationController
               operation.rotation = opr.xpath("rotation").text
               case operation.activity_id
                 when 1   #planting
-                  operation.type_id = opr.xpath("type_id").text
-                  operation.amount = opr.xpath("amout").text
+                  operation.type_id = opr.xpath("type_id").text. #planting method
+                  operation.amount = opr.xpath("amount").text. #seeding/ft2
                 when 2   #fertilizer
-                  operation.type_id = opr.xpath("type_id").text
-                  operation.subtype_id = opr.xpath("subtype_id").text
-                  operation.amount = opr.xpath("amout").text
-                  operation.depth = opr.xpath("depth").text
-                  operation.no3_n = opr.xpath("no3_n").text
-                  operation.po4_p = opr.xpath("po4_p").text
-                  operation.moisture = opr[13]
-                  if operation.type_id != 1 then
+                  operation.type_id = opr.xpath("type_id").text.  #fertilizer category (commercial/manure)
+                  operation.subtype_id = opr.xpath("subtype_id").text  #fertilizer code
+                  operation.amount = opr.xpath("amount").text #lbs/ac
+                  operation.depth = opr.xpath("depth").text 
+                  operation.no3_n = opr.xpath("no3_n").text #elemtn N %
+                  operation.po4_p = opr.xpath("po4_p").text #elemt p %
+                  if operation.moisture != nil then operation.moisture = opr[13]
+                  if operation.type_id != 1 then #manure application (solid or liquid)
                     calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
                     operation.no3_n = params[:operation][:no3_n]
                     operation.po4_p = params[:operation][:po4_p]
@@ -2060,13 +2060,13 @@ class ScenariosController < ApplicationController
                 when 5   #Killing
                 when 6   #irrigation
                   operation.type_id = opr.xpath("type_id").text
-                  operation.amount = opr.xpath("amout").text
-                  operation.depth = opr.xpath("depth").text
+                  operation.amount = opr.xpath("amount").text #volume in.
+                  operation.depth = opr.xpath("depth").text #efficiency
                 when 7   #Continues grazing
-                  operation.type_id = opr.xpath("type_id").text
-                  operation.amount = opr.xpath("amount").text
+                  operation.type_id = opr.xpath("type_id").text #animal type
+                  operation.amount = opr.xpath("amount").text #number of animals
                   operation.subtype_id = (Date.new(opr.xpath("year_end").text.to_i,opr.xpath("month_end").text.to_i,opr.xpath("day_end").text.to_i) - Date.new(operation.year,operation.month_id,operation.day)).to_i + 1
-                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 
+                  operation.org_c = opr.xpath("access_stream").text  #access to strea? yes=1 no=gallego
                   operation.depth = opr.xpath("hours_field").text #hours in field
                   operation.nh3 = opr.xpath("hours_stream").text   #hours in stream
                 when 9   #Rotational grazing
