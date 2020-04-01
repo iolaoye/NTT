@@ -2046,7 +2046,7 @@ class ScenariosController < ApplicationController
                   operation.depth = opr.xpath("depth").text 
                   operation.no3_n = opr.xpath("no3_n").text #elemtn N %
                   operation.po4_p = opr.xpath("po4_p").text #elemt p %
-                  if operation.moisture != nil then operation.moisture = opr[13]
+                  if operation.moisture != nil then operation.moisture = opr[13] end
                   if operation.type_id != 1 then #manure application (solid or liquid)
                     calculate_nutrients(operation.no3_n, operation.moisture, operation.po4_p, operation.activity_id, operation.type_id, operation.subtype_id)
                     operation.no3_n = params[:operation][:no3_n]
