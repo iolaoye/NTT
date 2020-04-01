@@ -16,7 +16,7 @@
   </thead>
 
   <tbody>
-    <% Trailer.all.order("code").each do |trailer| %>
+    <% Trailer.all.each do |trailer| %>
       <tr>
         <td><input type="text" id="trailer" name=<%=trailer.id.to_s%>  value=<%=t('general.select')%> class='btn btn-primary' readonly></td>
         <td><%= trailer.code %></td>
