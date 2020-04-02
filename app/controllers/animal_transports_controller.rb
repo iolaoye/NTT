@@ -30,6 +30,8 @@ class AnimalTransportsController < ApplicationController
   # GET /animal_transport/new.json
   def new
     @animal_transport = AnimalTransport.new
+    @animal_transport.trailer_id = 1
+    @animal_transport.truck_id = 1
     @categories = Category.where(:animal_transport_id => @animal_transport.id)
     respond_to do |format|
       format.html # new.html.erb
