@@ -216,7 +216,7 @@
       <%= field_set_tag t('aplcat.animal_transport_input'), class:'fieldset' do %>
         <div class="field" id="numbers">
           <%=  t('aplcat.totaltrip') %>
-          <%= select_tag :trip_number, options_for_select(listnum, :selected => 0, :required => true), {:prompt => t("Select the number of Trip")}%>
+          <%#= select_tag :trip_number, options_for_select(listnum, :selected => 0, :required => true), {:prompt => t("Select the number of Trip")}%>
         </div>
         <div class="field" id="trip_1" style=display:none>
           <h2><%= t("First Trip") %></h2>
