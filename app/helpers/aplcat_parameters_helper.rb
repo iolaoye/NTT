@@ -111,7 +111,7 @@ module AplcatParametersHelper
     apex_string += "Parameter 20" + "\t" + "integer" + "(1 to 31)" + "\n"
     apex_string += "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "CowCalfProductionData.txt") 
+    return send_file_to_APEX(apex_string, "CowCalfProductionData.txt")
   end
 
   def create_input_animal_transport
@@ -156,7 +156,7 @@ module AplcatParametersHelper
       i += 1
     end
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "InputAnimalTransport.txt") 
+    return send_file_to_APEX(apex_string, "InputAnimalTransport.txt")
   end
 
   def create_co2_balance_input
@@ -236,7 +236,7 @@ module AplcatParametersHelper
     apex_string += @aplcat.fir_lowest.to_s + "\t" + + "  " + @aplcat.fir_highest.to_s + "\t"  + "\t" + t('aplcat.parameter8') + "\n"
     apex_string += "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "ForageQualityInput.txt") 
+    return send_file_to_APEX(apex_string, "ForageQualityInput.txt")
   end
 
   def create_sim_file_aplcat
@@ -251,7 +251,7 @@ module AplcatParametersHelper
     apex_string += @aplcat.eyos.to_s + "\t" + "! " + t('aplcat.eyos') + "\n"
     apex_string += "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "SimFileAPLCAT.txt") 
+    return send_file_to_APEX(apex_string, "SimFileAPLCAT.txt")
   end
 
   def create_input_secondary_emissions
@@ -390,7 +390,7 @@ module AplcatParametersHelper
     end
     apex_string += "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt") 
+    return send_file_to_APEX(apex_string, "InputSecondaryEmissions.txt")
   end
 
   def create_simul_methods
@@ -547,7 +547,7 @@ module AplcatParametersHelper
     apex_string += @aplcat.running_ghg.to_s + "\t" + "! " + t('aplcat.running_ghg') + "\n"
     apex_string += @aplcat.running_transportation.to_s + "\t" + "! " + t('aplcat.running_transportation') + "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "RunParmAPLCAT.txt") 
+    return send_file_to_APEX(apex_string, "RunParmAPLCAT.txt")
   end
 
   def create_beef_cattle_nutrition
@@ -727,34 +727,34 @@ module AplcatParametersHelper
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
     if create_cow_calf_production_data != "OK"
-      return "There is an error creating APLCAT txt file. Check CowCalfProductionData"
+      return t('aplcat.error') + " " + t('aplcat.cow_calf')
     end
     if create_input_animal_transport != "OK"
-      return "There is an error creating APLCAT txt file. Check Animal Transport Input."
+      return t('aplcat.error') + " " + t('aplcat.animal_trans')
     end
     if create_co2_balance_input != "OK"
-      return "There is an error creating APLCAT txt file. Check CO2 Balance Input."
+      return t('aplcat.error') + " " + t('aplcat.co2_balance')
     end
     if create_forage_quality_input != "OK"
-      return "There is an error creating APLCAT txt file. Check Forage Quality Input."
+      return t('aplcat.error') + " " + t('aplcat.forage_quality')
     end
     if create_sim_file_aplcat != "OK"
-      return "There is an error creating APLCAT txt file. Check Scenario Files."
+      return t('aplcat.error') + " " + t('aplcat.simul_file')
     end
     if create_input_secondary_emissions != "OK"
-      return "There is an error creating APLCAT txt file. Check Secondary Emissions Input."
+      return t('aplcat.error') + " " + t('aplcat.secondary_emm')
     end
     if create_simul_methods != "OK"
-      return "There is an error creating APLCAT txt file. Check Simulation Methods."
+      return t('aplcat.error') + " " + t('aplcat.simul_method')
     end
     if create_simul_parms != "OK"
-      return "There is an error creating APLCAT txt file. Check Simulation Parameters."
+      return t('aplcat.error') + " " + t('aplcat.simul_parms')
     end
     if create_water_est_cow_calf != "OK"
-      return "There is an error creating APLCAT txt file. Check Water Estimation Parameters."
+      return t('aplcat.error') + " " + t('aplcat.water_est')
     end
     if create_run_parm_aplcat != "OK"
-      return "There is an error creating APLCAT txt file. Check RunParm APLCAT."
+      return t('aplcat.error') + " " + t('aplcat.run_parm')
     end
     if create_beef_cattle_nutrition != "OK"
     end
@@ -769,7 +769,7 @@ module AplcatParametersHelper
     if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
     if msg.include?("Bull output file") then msg="OK" end
     return msg
-  
+
     #***Saved for future references
     #apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
     #apex_string += aplcat.nit.to_s + "\t" + "! " + t('aplcat.parameter2') + "\n"
