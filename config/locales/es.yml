@@ -1118,9 +1118,11 @@ es:
       noc: Número de Vacas
       nomb: Número de toros maduros
       norh: Número de novillas de reemplazo
+      nocrh: Number of Calves to be Raised as Heifers
       abwc: Peso corporal promedio de las vacas (lb)
       abwmb: Peso corporal promedio de los toros maduros (lb)
       abwh: Peso corporal promedio de las novillas (lb)
+      abwrh: Average Body Weight of Replacement Heifers (lb)
       prh: Proporción novillas de reemplazo (%)
       prb: Proporción toros de reemplazo (%)
       adwgbc: Aumento promedio de peso diario (lb) por terneros/ganado en crecimiento
@@ -1133,6 +1135,7 @@ es:
       srop: Rata de embarazos exitosos (%)
       bwoc: Peso de los terneros al nacer (lb)
       jdbs: Día juliano de compra/venta
+      abc: Animal Breed Code
       dmd: Digestibilidad de la materia seca (DMD) (%)
       dmi: "DMI (% de peso corporal)"
       napanr: Tasa de población en el rango nativo. Número de animales / acre
@@ -1411,6 +1414,11 @@ es:
       norh: 'Total number of female animals kept by the producer as a replacement for the cows sold'
       abwc: 'Body weight of Cows in pounds'
       abwmb: 'Body weight of Bulls in pounds'
+      abwrh: 'Average Body weight of Replacement Heifers in pounds'
+      nocrh: 'Total number of Calves to be raised as Heifers'
+      abc: 'Animal breed code to be selected from AnimalBreedDatabase.txt'
+      graze_code: 'Refer to feed composition table file "FCT-NASEM-2016.txt"'
+      dmis: '% of animal bodyweight (OR) lb/day'
       abwh: 'Body weight of Heifers in pounds'
       prh: 'A value of 10  % means Cows live in the Cow-Calf system for ten years before slaughter'
       prb: 'A value of 20  % means Bulls live in the Cow-Calf system for five years before slaughter'
@@ -1549,7 +1557,8 @@ es:
       theta: Theta (unit conversion constant) [Adopted from FEM]
       fge: Fuel use constant for gasoline engines
       fde: Fuel use constant for diesel engines
-      animal_paramters:
+      tnggbc:
+      animal_parameters:
       animal_manure_parameters:
       animal_growth_parameters:
       environmental_parameters:
