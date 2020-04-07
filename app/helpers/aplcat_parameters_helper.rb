@@ -547,7 +547,7 @@ module AplcatParametersHelper
     apex_string += @aplcat.running_ghg.to_s + "\t" + "! " + t('aplcat.running_ghg') + "\n"
     apex_string += @aplcat.running_transportation.to_s + "\t" + "! " + t('aplcat.running_transportation') + "\n"
     #***** send file to server "
-    return send_file_to_APEX(apex_string, "RunParmAPLCAT.txt") 
+    msg = send_file_to_APEX(apex_string, "RunParmAPLCAT.txt") 
   end
 
   def create_beef_cattle_nutrition
@@ -720,12 +720,41 @@ module AplcatParametersHelper
     return send_file_to_APEX(apex_string, "BeefCattleNutrition.txt")
   end
 
+  def read_aplcat_result
+      #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
+      AplcatResult.where(:scenario_id => @scenario.id).delete_all
+      aplcatresult = AplcatResult.new
+      #download the results files
+      data = get_file_from_APLCAT("ManureOutputFile.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data.each_line do |tempa|
+          #read line by line of the file
+        end
+      end
+      #save the information needed in aplcatresult
+      data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+      #save the information needed in aplcatresult
+      data = get_file_from_APLCAT("EmsnOutBulls.txt")
+      #save the information needed in aplcatresult
+      data = get_file_from_APLCAT("EmsnOutCows.txt")
+      #save the information needed in aplcatresult
+      data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+      #save the information needed in aplcatresult
+      data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+      #save the information needed in aplcatresult
+  end
+
   ################################  aplcat - run the selected scenario for aplcat #################################
   def run_aplcat
     msg = "OK"
     msg = send_file_to_APEX("APLCAT", "APLCAT") #this operation will create APLCAT+session folder from APLCAT folder
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
+    if @aplcat == nil then
+      return "You need to create the APLCAT information before trying to simulate. Click on the scnario you want to work with and then select APLCAT option from the side menu"
+    end
     if create_cow_calf_production_data != "OK"
       return "There is an error creating APLCAT txt file. Check CowCalfProductionData"
     end
@@ -757,18 +786,16 @@ module AplcatParametersHelper
       return "There is an error creating APLCAT txt file. Check RunParm APLCAT."
     end
     if create_beef_cattle_nutrition != "OK"
+      return "There is an error creating APLCAT txt file. Check Beef Cattle Nutrition."
     end
-
-    #supplement = SupplementParameter.where(:scenario_id => @scenario.id)
-    aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
-    if @aplcat == nil then
-      @aplcat = AplcatParameter.new
-      @aplcat.scenario_id = params[:select_scenario][0]
-      @aplcat.save
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### create control, param, site, and weather files ########
+    response = client.call(:run_aplcat, message: {"session_id" => session[:session_id]})     
+    if response.body[:run_apex_response][:run_apex_result] == ("OK") then 
+      return read_aplcat_results()
+    else
+      return "Error running APLCAT"
     end
-    if msg.eql?("OK") then msg = send_file_to_APEX("RUNAPLCAT", session[:session_id]) else return msg  end  #this operation will run a simulation and return ntt file.
-    if msg.include?("Bull output file") then msg="OK" end
-    return msg
   
     #***Saved for future references
     #apex_string += aplcat.mm_type.to_s + "\t" + "! " + t('aplcat.parameter1') + "\n"
@@ -935,4 +962,14 @@ module AplcatParametersHelper
       #msg = send_file_to_APEX(apex_string, "AplcatResults.txt")
   end
 
+  def get_file_from_APLCAT(file)
+    client = Savon.client(wsdl: URL_SoilsInfo)
+    ###### retrieve MSW, MWS, ACY files from apex simulation ########
+    response = client.call(:get_aplcat_file, message: {"file" => file, "session_id" => session[:session_id]})
+    if !response.body[:get_file_response][:get_file_result] == "Error" then
+      return response.body[:get_file_response][:get_file_result]
+    else
+      return response.body[:get_file_response][:get_file_result]
+    end
+  end
 end
