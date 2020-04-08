@@ -720,16 +720,17 @@ module AplcatParametersHelper
     return send_file_to_APEX(apex_string, "BeefCattleNutrition.txt")
   end
 
-  def read_aplcat_result
+  def read_aplcat_results
       #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
       AplcatResult.where(:scenario_id => @scenario.id).delete_all
       aplcatresult = AplcatResult.new
       #download the results files
       data = get_file_from_APLCAT("ManureOutputFile.txt")
+      data1 = data.split("\n")
       if data.include? "Error =>" then
         return data
       else
-        data.each_line do |tempa|
+        data.each_line do |line|
           #read line by line of the file
         end
       end
@@ -791,7 +792,7 @@ module AplcatParametersHelper
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
     response = client.call(:run_aplcat, message: {"session_id" => session[:session_id]})     
-    if response.body[:run_apex_response][:run_apex_result] == ("OK") then 
+    if response.body[:run_aplcat_response][:run_aplcat_result].include? "Time taken to run APLCAT" then 
       return read_aplcat_results()
     else
       return "Error running APLCAT"
@@ -965,10 +966,10 @@ module AplcatParametersHelper
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### retrieve MSW, MWS, ACY files from apex simulation ########
     response = client.call(:get_aplcat_file, message: {"file" => file, "session_id" => session[:session_id]})
-    if !response.body[:get_file_response][:get_file_result] == "Error" then
-      return response.body[:get_file_response][:get_file_result]
+    if !response.body[:get_aplcat_file_response][:get_aplcat_file_result] == "Error" then
+      return response.body[:get_aplcat_file_response][:get_aplcat_file_result]
     else
-      return response.body[:get_file_response][:get_file_result]
+      return response.body[:get_aplcat_file_response][:get_aplcat_file_result]
     end
   end
 end
