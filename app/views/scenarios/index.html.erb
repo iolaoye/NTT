@@ -1,5 +1,6 @@
 <% aplcat = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
+<% dndc = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% test = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% if notice != nil %>
     <div class="success_alert">
@@ -72,6 +73,9 @@
     		<% if fem == 1 %>
     			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
     		<% end %>
+        	<% if dndc == 1 %>
+    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
+    		<% end %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
 		    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
@@ -82,6 +86,9 @@
           		<% end %>
          		<% if fem == 1 %>
           			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+          		<% end %>
+         		<% if dndc == 1 %>
+          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
           	<% end %>
         <% end %>

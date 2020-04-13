@@ -268,6 +268,38 @@ module SimulationsHelper
     end
   end
 
+def send_file_to_DNDC(apex_string, file, state)
+    apex_string1=""
+    if apex_string.kind_of? Array
+      apex_string.each do |as|
+        apex_string1 += as.gsub("\n", "*").gsub("\r", "")
+      end
+    else
+      apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+    end 
+
+
+    #get file name for the current
+    if @field.weather.weather_file.include? "Weather uploaded" then
+      wth = @field.weather.weather_file
+    else
+      if @field.weather.weather_final_year >= 2017 then
+        wth = PRISM2018 + "/" + @field.weather.weather_file
+      else
+        wth= PRISM1 + "/" + @field.weather.weather_file
+      end
+    end
+
+    client = Savon.client(wsdl: URL_SoilsInfo) 
+    ###### create control, param, site, and weather files, also fem_list########
+    response = client.call(:apex_files, message: {"fileName" => file, "data" => apex_string1, "site" => state, "wth" => wth, "session_id" => session[:session_id]})
+    if response.body[:apex_files_response][:apex_files_result] == "created" then
+      return "OK"
+    else
+      return response.body[:apex_files_response][:apex_files_result]
+    end
+  end
+
   def send_file_to_FEM(file1, file2, file3, file4, file_name)
     apex_string1=""
     if apex_string.kind_of? Array
