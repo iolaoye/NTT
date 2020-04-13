@@ -270,7 +270,7 @@ module AplcatParametersHelper
     apex_string += "\n"
     #apex_string += "First" + "\n"
     if @aplcat.first_area != nil then
-      if @aplcat.first_area > 0 then      
+      if @aplcat.first_area > 0 then
         apex_string += @aplcat.first_area.to_s + " " + "\t"
         apex_string += @aplcat.first_equip.to_s + " " +"\t"
         apex_string += Fuel.find(@aplcat.first_fuel_id).code + " " +"\t" + "\n"
@@ -727,27 +727,252 @@ module AplcatParametersHelper
       AplcatResult.where(:scenario_id => @scenario.id).delete_all
       aplcatresult = AplcatResult.new
       #download the results files
-      data = get_file_from_APLCAT("ManureOutputFile.txt")
+      data = get_file_from_APLCAT("AnimalWeights.txt")
       data1 = data.split("\n")
       if data.include? "Error =>" then
         return data
       else
-        data.each_line do |line|
+        data_weights = data.each_line.take(375).last
+        data_weights.each_line do |line|
           #read line by line of the file
+          line_columns = line.split(" ")
+          weights = Hash.new
+            weights["calf_aws"] = line_columns[1, 1]
+            weights["rh_aws"] = line_columns[2, 1]
+            weights["fch_aws"] = line_columns[3, 1]
+            weights["cow_aws"] = line_columns[4, 1]
+            weights["bull_aws"] = line_columns[5, 1]
         end
       end
+      data = get_file_from_APLCAT("ManureOutputFile.txt")
       #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_calf = data.each_line.take(1795).last
+        data_rh = data.each_line.take(1796).last
+        data_fch = data.each_line.take(1797).last
+        data_cow = data.each_line.take(1798).last
+        data_bull = data.each_line.take(1799).last
+        manure_excretion = Hash.new
+          data_calf.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            manure_excretion["calf_sme"] = line_columns[2, 1]
+          end
+          data_rh.each_line do |line|
+            line_columns = line.split(" ")
+            manure_excretion["rh_sme"] = line_columns[3, 1]
+          end
+          data_fch.each_line do |line|
+            line_columns = line.split(" ")
+            manure_excretion["fch_sme"] = line_columns[4, 1]
+          end
+          data_cow.each_line do |line|
+            line_columns = line.split(" ")
+            manure_excretion["cow_sme"] = line_columns[2, 1]
+          end
+          data_bull.each_line do |line|
+            line_columns = line.split(" ")
+            manure_excretion["bull_sme"] = line_columns[2, 1]
+          end
+      end
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
       #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_calf_gei = data.each_line.take(388).last
+        data_calf_ni = data.each_line.take(410).last
+        data_calf_une = data.each_line.take(411).last
+        data_calf_fne = data.each_line.take(412).last
+        data_calf_tne = data.each_line.take(413).last
+        data_calf_tnr = data.each_line.take(414).last
+        emmission_calves = Hash.new
+          data_calf_gei.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            emmission_calves["calf_gei"] = line_columns[3, 1]
+          end
+          data_calf_ni.each_line do |line|
+            line_columns = line.split(" ")
+            emmission_calves["calf_ni"] = line_columns[3, 1]
+          end
+            data_calf_une.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_calves["calf_une"] = line_columns[4, 1]
+          end
+            data_calf_fne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_calves["calf_fne"] = line_columns[4, 1]
+          end
+            data_calf_tne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_calves["calf_tne"] = line_columns[4, 1]
+          end
+            data_calf_tnr.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_calves["calf_tnr"] = line_columns[4, 1]
+          end
+      end
       data = get_file_from_APLCAT("EmsnOutBulls.txt")
       #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_bull_gei = data.each_line.take(390).last
+        data_bull_ni = data.each_line.take(412).last
+        data_bull_une = data.each_line.take(413).last
+        data_bull_fne = data.each_line.take(414).last
+        data_bull_tne = data.each_line.take(415).last
+        data_bull_tnr = data.each_line.take(416).last
+        emmission_bull = Hash.new
+          data_bull_gei.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            emmission_bull["bull_gei"] = line_columns[3, 1]
+          end
+          data_bull_ni.each_line do |line|
+            line_columns = line.split(" ")
+            emmission_bull["bull_ni"] = line_columns[3, 1]
+          end
+            data_bull_une.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_bull["bull_une"] = line_columns[4, 1]
+          end
+            data_bull_fne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_bull["bull_fne"] = line_columns[4, 1]
+          end
+            data_bull_tne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_bull["bull_tne"] = line_columns[4, 1]
+          end
+            data_bull_tnr.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_bull["bull_tnr"] = line_columns[4, 1]
+          end
+      end
       data = get_file_from_APLCAT("EmsnOutCows.txt")
       #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_cow_gei = data.each_line.take(390).last
+        data_cow_ni = data.each_line.take(412).last
+        data_cow_une = data.each_line.take(413).last
+        data_cow_fne = data.each_line.take(414).last
+        data_cow_tne = data.each_line.take(415).last
+        data_cow_tnr = data.each_line.take(416).last
+        emmission_cow = Hash.new
+          data_cow_gei.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            emmission_cow["cow_gei"] = line_columns[3, 1]
+          end
+          data_cow_ni.each_line do |line|
+            line_columns = line.split(" ")
+            emmission_cow["cow_ni"] = line_columns[4, 1]
+          end
+            data_cow_une.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_cow["cow_une"] = line_columns[4, 1]
+          end
+            data_cow_fne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_cow["cow_fne"] = line_columns[4, 1]
+          end
+            data_cow_tne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_cow["cow_tne"] = line_columns[4, 1]
+          end
+            data_cow_tnr.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_cow["cow_tnr"] = line_columns[4, 1]
+          end
+      end
       data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
       #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_fch_gei = data.each_line.take(390).last
+        data_fch_ni = data.each_line.take(412).last
+        data_fch_une = data.each_line.take(413).last
+        data_fch_fne = data.each_line.take(414).last
+        data_fch_tne = data.each_line.take(415).last
+        data_fch_tnr = data.each_line.take(416).last
+        emmission_fch = Hash.new
+          data_fch_gei.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            emmission_fch["fch_gei"] = line_columns[3, 1]
+          end
+          data_fch_ni.each_line do |line|
+            line_columns = line.split(" ")
+            emmission_fch["fch_ni"] = line_columns[4, 1]
+          end
+            data_fch_une.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_fch["fch_une"] = line_columns[4, 1]
+          end
+            data_fch_fne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_fch["fch_fne"] = line_columns[4, 1]
+          end
+            data_fch_tne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_fch["fch_tne"] = line_columns[4, 1]
+          end
+            data_fch_tnr.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_fch["fch_tnr"] = line_columns[4, 1]
+          end
+      end
       data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
-      #if everything is OK return "OK" otherwise return a message error.
-      return "OK"
+      #save the information needed in aplcatresult
+      data1 = data.split("\n")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_rh_gei = data.each_line.take(390).last
+        data_rh_ni = data.each_line.take(412).last
+        data_rh_une = data.each_line.take(413).last
+        data_rh_fne = data.each_line.take(414).last
+        data_rh_tne = data.each_line.take(415).last
+        data_rh_tnr = data.each_line.take(416).last
+        emmission_rh = Hash.new
+          data_rh_gei.each_line do |line|
+          #read line by line of the file
+          line_columns = line.split(" ")
+            emmission_rh["rh_gei"] = line_columns[3, 1]
+          end
+          data_rh_ni.each_line do |line|
+            line_columns = line.split(" ")
+            emmission_rh["rh_ni"] = line_columns[4, 1]
+          end
+            data_rh_une.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_rh["rh_une"] = line_columns[4, 1]
+          end
+            data_rh_fne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_rh["rh_fne"] = line_columns[4, 1]
+          end
+            data_rh_tne.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_rh["rh_tne"] = line_columns[4, 1]
+          end
+            data_rh_tnr.each_line do |line|
+              line_columns = line.split(" ")
+            emmission_rh["rh_tnr"] = line_columns[4, 1]
+          end
+      end
   end
 
   ################################  aplcat - run the selected scenario for aplcat #################################
@@ -794,8 +1019,8 @@ module AplcatParametersHelper
     end
     client = Savon.client(wsdl: URL_SoilsInfo)
     ###### create control, param, site, and weather files ########
-    response = client.call(:run_aplcat, message: {"session_id" => session[:session_id]})     
-    if response.body[:run_aplcat_response][:run_aplcat_result].include? "Time taken to run APLCAT" then 
+    response = client.call(:run_aplcat, message: {"session_id" => session[:session_id]})
+    if response.body[:run_aplcat_response][:run_aplcat_result].include? "Time taken to run APLCAT" then
       return read_aplcat_results()
     else
       return "Error running APLCAT"
