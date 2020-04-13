@@ -270,9 +270,11 @@ module AplcatParametersHelper
     apex_string += "\n"
     #apex_string += "First" + "\n"
     if @aplcat.first_area != nil then
-      apex_string += @aplcat.first_area.to_s + " " + "\t"
-      apex_string += @aplcat.first_equip.to_s + " " +"\t"
-      apex_string += Fuel.find(@aplcat.first_fuel_id).code + " " +"\t" + "\n"
+      if @aplcat.first_area > 0 then      
+        apex_string += @aplcat.first_area.to_s + " " + "\t"
+        apex_string += @aplcat.first_equip.to_s + " " +"\t"
+        apex_string += Fuel.find(@aplcat.first_fuel_id).code + " " +"\t" + "\n"
+      end
     end
     #apex_string += "Second" + "\n"
     if @aplcat.second_area != nil then
@@ -744,7 +746,8 @@ module AplcatParametersHelper
       data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
       #save the information needed in aplcatresult
       data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
-      #save the information needed in aplcatresult
+      #if everything is OK return "OK" otherwise return a message error.
+      return "OK"
   end
 
   ################################  aplcat - run the selected scenario for aplcat #################################

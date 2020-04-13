@@ -104,6 +104,7 @@ NTTG3::Application.routes.draw do
         post :download, on: :collection
         post :download_aplcat, on: :collection
         post :download_fem, on: :collection
+        post :download_dndc, on: :collection
         resources :aplcat_parameters do
           get 'animal_transports', on: :member
 	        get 'aplcat', on: :member

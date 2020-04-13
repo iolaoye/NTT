@@ -8,6 +8,7 @@ class ScenariosController < ApplicationController
   include ApplicationHelper
   include FemHelper
   include AplcatParametersHelper
+  include DndcHelper
   ##############################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
@@ -68,13 +69,15 @@ class ScenariosController < ApplicationController
   			msg = simulate_aplcat
       when params[:commit].include?("FEM")
         msg = simulate_fem
+      when params[:commit].include?("DNDC")
+        msg = simulate_dndc
   	end
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
       redirect_to project_field_scenarios_path(@project, @field)
     else
-      @scenarios = @scenarios = Scenario.where(:field_id => @field.id)
+      @scenarios = Scenario.where(:field_id => @field.id)
       render "index", error: msg
     end # end if msg
   end
@@ -112,6 +115,34 @@ class ScenariosController < ApplicationController
     end
   	return msg
   end
+
+################################  Simulate DNDC for selected scenarios  #################################
+  def simulate_dndc
+    msg = "OK"
+    @errors = Array.new
+    if params[:select_scenario] == nil then msg = "Select at least one scenario to simulate " end
+    if msg != "OK" then
+      @errors.push(msg)
+      return msg
+    end
+    @scenarios_selected = params[:select_scenario]
+    ActiveRecord::Base.transaction do
+      @scenarios_selected.each do |scenario_id|
+        @scenario = Scenario.find(scenario_id)
+        if @scenario.operations.count <= 0 then
+          @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+          return
+        end
+        msg = input_parameters
+        unless msg.eql?("OK")
+           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+           raise ActiveRecord::Rollback
+        end # end unless msg
+      end # end each do params loop
+    end
+    return msg
+  end
+
 ################################  NEW   #################################
 # GET /scenarios/new
 # GET /scenarios/new.json
@@ -786,6 +817,7 @@ class ScenariosController < ApplicationController
 
   ################################  aplcat - simulate the selected scenario for aplcat #################################
   def simulate_aplcat
+    msg = "OK"
     @errors = Array.new
   	if params[:select_scenario] == nil then
   		@errors.push("Select at least one Aplcat to simulate ")
@@ -806,6 +838,7 @@ class ScenariosController < ApplicationController
   	    end # end if msg
       end # end each do params loop
   	end
+    return msg
   end  # end method simulate_aplcat
 
   ################################  copy scenario selected  #################################
@@ -1245,6 +1278,10 @@ class ScenariosController < ApplicationController
 
   def download_fem
     download_fem_files()
+  end
+
+  def download_dndc
+    download_dndc_files()
   end
 
   private
