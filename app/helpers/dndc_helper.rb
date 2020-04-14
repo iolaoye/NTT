@@ -37,13 +37,13 @@ module DndcHelper
 		####Climate_data
 		dndc_string += "-" * 40 + "*"
 		dndc_string += "Climate_data" + "*" + "*"
-		dndc_string += line(2,"Climate_data_type","0")		#todo check 0,1,2, or 3
+		dndc_string += line(2,"Climate_data_type","1")		#todo check 0,1,2, or 3
 		dndc_string += line(2,"N_in_rainfall",sprintf("%.4f",@project.apex_controls.find_by_control_description_id(39).value))
 		dndc_string += line(2,"Air_NH3_concentration","0.0600")
 		dndc_string += line(2,"Air_CO2_concentration",sprintf("%.4f",@project.apex_controls.find_by_control_description_id(40).value))
 		dndc_string += line(2,"Climate_files",sprintf("%d",year_sim))
 		for i in 1..year_sim
-			dndc_string += sprintf("%4d", i) + "   D:\\NTTHTML5Files\\dndc " + session[:session_id] + "\\wth_" + i.to_s + ".txt" + "*"
+			dndc_string += sprintf("%4d", i) + "   D:\\NTTHTML5Files\\DNDC" + session[:session_id] + "\\wth_" + i.to_s + ".txt" + "*"
 		end
 		dndc_string += line(2,"Climate_file_mode","0")
 		dndc_string += line(2,"CO2_increase_rate","0.000000")
@@ -148,7 +148,9 @@ module DndcHelper
 		fertilizer[0] = 0
 		manure[0] = 0
 		irrigation = Array.new
+		irrigation[0] = 0
 		grazing = Array.new
+		grazing[0] = 0
 		operations.each do |oper|
 			crop_ant = oper.crop_id
 			case oper.activity_id
@@ -164,7 +166,15 @@ module DndcHelper
 						fertilizer.push(fertilizer[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + fert_method.to_s + "," + oper.depth.to_s + "," + (oper.amount * oper.no3_n / 100).to_s + "," + (oper.amount * oper.po4_p / 100).to_s)
 					else						#manure application. todo calculate amount accordingly
 						manure[0] += 1
-						manure.push(manure[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + oper.amount.to_s + "," + (oper.no3_n * 100).to_s)
+						if oper.type_id == 2	#solid manure
+							manure_C_N = 13
+							manure_type = 1
+						else	# liquid amnure
+							manure_C_N = 5
+							manure_type = 4
+						end
+						if oper.depth > 0 then fert_method = 1 end 	#surface or injected(0,1 method)
+						manure.push(manure[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + oper.amount.to_s + "," + manure_C_N.to_s + "," + manure_type.to_s + "," + fert_method.to_s + "," + oper.depth.to_s + "," + (oper.amount * oper.no3_n * 100).to_s + "'" + (oper.amount * oper.org_n * 100).to_s) 
 					end
 				when 3 	#Tillage
 					tillage[0] += 1
@@ -175,6 +185,16 @@ module DndcHelper
 					planting[5] = oper.year.to_s
 				when 5	#kill
 				when 6	#irrigation
+					irrigation[0] += 1	#todo check amount of irrigation.
+					case oper.type_id
+						when 1
+							irrigation_method = 1
+						when 2, 7
+							irrigation_method = 0
+						when 3
+							irrigation_method = 2
+					end
+					irrigation.push(irrigation[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + oper.amount.to_s + "," + irrigation_method.to_s)
 				when 7	#grazing continues
 				when 8	#stop grazin continues
 				when 9	#rotation grazing
@@ -227,22 +247,23 @@ module DndcHelper
     		tillage_string += line(6,"Till_day",till[2])
     		tillage_string += line(6,"Till_method", till[3])
 		end
+		#3. print fertilizer applications. todo check fert code APEX vs dndc
 		fertilizer_string = "-" * 40 + "*"
 		fertilizer_string += line(4,"Fertilizer_applications",fertilizer[0].to_s)
 		for j in 1..fertilizer.count-1
-			till = fertilizer[j].split(",")
-			fertilizer_string += line(6,"Fertilizing#",till[0])
-			fertilizer_string += line(6,"Fertilizing_month",till[1])
-    		fertilizer_string += line(6,"Fertilizing_day",till[2])
-    		fertilizer_string += line(6,"Fertilizing_method", till[3])
-    		fertilizer_string += line(6,"Fertilizing_depth", till[4])
-    		fertilizer_string += line(6,"Nitrate", till[5])
+			fert = fertilizer[j].split(",")
+			fertilizer_string += line(6,"Fertilizing#",fert[0])
+			fertilizer_string += line(6,"Fertilizing_month",fert[1])
+    		fertilizer_string += line(6,"Fertilizing_day",fert[2])
+    		fertilizer_string += line(6,"Fertilizing_method", fert[3])
+    		fertilizer_string += line(6,"Fertilizing_depth", fert[4])
+    		fertilizer_string += line(6,"Nitrate", fert[5])
    			fertilizer_string += line(6,"Ammonium_bicarbonate", "0.0000")
     		fertilizer_string += line(6,"Urea", "0.0000")
     		fertilizer_string += line(6,"Anhydrous_ammonia", "0.0000")
     		fertilizer_string += line(6,"Ammonium", "0.0000")
     		fertilizer_string += line(6,"Sulphate", "0.0000")
-    		fertilizer_string += line(6,"Phosphate", till[6])
+    		fertilizer_string += line(6,"Phosphate", fert[6])
     		fertilizer_string += line(6,"Slow_release_rate", "1.0000")
     		fertilizer_string += line(6,"Nitrification_inhibitor_efficiency", "0.0000")
     		fertilizer_string += line(6,"Nitrification_inhibitor_duration", "0.0000")
@@ -255,10 +276,66 @@ module DndcHelper
 			fertilizer_string += line(6,"None","0")	
 		end
 		fertilizer_string += line(4,"Fertilization_option","0")			
+		#4. print manure applications. todo check fert code APEX vs dndc
 		manure_string = "-" * 40 + "*"
 		manure_string += line(4,"Manure_applications",manure[0].to_s)
 		for j in 1..manure.count-1
+			man = manure[j].split(",")
+			manure_string += line(6,"Manuring#",man[0])
+			manure_string += line(6,"Manuring_month",man[1])
+    		manure_string += line(6,"Manuring_day",man[2])
+    		manure_string += line(6,"Manuring_amount", man[3])
+    		manure_string += line(6,"Manuring_C/N", man[4])
+    		manure_string += line(6,"Manuring_type", man[5])
+    		manure_string += line(6,"Manuring_method", man[6])
+    		manure_string += line(6,"Manuring_depth", man[7])
+    		manure_string += line(6,"Manuring_OrgN", man[9])
+    		manure_string += line(6,"Manuring_NH4", "0.0000")
+    		manure_string += line(6,"Manuring_NO3", man[8])
+	    	manure_string += line(6,"None","0")
 		end
-		return crop_string + tillage_string + fertilizer_string + manure_string
+		#5. print film applications.
+		film_string = "-" * 40 + "*"
+		film_string += line(4,"Film_applications","0")
+		film_string += line(4,"Method","0")
+		#6. print flood applications.
+		flood_string = "-" * 40 + "*"
+		flood_string += line(4,"Flood_applications","0")
+		flood_string += line(4,"Water_control","0")
+		flood_string += line(4,"Flood_water_N","0.0000")
+		flood_string += line(4,"Leak_rate","0.0000")
+		flood_string += line(4,"Water_gather_index","1.0000")
+		flood_string += line(4,"Watertable_file","None")
+		flood_string += line(4,"Empirical_para_1","0.0000")
+		flood_string += line(4,"Empirical_para_2","0.0000")
+		flood_string += line(4,"Empirical_para_3","0.0000")
+		flood_string += line(4,"Empirical_para_4","0.0000")
+		flood_string += line(4,"Empirical_para_5","0.0000")
+		flood_string += line(4,"Empirical_para_6","0.0000")
+		#4. print irrigation applications.
+		irrigation_string = "-" * 40 + "*"
+		irrigation_string += line(4,"Irrigation_applications",irrigation[0].to_s)
+		irrigation_string += line(4,"Irrigation_control","0")
+		irrigation_string += line(4,"Irrigation_index","0.0000")
+		irrigation_string += line(4,"Irrigation_method","5")
+		for j in 1..irrigation.count-1
+			irri = irrigation[j].split(",")
+			irrigation_string += line(6,"Irrigation#",irri[0])
+			irrigation_string += line(6,"Irri_month",irri[1])
+    		irrigation_string += line(6,"Irri_day",irri[2])
+    		irrigation_string += line(6,"Water_amount", irri[3])	#todo check volum units for convertion
+    		irrigation_string += line(6,"Irri_method", irri[4])
+	    	irrigation_string += line(6,"None","0")
+			irrigation_string += line(6,"None","0")
+			irrigation_string += line(6,"None","0")
+			irrigation_string += line(6,"None","0")
+			irrigation_string += line(6,"None","0")	
+		end
+		grazing_string = "-" * 40 + "*"
+		grazing_string += line(4,"Grazing_applications","0")	#todo add this
+		cut_string = "-" * 40 + "*"
+		cut_string += line(4,"Cut_applications ","0")
+		cut_string += "-" * 40 + "*"
+		return crop_string + tillage_string + fertilizer_string + manure_string + film_string + flood_string + irrigation_string + grazing_string + cut_string
 	end
 end
