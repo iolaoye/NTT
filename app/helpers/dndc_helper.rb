@@ -196,9 +196,28 @@ module DndcHelper
 					end
 					irrigation.push(irrigation[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + oper.amount.to_s + "," + irrigation_method.to_s)
 				when 7	#grazing continues
-				when 8	#stop grazin continues
+					grazing[0] += 1
+					oper_end_grazing = Operation.find_by_type_id(oper.id)
+					dairy = 0
+					beef = 0
+					sheep = 0
+					horse = 0 
+					pig = 0
+					heads_per_ha = oper.amount / (@field.field_area * AC_TO_HA)
+					case oper.type_id
+						when 43
+							dairy = heads_per_ha
+						when 44
+							beef = heads_per_ha
+						when 46
+							pig = heads_per_ha
+						when 47, 48 
+							sheep = heads_per_ha
+						when 49
+							horse = heads_per_ha
+					end
+					grazing.push(grazing[0].to_s + "," + oper.month_id.to_s + "," + oper.day.to_s + "," + oper_end_grazing.month_id.to_s + "," + oper_end_grazing.day.to_s + "," + sprintf("%.4f",oper.depth) + "," + sprintf("%.4f",dairy) + "," + sprintf("%.4f",beef) + "," + sprintf("%.4f",sheep) + "," + sprintf("%.4f",horse) + "," + sprintf("%.4f",pig))
 				when 9	#rotation grazing
-				when 10	#stop rotaional grazing
 				when 11	#burn
 				when 12 #liming	
 			end
@@ -332,7 +351,29 @@ module DndcHelper
 			irrigation_string += line(6,"None","0")	
 		end
 		grazing_string = "-" * 40 + "*"
-		grazing_string += line(4,"Grazing_applications","0")	#todo add this
+		grazing_string += line(4,"Grazing_applications",grazing[0].to_s)	#todo add this
+		for j in 1..grazing.count-1
+			graze = grazing[j].split(",")
+			grazing_string += line(6,"grazing#",graze[0])
+			grazing_string += line(6,"Start_month",graze[1])
+    		grazing_string += line(6,"Start_day",graze[2])
+			grazing_string += line(6,"End_month",graze[3])
+    		grazing_string += line(6,"End_day",graze[4])
+    		grazing_string += line(6,"Dairy_heads", graze[6])
+    		grazing_string += line(6,"Beef_heads", graze[7])
+    		grazing_string += line(6,"Pig_heads", graze[8])
+    		grazing_string += line(6,"Sheep_heads", graze[9])
+    		grazing_string += line(6,"Horse_heads", graze[10])
+    		grazing_string += line(6,"Grazing_hours/day", graze[5])
+    		grazing_string += line(6,"Additional_feed", "0.0000")
+    		grazing_string += line(6,"Additional_feed_C/N", "0.0000")
+   			grazing_string += line(6,"Excreta_handling", "1")
+	    	grazing_string += line(6,"None","0")
+			grazing_string += line(6,"None","0")
+			grazing_string += line(6,"None","0")
+			grazing_string += line(6,"None","0")
+			grazing_string += line(6,"None","0")	
+		end
 		cut_string = "-" * 40 + "*"
 		cut_string += line(4,"Cut_applications ","0")
 		cut_string += "-" * 40 + "*"
