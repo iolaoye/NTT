@@ -42,15 +42,15 @@
 							<%= "Total N" + " (" + "lbs" + ")" %>
 							<%= check_box_tag "Total N" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) + " (" + sprintf("%8.1f", @cis1[0][1]+@cis1[0][2]+@cis1[0][3]+@cis1[0][4]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) + " (" + sprintf("%8.2f", @cis1[0][1]+@cis1[0][2]+@cis1[0][3]+@cis1[0][4]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @totals2[0][0]+@totals2[0][1]+@totals2[0][2]+@totals2[0][3]) + " (" + sprintf("%8.1f", @cis2[0][1]+@cis2[0][2]+@cis2[0][3]+@cis2[0][4]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @totals2[0][0]+@totals2[0][1]+@totals2[0][2]+@totals2[0][3]) + " (" + sprintf("%8.1f", @cis2[0][1]+@cis2[0][2]+@cis2[0][3]+@cis2[0][4]) + ")" %></td>
 							<% difference1 = @totals2[0][0]+@totals2[0][1]+@totals2[0][2]+@totals2[0][3]-(@totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) %>
 							<% reduction1 = difference1 / (@totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @totals3[0][0]+@totals3[0][1]+@totals3[0][2]+@totals3[0][3]).to_s + " (" + sprintf("%8.1f", @cis3[0][1]+@cis3[0][2]+@cis3[0][3]+@cis3[0][4]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @totals3[0][0]+@totals3[0][1]+@totals3[0][2]+@totals3[0][3]).to_s + " (" + sprintf("%8.1f", @cis3[0][1]+@cis3[0][2]+@cis3[0][3]+@cis3[0][4]) + ")" %></td>
 							<% difference1 = @totals3[0][0]+@totals3[0][1]+@totals3[0][2]+@totals3[0][3]-(@totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) %>
 							<% reduction1 = difference1 / (@totals1[0][0]+@totals1[0][1]+@totals1[0][2]+@totals1[0][3]) * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
@@ -115,15 +115,15 @@
 							<%= "Total P" + " (" + "lbs" + ")" %>
 							<%= check_box_tag "Total P" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @totals1[0][4]+@totals1[0][5]+@totals1[0][6]).to_s + " (" + sprintf("%8.1f", @cis1[0][5]+@cis1[0][6]+@cis1[0][7]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @totals1[0][4]+@totals1[0][5]+@totals1[0][6]).to_s + " (" + sprintf("%8.1f", @cis1[0][5]+@cis1[0][6]+@cis1[0][7]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @totals2[0][4]+@totals2[0][5]+@totals2[0][6]) + " (" + sprintf("%8.1f", @cis2[0][5]+@cis2[0][6]+@cis2[0][7]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @totals2[0][4]+@totals2[0][5]+@totals2[0][6]) + " (" + sprintf("%8.1f", @cis2[0][5]+@cis2[0][6]+@cis2[0][7]) + ")" %></td>
 							<% difference1 = @totals2[0][4]+@totals2[0][5]+@totals2[0][6]-(@totals1[0][4]+@totals1[0][5]+@totals1[0][6]) %>
 							<% reduction1 = difference1 / (@totals1[0][4]+@totals1[0][5]+@totals1[0][6]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @totals3[0][4]+@totals3[0][5]+@totals3[0][6]) + " (" + sprintf("%8.1f", @cis3[0][5]+@cis3[0][6]+@cis3[0][7]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @totals3[0][4]+@totals3[0][5]+@totals3[0][6]) + " (" + sprintf("%8.1f", @cis3[0][5]+@cis3[0][6]+@cis3[0][7]) + ")" %></td>
 							<% difference1 = @totals3[0][4]+@totals3[0][5]+@totals3[0][6]-(@totals1[0][4]+@totals1[0][5]+@totals1[0][6]) %>
 							<% reduction1 = difference1 / (@totals1[0][4]+@totals1[0][5]+@totals1[0][5]) * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
@@ -175,15 +175,15 @@
 							<%= "Surface/Subsurface/Tile Drain Flow" + " (" + "acre-in" + ")" %>
 							<%= check_box_tag "Total P" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @totals1[0][7]+@totals1[0][8]+@totals1[0][9]) + " (" + sprintf("%8.1f", @cis1[0][8]+@cis1[0][9]+@cis1[0][10]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @totals1[0][7]+@totals1[0][8]+@totals1[0][9]) + " (" + sprintf("%8.1f", @cis1[0][8]+@cis1[0][9]+@cis1[0][10]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @totals2[0][7]+@totals2[0][8]+@totals2[0][9]) + " (" + sprintf("%8.1f", @cis2[0][8]+@cis2[0][9]+@cis2[0][10]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @totals2[0][7]+@totals2[0][8]+@totals2[0][9]) + " (" + sprintf("%8.1f", @cis2[0][8]+@cis2[0][9]+@cis2[0][10]) + ")" %></td>
 							<% difference1 = @totals2[0][7]+@totals2[0][8]+@totals2[0][9]-(@totals1[0][7]+@totals1[0][8]+@totals1[0][9]) %>
 							<% reduction1 = difference1 / (@totals1[0][7]+@totals1[0][8]+@totals1[0][9]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @totals3[0][7]+@totals3[0][8]+@totals3[0][9]) + " (" + sprintf("%8.1f", @cis3[0][8]+@cis3[0][9]+@cis3[0][10]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @totals3[0][7]+@totals3[0][8]+@totals3[0][9]) + " (" + sprintf("%8.1f", @cis3[0][8]+@cis3[0][9]+@cis3[0][10]) + ")" %></td>
 							<% difference1 = @totals3[0][7]+@totals3[0][8]+@totals3[0][9]-(@totals1[0][7]+@totals1[0][8]+@totals1[0][9]) %>
 							<% reduction1 = difference1 / (@totals1[0][7]+@totals1[0][8]+@totals1[0][9]) * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
@@ -235,15 +235,15 @@
 							<%= "Total Other Water Info" + " (" + "acre-in" + ")" %>
 							<%= check_box_tag "Total P" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @totals1[0][10]+@totals1[0][11]) + " (" + sprintf("%8.1f", @cis1[0][11]+@cis1[0][12]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @totals1[0][10]+@totals1[0][11]) + " (" + sprintf("%8.1f", @cis1[0][11]+@cis1[0][12]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @totals2[0][10]+@totals2[0][11]) + " (" + sprintf("%8.1f", @cis2[0][11]+@cis2[0][12]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @totals2[0][10]+@totals2[0][11]) + " (" + sprintf("%8.1f", @cis2[0][11]+@cis2[0][12]) + ")" %></td>
 							<% difference1 = @totals2[0][10]+@totals2[0][11]-(@totals1[0][10]+@totals1[0][11]) %>
 							<% reduction1 = difference1 / (@totals1[0][10]+@totals1[0][11]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @totals3[0][10]+@totals3[0][11]) + " (" + sprintf("%8.1f", @cis3[0][11]+@cis3[0][12]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @totals3[0][10]+@totals3[0][11]) + " (" + sprintf("%8.1f", @cis3[0][11]+@cis3[0][12]) + ")" %></td>
 							<% difference1 = @totals3[0][10]+@totals3[0][11]-(@totals1[0][10]+@totals1[0][11]) %>
 							<% reduction1 = difference1 / (@totals1[0][10]+@totals1[0][11]) * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
@@ -282,15 +282,15 @@
 							<%= "Total Sediment" + " (" + "t" + ")" %>
 							<%= check_box_tag "Total P" %>
 						</th>
-						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.1f", @totals1[0][12]+@totals1[0][13]) + " (" + sprintf("%8.1f", @cis1[0][13]+@cis1[0][14]) + ")" %></td>
+						<td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @totals1[0][12]+@totals1[0][13]) + " (" + sprintf("%8.1f", @cis1[0][13]+@cis1[0][14]) + ")" %></td>
 						<% if @scenario2 != "0" && @scenario2 != "" then %>
-							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.1f", @totals2[0][12]+@totals2[0][13]) + " (" + sprintf("%8.1f", @cis2[0][13]+@cis2[0][14]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#DEFFFD"><%= sprintf("%8.2f", @totals2[0][12]+@totals2[0][13]) + " (" + sprintf("%8.1f", @cis2[0][13]+@cis2[0][14]) + ")" %></td>
 							<% difference1 = @totals2[0][12]+@totals2[0][13]-(@totals1[0][12]+@totals1[0][13]) %>
 							<% reduction1 = difference1 / (@totals1[0][12]+@totals1[0][13]) * 100 %>
 							<td class= "gvTotalText" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
 						<% end %>
 						<% if @scenario3 > "0" then %>
-							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", @totals3[0][12]+@totals3[0][13]) + " (" + sprintf("%8.1f", @cis2[0][13]+@cis2[0][14]) + ")" %></td>
+							<td class="gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.2f", @totals3[0][12]+@totals3[0][13]) + " (" + sprintf("%8.1f", @cis2[0][13]+@cis2[0][14]) + ")" %></td>
 							<% difference1 = @totals3[0][12]+@totals3[0][13]-(@totals1[0][12]+@totals1[0][13]) %>
 							<% reduction1 = difference1 / (@totals1[0][12]+@totals1[0][13]) * 100 %>
 							<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1) + " (" + sprintf("%8.1f", reduction1) + ")" %></td>
