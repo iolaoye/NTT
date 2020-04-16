@@ -5,14 +5,9 @@
 
 cont = false
 	
-	file = "db/seeds/trucks.rb"
+	file = "db/seeds/crops.rb"
 	load file
 
-	file = "db/seeds/trailers.rb"
-	load file
-
-	file = "db/seeds/fuels.rb"
-	load file
 	
 if cont then
 
