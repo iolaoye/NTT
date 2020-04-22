@@ -133,6 +133,7 @@ Tillage.create!({:id => 100,:code => 331,:dndc => 4,:name => 'SHRDRGT8',:operati
 Tillage.create!({:id => 101,:code => 333,:dndc => 1,:name => 'STACKMOV',:operation => 0,:eqp => 'STACK MOVER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'MOVEDOR DE ALMIAR',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 102,:code => 334,:dndc => 1,:name => 'STACKAUT',:operation => 0,:eqp => 'STACKER AUTOMATIC',:status => false,:abbreviation => 'TILL',:spanish_name =>  'APILADOR AUTOMATICO',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 103,:code => 338,:dndc => 3,:name => 'BEETTOPP',:operation => 0,:eqp => 'BEET TOPPER 12 HP',:status => false,:abbreviation => 'TILL',:spanish_name =>  'TOPPER DE REMOLACHA 12 HP',:activity_id => 3}, :without_protection => true)
+Tillage.create!({:id => 210,:code => 339,:dndc => 0,:name => 'RICECOMB',:operation => 2,:eqp => "RICE COMBINE",:status => false,:abbreviation => 'TILL',:spanish_name =>  'Combinar Arroz',:activity_id => 4}, :without_protection => true)
 Tillage.create!({:id => 104,:code => 340,:dndc => 1,:name => 'PIPE WGN',:operation => 0,:eqp => 'PIPE WAGON',:status => false,:abbreviation => 'TILL',:spanish_name =>  'VAGON DE TUBOS',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 105,:code => 341,:dndc => 4,:name => 'TRLR20FT',:operation => 0,:eqp => 'UTILITY TRAILER 20 FT',:status => false,:abbreviation => 'TILL',:spanish_name =>  'REMOLQUE DE UTILIDAD 20 FT',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 106,:code => 343,:dndc => 5,:name => 'TRLR40FT',:operation => 0,:eqp => 'TRAILER 40 FT',:status => false,:abbreviation => 'TILL',:spanish_name =>  'REMOLQUE 40 FT',:activity_id => 3}, :without_protection => true)
@@ -208,4 +209,4 @@ Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operati
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 171,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp => 'DESTROY PUDDLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Destruir Puddle',:activity_id => 3}, :without_protection => true)
-#LAST id = 209 tillage code = 402 harvest potato
+#LAST id = 210 tillage code = 339 harvest ricecomb
