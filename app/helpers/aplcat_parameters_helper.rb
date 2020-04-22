@@ -731,231 +731,125 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        weights = data.lines.at(374)
+        weights = data.lines.at(374).split(" ")
           #read line by line of the file
-          line_columns = weights.split(" ")
-            aplcatresult.calf_aws = line_columns[1]
-            aplcatresult.rh_aws = line_columns[2]
-            aplcatresult.fch_aws = line_columns[3]
-            aplcatresult.cow_aws = line_columns[4]
-            aplcatresult.bull_aws = line_columns[5]
+            aplcatresult.calf_aws = weights[1]
+            aplcatresult.rh_aws = weights[2]
+            aplcatresult.fch_aws = weights[3]
+            aplcatresult.cow_aws = weights[4]
+            aplcatresult.bull_aws = weights[5]
       end
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_calf = data.lines.at(1794)
-        data_rh = data.lines.at(1795)
-        data_fch = data.lines.at(1796)
-        data_cow = data.lines.at(1797)
-        data_bull = data.lines.at(1798)
-          data_calf.each_line do |line|
+        data_calf = data.lines.at(1794).split(" ")
+        data_rh = data.lines.at(1795).split(" ")
+        data_fch = data.lines.at(1796).split(" ")
+        data_cow = data.lines.at(1797).split(" ")
+        data_bull = data.lines.at(1798).split(" ")
           #read line by line of the file
-          line_columns = line.split(" ")
-            aplcatresult.calf_sme = line_columns[2]
-          end
-          data_rh.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.rh_sme = line_columns[2]
-          end
-          data_fch.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.fch_sme = line_columns[2]
-          end
-          data_cow.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.cow_sme = line_columns[2]
-          end
-          data_bull.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.bull_sme = line_columns[2]
-          end
+            aplcatresult.calf_sme = data_calf[2]
+            aplcatresult.rh_sme = data_rh[3]
+            aplcatresult.fch_sme = data_fch[4]
+            aplcatresult.cow_sme = data_cow[2]
+            aplcatresult.bull_sme = data_bull[2]
       end
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_calf_gei = data.lines.at(387)
-        data_calf_ni = data.lines.at(409)
-        data_calf_une = data.lines.at(410)
-        data_calf_fne = data.lines.at(411)
-        data_calf_tne = data.lines.at(412)
-        data_calf_tnr = data.lines.at(413)
-          data_calf_gei.each_line do |line|
+        data_calf_gei = data.lines.at(387).split(" ")
+        data_calf_ni = data.lines.at(409).split(" ")
+        data_calf_une = data.lines.at(410).split(" ")
+        data_calf_fne = data.lines.at(411).split(" ")
+        data_calf_tne = data.lines.at(412).split(" ")
+        data_calf_tnr = data.lines.at(413).split(" ")
           #read line by line of the file
-            line_columns = line.split(" ")
-            aplcatresult.calf_gei = line_columns[3]
-          end
-          data_calf_ni.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.calf_ni = line_columns[3]
-          end
-            data_calf_une.each_line do |line|
-              line_columns = line.split(" ")
-              aplcatresult.calf_une = line_columns[4]
-          end
-            data_calf_fne.each_line do |line|
-              line_columns = line.split(" ")
-              aplcatresult.calf_fne = line_columns[4]
-          end
-            data_calf_tne.each_line do |line|
-              line_columns = line.split(" ")
-              aplcatresult.calf_tne = line_columns[4]
-          end
-            data_calf_tnr.each_line do |line|
-              line_columns = line.split(" ")
-              aplcatresult.calf_tnr = line_columns[4]
-          end
+            aplcatresult.calf_gei = data_calf_gei[3]
+            aplcatresult.calf_ni = data_calf_ni[3]
+            aplcatresult.calf_une = data_calf_une[4]
+            aplcatresult.calf_fne = data_calf_fne[4]
+            aplcatresult.calf_tne = data_calf_tne[4]
+            aplcatresult.calf_tnr = data_calf_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutBulls.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_bull_gei = data.lines.at(389)
-        data_bull_ni = data.lines.at(411)
-        data_bull_une = data.lines.at(412)
-        data_bull_fne = data.lines.at(413)
-        data_bull_tne = data.lines.at(414)
-        data_bull_tnr = data.lines.at(415)
-          data_bull_gei.each_line do |line|
+        data_bull_gei = data.lines.at(389).split(" ")
+        data_bull_ni = data.lines.at(411).split(" ")
+        data_bull_une = data.lines.at(412).split(" ")
+        data_bull_fne = data.lines.at(413).split(" ")
+        data_bull_tne = data.lines.at(414).split(" ")
+        data_bull_tnr = data.lines.at(415).split(" ")
           #read line by line of the file
-          line_columns = line.split(" ")
-            aplcatresult.bull_gei = line_columns[3]
-          end
-          data_bull_ni.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.bull_ni = line_columns[3]
-          end
-            data_bull_une.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.bull_une = line_columns[4]
-          end
-            data_bull_fne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.bull_fne = line_columns[4]
-          end
-            data_bull_tne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.bull_tne = line_columns[4]
-          end
-            data_bull_tnr.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.bull_tnr = line_columns[4]
-          end
+            aplcatresult.bull_gei = data_bull_gei[3]
+            aplcatresult.bull_ni = data_bull_ni[3]
+            aplcatresult.bull_une = data_bull_une[4]
+            aplcatresult.bull_fne = data_bull_fne[4]
+            aplcatresult.bull_tne = data_bull_tne[4]
+            aplcatresult.bull_tnr = data_bull_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutCows.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_cow_gei = data.lines.at(389)
-        data_cow_ni = data.lines.at(411)
-        data_cow_une = data.lines.at(412)
-        data_cow_fne = data.lines.at(413)
-        data_cow_tne = data.lines.at(414)
-        data_cow_tnr = data.lines.at(415)
-          data_cow_gei.each_line do |line|
+        data_cow_gei = data.lines.at(389).split(" ")
+        data_cow_ni = data.lines.at(411).split(" ")
+        data_cow_une = data.lines.at(412).split(" ")
+        data_cow_fne = data.lines.at(413).split(" ")
+        data_cow_tne = data.lines.at(414).split(" ")
+        data_cow_tnr = data.lines.at(415).split(" ")
           #read line by line of the file
-          line_columns = line.split(" ")
-            aplcatresult.cow_gei = line_columns[3]
-          end
-          data_cow_ni.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.cow_ni = line_columns[4]
-          end
-            data_cow_une.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.cow_une = line_columns[4]
-          end
-            data_cow_fne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.cow_fne = line_columns[4]
-          end
-            data_cow_tne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.cow_tne = line_columns[4]
-          end
-            data_cow_tnr.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.cow_tnr = line_columns[4]
-          end
+            aplcatresult.cow_gei = data_cow_gei[3]
+            aplcatresult.cow_ni = data_cow_ni[4]
+            aplcatresult.cow_une = data_cow_une[4]
+            aplcatresult.cow_fne = data_cow_fne[4]
+            aplcatresult.cow_tne = data_cow_tne[4]
+            aplcatresult.cow_tnr = data_cow_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_fch_gei = data.lines.at(389)
-        data_fch_ni = data.lines.at(411)
-        data_fch_une = data.lines.at(412)
-        data_fch_fne = data.lines.at(413)
-        data_fch_tne = data.lines.at(414)
-        data_fch_tnr = data.lines.at(415)
-          data_fch_gei.each_line do |line|
+        data_fch_gei = data.lines.at(389).split(" ")
+        data_fch_ni = data.lines.at(411).split(" ")
+        data_fch_une = data.lines.at(412).split(" ")
+        data_fch_fne = data.lines.at(413).split(" ")
+        data_fch_tne = data.lines.at(414).split(" ")
+        data_fch_tnr = data.lines.at(415).split(" ")
           #read line by line of the file
-          line_columns = line.split(" ")
-            aplcatresult.fch_gei = line_columns[3]
-          end
-          data_fch_ni.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.fch_ni = line_columns[4]
-          end
-            data_fch_une.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.fch_une = line_columns[4]
-          end
-            data_fch_fne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.fch_fne = line_columns[4]
-          end
-            data_fch_tne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.fch_tne = line_columns[4]
-          end
-            data_fch_tnr.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.fch_tnr = line_columns[4]
-          end
+            aplcatresult.fch_gei = data_fch_gei[3]
+            aplcatresult.fch_ni = data_fch_ni[4]
+            aplcatresult.fch_une = data_fch_une[4]
+            aplcatresult.fch_fne = data_fch_fne[4]
+            aplcatresult.fch_tne = data_fch_tne[4]
+            aplcatresult.fch_tnr = data_fch_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_rh_gei = data.lines.at(389)
-        data_rh_ni = data.lines.at(411)
-        data_rh_une = data.lines.at(412)
-        data_rh_fne = data.lines.at(413)
-        data_rh_tne = data.lines.at(414)
-        data_rh_tnr = data.lines.at(415)
-          data_rh_gei.each_line do |line|
+        data_rh_gei = data.lines.at(389).split(" ")
+        data_rh_ni = data.lines.at(411).split(" ")
+        data_rh_une = data.lines.at(412).split(" ")
+        data_rh_fne = data.lines.at(413).split(" ")
+        data_rh_tne = data.lines.at(414).split(" ")
+        data_rh_tnr = data.lines.at(415).split(" ")
           #read line by line of the file
-          line_columns = line.split(" ")
-            aplcatresult.rh_gei = line_columns[3]
-          end
-          data_rh_ni.each_line do |line|
-            line_columns = line.split(" ")
-            aplcatresult.rh_ni = line_columns[4]
-          end
-            data_rh_une.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.rh_une = line_columns[4]
-          end
-            data_rh_fne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.rh_fne = line_columns[4]
-          end
-            data_rh_tne.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.rh_tne = line_columns[4]
-          end
-            data_rh_tnr.each_line do |line|
-              line_columns = line.split(" ")
-            aplcatresult.rh_tnr = line_columns[4]
-          end
+            aplcatresult.rh_gei = data_rh_gei[3]
+            aplcatresult.rh_ni = data_rh_ni[4]
+            aplcatresult.rh_une = data_rh_une[4]
+            aplcatresult.rh_fne = data_rh_fne[4]
+            aplcatresult.rh_tne = data_rh_tne[4]
+            aplcatresult.rh_tnr = data_rh_tnr[4]
       end
   end
 
