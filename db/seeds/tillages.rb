@@ -126,6 +126,7 @@ Tillage.create!({:id => 93,:code => 319,:dndc => 1,:name => 'MOWERDRD',:operatio
 Tillage.create!({:id => 94,:code => 321,:dndc => 1,:name => 'MOWERSCK',:operation => 0,:eqp => 'MOWER SICKLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'PODADORA HOZ',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 95,:code => 323,:dndc => 1,:name => 'RAKESIDE',:operation => 0,:eqp => 'RAKE SIDE DELIVERY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'RAKE SIDE DELIVERY',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 96,:code => 324,:dndc => 1,:name => 'RAKEWHEL',:operation => 0,:eqp => 'RAKE WHEEL',:status => false,:abbreviation => 'TILL',:spanish_name =>  'RUEDA DE RASTRILLO',:activity_id => 3}, :without_protection => true)
+Tillage.create!({:id => 211,:code => 325,:dndc => 0,:name => 'SWATHROL',:operation => 0,:eqp => 'SWATH ROLLER',:status => true,:abbreviation => 'TILL',:spanish_name =>  'SWATH ROLLER',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 97,:code => 326,:dndc => 1,:name => 'WSWTHPTO',:operation => 0,:eqp => 'WINDROWER-SWATHER, PTO',:status => false,:abbreviation => 'TILL',:spanish_name =>  'WINDROWER-SWATHER, PTO',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 98,:code => 327,:dndc => 1,:name => 'WSWTHSP',:operation => 0,:eqp => 'WINDROWER-SWTH SELF-PROP',:status => false,:abbreviation => 'TILL',:spanish_name =>  'WINDROWER-SWTH SELF-PROP',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 99,:code => 329,:dndc => 4,:name => 'SHREDGT8',:operation => 0,:eqp => 'SHREDDER FLAIL GT8FT',:status => false,:abbreviation => 'TILL',:spanish_name =>  'DESFRIBADORA MAYAL GT8FT',:activity_id => 3}, :without_protection => true)
@@ -208,5 +209,5 @@ Tillage.create!({:id => 167,:code => 420,:dndc => 0,:name => 'RMV-DIKE',:operati
 Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operation => 0,:eqp => 'BUILD FURROW DIKE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir furrow dike',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
-Tillage.create!({:id => 171,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp => 'DESTROY PUDDLE',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Destruir Puddle',:activity_id => 3}, :without_protection => true)
-#LAST id = 210 tillage code = 339 harvest ricecomb
+Tillage.create!({:id => 212,:code => 611,:dndc => 0,:name => 'WEED',:operation => 0,:eqp => 'WED',:status => true,:abbreviation => 'TILL',:spanish_name =>  'Wed',:activity_id => 3}, :without_protection => true)
+#LAST id = 212 tillage code = 611 harvest wed
