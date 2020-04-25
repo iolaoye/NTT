@@ -380,17 +380,17 @@ class WatershedsController < ApplicationController
     #end
     msg = "OK"
     msg1 = ""
-    for i in 1..rec.count - 1
+    for i in 0..rec.count - 1
       field = rec[i].split(" ")
       rec1 = field[1] + " " + field[0]
       w_s = @watershed.watershed_scenarios.find_by_field_id(field[0])
       w_s.field_id_to = field[1]
       w_s.save
-      for j in i..rec.count - 1
-        if rec1 == rec[j] then msg1 = msg1 + "rec[j]" + " " end
+      for j in 0..rec.count - 1
+        if rec1 == rec[j] then msg1 = msg1 + Field.find(field[0]).name + "->" + Field.find(field[1]).name end
       end
     end
-    if msg != "" then
+    if msg1 != "" then
       msg = "Error routing fields: " + msg1
     end
     return msg
@@ -516,6 +516,7 @@ class WatershedsController < ApplicationController
         end
       end
     end   # end if > 2
+    return "OK"
   end  # end method
 
   def elim(nn,i)
