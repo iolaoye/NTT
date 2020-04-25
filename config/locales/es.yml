@@ -812,6 +812,7 @@ es:
     watershed_scenario_title: Lista de parcelas en
     add_to: Adicionar a
     already_selected: 'Ese parcela ya ha sido seleccionado. Por favor, elija otra vez.'
+    routing_to: "Flujo hacia"
   submit:
     create: Crear
     save: Salvar

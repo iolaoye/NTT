@@ -266,88 +266,86 @@ class WatershedsController < ApplicationController
               fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
             end
             j=0
-#todo remove this condition when move to production.
-        if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
-            #############  this block for the old way of simulating watersheds ##########################
-            watershed_scenarios.each do |p|
-              @scenario = Scenario.find(p.scenario_id)
-              @field = Field.find(p.field_id)
-              @grazing = @scenario.operations.find_by_activity_id([7, 9])
-              if @grazing == nil then
-                @soils = Soil.where(:field_id => p.field_id).limit(1)
-              else
-                @soils = Soil.where(:field_id => p.field_id).limit(1)
-              end
-                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-                if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-                j+=1
-            end # en
-            #############  this block for the old way of simulating watersheds ##########################
-        
+            #todo remove this condition when move to production.
+            if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
+                #############  this block for the old way of simulating watersheds ##########################
+                watershed_scenarios.each do |p|
+                  @scenario = Scenario.find(p.scenario_id)
+                  @field = Field.find(p.field_id)
+                  @grazing = @scenario.operations.find_by_activity_id([7, 9])
+                  if @grazing == nil then
+                    @soils = Soil.where(:field_id => p.field_id).limit(1)
+                  else
+                    @soils = Soil.where(:field_id => p.field_id).limit(1)
+                  end
+                    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                    j+=1
+                end # en
+                #############  this block for the old way of simulating watersheds ##########################
+            else
+                #############  this block for the new way of simulating watersheds ##########################
+                #call R program. read results and create the new watershed_scnearios hash to run scenarios
+                msg = define_routing(fields)
+                if msg.include? "Error"
+                  @errors.push(msg)
+                  break
+                end   # if msg == OK
 
-        else
-
-
-            #############  this block for the new way of simulating watersheds ##########################
-            #call R program. read results and create the new watershed_scnearios hash to run scenarios
-
-              define_routing(fields)
-              nn0 = @io.count-1
-              i = 1
-              while i <= nn0
-                chl = 0
-                rchl = 0
-                if nn0 > 1 then
-                  i1 = [1, @io[i]].max
-                else
-                  i1 = i
-                  @ix[i1] = 1
-                end
-                field = Field.find(@nbsa[i1])
-                field_area = field.field_area * AC_TO_HA
-                xx = Math.sqrt(field_area)
-                chl = xx * 0.1732
-                if @ix[i1] > 0 then
-                  if chl > 0 then 
-                    rchl = chl
-                  else  
-                    if rchl > 0 then
-                      chl = rchl
-                    else   
-                      chl = 0.1732 * xx
+                nn0 = @io.count-1
+                i = 1
+                while i <= nn0
+                  chl = 0
+                  rchl = 0
+                  if nn0 > 1 then
+                    i1 = [1, @io[i]].max
+                  else
+                    i1 = i
+                    @ix[i1] = 1
+                  end
+                  field = Field.find(@nbsa[i1])
+                  field_area = field.field_area * AC_TO_HA
+                  xx = Math.sqrt(field_area)
+                  chl = xx * 0.1732
+                  if @ix[i1] > 0 then
+                    if chl > 0 then 
                       rchl = chl
+                    else  
+                      if rchl > 0 then
+                        chl = rchl
+                      else   
+                        chl = 0.1732 * xx
+                        rchl = chl
+                      end
+                    end
+                  else  
+                    if rchl < 0.000000000001 then
+                      rchl = 0.1 * xx
+                    else          
+                      if chl < 0.000000000001 then
+                        chl = 0.1732 * xx
+                      else 
+                        if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
+                      end
                     end
                   end
-                else  
-                  if rchl < 0.000000000001 then
-                    rchl = 0.1 * xx
-                  else          
-                    if chl < 0.000000000001 then
-                      chl = 0.1732 * xx
-                    else 
-                      if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
-                    end
+                  
+                  if @ia[i1] > 0 then field_area = field_area * -1 end
+                  @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
+                  grazing = @scenario.operations.find_by_activity_id([7, 9])
+                  if @grazing == nil then
+                    @soils = Soil.where(:field_id => field.id).limit(1)
+                  else
+                    @soils = Soil.where(:field_id => field.id).limit(1)
                   end
-                end
-                
-                if @ia[i1] > 0 then field_area = field_area * -1 end
-                @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
-                grazing = @scenario.operations.find_by_activity_id([7, 9])
-                if @grazing == nil then
-                  @soils = Soil.where(:field_id => field.id).limit(1)
-                else
-                  @soils = Soil.where(:field_id => field.id).limit(1)
-                end
-                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                  if msg.eql?("OK") then msg = create_apex_soils() else return msg end
 
-                if msg.eql?("OK") then msg = create_subareas_watershed(i, field_area, chl, rchl, field.id) else return msg end
-                j+=1
-                i+=1
-              end  # end for i 1 to nn0
-            #############  this block for the new way of simulating watersheds ##########################
-        end
-
-
+                  if msg.eql?("OK") then msg = create_subareas_watershed(i, field_area, chl, rchl, field.id) else return msg end
+                  j+=1
+                  i+=1
+                end  # end for i 1 to nn0
+                #############  this block for the new way of simulating watersheds ##########################
+            end   # end if bk or localhost
     				print_array_to_file(@soil_list, "soil.dat")
     				print_array_to_file(@opcs_list_file, "OPCS.dat")
     				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
@@ -361,10 +359,10 @@ class WatershedsController < ApplicationController
     				else
     					@errors.push("Error running simulation for " + @watershed.name)
     				end
-    			end   # end params[:select_watershed].each
+  		    end   # end params[:select_watershed].each
     	else
     		@errors.push("Please select a watershed for simulation.")
-    	end	# end watershed present?
+      end	# end watershed present?
   	end
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
@@ -375,13 +373,27 @@ class WatershedsController < ApplicationController
   ################################ define_routing #################################
   def validate_routing(rec)
     #validate that a field is not being routing to the one receibing
+    #for i in 1..rec.count - 1
+    #rec1 = rec[i][5,4] + " " + rec[i][0,4]
+    #if rec1 == rec[i-1]
+      #rec[i][5,4] = "0"
+    #end
+    msg = "OK"
+    msg1 = ""
     for i in 1..rec.count - 1
-      rec1 = rec[i][5,4] + " " + rec[i][0,4]
-      if rec1 == rec[i-1]
-        rec[i][5,4] = "0"
+      field = rec[i].split(" ")
+      rec1 = field[1] + " " + field[0]
+      w_s = @watershed.watershed_scenarios.find_by_field_id(field[0])
+      w_s.field_id_to = field[1]
+      w_s.save
+      for j in i..rec.count - 1
+        if rec1 == rec[j] then msg1 = msg1 + "rec[j]" + " " end
       end
     end
-    return rec
+    if msg != "" then
+      msg = "Error routing fields: " + msg1
+    end
+    return msg
   end
   # Read results from R routing program and order the fields accordingly
   def define_routing(fields)
@@ -418,7 +430,11 @@ class WatershedsController < ApplicationController
     @ix.push(0)
     ir.push(0)
     #validate to avoid autorouting
-    rec = validate_routing(rec)
+    msg = "OK"
+    msg = validate_routing(rec)  #todo check this with Emad
+    if msg.include? "Error" then
+      return msg
+    end
     rec.each do |r|
       field = r.split(" ")
       ie.push(field[0])
