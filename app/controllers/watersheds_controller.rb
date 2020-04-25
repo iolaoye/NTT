@@ -387,7 +387,6 @@ class WatershedsController < ApplicationController
       w_s.field_id_to = field[1]
       w_s.save
       for j in 0..rec.count - 1
-        debugger
         if rec1 == rec[j] then msg1 = msg1 + Field.find(field[0]).field_name + "->" + Field.find(field[1]).field_name end
       end
     end
