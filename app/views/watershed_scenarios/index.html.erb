@@ -33,6 +33,7 @@
 			<thead>
 			  <tr>
     			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+    			<th class="gvCellStyleTitle"><%= t('fwatershed_scenario.routing_to') %></th>
     			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
     			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
   			  </tr>
@@ -45,7 +46,14 @@
     			<% else %>
       				<tr class="gvRowStyleOdd">
     			<% end %>
-        			<td class="gvCellStyleText"><%= Field.find_by_id(watershed_scenario.field_id).field_name %></td>
+        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id).field_name %></td>
+        			<% if watershed_scenario.field_id_to == nil %>
+	        			<td class="gvCellStyleText"><%= t('bmp.none') %></td>
+        			<% elsif watershed_scenario.field_id_to == "0" %>
+	        			<td class="gvCellStyleText"><%= 'outlet' %></td>
+	        		<% else  %>
+	        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id_to).field_name %></td>
+	        		<% end %>
         			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
         			<td class="gvCellStyleCheckbox">
           				<%= link_to image_tag("delete.png"), project_watershed_watershed_scenario_path(@project, @watershed, watershed_scenario), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
