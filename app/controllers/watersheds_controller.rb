@@ -130,7 +130,7 @@ class WatershedsController < ApplicationController
   # GET /watersheds
   # GET /watersheds.json
   def index
-    if params[:watershed_id] != "0" then
+    if params[:watershed_id] != nil && params[:watershed_id] != "0" then
       @watershed1 = Watershed.find(params[:watershed_id])
     end
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
