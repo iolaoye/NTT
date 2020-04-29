@@ -1,4 +1,4 @@
-<%= form_for([@project, @watershed, @watershed_scenario]) do |f| %>
+<%= form_for([@project, @watershed1, @watershed_scenario]) do |f| %>
   <% if @watershed_scenario.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @watershed_scenarios.errors.count, :model => t('models.watershed_scenario').downcase) %></h2>
@@ -10,11 +10,12 @@
       </ul>
     </div>
   <% end %>
-
+<div id="div_form" style="display:none">
   <td><%= collection_select :field, :id, Field.where(:location_id => @project.location.id), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %></td>
   <td><%= collection_select :scenario, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %></td>
-  <div class="actions">
+  <div >
 	<%= f.submit t('result.add') %>
   </div>
+</div>
   <%= hidden_field_tag(:watershed_id, @watershed_scenario.id) %>
 <% end %>

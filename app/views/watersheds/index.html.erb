@@ -42,6 +42,7 @@
 <div id="div_new" style="display:none"><%= render 'form'%></div>
 
 <%= form_tag simulate_project_watersheds_path(@project), method: :post do |f| %>
+	<%= hidden_field_tag(:project_id, @project.id) %>
     <% if @watersheds.count > 0 %>
     	<% if @watershed_scenarios_count > 0 %>
 			<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('watershed.watershed'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_watershed" %>
@@ -53,7 +54,6 @@
 	    <br>
         <br>
 		<%= t('instructions.scenarios').gsub(t('models.scenario'), t('watershed.watershed')) %>
-
 		<div class="table-responsive">
 		  	<div class="panel panel-default">
 				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
@@ -66,31 +66,82 @@
 						</tr>
 				  	</thead>
 				  	<tbody>
-						<% i=1 %>
+						<% i=0 %>
+						<%= hidden_field_tag(:watersheds_count, @watersheds.count) %>
+						<%= hidden_field_tag(:watershed_number, 0)		 %>
+						<%= hidden_field_tag(:watershed_id, 0) %>
 						<% @watersheds.each do |w| %>
-							<% if (i % 2 == 0) %>
-								<tr class="gvRowStyleEven">
-							<% else %>
-							  	<tr class="gvRowStyleOdd">
+							<% i = i + 1 %>
+							<tr>
+								<td class="gvCellStyleText"><%= check_box_tag "select_watershed[]",w.id %></td>
+								<td style="cursor:pointer; color:blue;" onclick="show_ws(<%= i %>, <%= w.id %>)"><%= w.name %></td>
+								<td class="gvCellStyleText"><%= w.last_simulation %></td>
+								<td class="gvCellStyleActions">
+									<%= link_to image_tag("edit.png"), edit_project_watershed_path(@project, w), title: t('general.edit') %>
+									<%= link_to image_tag("delete.png"), w, method: :delete, data: { confirm: t('general.confirm') } %>
+								</td>		
+							</tr>
+							<% div_ws = "div_ws" + i.to_s %>
+							<% field_id = "field" + i.to_s %>
+							<% scenario_id = "scenario" + i.to_s %>
+							<% tr_style = "display:none; width:100%; background-color: #fefbd8" %>
+							<% if @watershed1 != nil %>
+								<% if @watershed1.id == w.id %>
+									<% tr_style = "width:100%; background-color: #fefbd8" %>
+								<% end %>
 							<% end %>
-									<td class="gvCellStyleText">
-									  <%= check_box_tag "select_watershed[]", w.id %>
-									</td>
-									<td class="table-link">
-									  <%= link_to w.name, project_watershed_watershed_scenarios_path(@project, w) %>
-									</td>
-									<td class="gvCellStyleText">
-									  <%= w.last_simulation %>
-									</td>
-									<td class="gvCellStyleActions">
-										<%= link_to image_tag("edit.png"), edit_project_watershed_path(@project, w), title: t('general.edit') %>
-										<%#= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
-										<%= link_to image_tag("delete.png"), w, method: :delete, data: { confirm: t('general.confirm') } %>
-									</td>
-							  	</tr>
-							  	<% i = i + 1 %>
+							<tr style=<%= tr_style %> class="toggable borders" id=<%=div_ws%>>
+								<td colspan="4">
+									<table class='table table-striped'>
+										<tr>
+											<td>
+												<%= select_tag field_id.to_sym, options_for_select(Field.where(:location_id => @project.location.id).collect {|c| [c.field_name, c.id]}, :selected => 0, :required => true), {:prompt => t('helpers.select.field')}%>
+												<%= select_tag scenario_id.to_sym, options_for_select(@scenarios, :selected => 0, :required => true), {:prompt => t('helpers.select.scenario')}%>
+											</td>
+											<div >
+												<%= button_tag("Add", :class=>"btn btn-primary", :id=>"button",:name=>"submit", :action => "Add") %>
+											</div>
+										</tr>
+									</table>
+									<table class='table table-striped'>
+										<thead>
+										  <tr>
+							    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+							    			<th class="gvCellStyleTitle"><%= t('fwatershed_scenario.routing_to') %></th>
+							    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
+							    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+							  			  </tr>
+										</thead>
+										<tbody>
+								  			<% j=1 %>
+								  			<% watershed_scenarios = WatershedScenario.where(:watershed_id => w.id) %>
+								  			<% watershed_scenarios.each do |watershed_scenario| %>
+								    			<% if (j % 2  == 0) %>
+								      				<tr class="gvRowStyleEven">
+								    			<% else %>
+								      				<tr class="gvRowStyleOdd">
+								    			<% end %>
+								        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id).field_name %></td>
+								        			<% if watershed_scenario.field_id_to == nil %>
+									        			<td class="gvCellStyleText"><%= t('bmp.none') %></td>
+								        			<% elsif watershed_scenario.field_id_to == "0" %>
+									        			<td class="gvCellStyleText"><%= 'outlet' %></td>
+									        		<% else  %>
+									        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id_to).field_name %></td>
+									        		<% end %>
+								        			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+								        			<td class="gvCellStyleCheckbox">
+														<%= link_to image_tag("delete.png"), watershed_scenario, method: :delete, data: { confirm: t('general.confirm') } %>
+								        			</td>
+								      			</tr>
+								  				<% j = j + 1 %>
+								  			<% end %>
+										</tbody>
+									</table>
+								</td>
+							</tr>
 						<% end %>
-				  	</tbody>
+					</tbody>
 				</table>
 		  	</div>
 		</div>
@@ -98,3 +149,26 @@
 <% end %>
 
 <br>
+<script>
+	function show_ws(ele, ws_id) {
+		div_ws = document.getElementById("div_ws" + ele);
+		if (div_ws.style.display == "") {
+			document.getElementById("div_ws" + ele).style.display = "none";
+			document.getElementById("watershed_number").value = 0;
+			document.getElementById("watershed_id").value = 0;
+			}
+	  	else {
+	  		document.getElementById("div_ws" + ele).style.display = "";
+	  		document.getElementById("watershed_number").value = ele;
+			document.getElementById("watershed_id").value = ws_id;
+	  		}
+	  	ws_num = document.getElementById("watersheds_count").value
+	  	for (i = 1; i <= ws_num; i++) {
+	  		if (i != ele) {
+	  			document.getElementById("div_ws" + i).style.display = "none";
+	  			document.getElementById("field" + i).selectedIndex = 0;
+	  			document.getElementById("scenario" + i).selectedIndex = 0;
+	  		}
+	  	}
+	}
+</script>

@@ -5,9 +5,10 @@
 
 cont = false
 	
+	file = "db/seeds/crops.rb"
+	load file
 
-
-		file = "db/seeds/tillages.rb"
+	file = "db/seeds/tillages.rb"
 	load file
 
 
