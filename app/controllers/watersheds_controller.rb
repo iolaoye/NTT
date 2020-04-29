@@ -130,8 +130,11 @@ class WatershedsController < ApplicationController
   # GET /watersheds
   # GET /watersheds.json
   def index
-    if params[:watershed_id] != nil && params[:watershed_id] != "0" then
-      @watershed1 = Watershed.find(params[:watershed_id])
+    @watershed1_id = 0
+    @watershed1_num = 0
+    if params[:watershed_id] != nil && params[:watershed_id] != "0" then 
+      @watershed1_id = Watershed.find(params[:watershed_id]).id 
+      @watershed1_num = params[:watershed_number]
     end
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
     @watersheds = Watershed.where(:location_id => @project.location.id)
@@ -150,7 +153,7 @@ class WatershedsController < ApplicationController
     field_id = params[("field" + params[:watershed_number]).to_sym]
     scenario_id = params[("scenario" + params[:watershed_number]).to_sym]
     item = WatershedScenario.find_by_field_id_and_watershed_id(field_id, params[:watershed_id])
-	  if item == nil
+	  if item == nil && field_id != nil && scenario_id != nil
 			@new_watershed_scenario = WatershedScenario.new
 			@new_watershed_scenario.field_id = field_id
 			@new_watershed_scenario.scenario_id = scenario_id
@@ -174,7 +177,7 @@ class WatershedsController < ApplicationController
   end
 
   ################################  simulation   #################################
-  def simulate    
+  def simulate 
     msg = "OK"
     @errors = Array.new
     if params[:action] != nil
@@ -205,8 +208,12 @@ class WatershedsController < ApplicationController
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
   	watershed_scenarios_count(@watersheds)
-    #@watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed1.id)
-    if params[:watershed_id] != "0" then @watershed1 = Watershed.find(params[:watershed_id]) end
+    @watershed1_id = 0
+    @watershed1_num = 0
+    if params[:watershed_id] != "0" then 
+      @watershed1_id = Watershed.find(params[:watershed_id]).id 
+      @watershed1_num = params[:watershed_number]
+    end
     render "index"
   end
 
