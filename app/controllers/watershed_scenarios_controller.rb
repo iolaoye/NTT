@@ -86,16 +86,21 @@ class WatershedScenariosController < ApplicationController
   # DELETE /watershed_scenarios/1
   # DELETE /watershed_scenarios/1.json
   def destroy
-    @watershed_scenario = WatershedScenario.find(params[:id])
-    if @watershed_scenario.destroy
-	  redirect_to project_watershed_watershed_scenarios_path(params[:project_id], params[:watershed_id]), notice: t('models.watershed_scenario') + t('notices.deleted')
-    end
+    watershed_scenario = WatershedScenario.find(params[:id])
+    project_id = watershed_scenario.watershed.location.project.id
+    watershed_scenario.delete
+    #@watershed1 = Watershed.find(params[:watershed_id])
+    #@watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed1.id)
+    
+    #if @watershed_scenario.destroy
+	   redirect_to project_watersheds_path(project_id), notice: t('models.watershed_scenario') + t('notices.deleted')
+    #end
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
   def new_scenario
     @scenarios = Scenario.where(:field_id => 0)
-	watershed = Watershed.find(params[:watershed_id])
+	  watershed = Watershed.find(params[:watershed_id])
     @watershed_name = watershed.name
     item = WatershedScenario.where(:field_id => params[:watershed][:field_id], :scenario_id => params[:watershed][:scenario_id], :watershed_id => params[:id]).first
     respond_to do |format|

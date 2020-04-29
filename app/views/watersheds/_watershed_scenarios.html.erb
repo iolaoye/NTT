@@ -1,0 +1,60 @@
+								<% div_ws = "div_ws" + i.to_s %>
+								<tr style="display:none; width:100%; background-color: #fefbd8" class="toggable borders" id=<%=div_ws%>>
+									<td colspan="4">
+
+
+
+										<table class='table table-striped'>
+											<tr>
+												<td>
+													<% field_id = "field" + i.to_s %>
+													<% scenario_id = "scenario" + i.to_s %>
+													<%= collection_select field_id.to_sym, :id, Field.where(:location_id => @project.location.id), :id, :field_name, {:prompt => t('helpers.select.field')}, {:required => true} %>
+													<%= collection_select scenario_id.to_sym, :id, @scenarios, :id, :name, {:prompt => t('helpers.select.scenario')}, {:required => true} %>
+													<div >
+										    			<%= link_to t('general.back'), new_scenario_project_watershed_path(params[:project_id], w.id, :field => ""), :class => "btn btn-primary" %>
+
+														<%= button_tag("Add", :class=>"test", :id=>"button",:name=>"submit", :action => "simulate") %>
+  													</div>
+
+												</td>
+											</tr>
+										</table>
+										<table class='table table-striped'>
+											<thead>
+											  <tr>
+								    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
+								    			<th class="gvCellStyleTitle"><%= t('fwatershed_scenario.routing_to') %></th>
+								    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
+								    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
+								  			  </tr>
+											</thead>
+											<tbody>
+								  			<% j=1 %>
+								  			<% watershed_scenarios = WatershedScenario.where(:watershed_id => w.id) %>
+								  			<% watershed_scenarios.each do |watershed_scenario| %>
+								    			<% if (j % 2  == 0) %>
+								      				<tr class="gvRowStyleEven">
+								    			<% else %>
+								      				<tr class="gvRowStyleOdd">
+								    			<% end %>
+								        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id).field_name %></td>
+								        			<% if watershed_scenario.field_id_to == nil %>
+									        			<td class="gvCellStyleText"><%= t('bmp.none') %></td>
+								        			<% elsif watershed_scenario.field_id_to == "0" %>
+									        			<td class="gvCellStyleText"><%= 'outlet' %></td>
+									        		<% else  %>
+									        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id_to).field_name %></td>
+									        		<% end %>
+								        			<td class="gvCellStyleText"><%= Scenario.find_by_id(watershed_scenario.scenario_id).name %></td>
+								        			<td class="gvCellStyleCheckbox">
+														<%= link_to image_tag("delete.png"), watershed_scenario, method: :delete, data: { confirm: t('general.confirm') } %>
+								        			</td>
+								      			</tr>
+								  				<% j = j + 1 %>
+								  			<% end %>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+				  	

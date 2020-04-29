@@ -3,7 +3,7 @@ class WatershedsController < ApplicationController
   include ProjectsHelper
   include SimulationsHelper
   include ApplicationHelper
-
+ 
   before_action :set_notifications
 
   def run_fem
@@ -81,7 +81,6 @@ class WatershedsController < ApplicationController
     end
   end
 
-
   def simulate_fem
     @errors = Array.new
     msg = "OK"
@@ -131,8 +130,10 @@ class WatershedsController < ApplicationController
   # GET /watersheds
   # GET /watersheds.json
   def index
+    if params[:watershed_id] != "0" then
+      @watershed1 = Watershed.find(params[:watershed_id])
+    end
     @scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
-    #@project = Project.find(params[:project_id])
     @watersheds = Watershed.where(:location_id => @project.location.id)
     watershed_scenarios_count(@watersheds)
 
@@ -145,231 +146,227 @@ class WatershedsController < ApplicationController
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
   def new_scenario()
-    #find the name for the collection
-  	watersheds = Watershed.where(:location_id => Project.find(params[:project_id]).location)
-  	i = 1
-  	field_id = ""
-  	scenario_id = ""
-  	watersheds.each do |watershed|
-  		if watershed.name.eql? @watershed_name then
-  			field_id = params[("field" + i.to_s).to_sym][:id]
-  			scenario_id = params[("scenario" + i.to_s).to_sym][:id]
-  		end
-  		i +=1
-  	end
-
-  	if !(field_id == "" || scenario_id == "") then
-  		item = WatershedScenario.where(:field_id => field_id, :scenario_id => scenario_id, :watershed_id => @watershed.id).first
-  		respond_to do |format|
-  		  ## if item nil
-  		  if item == nil
-  			@new_watershed_scenario = WatershedScenario.new
-  			@new_watershed_scenario.field_id = field_id
-  			@new_watershed_scenario.scenario_id = scenario_id
-  			@new_watershed_scenario.watershed_id = @watershed.id
-  			#### Save new watershed
-  			if @new_watershed_scenario.save
-  			  return "saved"
-  			else
-  			  return "error"
-  			end
-  			#### Save new watershed
-  		  else
-  			return "exist"
-  		  end
-  		  ## if item nil
-  		end  #Respond to format
-  	else
-  		return "error"
-  	end  # if field or scenario <> ""
+    # validates taht field does not exist in the watershed
+    field_id = params[("field" + params[:watershed_number]).to_sym]
+    scenario_id = params[("scenario" + params[:watershed_number]).to_sym]
+    item = WatershedScenario.find_by_field_id_and_watershed_id(field_id, params[:watershed_id])
+	  if item == nil
+			@new_watershed_scenario = WatershedScenario.new
+			@new_watershed_scenario.field_id = field_id
+			@new_watershed_scenario.scenario_id = scenario_id
+			@new_watershed_scenario.watershed_id = params[:watershed_id]
+			#### Save new watershed
+			if @new_watershed_scenario.save
+			  return "saved"
+			else
+			  return "error"
+			end
+	  else
+		 return "exist"
+	  end
   end
 
   ################################  SHOW used for simulation   #################################
-  # GET /watersheds/1
-  # GET /watersheds/1.json
-  def simulate
+  def show()
+    # GET /watersheds/1
+    # GET /watersheds/1.json
+    simulate
+  end
+
+  ################################  simulation   #################################
+  def simulate    
     msg = "OK"
     @errors = Array.new
-    if (params[:commit].include?("FEM")) then
-        msg = simulate_fem
-	  elsif !(params[:commit].include?("Simulate")) then
-  		#update watershed_scenarios
-  		@watershed_name = params[:commit]
-  		@watershed_name.slice! "Add to "
-  		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
-  		status = new_scenario()
-  		@notice = nil
-  		case status
-  			when "saved"
-  				@notice = t('field.field') + "/" + t('scenario.scenario') + " " + t('general.created')
-  			when "exist"
-  				@errors.push(t('field.field') + "/" + t('scenario.scenario') + " " + t('errors.messages.exist'))
-  			when "error"
-  				@errors.push("Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario'))
-  		end
-    else
-    	#run simulations
-    	if params[:select_watershed]
-    			params[:select_watershed].each do |ws|
-    				@watershed = Watershed.find(ws)
-    				if @watershed.watershed_scenarios.count == 0
-    					@errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
-    				end
-    				break if @errors.present?
-    				session[:simulation] = 'watershed'
-    				@project = Project.find(params[:project_id])
-    				watershed_id = ws
-    				@dtNow1 = Time.now.to_s
-    				dir_name = APEX + "/APEX" + session[:session_id]
-    				if !File.exists?(dir_name)
-    				  FileUtils.mkdir_p(dir_name)
-    				end
-    				watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id).order(:field_id)
-    				msg = create_control_file()			#this prepares the apexcont.dat file
-    				if msg.eql?("OK") then msg = create_parameter_file() else return msg end			#this prepares the parms.dat file
-    				#todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
-    				@scenario = Scenario.find(watershed_scenarios[0].scenario_id)
-    				#if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end			#this prepares the apex.wth file
-            if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end		#this prepares the apex.sit file
-            @field = watershed_scenarios[0].field
-            if @project.location.state_id == 0 then 
-              if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
-            else
-              if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder  
-            end
-    				@last_soil = 0
-    				@last_soil_sub = 0
-    				@last_subarea = 0
-    				@soil_list = Array.new
-    				@opcs_list_file = Array.new
-    				@opers = Array.new
-    				@depth_ant = Array.new
-    				@change_till_depth = Array.new
-    				@fem_list = Array.new
-    				@nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
-    				@current_nutrients = Array.new
-    				@new_fert_line = Array.new
-    				@subarea_file = Array.new
-    				@soil_number = 0
-    				@last_herd = 0
-    				@herd_list = Array.new
-    				@change_fert_for_grazing_line = Array.new
-    		    @fert_code = 79
-    			  state_id = @project.location.state_id
-    			  @state_abbreviation = "**"
-  			  	if state_id != 0 and state_id != nil then
-  			  		@state_abbreviation = State.find(state_id).state_abbreviation
-  			  	end
-            if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
-            fields = ""
-            watershed_scenarios.each do |p|
-              fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
-            end
-            j=0
-            #todo remove this condition when move to production.
-            if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
-                #############  this block for the old way of simulating watersheds ##########################
-                watershed_scenarios.each do |p|
-                  @scenario = Scenario.find(p.scenario_id)
-                  @field = Field.find(p.field_id)
-                  @grazing = @scenario.operations.find_by_activity_id([7, 9])
-                  if @grazing == nil then
-                    @soils = Soil.where(:field_id => p.field_id).limit(1)
-                  else
-                    @soils = Soil.where(:field_id => p.field_id).limit(1)
-                  end
-                    if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-                    if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
-                    j+=1
-                end # en
-                #############  this block for the old way of simulating watersheds ##########################
-            else
-                #############  this block for the new way of simulating watersheds ##########################
-                #call R program. read results and create the new watershed_scnearios hash to run scenarios
-                msg = define_routing(fields)
-                if msg.include? "Error"
-                  @errors.push(msg)
-                  break
-                end   # if msg == OK
-
-                nn0 = @io.count-1
-                i = 1
-                while i <= nn0
-                  chl = 0
-                  rchl = 0
-                  if nn0 > 1 then
-                    i1 = [1, @io[i]].max
-                  else
-                    i1 = i
-                    @ix[i1] = 1
-                  end
-                  field = Field.find(@nbsa[i1])
-                  field_area = field.field_area * AC_TO_HA
-                  xx = Math.sqrt(field_area)
-                  chl = xx * 0.1732
-                  if @ix[i1] > 0 then
-                    if chl > 0 then 
-                      rchl = chl
-                    else  
-                      if rchl > 0 then
-                        chl = rchl
-                      else   
-                        chl = 0.1732 * xx
-                        rchl = chl
-                      end
-                    end
-                  else  
-                    if rchl < 0.000000000001 then
-                      rchl = 0.1 * xx
-                    else          
-                      if chl < 0.000000000001 then
-                        chl = 0.1732 * xx
-                      else 
-                        if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
-                      end
-                    end
-                  end
-                  
-                  if @ia[i1] > 0 then field_area = field_area * -1 end
-                  @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
-                  grazing = @scenario.operations.find_by_activity_id([7, 9])
-                  if @grazing == nil then
-                    @soils = Soil.where(:field_id => field.id).limit(1)
-                  else
-                    @soils = Soil.where(:field_id => field.id).limit(1)
-                  end
-                  if msg.eql?("OK") then msg = create_apex_soils() else return msg end
-
-                  if msg.eql?("OK") then msg = create_subareas_watershed(i, field_area, chl, rchl, field.id) else return msg end
-                  j+=1
-                  i+=1
-                end  # end for i 1 to nn0
-                #############  this block for the new way of simulating watersheds ##########################
-            end   # end if bk or localhost
-    				print_array_to_file(@soil_list, "soil.dat")
-    				print_array_to_file(@opcs_list_file, "OPCS.dat")
-    				if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
-    				if !msg.include?("Error") then
-    					msg = read_apex_results(msg)
-    					@watershed.last_simulation = Time.now
-    				end
-    				@watershed.save
-    				if msg == "OK"
-    					@notice = "Simulation ran succesfully"
-    				else
-    					@errors.push("Error running simulation for " + @watershed.name)
-    				end
-  		    end   # end params[:select_watershed].each
-    	else
-    		@errors.push("Please select a watershed for simulation.")
-      end	# end watershed present?
-  	end
+    if params[:action] != nil
+	    if !((params[:action].include?("simulate")) or params[:action].include?('show')) then
+    		#update watershed_scenarios
+    		@watershed_name = params[:commit]
+    		@watershed_name.slice! "Add to "
+    		@watershed = Watershed.find_by_name_and_location_id(@watershed_name, @project.location.id)
+    		status = new_scenario()
+    		@notice = nil
+    		case status
+    			when "saved"
+    				@notice = t('field.field') + "/" + t('scenario.scenario') + " " + t('general.created')
+    			when "exist"
+    				@errors.push(t('field.field') + "/" + t('scenario.scenario') + " " + t('errors.messages.exist'))
+    			when "error"
+    				@errors.push("Error " + t('general.adding') + " " + t('field.field') + "/" + t('scenario.scenario'))
+    		end
+      end
+      if params[:commit] != nil
+        if params[:commit] = "Simulate Selected Field Routing (Watershed)"
+          simulate_watersheds
+        end
+      else
+        msg = new_scenario()
+      end
+    end
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
   	watershed_scenarios_count(@watersheds)
+    #@watershed_scenarios = WatershedScenario.where(:watershed_id => @watershed1.id)
+    if params[:watershed_id] != "0" then @watershed1 = Watershed.find(params[:watershed_id]) end
     render "index"
   end
 
+  def simulate_watersheds
+    #run simulations
+    if params[:select_watershed]
+        params[:select_watershed].each do |ws|
+          @watershed = Watershed.find(ws)
+          if @watershed.watershed_scenarios.count == 0
+            @errors.push("Unable to simulate Watershed " + @watershed.name + ". Please add a field to "  + @watershed.name + " to successfully run the simulation.")
+          end
+          break if @errors.present?
+          session[:simulation] = 'watershed'
+          @project = Project.find(params[:project_id])
+          watershed_id = ws
+          @dtNow1 = Time.now.to_s
+          dir_name = APEX + "/APEX" + session[:session_id]
+          if !File.exists?(dir_name)
+            FileUtils.mkdir_p(dir_name)
+          end
+          watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id).order(:field_id)
+          msg = create_control_file()     #this prepares the apexcont.dat file
+          if msg.eql?("OK") then msg = create_parameter_file() else return msg end      #this prepares the parms.dat file
+          #todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
+          @scenario = Scenario.find(watershed_scenarios[0].scenario_id)
+          #if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end      #this prepares the apex.wth file
+          if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end    #this prepares the apex.sit file
+          @field = watershed_scenarios[0].field
+          if @project.location.state_id == 0 then 
+            if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+          else
+            if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) else return msg end #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder  
+          end
+          @last_soil = 0
+          @last_soil_sub = 0
+          @last_subarea = 0
+          @soil_list = Array.new
+          @opcs_list_file = Array.new
+          @opers = Array.new
+          @depth_ant = Array.new
+          @change_till_depth = Array.new
+          @fem_list = Array.new
+          @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+          @current_nutrients = Array.new
+          @new_fert_line = Array.new
+          @subarea_file = Array.new
+          @soil_number = 0
+          @last_herd = 0
+          @herd_list = Array.new
+          @change_fert_for_grazing_line = Array.new
+          @fert_code = 79
+          state_id = @project.location.state_id
+          @state_abbreviation = "**"
+          if state_id != 0 and state_id != nil then
+            @state_abbreviation = State.find(state_id).state_abbreviation
+          end
+          if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg end
+          fields = ""
+          watershed_scenarios.each do |p|
+            fields += "(" + p.field_id.to_s + ":" + p.field.coordinates + ")"   #generate the string to send to R program
+          end
+          j=0
+          #todo remove this condition when move to production.
+          if !(request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost"))
+              #############  this block for the old way of simulating watersheds ##########################
+              watershed_scenarios.each do |p|
+                @scenario = Scenario.find(p.scenario_id)
+                @field = Field.find(p.field_id)
+                @grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => p.field_id).limit(1)
+                else
+                  @soils = Soil.where(:field_id => p.field_id).limit(1)
+                end
+                  if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+                  if msg.eql?("OK") then msg = create_subareas(j+1) else return msg end
+                  j+=1
+              end # en
+              #############  this block for the old way of simulating watersheds ##########################
+          else
+              #############  this block for the new way of simulating watersheds ##########################
+              #call R program. read results and create the new watershed_scnearios hash to run scenarios
+              msg = define_routing(fields)
+              if msg.include? "Error"
+                @errors.push(msg)
+                break
+              end   # if msg == OK
+
+              nn0 = @io.count-1
+              i = 1
+              while i <= nn0
+                chl = 0
+                rchl = 0
+                if nn0 > 1 then
+                  i1 = [1, @io[i]].max
+                else
+                  i1 = i
+                  @ix[i1] = 1
+                end
+                field = Field.find(@nbsa[i1])
+                field_area = field.field_area * AC_TO_HA
+                xx = Math.sqrt(field_area)
+                chl = xx * 0.1732
+                if @ix[i1] > 0 then
+                  if chl > 0 then 
+                    rchl = chl
+                  else  
+                    if rchl > 0 then
+                      chl = rchl
+                    else   
+                      chl = 0.1732 * xx
+                      rchl = chl
+                    end
+                  end
+                else  
+                  if rchl < 0.000000000001 then
+                    rchl = 0.1 * xx
+                  else          
+                    if chl < 0.000000000001 then
+                      chl = 0.1732 * xx
+                    else 
+                      if (chl - rchl).abs < 1.E-5 then chl = 1.732 * rchl end
+                    end
+                  end
+                end
+                
+                if @ia[i1] > 0 then field_area = field_area * -1 end
+                @scenario = Scenario.find(field.watershed_scenarios.first.scenario_id)
+                grazing = @scenario.operations.find_by_activity_id([7, 9])
+                if @grazing == nil then
+                  @soils = Soil.where(:field_id => field.id).limit(1)
+                else
+                  @soils = Soil.where(:field_id => field.id).limit(1)
+                end
+                if msg.eql?("OK") then msg = create_apex_soils() else return msg end
+
+                if msg.eql?("OK") then msg = create_subareas_watershed(i, field_area, chl, rchl, field.id) else return msg end
+                j+=1
+                i+=1
+              end  # end for i 1 to nn0
+              #############  this block for the new way of simulating watersheds ##########################
+          end   # end if bk or localhost
+          print_array_to_file(@soil_list, "soil.dat")
+          print_array_to_file(@opcs_list_file, "OPCS.dat")
+          if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg end #this operation will run a simulation
+          if !msg.include?("Error") then
+            msg = read_apex_results(msg)
+            @watershed.last_simulation = Time.now
+          end
+          @watershed.save
+          if msg == "OK"
+            @notice = "Simulation ran succesfully"
+          else
+            @errors.push("Error running simulation for " + @watershed.name)
+          end
+        end   # end params[:select_watershed].each
+    else
+      @errors.push("Please select a watershed for simulation.")
+    end # end watershed present?
+  end
   ################################ define_routing #################################
   def validate_routing(rec)
     #validate that a field is not being routing to the one receibing

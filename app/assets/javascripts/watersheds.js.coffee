@@ -6,8 +6,13 @@ create_watershed = ->
     $("#div_new").toggle(true)
 
 select_scenarios = (num) ->
-  field = "#field" + num + "_id"
-  scenario = "#scenario" + num + "_id" 
+  if (num==0)
+     field = "#field"
+     scenario = "#scenario"
+  else
+     field = "#field" + num 
+     scenario = "#scenario" + num
+  $("#field_id1").val($(field).val())
   url = "/projects/" + $("#project_id").val() + "/fields/" + $(field).val() + "/scenarios.json"
   if $(field).val() > 0
     $.getJSON url, (scenarios) ->
@@ -38,64 +43,67 @@ $(document).ready ->
   $("#new_watershed").click ->
     create_watershed()
 
-  $("#field1_id").change ->
+  $("#field_id").change ->
+    select_scenarios(0)
+
+  $("#field1").change ->
     select_scenarios(1)
 
-  $("#field2_id").change ->
+  $("#field2").change ->
     select_scenarios(2)
 
-  $("#field3_id").change ->
+  $("#field3").change ->
     select_scenarios(3)
 
-  $("#field4_id").change ->
+  $("#field4").change ->
     select_scenarios(4)
 
-  $("#field5_id").change ->
+  $("#field5").change ->
     select_scenarios(5)
 
-  $("#field6_id").change ->
+  $("#field6").change ->
     select6_scenarios(6)
 
-  $("#field7_id").change ->
+  $("#field7").change ->
     select_scenarios(7)
 
-  $("#field8_id").change ->
+  $("#field8").change ->
     select_scenarios(8)
 
-  $("#field9_id").change ->
+  $("#field9").change ->
     select_scenarios(9)
 
-  $("#field10_id").change ->
+  $("#field10").change ->
     select_scenarios(10)
 
-  $("#field11_id").change ->
+  $("#field11").change ->
     select_scenarios(11)
 
-  $("#field12_id").change ->
+  $("#field12").change ->
     select_scenarios(12)
 
-  $("#field13_id").change ->
+  $("#field13").change ->
     select_scenarios(13)
 
-  $("#field14_id").change ->
+  $("#field14").change ->
     select_scenarios(14)
 
-  $("#field15_id").change ->
+  $("#field15").change ->
     select_scenarios(15)
 
-  $("#field16_id").change ->
+  $("#field16").change ->
     select_scenarios(16)
 
-  $("#field17_id").change ->
+  $("#field17").change ->
     select_scenarios(17)
 
-  $("#field18_id").change ->
+  $("#field18").change ->
     select_scenarios(18)
 
-  $("#field19_id").change ->
+  $("#field19").change ->
     select_scenarios(19)
 
-  $("#field20_id").change ->
+  $("#field20").change ->
     select_scenarios(20)
 
   $("#simulate_watershed").click ->
