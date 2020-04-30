@@ -160,12 +160,12 @@ class WatershedsController < ApplicationController
 			@new_watershed_scenario.watershed_id = params[:watershed_id]
 			#### Save new watershed
 			if @new_watershed_scenario.save
-			  return "saved"
+			  return t('activerecord.notices.messages.added')
 			else
-			  return "error"
+			  return "Error"
 			end
 	  else
-		 return "exist"
+		 return "Error => " + t('errors.messages.exist')
 	  end
   end
 
@@ -204,6 +204,11 @@ class WatershedsController < ApplicationController
       else
         msg = new_scenario()
       end
+    end
+    if msg.include? "Error" then
+      @errors.push(msg)
+    else
+      @notice = msg
     end
   	@scenarios = Scenario.where(:field_id => 0) # make @scenarios empty to start the list page in watershed
   	@watersheds = Watershed.where(:location_id => @project.location.id)
