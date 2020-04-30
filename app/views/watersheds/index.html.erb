@@ -53,7 +53,7 @@
  		<% end %>
 	    <br>
         <br>
-		<%= t('instructions.scenarios').gsub(t('models.scenario'), t('watershed.watershed')) %>
+		<%= t('instructions.scenarios').gsub(t('models.scenario').downcase, t('watershed.watershed').downcase) %>
 		<div class="table-responsive">
 		  	<div class="panel panel-default">
 				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
@@ -68,8 +68,8 @@
 				  	<tbody>
 						<% i=0 %>
 						<%= hidden_field_tag(:watersheds_count, @watersheds.count) %>
-						<%= hidden_field_tag(:watershed_number, 0)		 %>
-						<%= hidden_field_tag(:watershed_id, 0) %>
+						<%= hidden_field_tag(:watershed_number, @watershed1_num) %>
+						<%= hidden_field_tag(:watershed_id, @watershed1_id) %>
 						<% @watersheds.each do |w| %>
 							<% i = i + 1 %>
 							<tr>
@@ -85,8 +85,8 @@
 							<% field_id = "field" + i.to_s %>
 							<% scenario_id = "scenario" + i.to_s %>
 							<% tr_style = "display:none; width:100%; background-color: #fefbd8" %>
-							<% if @watershed1 != nil %>
-								<% if @watershed1.id == w.id %>
+							<% if @watershed1_id != "0" %>
+								<% if @watershed1_id == w.id %>
 									<% tr_style = "width:100%; background-color: #fefbd8" %>
 								<% end %>
 							<% end %>
@@ -99,7 +99,7 @@
 												<%= select_tag scenario_id.to_sym, options_for_select(@scenarios, :selected => 0, :required => true), {:prompt => t('helpers.select.scenario')}%>
 											</td>
 											<div >
-												<%= button_tag("Add", :class=>"btn btn-primary", :id=>"button",:name=>"submit", :action => "Add") %>
+												<%= button_tag("Add", :class=>"btn btn-primary", :id=>"button",:name=>"submit") %>
 											</div>
 										</tr>
 									</table>
@@ -120,8 +120,8 @@
 								      				<tr class="gvRowStyleEven">
 								    			<% else %>
 								      				<tr class="gvRowStyleOdd">
-								    			<% end %>
-								        			<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id).field_name %></td>
+								    			<% end %>							        			
+													<td class="gvCellStyleText"><%= Field.find(watershed_scenario.field_id).field_name %></td>
 								        			<% if watershed_scenario.field_id_to == nil %>
 									        			<td class="gvCellStyleText"><%= t('bmp.none') %></td>
 								        			<% elsif watershed_scenario.field_id_to == "0" %>
