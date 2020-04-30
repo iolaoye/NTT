@@ -12,7 +12,7 @@ en:
       messages:
         record_invalid: "Validation failed: %{errors}"
         projects:
-          no_saved: "Project could not be saved"
+          no_saved: "%{model} could not be saved"
           exist: "Project already exists"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
@@ -22,6 +22,7 @@ en:
           saved: "%{model} Saved"
           created: "%{model} Created"
           deleted: "%{model} Deleted"
+          added: "%{model} Added"
     models:
       projects: "Projects"
       location: "Location"
