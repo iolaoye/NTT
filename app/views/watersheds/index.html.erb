@@ -91,8 +91,8 @@
 								<% end %>
 							<% end %>
 							<tr style=<%= tr_style %> class="toggable borders" id=<%=div_ws%>>
-								<td colspan="4">
-									<table class='table table-striped'>
+								<td colspan="4" style="background-color: #fefbd8">
+									<table class='table-bordered'>
 										<tr>
 											<td>
 												<%= select_tag field_id.to_sym, options_for_select(Field.where(:location_id => @project.location.id).collect {|c| [c.field_name, c.id]}, :selected => 0, :required => true), {:prompt => t('helpers.select.field')}%>
@@ -103,7 +103,7 @@
 											</div>
 										</tr>
 									</table>
-									<table class='table table-striped'>
+									<table class='table table-condensed table-bordered' style="background-color: #fefbd8">
 										<thead>
 										  <tr>
 							    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
