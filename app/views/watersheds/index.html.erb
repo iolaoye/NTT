@@ -92,7 +92,7 @@
 							<% end %>
 							<tr style=<%= tr_style %> class="toggable borders" id=<%=div_ws%>>
 								<td colspan="4" style="background-color: #fefbd8">
-									<table class='table-bordered'>
+									<table class='table table-striped'>
 										<tr>
 											<td>
 												<%= select_tag field_id.to_sym, options_for_select(Field.where(:location_id => @project.location.id).collect {|c| [c.field_name, c.id]}, :selected => 0, :required => true), {:prompt => t('helpers.select.field')}%>
