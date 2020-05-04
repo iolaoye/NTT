@@ -573,7 +573,7 @@ class BmpsController < ApplicationController
               subarea.tdms = 33
             else 
               @bmp.crop_id = 0 
-              subaera.tdms = 0
+              subarea.tdms = 0
             end
 			     subarea.drt = 2
           when "delete"
