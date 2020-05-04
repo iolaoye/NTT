@@ -1941,20 +1941,22 @@ def send_file_to_DNDC(apex_string, file, state)
     i=1
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
-    td_reduction = 1
-    bmp = @scenario.bmps.find_by_bmpsublist_id(3)
-    if !(bmp == nil)
-      if bmp.irrigation_id == 1 and bmp.crop_id == 1 then
-        td_reduction = 1 - 0.50
-      else
-        if bmp.irrigation_id == 1 then 
-          td_reduction = 1 - 0.43
+    <<-DOC
+        td_reduction = 1
+        bmp = @scenario.bmps.find_by_bmpsublist_id(3)
+        if !(bmp == nil)
+          if bmp.irrigation_id == 1 and bmp.crop_id == 1 then   # both
+            td_reduction = 1 - 0.50
+          else
+            if bmp.irrigation_id == 1 then #Tile Bioreactors
+              td_reduction = 1 - 0.43
+            end
+            if bmp.crop_id == 1 then  # Drainage Water Management
+              td_reduction = 1 - 0.33
+            end
+          end
         end
-        if bmp.crop_id == 1 then
-          td_reduction = 1 - 0.33
-        end
-      end
-    end
+    DOC
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i
@@ -1979,7 +1981,7 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
         one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction
+        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) #* td_reduction
         one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
         one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
