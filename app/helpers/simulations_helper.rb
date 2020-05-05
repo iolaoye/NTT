@@ -1941,7 +1941,6 @@ def send_file_to_DNDC(apex_string, file, state)
     biom = 0
     total_subs = 0
     i=1
-    debugger
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
     td_reduction = 1
