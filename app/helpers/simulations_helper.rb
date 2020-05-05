@@ -1209,6 +1209,7 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%4d", _subarea_info.idf4)
     sLine += sprintf("%4d", _subarea_info.idf5)
     sLine += sprintf("%4d", 0)   #add idf6 column for 1501
+    if _subarea_info.tdms == nil then _subarea_info.tdms = 0 end    # for those existing projects.
     sLine += sprintf("%4d", _subarea_info.tdms)   # add for tile drain management. Test with 1501
       #todo these variables will be before tdms in 1501
       sLine += sprintf("%4d", 0)   #add irrs column
