@@ -1943,22 +1943,20 @@ def send_file_to_DNDC(apex_string, file, state)
     i=1
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
-    <<-DOC
-        td_reduction = 1
-        bmp = @scenario.bmps.find_by_bmpsublist_id(3)
-        if !(bmp == nil)
-          if bmp.irrigation_id == 1 and bmp.crop_id == 1 then   # both
-            td_reduction = 1 - 0.50
-          else
-            if bmp.irrigation_id == 1 then #Tile Bioreactors
-              td_reduction = 1 - 0.43
-            end
-            if bmp.crop_id == 1 then  # Drainage Water Management
-              td_reduction = 1 - 0.33
-            end
-          end
+    td_reduction = 1
+    bmp = @scenario.bmps.find_by_bmpsublist_id(3)
+    if !(bmp == nil)
+      if bmp.irrigation_id == 1 and bmp.crop_id == 1 then   # both
+        td_reduction = 1 - 0.50
+      else
+        if bmp.irrigation_id == 1 then #Tile Bioreactors
+          td_reduction = 1 - 0.43
         end
-    DOC
+        if bmp.crop_id == 1 then  # Drainage Water Management
+          #td_reduction = 1 - 0.33
+        end
+      end
+    end
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i
