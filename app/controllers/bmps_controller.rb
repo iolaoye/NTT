@@ -561,21 +561,18 @@ class BmpsController < ApplicationController
           when "create", "update"
             subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
             @bmp.depth = params[:bmp_td][:depth]
+            @bmp.irrigation_id = 0
+            subarea.tdms = 0
+            @bmp.crop_id = 0  
             if !(params[:irrigation_id] == nil) then 
               @bmp.irrigation_id = 1
               subarea.tdms = 43
-            else 
-              @bmp.irrigation_id = 0
-              subarea.tdms = 0
             end
             if !(params[:crop_id] == nil) then 
               @bmp.crop_id = 1 
               subarea.tdms = 33
-            else 
-              @bmp.crop_id = 0 
-              subarea.tdms = 0
             end
-			     subarea.drt = 2
+			      subarea.drt = 2
           when "delete"
             subarea.idr = 0
             subarea.drt = 0
