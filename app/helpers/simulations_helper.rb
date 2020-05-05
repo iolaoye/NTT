@@ -1941,6 +1941,7 @@ def send_file_to_DNDC(apex_string, file, state)
     biom = 0
     total_subs = 0
     i=1
+    debugger
     #apex_control = ApexControl.where(:project_id => params[:project_id])
     initial_chart_year = @apex_controls[0].value - 12 + @apex_controls[1].value
     td_reduction = 1
@@ -1981,7 +1982,7 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
         one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) #* td_reduction
+        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction
         one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
         one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
