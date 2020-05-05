@@ -1049,6 +1049,7 @@ def send_file_to_DNDC(apex_string, file, state)
     #/line 2
     @last_soil2 = j + @last_soil_sub
     last_owner1 = @last_soil2
+    debugger
   	if buffer then
   		sLine = sprintf("%4d", _subarea_info.inps)  #soil
   		if (_subarea_info.subarea_type == "PPDE" || _subarea_info.subarea_type == "PPTW") then
@@ -1065,6 +1066,7 @@ def send_file_to_DNDC(apex_string, file, state)
         if session[:simulation] != "scenario" then
           _subarea_info.iops = @soil_number + 1
         end
+        if _subarea_info.iops == nil then _subarea_info.iops = @soil_number + 1 end
   			sLine += sprintf("%4d", _subarea_info.iops)   #operation
   		end
   		sLine += sprintf("%4d", _subarea_info.iow) #owner id. Should change for each field
