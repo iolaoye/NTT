@@ -109,19 +109,18 @@
   <b>State:</b>
   <%= @crop.state_id %>
 </p>
-
 <p>
-  <b>Itil:</b>
+  <b>Crop_Season:</b>
   <%= @crop.itil %>
 </p>
 
 <p>
-  <b>To1:</b>
+  <b>Optimal_Temperature:</b>
   <%= @crop.to1 %>
 </p>
 
 <p>
-  <b>Tb:</b>
+  <b>Minimum_Temperature:</b>
   <%= @crop.tb %>
 </p>
 
@@ -131,7 +130,7 @@
 </p>
 
 <p>
-  <b>Dyam:</b>
+  <b>Days_to_Maturity:</b>
   <%= @crop.dyam %>
 </p>
 
@@ -139,7 +138,6 @@
   <b>Spanish name:</b>
   <%= @crop.spanish_name %>
 </p>
-
 
 <%= link_to t('general.edit'), edit_crop_path(@crop) %> |
 <%= link_to t('general.back'), crops_path %>
