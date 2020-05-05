@@ -1620,8 +1620,28 @@ en:
     ln10: 'Green water footprint (litres of water required to produce one kg of animal feed)'
   documents_basic_html:
     <a href="/basic_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
+    <br>
+    <br><strong>NTT References</strong>
+    <br>
+    <p>Tian Guo, Remegio Confesor Jr., Ali Saleh, and Kevin King. 2020. Crop growth, hydrology, and water quality dynamics in agricultural fields across the Western Lake Erie Basin (WLEB). multi-site verification of the Nutrient Tracking Tool (NTT). Accepted for publication at Science of the Total Environment.</p>
+    <br>
+    <p>Saleh A., O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011 Nutrient Tracking Tool- a user-friendly tool for calculating nutrient reductions for water quality trading. Journal of Soil and Water Conservation 2011 66(6):400-410.</p>
+    <br>
+    <p>Saleh A., Oscar Gallego, and Edward Osei. 2015. Evaluating Nutrient Tracking Tool and simulated conservation practices. Journal of Soil and Water Conservation. 115AJULY/AUGUST 2015 —VOL. 70, NO. 4</p>
+    <br>
+    <p>Saleh A. and Edward Osei. 2018. Precision and water quality markets. Book chapter. Precision conservation. Agronomy Monograph. Pp.313-339</p>
   documents_re_html:
     <a href="/re_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
+    <br>
+    <br><strong>NTT References</strong>
+    <br>
+    <p>Tian Guo, Remegio Confesor Jr., Ali Saleh, and Kevin King. 2020. Crop growth, hydrology, and water quality dynamics in agricultural fields across the Western Lake Erie Basin (WLEB). multi-site verification of the Nutrient Tracking Tool (NTT). Accepted for publication at Science of the Total Environment.</p>
+    <br>
+    <p>Saleh A., O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011 Nutrient Tracking Tool- a user-friendly tool for calculating nutrient reductions for water quality trading. Journal of Soil and Water Conservation 2011 66(6):400-410.</p>
+    <br>
+    <p>Saleh A., Oscar Gallego, and Edward Osei. 2015. Evaluating Nutrient Tracking Tool and simulated conservation practices. Journal of Soil and Water Conservation. 115AJULY/AUGUST 2015 —VOL. 70, NO. 4</p>
+    <br>
+    <p>Saleh A. and Edward Osei. 2018. Precision and water quality markets. Book chapter. Precision conservation. Agronomy Monograph. Pp.313-339</p>
   instructions:
     projects: To select an existing project, click on the project name
     fields: To select a field, click on the field name
