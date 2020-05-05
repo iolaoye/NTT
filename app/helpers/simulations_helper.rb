@@ -1208,13 +1208,11 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%4d", _subarea_info.idf3)
     sLine += sprintf("%4d", _subarea_info.idf4)
     sLine += sprintf("%4d", _subarea_info.idf5)
-    sLine += sprintf("%4d", _subarea_info.tdms)
-    if @apex_version == 1501 then
+    sLine += sprintf("%4d", 0)   #add idf6 column for 1501
+    sLine += sprintf("%4d", _subarea_info.tdms)   # add for tile drain management. Test with 1501
       #todo these variables will be before tdms in 1501
-      sLine += sprintf("%4d", 0)   #add idf6 column
       sLine += sprintf("%4d", 0)   #add irrs column
       sLine += sprintf("%4d", 0)   #add irrw column
-    end    
     @subarea_file.push(sLine + "\n")
     #/line 9
     if _subarea_info.nirr > 0 then
