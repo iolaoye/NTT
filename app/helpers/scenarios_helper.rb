@@ -264,7 +264,6 @@ module ScenariosHelper
         subarea.xtp9 = 0
         subarea.xtp10 = 0
 		buffer_length = field_area   #total Area
-		#bmps = Bmp.where(:bmpsublist => [1, 2, 3])
 		temp_length = Math.sqrt(buffer_length * AC_TO_KM2)
 		if soil_resubmit then
 			#the default values are going to be overwritten if the addition is a buffer or the bmp modifies the subarea.
@@ -273,13 +272,13 @@ module ScenariosHelper
 				scenario.bmps.each do |bmp|
 					if [1,2,3,9,11,16,17,18,25].include? bmp.bmpsublist_id
 						@bmp = bmp
-						update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
+						update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker, type, total_selected, soil_percentage, total_percentage)
 					end
 				end
 			end
 		else
 			#call whatever is comming once
-			update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
+			update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker, type, total_selected, soil_percentage, total_percentage)
 		end
 
 		#this is when the subarea is added from a scenario
@@ -304,7 +303,7 @@ module ScenariosHelper
 		end
 	end
 
-	def update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker)
+	def update_bmp_information(subarea, soil_id, soil_area, rchc_buff, rchk_buff, scenario_id, temp_length, checker, type, total_selected, soil_percentage, total_percentage)
 		if !(@bmp==nil)
 			case @bmp.bmpsublist_id
 			when 1,2 #autoirrigation / autofertigation
@@ -491,7 +490,7 @@ module ScenariosHelper
 							fs_area = subarea.wsa
 						end
 						if @bmp.sides == 0 then
-							update_wsa("-", subarea	.wsa)
+							update_wsa("-", subarea.wsa)
 						end
 						subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 						subarea.slp = subarea.slp * @bmp.buffer_slope_upland
@@ -522,10 +521,10 @@ module ScenariosHelper
 						subarea.pec = 1.0
 						if @bmp.width > 0 then
 							if type == "create"
-								create_subarea("RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "create")
+								create_subarea("RFFS", 1, soil_area, subarea.slp, false, total_selected, @field.field_name, scenario_id, soil_id, soil_percentage, total_percentage, @field.field_area, @bmp.id, @bmp.bmpsublist_id, true, "create", false)
 							else
 								update_wsa("-", subarea.wsa)
-								update_subarea(subarea, "RFFS", i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, true, "update")
+								update_subarea(subarea, "RFFS", subarea.iops, soil_area, subarea.slp, false, total_selected, @field.field_name, scenario_id, soil_id, soil_percentage, total_percentage, @field.field_area, @bmp.id, @bmp.bmpsublist_id, true, "update", false)
 							end
 						end
 						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)

@@ -1330,24 +1330,16 @@ end
     end
     if is_filled
       @soils = @field.soils
-      #i = 0
-      #@inps = i
       @soils.each do |soil|
-        #if soil.selected
           if @slope > soil.slope then
             @slope = soil.slope
           end
-        #end
         subarea = @scenario.subareas.find_by_soil_id(soil.id)
         @inps = 1
         if subarea != nil then
-          #if i == 0 then
-            #@inps = subarea.inps #select the last soil, to informe the subarea to what soil the wetland is going to be.
-            #i += 1
-          #end
-          #if soil.selected
             @iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
-          #end
+        else
+            @iops = @scenario.subareas.count
         end
       end
       if id == 15 then   #contour buffer
