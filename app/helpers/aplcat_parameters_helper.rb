@@ -731,7 +731,9 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        weights = data.lines.at(374).split(" ")
+        weights = data.lines.grep(/Ave./)
+        weights = weights[0]
+        weights = weights.split
           #read line by line of the file
             aplcatresult.calf_aws = weights[1]
             aplcatresult.rh_aws = weights[2]
@@ -761,12 +763,24 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_calf_gei = data.lines.at(387).split(" ")
-        data_calf_ni = data.lines.at(409).split(" ")
-        data_calf_une = data.lines.at(410).split(" ")
-        data_calf_fne = data.lines.at(411).split(" ")
-        data_calf_tne = data.lines.at(412).split(" ")
-        data_calf_tnr = data.lines.at(413).split(" ")
+        data_calf_gei = data.lines.grep(/Gross energy intake/)
+        data_calf_gei = data_calf_gei[0]
+        data_calf_gei = data_calf_gei.split
+        data_calf_ni = data.lines.grep(/nitrogen intake/)
+        data_calf_ni = data_calf_ni[0]
+        data_calf_ni = data_calf_ni.split
+        data_calf_une = data.lines.grep(/urine nitrogen excretion/)
+        data_calf_une = data_calf_une[0]
+        data_calf_une = data_calf_une.split
+        data_calf_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data_calf_fne = data_calf_fne[0]
+        data_calf_fne = data_calf_fne.split
+        data_calf_tne = data.lines.grep(/total nitrogen excretion/)
+        data_calf_tne = data_calf_tne[0]
+        data_calf_tne = data_calf_tne.split
+        data_calf_tnr = data.lines.grep(/nitrogen retained/)
+        data_calf_tnr = data_calf_tnr[0]
+        data_calf_tnr = data_calf_tnr.split
           #read line by line of the file
             aplcatresult.calf_gei = data_calf_gei[3]
             aplcatresult.calf_ni = data_calf_ni[3]
@@ -780,12 +794,24 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_bull_gei = data.lines.at(389).split(" ")
-        data_bull_ni = data.lines.at(411).split(" ")
-        data_bull_une = data.lines.at(412).split(" ")
-        data_bull_fne = data.lines.at(413).split(" ")
-        data_bull_tne = data.lines.at(414).split(" ")
-        data_bull_tnr = data.lines.at(415).split(" ")
+        data_bull_gei = data.lines.grep(/Gross energy intake/)
+        data_bull_gei = data_bull_gei[0]
+        data_bull_gei = data_bull_gei.split
+        data_bull_ni = data.lines.grep(/nitrogen intake/)
+        data_bull_ni = data_bull_ni[0]
+        data_bull_ni = data_bull_ni.split
+        data_bull_une = data.lines.grep(/urine nitrogen excretion/)
+        data_bull_une = data_bull_une[0]
+        data_bull_une = data_bull_une.split
+        data_bull_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data_bull_fne = data_bull_fne[0]
+        data_bull_fne = data_bull_fne.split
+        data_bull_tne = data.lines.grep(/total nitrogen excretion/)
+        data_bull_tne = data_bull_tne[0]
+        data_bull_tne = data_bull_tne.split
+        data_bull_tnr = data.lines.grep(/nitrogen retained/)
+        data_bull_tnr = data_bull_tnr[0]
+        data_bull_tnr = data_bull_tnr.split
           #read line by line of the file
             aplcatresult.bull_gei = data_bull_gei[3]
             aplcatresult.bull_ni = data_bull_ni[3]
@@ -799,12 +825,24 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_cow_gei = data.lines.at(389).split(" ")
-        data_cow_ni = data.lines.at(411).split(" ")
-        data_cow_une = data.lines.at(412).split(" ")
-        data_cow_fne = data.lines.at(413).split(" ")
-        data_cow_tne = data.lines.at(414).split(" ")
-        data_cow_tnr = data.lines.at(415).split(" ")
+        data_cow_gei = data.lines.grep(/Gross energy intake/)
+        data_cow_gei = data_cow_gei[0]
+        data_cow_gei = data_cow_gei.split
+        data_cow_ni = data.lines.grep(/nitrogen intake/)
+        data_cow_ni = data_cow_ni[0]
+        data_cow_ni = data_cow_ni.split
+        data_cow_une = data.lines.grep(/urine nitrogen excretion/)
+        data_cow_une = data_cow_une[0]
+        data_cow_une = data_cow_une.split
+        data_cow_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data_cow_fne = data_cow_fne[0]
+        data_cow_fne = data_cow_fne.split
+        data_cow_tne = data.lines.grep(/total nitrogen excretion/)
+        data_cow_tne = data_cow_tne[0]
+        data_cow_tne = data_cow_tne.split
+        data_cow_tnr = data.lines.grep(/nitrogen retained/)
+        data_cow_tnr = data_cow_tnr[0]
+        data_cow_tnr = data_cow_tnr.split
           #read line by line of the file
             aplcatresult.cow_gei = data_cow_gei[3]
             aplcatresult.cow_ni = data_cow_ni[4]
@@ -818,12 +856,24 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_fch_gei = data.lines.at(389).split(" ")
-        data_fch_ni = data.lines.at(411).split(" ")
-        data_fch_une = data.lines.at(412).split(" ")
-        data_fch_fne = data.lines.at(413).split(" ")
-        data_fch_tne = data.lines.at(414).split(" ")
-        data_fch_tnr = data.lines.at(415).split(" ")
+        data_fch_gei = data.lines.grep(/Gross energy intake/)
+        data_fch_gei = data_fch_gei[0]
+        data_fch_gei = data_fch_gei.split
+        data_fch_ni = data.lines.grep(/nitrogen intake/)
+        data_fch_ni = data_fch_ni[0]
+        data_fch_ni = data_fch_ni.split
+        data_fch_une = data.lines.grep(/urine nitrogen excretion/)
+        data_fch_une = data_fch_une[0]
+        data_fch_une = data_fch_une.split
+        data_fch_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data_fch_fne = data_fch_fne[0]
+        data_fch_fne = data_fch_fne.split
+        data_fch_tne = data.lines.grep(/total nitrogen excretion/)
+        data_fch_tne = data_fch_tne[0]
+        data_fch_tne = data_fch_tne.split
+        data_fch_tnr = data.lines.grep(/nitrogen retained/)
+        data_fch_tnr = data_fch_tnr[0]
+        data_fch_tnr = data_fch_tnr.split
           #read line by line of the file
             aplcatresult.fch_gei = data_fch_gei[3]
             aplcatresult.fch_ni = data_fch_ni[4]
@@ -837,12 +887,24 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_rh_gei = data.lines.at(389).split(" ")
-        data_rh_ni = data.lines.at(411).split(" ")
-        data_rh_une = data.lines.at(412).split(" ")
-        data_rh_fne = data.lines.at(413).split(" ")
-        data_rh_tne = data.lines.at(414).split(" ")
-        data_rh_tnr = data.lines.at(415).split(" ")
+        data_rh_gei = data.lines.grep(/Gross energy intake/)
+        data_rh_gei = data_rh_gei[0]
+        data_rh_gei = data_rh_gei.split
+        data_rh_ni = data.lines.grep(/nitrogen intake/)
+        data_rh_ni = data_rh_ni[0]
+        data_rh_ni = data_rh_ni.split
+        data_rh_une = data.lines.grep(/urine nitrogen excretion/)
+        data_rh_une = data_rh_une[0]
+        data_rh_une = data_rh_une.split
+        data_rh_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data_rh_fne = data_rh_fne[0]
+        data_rh_fne = data_rh_fne.split
+        data_rh_tne = data.lines.grep(/total nitrogen excretion/)
+        data_rh_tne = data_rh_tne[0]
+        data_rh_tne = data_rh_tne.split
+        data_rh_tnr = data.lines.grep(/nitrogen retained/)
+        data_rh_tnr = data_rh_tnr[0]
+        data_rh_tnr = data_rh_tnr.split
           #read line by line of the file
             aplcatresult.rh_gei = data_rh_gei[3]
             aplcatresult.rh_ni = data_rh_ni[4]
