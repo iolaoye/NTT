@@ -723,8 +723,9 @@ module AplcatParametersHelper
   end
 
   def read_aplcat_results
+      aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
       #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
-      AplcatResult.where(:scenario_id => @scenario.id).delete_all
+      if aplcatresult.count > 0 then AplcatResult.where(:scenario_id => @scenario.id).delete_all end
       aplcatresult = AplcatResult.new
       #download the results files
       data = get_file_from_APLCAT("AnimalWeights.txt")
@@ -746,17 +747,28 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data_calf = data.lines.at(1794).split(" ")
-        data_rh = data.lines.at(1795).split(" ")
-        data_fch = data.lines.at(1796).split(" ")
-        data_cow = data.lines.at(1797).split(" ")
-        data_bull = data.lines.at(1798).split(" ")
-          #read line by line of the file
-            aplcatresult.calf_sme = data_calf[2]
-            aplcatresult.rh_sme = data_rh[3]
-            aplcatresult.fch_sme = data_fch[4]
-            aplcatresult.cow_sme = data_cow[2]
-            aplcatresult.bull_sme = data_bull[2]
+        data = data.split("\n")
+        found = false
+        data.each do |line|
+          if line.include? "Annual total solid manure excretion" then
+            found = true 
+          end
+          if found == true then
+            case true
+              when line.include?("Calf                :")
+                aplcatresult.calf_sme = line.split(" ")[2]
+              when line.include?("Replacement heifer  :")
+                aplcatresult.rh_sme = line.split(" ")[3]
+              when line.include?("First calf heifer   :")
+                aplcatresult.fch_sme = line.split(" ")[4]
+              when line.include?("Cow                 :")
+                aplcatresult.cow_sme = line.split(" ")[2]
+              when line.include?("Bull                :")
+                aplcatresult.bull_sme = line.split(" ")[2]
+                break
+            end
+          end
+        end
       end
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
       #save the information needed in aplcatresult
