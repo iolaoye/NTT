@@ -520,12 +520,12 @@ module ScenariosHelper
 						#line 10
 						subarea.pec = 1.0
 						if @bmp.width > 0 then
-							if type == "create"
+							#if type == "create"
 								create_subarea("RFFS", 1, soil_area, subarea.slp, false, total_selected, @field.field_name, scenario_id, soil_id, soil_percentage, total_percentage, @field.field_area, @bmp.id, @bmp.bmpsublist_id, true, "create", false)
-							else
-								update_wsa("-", subarea.wsa)
-								update_subarea(subarea, "RFFS", subarea.iops, soil_area, subarea.slp, false, total_selected, @field.field_name, scenario_id, soil_id, soil_percentage, total_percentage, @field.field_area, @bmp.id, @bmp.bmpsublist_id, true, "update", false)
-							end
+							#else
+								#update_wsa("-", subarea.wsa)
+								#update_subarea(subarea, "RFFS", subarea.iops, soil_area, subarea.slp, false, total_selected, @field.field_name, scenario_id, soil_id, soil_percentage, total_percentage, @field.field_area, @bmp.id, @bmp.bmpsublist_id, true, "update", false)
+							#end
 						end
 						add_buffer_operation(139, 79, 350, 1900, -64, 22, 1, scenario_id)
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 1, scenario_id)
