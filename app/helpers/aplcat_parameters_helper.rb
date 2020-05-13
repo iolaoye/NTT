@@ -747,28 +747,27 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
-        data = data.split("\n")
-        found = false
-        data.each do |line|
-          if line.include? "Annual total solid manure excretion" then
-            found = true 
-          end
-          if found == true then
-            case true
-              when line.include?("Calf                :")
-                aplcatresult.calf_sme = line.split(" ")[2]
-              when line.include?("Replacement heifer  :")
-                aplcatresult.rh_sme = line.split(" ")[3]
-              when line.include?("First calf heifer   :")
-                aplcatresult.fch_sme = line.split(" ")[4]
-              when line.include?("Cow                 :")
-                aplcatresult.cow_sme = line.split(" ")[2]
-              when line.include?("Bull                :")
-                aplcatresult.bull_sme = line.split(" ")[2]
-                break
-            end
-          end
-        end
+        data_calf = data.lines.grep(/Calf                :/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split
+        data_rh = data.lines.grep(/Replacement heifer  :/)
+        data_rh = data_rh[0]
+        data_rh = data_rh.split
+        data_fch = data.lines.grep(/First calf heifer   :/)
+        data_fch = data_fch[0]
+        data_fch = data_fch.split
+        data_cow = data.lines.grep(/Cow                 :/)
+        data_cow = data_cow[0]
+        data_cow = data_cow.split
+        data_bull = data.lines.grep(/Bull                :/)
+        data_bull = data_bull[0]
+        data_bull = data_bull.split
+          #read line by line of the file
+            aplcatresult.calf_sme = data_calf[2]
+            aplcatresult.rh_sme = data_rh[3]
+            aplcatresult.fch_sme = data_fch[4]
+            aplcatresult.cow_sme = data_cow[2]
+            aplcatresult.bull_sme = data_bull[2]
       end
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
       #save the information needed in aplcatresult
