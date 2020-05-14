@@ -625,7 +625,7 @@ class ScenariosController < ApplicationController
         items[1] = bmp.width
         items[3] = "Fraction treated by buffer"
         values[3] = bmp.slop
-        apex_op = "PP"
+        apex_op = "WW"
       when 15  #contour buffer
         items[4] = "Crop"
         values[4] = Crop.find(bmp.crop_id).name
