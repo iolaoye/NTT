@@ -1037,6 +1037,17 @@ def send_file_to_DNDC(apex_string, file, state)
   	return msg
   end   # end create_subareas
   
+  def calculate_filter_area(filter_width, subarea_area, pnd_sides)
+      #calculate filter area.
+      total_area_ha = @scenario.subareas.sum(:wsa) #toptal area in ha
+      total_area_km = total_area_ha * 0.01    #Convert Ha to Km2
+      filter_length = Math.sqrt(total_area_km) #Calculate the lenght of the Filter Strip
+      filter_area = filter_length * filter_width #Calculate Filter Strip Area. convert wtidh from ft to m
+      filter_area = filter_area * 100 #Convert km2 to ha.
+      field_area = subarea_area - subarea_area / total_area_ha * (filter_area * pnd_sides)
+  end
+
+
   #This add single subarea information for regular simulation
   def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
     j = i + 1
@@ -1107,6 +1118,11 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
+    bmp = @scenario.bmps.where("bmpsublist_id = 4 or bmpsublist_id = 5").first
+    if bmp != nil then
+      field_area = calculate_filter_area(bmp.width * FT_TO_KM, _subarea_info.wsa, bmp.sides)
+      _subarea_info.wsa = field_area
+    end
     _subarea_info.wsa = _subarea_info.wsa.round(2)
     if _subarea_info.wsa == 0.00 then
       _subarea_info.wsa = 0.01
@@ -1133,9 +1149,6 @@ def send_file_to_DNDC(apex_string, file, state)
   		end
   		if (operation_number > 1 && i == 0) then
         _subarea_info.rchl = _subarea_info.rchl * 0.9
-  		  #if (operation_number > 1 && i == 0) || (total_soils == i + 1 && total_soils > 1) then
-  		  #_subarea_info.rchl = (_subarea_info.chl * 0.9).round(4)
-  		  #sLine = sprintf("%8.4f", _subarea_info.rchl * 0.9)
   		end
     end
     sLine = sprintf("%8.4f", _subarea_info.rchl)
@@ -1276,7 +1289,6 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%8.2f", _subarea_info.xtp3)
     sLine += sprintf("%8.2f", _subarea_info.xtp4)
     @subarea_file.push(sLine + "\n")
-
     return "OK"
   end
 

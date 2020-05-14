@@ -334,48 +334,50 @@ module ScenariosHelper
 			when 3  #tile drain
 				subarea.idr = @bmp.depth * FT_TO_MM  # update the tile drain depth in mm.
 				subarea.drt = 2
-			when 6, 7    #PPDE
-				#line 2
-				subarea.number = 106
-				subarea.iops = soil_id
-				#subarea.iow = 1
-				#line 5
-				subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
-				#line 4
-				subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
-				# reduce the area of others subareas proportionally
-				update_wsa("-", subarea.wsa)
-				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
-				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
-				subarea.chs = subarea.slp
-				subarea.slp *= 0.25
-				subarea.chn = 0.05
-				subarea.upn = 0.41
-				subarea.ffpq = 0.8
-				#line 5
-				subarea.rchd = 0.1
-				subarea.rcbw = 0.1
-				subarea.rctw = 0.2
-				subarea.rchs = subarea.chs
-				subarea.rchn = 0.15
-				subarea.rchk = 0.01
-				#line 6
-				subarea.rsee = 0.10
-				subarea.rsae = subarea.wsa
-				subarea.rsve = 75
-				subarea.rsep = 0.1
-				subarea.rsap = subarea.wsa
-				subarea.rsvp = 25
-				subarea.rsrr = 1
-				subarea.rsv = 0
-				subarea.rsys = 300
-				subarea.rsyn = 300
-				#line 7
-				subarea.rshc = 0.001
-				subarea.rsdp = 360
-				subarea.rsbd = 0.8
-				#line 10
-				subarea.pec = 1
+			when 4   #PPDE, PPTW
+				if @bmp.depth == 6 || @bmp.depth == 7 then
+					#line 2
+					subarea.number = 106
+					subarea.iops = soil_id
+					#subarea.iow = 1
+					#line 5
+					subarea.rchl = soil_area * AC_TO_KM2 / temp_length    #soil_area here is the reservior area
+					#line 4
+					subarea.wsa = soil_area * AC_TO_HA       #soil_area here is the reservior area
+					# reduce the area of others subareas proportionally
+					update_wsa("-", subarea.wsa)
+					subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
+					## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
+					subarea.chs = subarea.slp
+					subarea.slp *= 0.25
+					subarea.chn = 0.05
+					subarea.upn = 0.41
+					subarea.ffpq = 0.8
+					#line 5
+					subarea.rchd = 0.1
+					subarea.rcbw = 0.1
+					subarea.rctw = 0.2
+					subarea.rchs = subarea.chs
+					subarea.rchn = 0.15
+					subarea.rchk = 0.01
+					#line 6
+					subarea.rsee = 0.10
+					subarea.rsae = subarea.wsa
+					subarea.rsve = 75
+					subarea.rsep = 0.1
+					subarea.rsap = subarea.wsa
+					subarea.rsvp = 25
+					subarea.rsrr = 1
+					subarea.rsv = 0
+					subarea.rsys = 300
+					subarea.rsyn = 300
+					#line 7
+					subarea.rshc = 0.001
+					subarea.rsdp = 360
+					subarea.rsbd = 0.8
+					#line 10
+					subarea.pec = 1
+				end
 			when 8    #Wetlands
 				#line 2
 				subarea.number = 105

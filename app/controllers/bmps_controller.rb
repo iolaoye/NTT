@@ -616,22 +616,24 @@ class BmpsController < ApplicationController
   end   # end method
 
 
-### ID: 6
+  ### ID: 6
   def ppde(type)
     case type
       when "create"
-		@bmp.width = params[:bmp_ppnd][:width]
-		@bmp.sides = params[:bmp_ppnd][:sides]
-		@bmp.area = params[:bmp_ppnd][:area]
-		@bmp.depth = params[:bmp_cb2]
-		@bmp.save
-		msg = pads_pipes(type)
-		@iops = @field.soils.count
-		@inps = 1
-        #@iops = subarea.iops + 1 #selected the last iops to inform the subarea the folowing iops to create.
-        if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-          create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
-        end
+    		@bmp.width = params[:bmp_ppnd][:width]
+    		@bmp.sides = params[:bmp_ppnd][:sides]
+    		@bmp.area = params[:bmp_ppnd][:area]
+    		@bmp.depth = params[:bmp_cb2]
+    		@iops = @field.soils.count
+    		@inps = 1
+        if @bmp.save then
+          msg = pads_pipes(type)
+          if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
+            create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
+          end
+        else
+         return "Error saving BMP"
+        end          
       when "update"
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           update_existing_subarea("PPDE")
@@ -639,28 +641,27 @@ class BmpsController < ApplicationController
       when "delete"
         delete_existing_subarea("PPDE")
     end
-    #return msg
   end   # end method
 
 
-### ID: 7
+  ### ID: 7
   def pptw(type)
     case type
       when "create"
-		  @bmp.width = params[:bmp_ppnd][:width]
-		  @bmp.sides = params[:bmp_ppnd][:sides]
-		  @bmp.area = params[:bmp_ppnd][:area]
-		  @bmp.depth = params[:bmp_cb2]
-		  @iops = @field.soils.count
-		  @inps = 1
-		  if @bmp.save then
-			  msg = pads_pipes(type)
-			  if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-				create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
-			  end
-		  else
-			return "Error saving BMP"
-		  end
+  		  @bmp.width = params[:bmp_ppnd][:width]
+  		  @bmp.sides = params[:bmp_ppnd][:sides]
+  		  @bmp.area = params[:bmp_ppnd][:area]
+  		  @bmp.depth = params[:bmp_cb2]
+  		  @iops = @field.soils.count
+  		  @inps = 1
+  		  if @bmp.save then
+  			  msg = pads_pipes(type)
+  			  if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
+  				  create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
+  			  end
+  		  else
+  			 return "Error saving BMP"
+  		  end
       when "update"
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           update_existing_subarea("PPTW")
@@ -668,7 +669,6 @@ class BmpsController < ApplicationController
       when "delete"
         delete_existing_subarea("PPTW")
     end
-    #return pads_pipes(type)
   end   # end method
 
 
@@ -1233,26 +1233,19 @@ end
     return "OK"
   end # end method
 
-## USED FOR PADS AND PIPES FIELDS (ID: 4 to ID: 7)
+  ## USED FOR PADS AND PIPES FIELDS (ID: 4 to ID: 7)
   def pads_pipes(type)
+    #PPND: 1) reduce CN bu 10%, 2) reduce field area by bmp.widht * bmp.sides after calculate area.
+    #PPDS: same as PPND and 3) add a pond 0.5 in PCOF.
+    #PPDE: Same as PPDS and add a reservoir.
     @soils = Soil.where(:field_id => params[:field_id])
     i = 0
     @soils.each do |soil|
-      #if soil.selected
-        if @slope > soil.slope then
-          @slope = soil.slope
-        end
-      #end
+      if @slope > soil.slope then
+        @slope = soil.slope
+      end
       subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
       if subarea != nil then
-        #if i == 0 then
-          #@inps = subarea.inps #select the first soil, which is with bigest area
-          #i += 1
-        #end
-        #if soil.selected
-          #@iops = subarea.iops #selected the last iops to inform the subarea the folowing iops to create.
-        #end
-
         case type
           when "create", "update"
             if @bmp.depth == 4
@@ -1263,16 +1256,15 @@ end
           when "delete"
             subarea.pcof = 0.0
         end # switch statement
-		#assign bmp_id to subarea. Need to save the bmp first to get the bmp_id
-		if subarea.subarea_type != "Soil" then
-			subarea.bmp_id = @bmp.id
-		else
-			subarea.bmp_id = 0
-		end
+    		#assign bmp_id to subarea. Need to save the bmp first to get the bmp_id
+    		if subarea.subarea_type != "Soil" then
+    			subarea.bmp_id = @bmp.id
+    		else
+    			subarea.bmp_id = 0
+    		end
         if !subarea.save then
-			return "Enable to save value in the subarea file"
-		else
-		end
+    			return "Enable to save value in the subarea file"
+    		end
       end #end if subarea !nil
       soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => params[:scenario_id], :activity_id => 1)
       soil_ops.each do |soil_op|
