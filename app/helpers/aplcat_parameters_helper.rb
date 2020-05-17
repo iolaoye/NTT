@@ -735,12 +735,12 @@ module AplcatParametersHelper
         weights = data.lines.grep(/Ave./)
         weights = weights[0]
         weights = weights.split
-          #read line by line of the file
-            aplcatresult.calf_aws = weights[1]
-            aplcatresult.rh_aws = weights[2]
-            aplcatresult.fch_aws = weights[3]
-            aplcatresult.cow_aws = weights[4]
-            aplcatresult.bull_aws = weights[5]
+        #read line by line of the file
+        aplcatresult.calf_aws = weights[1]
+        aplcatresult.rh_aws = weights[2]
+        aplcatresult.fch_aws = weights[3]
+        aplcatresult.cow_aws = weights[4]
+        aplcatresult.bull_aws = weights[5]
       end
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       #save the information needed in aplcatresult
@@ -792,13 +792,13 @@ module AplcatParametersHelper
         data_calf_tnr = data.lines.grep(/nitrogen retained/)
         data_calf_tnr = data_calf_tnr[0]
         data_calf_tnr = data_calf_tnr.split
-          #read line by line of the file
-            aplcatresult.calf_gei = data_calf_gei[3]
-            aplcatresult.calf_ni = data_calf_ni[3]
-            aplcatresult.calf_une = data_calf_une[4]
-            aplcatresult.calf_fne = data_calf_fne[4]
-            aplcatresult.calf_tne = data_calf_tne[4]
-            aplcatresult.calf_tnr = data_calf_tnr[4]
+        #read line by line of the file
+        aplcatresult.calf_gei = data_calf_gei[3]
+        aplcatresult.calf_ni = data_calf_ni[3]
+        aplcatresult.calf_une = data_calf_une[4]
+        aplcatresult.calf_fne = data_calf_fne[4]
+        aplcatresult.calf_tne = data_calf_tne[4]
+        aplcatresult.calf_tnr = data_calf_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutBulls.txt")
       #save the information needed in aplcatresult
@@ -823,13 +823,13 @@ module AplcatParametersHelper
         data_bull_tnr = data.lines.grep(/nitrogen retained/)
         data_bull_tnr = data_bull_tnr[0]
         data_bull_tnr = data_bull_tnr.split
-          #read line by line of the file
-            aplcatresult.bull_gei = data_bull_gei[3]
-            aplcatresult.bull_ni = data_bull_ni[3]
-            aplcatresult.bull_une = data_bull_une[4]
-            aplcatresult.bull_fne = data_bull_fne[4]
-            aplcatresult.bull_tne = data_bull_tne[4]
-            aplcatresult.bull_tnr = data_bull_tnr[4]
+        #read line by line of the file
+        aplcatresult.bull_gei = data_bull_gei[3]
+        aplcatresult.bull_ni = data_bull_ni[3]
+        aplcatresult.bull_une = data_bull_une[4]
+        aplcatresult.bull_fne = data_bull_fne[4]
+        aplcatresult.bull_tne = data_bull_tne[4]
+        aplcatresult.bull_tnr = data_bull_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutCows.txt")
       #save the information needed in aplcatresult
@@ -854,13 +854,13 @@ module AplcatParametersHelper
         data_cow_tnr = data.lines.grep(/nitrogen retained/)
         data_cow_tnr = data_cow_tnr[0]
         data_cow_tnr = data_cow_tnr.split
-          #read line by line of the file
-            aplcatresult.cow_gei = data_cow_gei[3]
-            aplcatresult.cow_ni = data_cow_ni[4]
-            aplcatresult.cow_une = data_cow_une[4]
-            aplcatresult.cow_fne = data_cow_fne[4]
-            aplcatresult.cow_tne = data_cow_tne[4]
-            aplcatresult.cow_tnr = data_cow_tnr[4]
+        #read line by line of the file
+        aplcatresult.cow_gei = data_cow_gei[3]
+        aplcatresult.cow_ni = data_cow_ni[4]
+        aplcatresult.cow_une = data_cow_une[4]
+        aplcatresult.cow_fne = data_cow_fne[4]
+        aplcatresult.cow_tne = data_cow_tne[4]
+        aplcatresult.cow_tnr = data_cow_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
       #save the information needed in aplcatresult
@@ -885,13 +885,13 @@ module AplcatParametersHelper
         data_fch_tnr = data.lines.grep(/nitrogen retained/)
         data_fch_tnr = data_fch_tnr[0]
         data_fch_tnr = data_fch_tnr.split
-          #read line by line of the file
-            aplcatresult.fch_gei = data_fch_gei[3]
-            aplcatresult.fch_ni = data_fch_ni[4]
-            aplcatresult.fch_une = data_fch_une[4]
-            aplcatresult.fch_fne = data_fch_fne[4]
-            aplcatresult.fch_tne = data_fch_tne[4]
-            aplcatresult.fch_tnr = data_fch_tnr[4]
+        #read line by line of the file
+        aplcatresult.fch_gei = data_fch_gei[3]
+        aplcatresult.fch_ni = data_fch_ni[4]
+        aplcatresult.fch_une = data_fch_une[4]
+        aplcatresult.fch_fne = data_fch_fne[4]
+        aplcatresult.fch_tne = data_fch_tne[4]
+        aplcatresult.fch_tnr = data_fch_tnr[4]
       end
       data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
       #save the information needed in aplcatresult
@@ -916,18 +916,20 @@ module AplcatParametersHelper
         data_rh_tnr = data.lines.grep(/nitrogen retained/)
         data_rh_tnr = data_rh_tnr[0]
         data_rh_tnr = data_rh_tnr.split
-          #read line by line of the file
-            aplcatresult.rh_gei = data_rh_gei[3]
-            aplcatresult.rh_ni = data_rh_ni[4]
-            aplcatresult.rh_une = data_rh_une[4]
-            aplcatresult.rh_fne = data_rh_fne[4]
-            aplcatresult.rh_tne = data_rh_tne[4]
-            aplcatresult.rh_tnr = data_rh_tnr[4]
+        #read line by line of the file
+        aplcatresult.rh_gei = data_rh_gei[3]
+        aplcatresult.rh_ni = data_rh_ni[4]
+        aplcatresult.rh_une = data_rh_une[4]
+        aplcatresult.rh_fne = data_rh_fne[4]
+        aplcatresult.rh_tne = data_rh_tne[4]
+        aplcatresult.rh_tnr = data_rh_tnr[4]
+        return "OK"
       end
   end
 
   ################################  aplcat - run the selected scenario for aplcat #################################
   def run_aplcat
+debugger
     msg = "OK"
     msg = send_file_to_APEX("APLCAT", "APLCAT") #this operation will create APLCAT+session folder from APLCAT folder
     #find the aplcat parameters for the sceanrio selected
