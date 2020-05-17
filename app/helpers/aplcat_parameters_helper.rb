@@ -929,8 +929,7 @@ module AplcatParametersHelper
 
   ################################  aplcat - run the selected scenario for aplcat #################################
   def run_aplcat
-debugger
-    msg = "OK"
+s    msg = "OK"
     msg = send_file_to_APEX("APLCAT", "APLCAT") #this operation will create APLCAT+session folder from APLCAT folder
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
