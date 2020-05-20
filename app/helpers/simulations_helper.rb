@@ -380,7 +380,13 @@ def send_file_to_DNDC(apex_string, file, state)
     @apex_parm +="                " + "\n"
     @apex_parm +="                " + "\n"
     @apex_parm +="   50.00   10.00" + "\n"
-    apex_parameter = ApexParameter.where(:project_id => params[:project_id])
+    apex_parameter = ApexParameter.where(:project_id => params[:project_id])   
+    #find out if the @scenario has a tile drain bmp with Drainage management system implementd.
+    bmp = @scenario.bmps.find_by_bmpsublist_id_and_crop_id(3,1)
+    bmp_found = false
+    if bmp != nil then
+      bmp_found = true
+    end
     apex_parameter.each do |p|
       #number = Parameter.find(p.parameter_description_id).number
       case p.parameter_description_id
@@ -395,6 +401,10 @@ def send_file_to_DNDC(apex_string, file, state)
         when 39
           @apex_parm += sprintf("%8.5f", p.value)
         else
+          if p.parameter_description_id == 83 and bmp_found == true then            
+            #Ali's new approach. Change parm 83 from to 2 to 0.75.
+            p.value = 0.75
+          end 
           @apex_parm += sprintf("%8.2f", p.value)
       end #end case p.line
     end #end each do p

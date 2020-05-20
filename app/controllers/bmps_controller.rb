@@ -570,10 +570,6 @@ class BmpsController < ApplicationController
             end
             if !(params[:crop_id] == nil) then 
               @bmp.crop_id = 1 
-              #Ali's new approach. Change parm 83 from to 2 to 0.75.
-              parm = ApexParameter.find_by_parameter_description_id_and_project_id(83,@project.id)
-              parm.value = 0.75
-              parm.save
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
 			      subarea.drt = 2
@@ -581,10 +577,6 @@ class BmpsController < ApplicationController
             subarea.idr = 0
             subarea.drt = 0
             subarea.tdms = 0
-            #set parm 85 against to the original value.
-            parm = ApexParameter.find_by_parameter_description_id_and_project_id(83,@project.id)
-            parm.value = Parameter.find(83).default_value
-            parm.save
         end
         if !subarea.save then return "Unable to save value in the subarea file" end
       end #end if subarea !nil
