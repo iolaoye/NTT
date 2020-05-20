@@ -566,11 +566,11 @@ class BmpsController < ApplicationController
             @bmp.crop_id = 0
             if !(params[:irrigation_id] == nil) then 
               @bmp.irrigation_id = 1
-              #subarea.tdms = 43    #only TD management is applicable in  APEX. Bio is cvalculatd here.
+              #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
             end
             if !(params[:crop_id] == nil) then 
               @bmp.crop_id = 1 
-              subarea.tdms = 33
+              #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
 			      subarea.drt = 2
           when "delete"

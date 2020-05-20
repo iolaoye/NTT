@@ -380,7 +380,13 @@ def send_file_to_DNDC(apex_string, file, state)
     @apex_parm +="                " + "\n"
     @apex_parm +="                " + "\n"
     @apex_parm +="   50.00   10.00" + "\n"
-    apex_parameter = ApexParameter.where(:project_id => params[:project_id])
+    apex_parameter = ApexParameter.where(:project_id => params[:project_id])   
+    #find out if the @scenario has a tile drain bmp with Drainage management system implementd.
+    bmp = @scenario.bmps.find_by_bmpsublist_id_and_crop_id(3,1)
+    bmp_found = false
+    if bmp != nil then
+      bmp_found = true
+    end
     apex_parameter.each do |p|
       #number = Parameter.find(p.parameter_description_id).number
       case p.parameter_description_id
@@ -395,6 +401,10 @@ def send_file_to_DNDC(apex_string, file, state)
         when 39
           @apex_parm += sprintf("%8.5f", p.value)
         else
+          if p.parameter_description_id == 83 and bmp_found == true then            
+            #Ali's new approach. Change parm 83 from to 2 to 0.75.
+            p.value = 0.75
+          end 
           @apex_parm += sprintf("%8.2f", p.value)
       end #end case p.line
     end #end each do p
@@ -1224,7 +1234,9 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%4d", _subarea_info.idf5)
     sLine += sprintf("%4d", 0)   #add idf6 column for 1501
     if _subarea_info.tdms == nil then _subarea_info.tdms = 0 end    # for those existing projects.
-    sLine += sprintf("%4d", _subarea_info.tdms)   # add for tile drain management. Test with 1501
+    #sLine += sprintf("%4d", _subarea_info.tdms)   # add for tile drain management. Pending to Test with 1501
+    #if this is activated, activate subarea.tdms in tile_drain the bmp_controller.
+    sLine += sprintf("%4d", 0)   # Changed for now 5/10/20. Ali is testing something different.
       #todo these variables will be before tdms in 1501
       sLine += sprintf("%4d", 0)   #add irrs column
       sLine += sprintf("%4d", 0)   #add irrw column
@@ -1965,7 +1977,7 @@ def send_file_to_DNDC(apex_string, file, state)
           td_reduction = 1 - 0.43
         end
         if bmp.crop_id == 1 then  # Drainage Water Management
-          #td_reduction = 1 - 0.33
+          td_reduction = 1 - 0.33
         end
       end
     end

@@ -210,4 +210,5 @@ Tillage.create!({:id => 168,:code => 421,:dndc => 0,:name => 'BDIKE100',:operati
 Tillage.create!({:id => 169,:code => 424,:dndc => 0,:name => 'PUDDLE',:operation => 0,:eqp => 'PUDDLE RICE PADDY',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Puddle Rice Paddy',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 170,:code => 422,:dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 212,:code => 611,:dndc => 0,:name => 'WEED',:operation => 0,:eqp => 'WED',:status => true,:abbreviation => 'TILL',:spanish_name =>  'Wed',:activity_id => 3}, :without_protection => true)
+Tillage.create!({:id => 213,:code => 425,:dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp =>'DESTROY PUDDLE',:status => true,:abbreviation => 'TILL',:spanish_name =>  'Destrosar el Charco',:activity_id => 3}, :without_protection => true)
 #LAST id = 212 tillage code = 611 harvest wed
