@@ -3,12 +3,17 @@
 #######
 # encoding: utf-8
 
+
+
 cont = false
-	
+if cont then 	
 	file = "db/seeds/crops.rb"
 	load file
 
 	file = "db/seeds/tillages.rb"
+	load file
+end
+	file = "db/seeds/activities.rb"
 	load file
 
 

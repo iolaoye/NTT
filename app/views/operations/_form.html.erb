@@ -24,9 +24,9 @@
 	<div class="field" >
 		<%= label :activity_id, t('scenario.operation') %>
 			<% if I18n.locale.eql?(:en) %>
-				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :name, {:prompt => 'Select Operation', :selected => @operation.activity_id || (params[:operation])}, {:required => true} %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10").order(:order), :id, :name, {:prompt => 'Select Operation', :selected => @operation.activity_id || (params[:operation])}, {:required => true} %>
 			<% else %>
-				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10"), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
+				<%= collection_select :operation, :activity_id, Activity.where("id != 8 and id != 10").order(:order), :id, :spanish_name, {:prompt => 'Seleccione Operacion', :selected => (params[:operation] || @operation.activity_id)}, {:required => true} %>
 			<% end %>
 	</div>
 	<div class="field" id="div_crops">
@@ -662,7 +662,7 @@
 				<%= f.number_field :moisture, :class => "gvTitleStyleNumber", min: 0, max: 100, :step => 'any'  %>
 			</div>
 		</div>
-    <% when 13 %>
+    <% when 14 %>
       	<div id="div_date" style="display:none" >
 	        <%= f.label :stop, t('general.stop'), :class => 'field' %>
 	          <%= f.label :year, t('general.year'), :class => 'field' %>
