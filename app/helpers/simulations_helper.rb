@@ -1511,9 +1511,8 @@ def send_file_to_DNDC(apex_string, file, state)
     opv5 = "\s" + "\s" + "\s" + "\s" + "\s"
     apex_string += sprintf("%3d", operation.year) #Year
     apex_string += sprintf("%3d", operation.month) #Month
-    #if operation is Dec. 27 or upper reduce the day 4 days.
-    if operation.month == 12 && operation.day > 27 then
-      apex_string += sprintf("%3d", operation.day - 4) #Day
+    if operation.month == 12 && operation.day == 31 then
+      apex_string += sprintf("%3d", 30) #Day
     else
       apex_string += sprintf("%3d", operation.day) #Day
     end

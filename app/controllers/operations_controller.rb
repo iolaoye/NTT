@@ -243,7 +243,6 @@ def index
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
-    debugger
     harvest_and_kill = false
     #validate if operation is harvest and kill
     if params[:operation][:activity_id] == "13" then
