@@ -152,7 +152,7 @@ updateTypes = ->
   $("#div_other_nutrients").hide()
   $('div[style*="display: none"] *').removeAttr('required') #removes required attribute from all hidden elements
   switch $("#operation_activity_id").val()
-    when "1","13" # planting and cover crop
+    when "1","14" # planting and cover crop
       updatePlantPopulation()
       #url = "/activities/" + $("#operation_activity_id").val() + "/tillages.json"
       url = "/activities/1/tillages.json" #hardcoded path for cover crop compatibility
@@ -362,7 +362,7 @@ $(document).ready ->
     $("#btn_views").click ->
         switch_view()
 
-    if $("#operation_activity_id").val() == "13"
+    if $("#operation_activity_id").val() == "14"
       $("#div_crops").hide()
       $("#div_cover_crops").show()
 

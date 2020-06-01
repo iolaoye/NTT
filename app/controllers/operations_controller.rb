@@ -115,8 +115,14 @@ def index
     msg = "OK"
     saved = false
     soil_op_saved = false
+    harvest_and_kill = false
     
     ActiveRecord::Base.transaction do
+      #validate if operation is harvest and kill
+      if params[:operation][:activity_id] == "13" then
+        harvest_and_kill = true
+        params[:operation][:activity_id] = "4"
+      end
       case true
       when params[:op] != nil
         if params[:op][:activity_id] != "7" && params[:op][:activity_id] != "9"
@@ -164,20 +170,27 @@ def index
           soil_op_saved = false
           raise ActiveRecord::Rollback
         end
-        if operation.activity_id == 7 || operation.activity_id == 9 then
+        if operation.activity_id == 7 || operation.activity_id == 9 || harvest_and_kill == true then
           operation_id = operation.id
           operation1 = Operation.new(operation_params)
-          if operation.activity_id == 7 then
-            operation1.activity_id = 8
-          else
-            operation1.activity_id = 10
-          end
           operation1.year = params[:year1]
           operation1.month_id = params[:month_id1]
           operation1.day = params[:day1]
+          if operation.activity_id == 7 then
+            operation1.activity_id = 8
+          elsif operation.activity_id == 9 then            
+            operation1.activity_id = 10
+          elsif harvest_and_kill == true then
+            operation1.activity_id = 5
+            h_k_date = Date.parse(sprintf("%2d", operation.year) + "/" + sprintf("%2d", operation.month_id) + "/" + sprintf("%2d", operation.day))
+            h_k_date += 1.days
+            operation1.year = h_k_date.year - 2000
+            operation1.month_id = h_k_date.month
+            operation1.day = h_k_date.day
+          end
           operation1.type_id = operation_id
           operation1.scenario_id = params[:scenario_id]
-          operation1.amount = 0
+          operation1.amount = 0 
           operation1.depth = 0
           operation1.no3_n = 0
           operation1.po4_p = 0
@@ -187,7 +200,7 @@ def index
           operation1.subtype_id = 0
           operation1.rotation = params[:operation][:rotation]
           operation1.save
-          if operation1.activity_id == 8 then
+          if operation1.activity_id == 8 || operation1.activity_id == 5 then
             msg = add_soil_operation(operation1)
             if msg.eql?("OK")
               soil_op_saved = true
@@ -230,6 +243,13 @@ def index
 # PATCH/PUT /operations/1
 # PATCH/PUT /operations/1.json
   def update
+    harvest_and_kill = false
+    #validate if operation is harvest and kill
+    if params[:operation][:activity_id] == "13" then
+      harvest_and_kill = true
+      params[:operation][:activity_id] = "4"
+    end
+
     if params[:operation][:activity_id] != "7" && params[:operation][:activity_id] != "9"
       calculate_nutrients(params[:operation][:org_c].to_f, params[:operation][:moisture].to_f, params[:operation][:nh4_n].to_f, params[:operation][:activity_id], params[:operation][:type_id], params[:operation][:subtype_id])
     end
@@ -250,7 +270,7 @@ def index
         end
         SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.
         if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation) end
-        if @operation.activity_id == 7 || @operation.activity_id == 9 then
+        if @operation.activity_id == 7 || @operation.activity_id == 9 || harvest_and_kill == true then
           if (Operation.find_by_type_id(@operation.id) != nil) then
             @operation1 = Operation.find_by_type_id(@operation.id)
           else
@@ -268,14 +288,21 @@ def index
             @operation1.moisture = 0
             @operation1.subtype_id = 0
           end
-          if @operation.activity_id == 7 then
-            @operation1.activity_id = 8
-          else
-            @operation1.activity_id = 10
-          end
           @operation1.year = params[:year1]
           @operation1.month_id = params[:month_id1]
           @operation1.day = params[:day1]
+          if @operation.activity_id == 7 then
+            @operation1.activity_id = 8
+          elsif @operation.activity_id == 9 then
+            @operation1.activity_id = 10
+          elsif harvest_and_kill == true then
+            @operation1.activity_id = 5
+            h_k_date = Date.parse(sprintf("%2d", @operation.year) + "/" + sprintf("%2d", @operation.month_id) + "/" + sprintf("%2d", @operation.day))
+            h_k_date += 1.days
+            @operation1.year = h_k_date.year - 2000
+            @operation1.month_id = h_k_date.month
+            @operation1.day = h_k_date.day
+          end
           @operation1.save
           if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1) end
         end
