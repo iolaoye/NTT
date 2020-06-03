@@ -1,5 +1,6 @@
 class ResultsController < ApplicationController
   include OperationsHelper
+  include AplcatParametersHelper
   ###############################  MONTHLY CHART  ###################################
   def monthly_charts
     @type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
@@ -330,7 +331,7 @@ class ResultsController < ApplicationController
           case true
           when @scenario1 != nil && @scenario2 != nil && @scenario3!= nil && @scenario1 != "" && @scenario2 != "" && @scenario3 != ""
             @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ? or scenario_id = ?",@scenario1, @scenario2, @scenario3).group(:name)
-          when @scenario1 != nil && @scenario2 != nil && @scenario1 != "" && @scenario2 != "" 
+          when @scenario1 != nil && @scenario2 != nil && @scenario1 != "" && @scenario2 != ""
             @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ?",@scenario1, @scenario2).group(:name)
           when @scenario1 != nil && @scenario1 != ""
             @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ?",@scenario1).group(:name)
