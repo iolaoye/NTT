@@ -2606,12 +2606,12 @@ class ProjectsController < ApplicationController
           operation.po4_p = nutrients[1]
           operation.org_n = nutrients[2]
           operation.org_p = nutrients[3]
-          operation.no3_n *= 100
+          if operation.no3_n != nil then operation.no3_n *= 100 end
           #if operation.no3_n > 0 then operation.subtype_id = 1
-          operation.po4_p *= 100
+          if operation.po4_p != nil then operation.po4_p *= 100
           #if operation.po4_p > 0 then operation.subtype_id = 2
-          operation.org_n *= 100
-          operation.org_p *= 100
+          if operation.org_n != nil then operation.org_n *= 100
+          if operation.org_p != nil then operation.org_p *= 100
         when "moisture"
           operation.moisture = p.text
         when "org_c"
