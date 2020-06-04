@@ -1024,9 +1024,6 @@ class ProjectsController < ApplicationController
     end   # end if Save
     if location.save
       @location = location
-      #save parameters
-      load_parameters(0)
-      load_controls
       return "OK"
     else
       return t('activerecord.errors.messages.projects.no_saved') + " - " + t('activerecord.errors.messages.projects.exist')
@@ -1086,6 +1083,9 @@ class ProjectsController < ApplicationController
           scenario.field_id = field.id
           scenario.name = "Scenario1"
           scenario.save
+          #save parameters and controls
+          load_parameters(0)
+          load_controls
         else
           return "field could not be saved"
         end
