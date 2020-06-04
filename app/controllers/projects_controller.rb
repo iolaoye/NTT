@@ -1039,7 +1039,6 @@ class ProjectsController < ApplicationController
     old_field_id = 0
     field.location_id = @location.id
     scenario = Scenario.new
-
     node.elements.each do |p|
       case p.name
       when "Field_id"
@@ -1102,11 +1101,6 @@ class ProjectsController < ApplicationController
           centroid = calculate_centroid()
           site.ylat = centroid.cy
           site.xlog = centroid.cx
-          if site.save then
-            return "OK"
-          else
-            return "site could not be saved"
-          end
         else
           return "field could not be saved"
         end
@@ -2617,13 +2611,6 @@ class ProjectsController < ApplicationController
           operation.org_c = p.text
         when "rotation"
           operation.rotation = p.text
-        when "soil_operations"
-          p.elements.each do |soil_op|
-            msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
-            if msg != "OK"
-              return msg
-            end
-          end
       end
     end
     if operation.save then
