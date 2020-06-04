@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
 
   include LocationsHelper
   include ProjectsHelper
+  include ScenariosHelper
   layout 'welcome'
   require 'nokogiri'
   helper_method :sort_column, :sort_direction
@@ -178,8 +179,7 @@ class ProjectsController < ApplicationController
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
-  def upload_project
-    
+  def upload_project    
     saved = upload_prj()
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
@@ -206,7 +206,7 @@ class ProjectsController < ApplicationController
         end
         @data = Nokogiri::XML(params[:project])
         @upload_id = 0
-      else
+      elsif params[:commit].eql? t('project.upload_example') then
         @upload_id = 1
         case params[:examples]  # No example was selected
         when "0"
@@ -221,6 +221,13 @@ class ProjectsController < ApplicationController
           @data = Nokogiri::XML(File.open(@path))
           @upload_id = 2
         end # end case examples
+      else
+        if params[:project] == nil then
+          redirect_to projects_upload_path(@upload_id)
+          flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
+        end
+        @data = Nokogiri::XML(params[:project])
+        @upload_id = 2       
       end
       @data.root.elements.each do |node|
         case node.name
@@ -229,12 +236,20 @@ class ProjectsController < ApplicationController
         when "location"
           msg = upload_location_new_version(node)
         when "StartInfo"
-          msg = upload_project_info(node)
+          if @upload_id == 1 then
+            msg = upload_project_info(node)
+          else    #Means is a comet project
+            msg = upload_project_comet_version(node)
+          end            
         when "FarmInfo"
           msg = upload_location_info1(node)
         when "FieldInfo"
-          msg = upload_field_info(node)
-          msg = renumber_subareas()
+          if @upload_id == 1 then
+            msg = upload_field_info(node)
+            msg = renumber_subareas()
+          else
+            msg = upload_field_comet_version(node)
+          end
         when "SiteInfo"
           msg = upload_site_info(node)
         when "controls"
@@ -972,6 +987,126 @@ class ProjectsController < ApplicationController
     #end
   end
 
+  def upload_project_comet_version(node)    
+    #begin
+    @project = Project.new
+    @project.user_id = session[:user_id]
+    node.elements.each do |p|
+      case p.name
+        when "ProjectName" #if project name exists, save fails
+          @project.name = p.text
+        when "project_description"
+          @project.description = project.name + " from Comet"
+      end
+    end
+    @project.version = "NTTG3"
+    if @project.save
+      location = Location.new
+      location.project_id = @project.id
+      node.elements.each do |p|
+        case p.name
+          when "State"
+            state_id = State.find_by_state_abbreviation(p.text).id
+            location.state_id = state_id
+          when "County"
+            county_id = County.find_by_county_state_code(p.text).id
+            location.county_id = county_id
+          when "Status"
+            location.status = p.text
+        end   # end case 
+      end   # end node.elements
+    end   # end if Save
+    if location.save
+      @location = location
+      #save parameters
+      load_parameters(0)
+      load_controls
+      return "OK"
+    else
+      return t('activerecord.errors.messages.projects.no_saved') + " - " + t('activerecord.errors.messages.projects.exist')
+    end
+    #rescue
+      return t('activerecord.errors.messages.projects.no_saved')
+    #end
+  end
+
+  def upload_field_comet_version(node)
+    field_id = Hash.new
+    field = Field.new
+    old_field_id = 0
+    field.location_id = @location.id
+    scenario = Scenario.new
+
+    node.elements.each do |p|
+      case p.name
+      when "Field_id"
+        field.field_name = p.text
+      when "Area"
+        field.field_area = p.text
+      when "field_average_slope"
+        field.field_average_slope = p.text
+      when "Type"
+        field.field_type = p.text
+      when "SoilP"
+        field.soilp = p.text
+      when "Aluminum"
+        field.soil_aliminum = p.text
+      when "soil_test"
+        field.soil_test = p.text
+      when "Coordinates"
+        @location.coordinates = p.text
+        @location.save
+        field.coordinates = p.text
+        #add weather
+        weather = Weather.new
+        weather.way_id = 2
+        weather.station_way ="Own"
+        weather.weather_file = "No set Yet"
+        weather.weather_initial_year = 0
+        weather.weather_final_year = 0
+        weather.simulation_initial_year = 0
+        weather.simulation_final_year = 0
+        weather.field_id = field.id
+        weather.save
+        field.weather_id = weather.id
+        if field.save! then
+          session[:field_id] = field.id
+          field_id[old_field_id] = field.id
+          #@field_ids.push(field_id)
+          #add soils
+          @field = Field.find(session[:field_id])
+          request_soils()
+          #now create scenario and save it
+          scenario.field_id = field.id
+          scenario.name = "Scenario1"
+          scenario.save
+        else
+          return "field could not be saved"
+        end
+      when "weather"
+        #msg = upload_weather_comet_version(p, field.id)
+        if msg != "OK"
+          return msg
+        end
+      when "site"
+        msg = upload_site_comet_version(p, field.id)
+        if msg != "OK"
+          return msg
+        end
+      when "OperationInfo"
+        #create and array and hash to have the new and the old scenario id to use in watersheds.
+        #p.elements.each do |f|
+          upload_operation_comet_version(scenario.id, p.elements)
+          #if scenario_id == nil then
+            #return "scenario could not be saved"
+          #end
+        #end
+        #field.soils.update_all(:soil_id_old => nil)
+      end
+    end
+    return "OK"
+  end
+
   def upload_location_info(node)
     location = Location.new
     location.project_id = @project.id
@@ -1332,6 +1467,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def upload_site_comet_version(node, field_id)
+    site = Site.new
+    site.field_id = field_id
+    site.apm = 1
+    site.co2x = 0
+    site.cqnx = 0
+    site.elev = 0
+    site.fir0 = 0
+    site.rfnx = 0
+    site.unr = 0
+    site.upr = 0
+    site.xlog = @location.coordinates.split(" ").split(",")[0]
+    site.ylat = @location.coordinates.split(" ").split(",")[1]
+    if site.save then
+      return "OK"
+    else
+      return "site could not be saved"
+    end
+  end
+
   def upload_soil_info(node, field_id)   
     soil = Soil.new
     soil.field_id = field_id
@@ -1512,8 +1667,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def upload_layer_info(node, soil_id)
-    
+  def upload_layer_info(node, soil_id)   
     layer = Layer.new
     layer.soil_id = soil_id
     node.elements.each do |p|
@@ -2396,6 +2550,90 @@ class ProjectsController < ApplicationController
     else
       return "operation could not be saved"
     end
+  end
+
+  def upload_operation_comet_version(scenario_id, new_operation)
+    operation = Operation.new
+    operation.scenario_id = scenario_id
+    operation.save
+    activity_id = 0
+    for i in 0..(new_operation.length - 1)
+      p = new_operation[i]
+      #new_operation.elements.each do |p|
+      case p.name
+        when "Crop"
+          operation.crop_id = p.text
+        when "Operation_Name"   #todo
+          case true
+            when p.text.include?("Tillage")
+              activity_id = 3
+            when  p.text.include?("Planting")
+              activity_id = 1
+            when  p.text.include?("Harvest")
+              activity_id = 4
+            when  p.text.include?("Kill")
+              activity_id = 5
+            when  p.text.include?("Irrigation")
+              activity_id = 6
+          end
+          operation.activity_id = activity_id
+        when "Day"
+          operation.day = p.text
+        when "Month"
+          operation.month_id = p.text
+        when "Year"
+          operation.year = p.text
+        when "Operation"
+          operation.type_id = p.text
+          if operation.type_id == 580 then
+            operation.activity_id = 2
+          end
+        when "subtype_id"
+          operation.subtype_id = p.text
+        when "Opv1"
+          operation.amount = p.text
+        when "Opv2"
+          operation.depth = p.text
+        when "Opv4"
+          nutrients = p.text.split(",")
+          operation.no3_n = nutrients[0]
+          operation.po4_p = nutrients[1]
+          operation.org_n = nutrients[2]
+          operation.org_p = nutrients[3]
+        when "moisture"
+          operation.moisture = p.text
+        when "org_c"
+          operation.org_c = p.text
+        when "rotation"
+          operation.rotation = p.text
+        when "soil_operations"
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, scenario_id, 0, operation.id, 0)
+            if msg != "OK"
+              return msg
+            end
+          end
+      end
+    end
+    if operation.save then
+      add_soil_operation(operation)
+      return "OK"
+    else
+      return "operation could not be saved"
+    end
+  end
+
+  def add_soil_operation(operation)
+      soils = @field.soils
+      msg = "OK"
+      soils.each do |soil|
+        if msg.eql?("OK")
+          msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+        else
+          break
+        end
+      end
+      return msg
   end
 
   def upload_soil_operation_new(node, scenario_id, soil_id, operation_id, bmp_id)

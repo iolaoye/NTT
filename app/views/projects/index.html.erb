@@ -1,3 +1,4 @@
+<% comet = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% case %>
 	<% when flash[:notice] %>
 		<div class="success_alert">
@@ -25,6 +26,9 @@
 				<%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
 				<%= link_to t('project.upload_project'), projects_upload_path(0), :method => "get", :class => "btn btn-primary" %>
 				<%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+				<% if comet == 1 %>
+					<%= link_to "Upload Comet Ptoject", projects_upload_path(2), :method => "get", :class => "btn btn-primary" %><br><br>
+				<% end  %>
 			<% end %>
 			<% @project = Project.new %>
 			<div id="div_new" style="display:none" >
