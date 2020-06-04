@@ -2586,6 +2586,7 @@ class ProjectsController < ApplicationController
           operation.type_id = p.text
           if operation.type_id == 580 then
             operation.activity_id = 2
+            operation.subtype_id = 1
           end
         when "subtype_id"
           operation.subtype_id = 1
@@ -2594,12 +2595,16 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv4"
+          operation.type = 1
           nutrients = p.text.split(",")
           operation.no3_n = nutrients[0]
           operation.po4_p = nutrients[1]
           operation.org_n = nutrients[2]
-          operation.org_p = nutrients[3]
-          operation.subtype_id = 1
+          operation.org_p = nutrients[3]manure paramters here.
+          #todo add 
+          if nutrients.count == 9 then
+            operation.type = nutrients[8] + 1
+          end
           if operation.no3_n != nil then operation.no3_n *= 100 end
           #if operation.no3_n > 0 then operation.subtype_id = 1
           if operation.po4_p != nil then operation.po4_p *= 100 end
