@@ -991,6 +991,8 @@ class ProjectsController < ApplicationController
     #begin
     @project = Project.new
     @project.user_id = session[:user_id]
+    @initial_year = 0
+    @number_years = 0
     node.elements.each do |p|
       case p.name
         when "ProjectName" #if project name exists, save fails
@@ -1013,6 +1015,10 @@ class ProjectsController < ApplicationController
             location.county_id = county_id
           when "Status"
             location.status = p.text
+          when "InitialYear"
+            @initial_year = p.text
+          when "NumberOfYears"
+            @number_years = p.text
         end   # end case 
       end   # end node.elements
     end   # end if Save
@@ -1062,10 +1068,10 @@ class ProjectsController < ApplicationController
         weather.way_id = 2
         weather.station_way ="Own"
         weather.weather_file = "No set Yet"
-        weather.weather_initial_year = 0
-        weather.weather_final_year = 0
-        weather.simulation_initial_year = 0
-        weather.simulation_final_year = 0
+        weather.weather_initial_year = @initial_year
+        weather.weather_final_year = @initial_year + @number_years
+        weather.simulation_initial_year = weather.weather_initial_year + 5
+        weather.simulation_final_year = weather.weather_final_year 
         weather.field_id = field.id
         weather.save
         field.weather_id = weather.id
@@ -2589,7 +2595,7 @@ class ProjectsController < ApplicationController
             operation.activity_id = 2
           end
         when "subtype_id"
-          operation.subtype_id = p.text
+          operation.subtype_id = 1
         when "Opv1"
           operation.amount = p.text
         when "Opv2"
@@ -2600,6 +2606,12 @@ class ProjectsController < ApplicationController
           operation.po4_p = nutrients[1]
           operation.org_n = nutrients[2]
           operation.org_p = nutrients[3]
+          operation.no3_n *= 100
+          #if operation.no3_n > 0 then operation.subtype_id = 1
+          operation.po4_p *= 100
+          #if operation.po4_p > 0 then operation.subtype_id = 2
+          operation.org_n *= 100
+          operation.org_p *= 100
         when "moisture"
           operation.moisture = p.text
         when "org_c"
