@@ -7,21 +7,24 @@
 <%= form_tag({action: :upload_project}, multipart: true) do %>
   <div>
     <% if @id == "0" %>
-        <div class="page-header"><h1><%= t('project.upload_project') %></h1></div>
-        <br>
+        <div class="page-header"><h1><%= t('project.upload_project') %></h1></div><br>
         <%= file_field_tag :project, {:required => true} %>
-    <% else %>
-        <div class="page-header"><h1><%= t('project.upload_example') %></h1></div>
-		<br>
+    <% elsif @id == "1"%>
+        <div class="page-header"><h1><%= t('project.upload_example') %></h1></div><br>
         <%= select_tag "examples", "<option value=0>#{t('helpers.select.prompt')}</option><option value=1>OH Two Fields</option>".html_safe, {:required => true} %>
+    <% else %>
+        <div class="page-header"><h1><%= "Upload Comet Project" %></h1></div><br>
+        <%= file_field_tag :project, {:required => true} %>
     <% end %>
   </div>
   </br>
   <div class="actions">
     <% if @id == "0" %>
         <%= submit_tag(value = t('project.upload_project'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
-    <% else %>
+    <% elsif @id == "1" %>
         <%= submit_tag(value = t('project.upload_example'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
+    <% else %>
+        <%= submit_tag(value = 'Upload Comet Project', :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>    
     <% end %>
     <%= link_to t('general.back'), welcomes_path, :class => "btn btn-primary" %>
   </div>

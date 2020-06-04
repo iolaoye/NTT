@@ -542,43 +542,4 @@ class LocationsController < ApplicationController
       end
     end #end for create_layers
   end
-
-  def load_controls()
-    apex_controls = ApexControl.where(:project_id => @project.id)
-    if apex_controls == [] then
-      controls = Control.where(:state_id => @project.location.state_id)
-      if controls.blank? || controls == nil then
-        controls = Control.where(:state_id => 99)		
-      end
-      controls.each do |c|
-        apex_control = ApexControl.new
-        apex_control.control_description_id = c.number
-        case apex_control.control_description_id
-          when 1
-            if @weather.weather_final_year == nil or @weather.weather_initial_year == nil
-              apex_control.value = c.default_value
-            else
-              apex_control.value = @weather.weather_final_year - @weather.weather_initial_year + 1
-            end
-          when 2
-            if @weather.weather_initial_year == nil then
-              apex_control.value = c.default_value
-            else
-              apex_control.value = @weather.weather_initial_year
-            end
-          else
-            apex_control.value = c.default_value
-        end
-        
-        apex_control.project_id = @project.id
-        #if apex_control.control_description_id == 1 then
-        #  apex_control.value = @weather.simulation_final_year - @weather.simulation_initial_year + 1 + 5
-        #end
-        #if apex_control.control_description_id == 2 then
-          #apex_control.value = @weather.simulation_initial_year - 5
-        #end
-        apex_control.save
-      end # end control all
-    end # end if
-  end  #end method
 end

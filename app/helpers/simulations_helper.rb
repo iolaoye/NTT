@@ -1977,7 +1977,7 @@ def send_file_to_DNDC(apex_string, file, state)
           td_reduction = 1 - 0.43
         end
         if bmp.crop_id == 1 then  # Drainage Water Management
-          td_reduction = 1 - 0.33
+          #td_reduction = 1 - 0.33
         end
       end
     end
