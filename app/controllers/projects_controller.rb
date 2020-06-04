@@ -2600,8 +2600,8 @@ class ProjectsController < ApplicationController
           operation.no3_n = nutrients[0]
           operation.po4_p = nutrients[1]
           operation.org_n = nutrients[2]
-          operation.org_p = nutrients[3]manure paramters here.
-          #todo add 
+          operation.org_p = nutrients[3]
+          #todo add manure paramters here.
           if nutrients.count == 9 then
             operation.type = nutrients[8] + 1
           end
