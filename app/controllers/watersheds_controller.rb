@@ -241,9 +241,9 @@ class WatershedsController < ApplicationController
           end
           watershed_scenarios = WatershedScenario.where(:watershed_id => watershed_id).order(:field_id)
           msg = create_control_file()     #this prepares the apexcont.dat file
-          if msg.eql?("OK") then msg = create_parameter_file() else return msg end      #this prepares the parms.dat file
           #todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
           @scenario = Scenario.find(watershed_scenarios[0].scenario_id)
+          if msg.eql?("OK") then msg = create_parameter_file() else return msg end      #this prepares the parms.dat file
           #if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end      #this prepares the apex.wth file
           if msg.eql?("OK") then msg = create_site_file(Field.find_by_location_id(@project.location.id)) else return msg end    #this prepares the apex.sit file
           @field = watershed_scenarios[0].field
