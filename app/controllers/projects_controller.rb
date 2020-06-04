@@ -1064,17 +1064,17 @@ class ProjectsController < ApplicationController
         @location.save
         field.coordinates = p.text
         #add weather
-        weather = Weather.new
-        weather.way_id = 2
-        weather.station_way ="Own"
-        weather.weather_file = "No set Yet"
-        weather.weather_initial_year = @initial_year
-        weather.weather_final_year = @initial_year + @number_years
-        weather.simulation_initial_year = weather.weather_initial_year + 5
-        weather.simulation_final_year = weather.weather_final_year 
-        weather.field_id = field.id
-        weather.save
-        field.weather_id = weather.id
+        @weather = Weather.new
+        @weather.way_id = 2
+        @weather.station_way ="Own"
+        @weather.weather_file = "No set Yet"
+        @weather.weather_initial_year = @initial_year
+        @weather.weather_final_year = @initial_year + @number_years
+        @weather.simulation_initial_year = weather.weather_initial_year + 5
+        @weather.simulation_final_year = weather.weather_final_year 
+        @weather.field_id = field.id
+        @weather.save
+        field.weather_id = @weather.id
         if field.save! then
           session[:field_id] = field.id
           field_id[old_field_id] = field.id
