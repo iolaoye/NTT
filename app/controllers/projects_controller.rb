@@ -1069,10 +1069,12 @@ class ProjectsController < ApplicationController
         @weather.weather_final_year = @initial_year + @number_years
         @weather.simulation_initial_year = @weather.weather_initial_year + 5
         @weather.simulation_final_year = @weather.weather_final_year 
-        @weather.field_id = field.id
         @weather.save
         field.weather_id = @weather.id
         if field.save! then
+          #save weathr again to take field.id
+          @weather.field_id = field.id
+          @Weather.save
           session[:field_id] = field.id
           field_id[old_field_id] = field.id
           #@field_ids.push(field_id)
@@ -1196,35 +1198,34 @@ class ProjectsController < ApplicationController
 
   def upload_field_info(node)   
     #begin
-      field = Field.new
-      field.location_id = session[:location_id]
-      node.elements.each do |p|
-        
-        case p.name
-          when "Forestry"
-            if p.text == "True" then
-              field.field_type = true
-            else
-              field.field_type = false
-            end
-          when "Name"
-            field.field_name = p.text
-          when "Area"
-            field.field_area = p.text
-          when "AvgSlope"
-            field.field_average_slope = p.text
-          when "Coordinates"
-            field.coordinates = p.text
-          when "SoilInfo"
-            field.save
-            upload_soil_info(p, field.id)
-          when "ScenarioInfo"
-            upload_scenario_info(p, field.id)
-        end
+    field = Field.new
+    field.location_id = session[:location_id]
+    node.elements.each do |p|        
+      case p.name
+        when "Forestry"
+          if p.text == "True" then
+            field.field_type = true
+          else
+            field.field_type = false
+          end
+        when "Name"
+          field.field_name = p.text
+        when "Area"
+          field.field_area = p.text
+        when "AvgSlope"
+          field.field_average_slope = p.text
+        when "Coordinates"
+          field.coordinates = p.text
+        when "SoilInfo"
+          field.save
+          upload_soil_info(p, field.id)
+        when "ScenarioInfo"
+          upload_scenario_info(p, field.id)
       end
+    end
 
-      field.save
-      session[:field_id] = field.id
+    field.save
+    session[:field_id] = field.id
     #rescue
       #return "Field could not be saved"
     #end
