@@ -1097,7 +1097,7 @@ class ProjectsController < ApplicationController
           return msg
         end
       when "site"
-        msg = upload_site_comet_version(p, field.id)
+        msg = upload_site_comet_version(p, @field.id)
         if msg != "OK"
           return msg
         end
