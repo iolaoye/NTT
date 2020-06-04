@@ -1088,6 +1088,24 @@ class ProjectsController < ApplicationController
           #save parameters and controls
           load_parameters(0)
           load_controls
+          #create site file
+          site = Site.new
+          site.field_id = field.id
+          site.apm = 1
+          site.co2x = 0
+          site.cqnx = 0
+          site.elev = 0
+          site.fir0 = 0
+          site.rfnx = 0
+          site.unr = 0
+          site.upr = 0
+          site.xlog = @location.coordinates.split(" ").split(",")[0]
+          site.ylat = @location.coordinates.split(" ").split(",")[1]
+          if site.save then
+            return "OK"
+          else
+            return "site could not be saved"
+          end
         else
           return "field could not be saved"
         end
@@ -1097,7 +1115,6 @@ class ProjectsController < ApplicationController
           return msg
         end
       when "site"
-        msg = upload_site_comet_version(p, @field.id)
         if msg != "OK"
           return msg
         end
@@ -1467,26 +1484,6 @@ class ProjectsController < ApplicationController
           end
       end
     end
-    if site.save then
-      return "OK"
-    else
-      return "site could not be saved"
-    end
-  end
-
-  def upload_site_comet_version(node, field_id)
-    site = Site.new
-    site.field_id = field_id
-    site.apm = 1
-    site.co2x = 0
-    site.cqnx = 0
-    site.elev = 0
-    site.fir0 = 0
-    site.rfnx = 0
-    site.unr = 0
-    site.upr = 0
-    site.xlog = @location.coordinates.split(" ").split(",")[0]
-    site.ylat = @location.coordinates.split(" ").split(",")[1]
     if site.save then
       return "OK"
     else
