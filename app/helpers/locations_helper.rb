@@ -13,7 +13,7 @@ module LocationsHelper
 		    apex_parameter = ApexParameter.new
 		    apex_parameter.parameter_description_id = c.number
 		    apex_parameter.value = c.default_value
-		    apex_parameter.project_id = params[:project_id]
+		    apex_parameter.project_id = @project.id
 		    apex_parameter.save
       end # end Parameter.all
 	  end # end if apex_controls == []
