@@ -1099,8 +1099,9 @@ class ProjectsController < ApplicationController
           site.rfnx = 0
           site.unr = 0
           site.upr = 0
-          site.xlog = @location.coordinates.split(" ").split(",")[0]
-          site.ylat = @location.coordinates.split(" ").split(",")[1]
+          centroid = calculate_centroid()
+          site.ylat = centroid.cy
+          site.xlog = centroid.cx
           if site.save then
             return "OK"
           else
