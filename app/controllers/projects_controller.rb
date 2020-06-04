@@ -2595,7 +2595,7 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv4"
-          operation.type = 1
+          operation.type_id = 1
           nutrients = p.text.split(",")
           operation.no3_n = nutrients[0]
           operation.po4_p = nutrients[1]
@@ -2603,7 +2603,7 @@ class ProjectsController < ApplicationController
           operation.org_p = nutrients[3]
           #todo add manure paramters here.
           if nutrients.count == 9 then
-            operation.type = nutrients[8] + 1
+            operation.type_id = nutrients[8] + 1
           end
           if operation.no3_n != nil then operation.no3_n *= 100 end
           #if operation.no3_n > 0 then operation.subtype_id = 1
