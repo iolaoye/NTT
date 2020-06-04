@@ -2599,6 +2599,7 @@ class ProjectsController < ApplicationController
           operation.po4_p = nutrients[1]
           operation.org_n = nutrients[2]
           operation.org_p = nutrients[3]
+          operation.subtype_id = 1
           if operation.no3_n != nil then operation.no3_n *= 100 end
           #if operation.no3_n > 0 then operation.subtype_id = 1
           if operation.po4_p != nil then operation.po4_p *= 100 end
