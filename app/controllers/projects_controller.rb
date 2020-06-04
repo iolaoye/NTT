@@ -1074,7 +1074,7 @@ class ProjectsController < ApplicationController
         if field.save! then
           #save weathr again to take field.id
           @weather.field_id = field.id
-          @Weather.save
+          @weather.save
           session[:field_id] = field.id
           field_id[old_field_id] = field.id
           #@field_ids.push(field_id)
