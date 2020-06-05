@@ -1971,7 +1971,7 @@ def send_file_to_DNDC(apex_string, file, state)
     bmp = @scenario.bmps.find_by_bmpsublist_id(3)
     if !(bmp == nil)
       if bmp.irrigation_id == 1 and bmp.crop_id == 1 then   # both
-        td_reduction = 1 - 0.50
+        td_reduction = 1 - 0.43   # instead of reduce by 50% only reduce by 0.43 and the parm 83 is set to 0.75
       else
         if bmp.irrigation_id == 1 then #Tile Bioreactors
           td_reduction = 1 - 0.43
