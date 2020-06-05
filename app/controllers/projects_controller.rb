@@ -2583,7 +2583,6 @@ class ProjectsController < ApplicationController
         when "Year"
           operation.year = p.text
         when "Operation"
-          debugger
           #operation.type_id = p.text
           if p.text == "580" then
             operation.activity_id = 2
@@ -2596,9 +2595,8 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv4"
-          debugger
           #todo add opv4 for grazing and irrigation
-          if activity_id == 2 then 
+          if operation.activity_id == 2 then 
             nutrients = p.text.split(",")
             operation.no3_n = nutrients[0]
             operation.po4_p = nutrients[1]
