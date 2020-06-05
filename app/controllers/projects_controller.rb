@@ -1048,7 +1048,7 @@ class ProjectsController < ApplicationController
       when "field_average_slope"
         field.field_average_slope = p.text
       when "Type"
-        field.field_type = p.text
+        field.field_type = nil
       when "SoilP"
         field.soilp = p.text
       when "Aluminum"
@@ -2595,22 +2595,25 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv4"
-          operation.type_id = 1
-          nutrients = p.text.split(",")
-          operation.no3_n = nutrients[0]
-          operation.po4_p = nutrients[1]
-          operation.org_n = nutrients[2]
-          operation.org_p = nutrients[3]
-          #todo add manure paramters here.
-          if nutrients.count == 9 then
-            operation.type_id = nutrients[8] + 1
+          #todo add opv4 for grazing and irrigation
+          if activity_id == 2 then 
+            nutrients = p.text.split(",")
+            operation.no3_n = nutrients[0]
+            operation.po4_p = nutrients[1]
+            operation.org_n = nutrients[2]
+            operation.org_p = nutrients[3]
+            #todo add manure paramters here.
+            operation.type_id = 1 
+            if nutrients.count == 9 then
+              operation.type_id = nutrients[8] + 1
+            end
+            if operation.no3_n != nil then operation.no3_n *= 100 end
+            #if operation.no3_n > 0 then operation.subtype_id = 1
+            if operation.po4_p != nil then operation.po4_p *= 100 end
+            #if operation.po4_p > 0 then operation.subtype_id = 2
+            if operation.org_n != nil then operation.org_n *= 100 end
+            if operation.org_p != nil then operation.org_p *= 100 end
           end
-          if operation.no3_n != nil then operation.no3_n *= 100 end
-          #if operation.no3_n > 0 then operation.subtype_id = 1
-          if operation.po4_p != nil then operation.po4_p *= 100 end
-          #if operation.po4_p > 0 then operation.subtype_id = 2
-          if operation.org_n != nil then operation.org_n *= 100 end
-          if operation.org_p != nil then operation.org_p *= 100 end
         when "moisture"
           operation.moisture = p.text
         when "org_c"
