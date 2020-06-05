@@ -2583,7 +2583,7 @@ class ProjectsController < ApplicationController
         when "Year"
           operation.year = p.text
         when "Operation"
-          operation.type_id = p.text
+          #operation.type_id = p.text
           if operation.type_id == 580 then
             operation.activity_id = 2
             operation.subtype_id = 1
@@ -2603,7 +2603,7 @@ class ProjectsController < ApplicationController
             operation.org_n = nutrients[2]
             operation.org_p = nutrients[3]
             #todo add manure paramters here.
-            operation.type_id = 1 
+            operation.type_id = 1
             if nutrients.count == 9 then
               operation.type_id = nutrients[8] + 1
             end
