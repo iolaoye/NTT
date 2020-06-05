@@ -1101,6 +1101,7 @@ class ProjectsController < ApplicationController
           centroid = calculate_centroid()
           site.ylat = centroid.cy
           site.xlog = centroid.cx
+          site.save
         else
           return "field could not be saved"
         end
@@ -2592,8 +2593,10 @@ class ProjectsController < ApplicationController
           operation.subtype_id = 1
         when "Opv1"
           operation.amount = p.text
+          if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
         when "Opv2"
           operation.depth = p.text
+          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
         when "Opv4"
           #todo add opv4 for grazing and irrigation
           if operation.activity_id == 2 then 
