@@ -373,11 +373,12 @@ $(document).ready ->
         $("#td_n_rate").toggle(false)
     $("#bmp_cb1_2").click ->
         $("#td_n_rate").toggle(true)
+    #on 06/05/2020 Dr. Saleh asked to make both check boxes (irrig and crop) allow to check at the same time. Before just one could be checked at a time.
     $("#irrigation_id").click ->
         if $("#irrigation_id")[0].checked == true
-            $("#crop_id")[0].checked = false
-            $("#irrigation_id")[0].checked = true
+            #$("#crop_id")[0].checked = false
+            #$("#irrigation_id")[0].checked = true
     $("#crop_id").click ->
         if $("#crop_id")[0].checked == true
-            $("#irrigation_id")[0].checked = false
-            $("#crop_id")[0].checked = true
+            #$("#irrigation_id")[0].checked = false
+            #$("#crop_id")[0].checked = true
