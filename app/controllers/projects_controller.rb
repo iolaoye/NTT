@@ -2584,7 +2584,7 @@ class ProjectsController < ApplicationController
           operation.year = p.text
         when "Operation"
           #operation.type_id = p.text
-          if operation.type_id == 580 then
+          if p.text == "580" then
             operation.activity_id = 2
             operation.subtype_id = 1
           end
