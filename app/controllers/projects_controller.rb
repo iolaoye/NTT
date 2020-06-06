@@ -1102,30 +1102,38 @@ class ProjectsController < ApplicationController
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.save
+          #create subareas
+          soils = @field.soils
+          msg = "OK"
+          i = 1
+          soils.each do |soil|
+            msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
+            i += 1
+          end  
         else
           return "field could not be saved"
         end
-      when "weather"
-        #msg = upload_weather_comet_version(p, field.id)
-        if msg != "OK"
-          return msg
-        end
-      when "site"
-        if msg != "OK"
-          return msg
-        end
       when "OperationInfo"
-        #create and array and hash to have the new and the old scenario id to use in watersheds.
-        #p.elements.each do |f|
           upload_operation_comet_version(scenario.id, p.elements)
-          #if scenario_id == nil then
-            #return "scenario could not be saved"
-          #end
-        #end
-        #field.soils.update_all(:soil_id_old => nil)
+      when "BmpInfo"
+        upload_bmp_comet_version(scenario.id, p.elements)
       end
     end
     return "OK"
+  end
+
+  def upload_bmp_comet_version(scenario_id, new_bmps)
+    for i in 0..(new_bmps.length - 1)
+      bmp = Bmp.new
+      bmp.scenario_id = scenario_id
+      case new_bmps[i].name
+        when "TileDrain"
+          bmp.bmp_id = 3
+          bmp.depth = new_bmps[0].elements[0].text
+          bmp.depth = bmp.depth / FT_TO_MM
+      end
+      bmp.save
+    end
   end
 
   def upload_location_info(node)
@@ -2575,6 +2583,8 @@ class ProjectsController < ApplicationController
               activity_id = 5
             when  p.text.include?("Irrigation")
               activity_id = 6
+            when p.text.include?("Liming")
+              activity_id = 12
           end
           operation.activity_id = activity_id
         when "Day"
@@ -2594,11 +2604,13 @@ class ProjectsController < ApplicationController
         when "Opv1"
           operation.amount = p.text
           if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
+          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
+          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
         when "Opv2"
           operation.depth = p.text
           if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
         when "Opv4"
-          #todo add opv4 for grazing and irrigation
+          #todo add opv4 for grazing 
           if operation.activity_id == 2 then 
             nutrients = p.text.split(",")
             operation.no3_n = nutrients[0]
@@ -2617,6 +2629,7 @@ class ProjectsController < ApplicationController
             if operation.org_n != nil then operation.org_n *= 100 end
             if operation.org_p != nil then operation.org_p *= 100 end
           end
+          if operation.activity_id == 6 then operation.depth = p.text * 100 end
         when "moisture"
           operation.moisture = p.text
         when "org_c"
