@@ -1128,11 +1128,17 @@ class ProjectsController < ApplicationController
       bmp.scenario_id = scenario_id
       case new_bmps[i].name
         when "TileDrain"
-          bmp.bmp_id = 3
+          bmp.bmpsublist_id = 3
           bmp.depth = new_bmps[0].elements[0].text
-          bmp.depth = bmp.depth / FT_TO_MM
+          bmp.depth = (bmp.depth / FT_TO_MM).round(1)
+          bmp.save
+          #update subarea file with the TD
+          subareas = Subarea.where(:scenario_id => scenario_id)
+          subareas.each do |subarea|
+            subarea.idr = new_bmps[0].elements[0].text
+            subarea.save
+          end
       end
-      bmp.save
     end
   end
 
