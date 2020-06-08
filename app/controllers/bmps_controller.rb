@@ -262,7 +262,6 @@ class BmpsController < ApplicationController
       if @values.has_key?(:select) && !@values[:select][:"28"].nil? and @values[:bmp_clm1] != nil then
         create(28)
       end
-      debugger
       if @values[:action] == "save_bmps" then
   		  redirect_to project_field_scenarios_path(@project, @field)
       else
