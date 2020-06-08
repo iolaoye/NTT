@@ -2665,8 +2665,10 @@ class ProjectsController < ApplicationController
           operation.amount = p.text
           if operation.activity_id = 1 then
             #take plant population from crop if Opv5 is zero
-            if operation.amount <= 0 then
-              operation.amount = crop.plant_population_mt
+            if operation.amount != nil then 
+              if operation.amount <= 0 then
+                operation.amount = crop.plant_population_mt
+              end
             end
           end
         when "moisture"
