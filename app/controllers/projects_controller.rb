@@ -2616,6 +2616,8 @@ class ProjectsController < ApplicationController
               activity_id = 6
             when p.text.include?("Liming")
               activity_id = 12
+            else
+              activity_id = 2
           end
           operation.activity_id = activity_id
         when "Day"
