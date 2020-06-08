@@ -2605,13 +2605,11 @@ class ProjectsController < ApplicationController
           crop = Crop.find_by_number(operation.crop_id)
           operation.crop_id = crop.id
         when "Operation_Name"   #todo
-          debugger
           case true
             when p.text.include?("Tillage")
               activity_id = 3
             when  p.text.include?("Planting")
               activity_id = 1
-              debugger
             when  p.text.include?("Harvest")
               activity_id = 4
             when  p.text.include?("Kill")
@@ -2683,7 +2681,6 @@ class ProjectsController < ApplicationController
           operation.rotation = p.text
       end
     end
-    debugger
     if operation.save then
       add_soil_operation(operation)
       return "OK"
