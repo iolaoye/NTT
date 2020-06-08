@@ -1077,13 +1077,14 @@ class ProjectsController < ApplicationController
           session[:field_id] = field.id
           field_id[old_field_id] = field.id
           #@field_ids.push(field_id)
-          #add soils
           @field = Field.find(session[:field_id])
-          request_soils()
           #now create scenario and save it
           scenario.field_id = field.id
           scenario.name = "Scenario1"
           scenario.save
+          #add soils
+=begin
+          request_soils()
           #save parameters and controls
           load_parameters(0)
           load_controls
@@ -1110,6 +1111,7 @@ class ProjectsController < ApplicationController
             msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
             i += 1
           end  
+=end
         else
           return "field could not be saved"
         end
@@ -2603,11 +2605,13 @@ class ProjectsController < ApplicationController
           crop = Crop.find_by_number(operation.crop_id)
           operation.crop_id = crop.id
         when "Operation_Name"   #todo
+          debugger
           case true
             when p.text.include?("Tillage")
               activity_id = 3
             when  p.text.include?("Planting")
               activity_id = 1
+              debugger
             when  p.text.include?("Harvest")
               activity_id = 4
             when  p.text.include?("Kill")
@@ -2663,9 +2667,9 @@ class ProjectsController < ApplicationController
           if operation.activity_id == 6 then operation.depth = p.text * 100 end
         when "Opv5"
           operation.amount = p.text
-          if operation.activity_id = 1 then
-            #take plant population from crop if Opv5 is zero
-            if operation.amount != nil then 
+          if operation.activity_id == 1 then
+            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufions with CC.
+            if operation.amount != nil then   #take plant population from crop if Opv5 is zero
               if operation.amount <= 0 then
                 operation.amount = crop.plant_population_mt
               end
@@ -2679,6 +2683,7 @@ class ProjectsController < ApplicationController
           operation.rotation = p.text
       end
     end
+    debugger
     if operation.save then
       add_soil_operation(operation)
       return "OK"
