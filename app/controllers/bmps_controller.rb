@@ -113,14 +113,23 @@ class BmpsController < ApplicationController
   	end
   end
 
+  def save_bmps
+    @values = params
+    save_bmps_values()
+  end
+
+  def save_bmps_from_load(values)
+    @values = values
+    @project = Project.find(@values[:project_id])
+    save_bmps_values()
+  end
 ################################  save BMPS  #################################
 # POST /bmps/scenario
-  def save_bmps
-    if $values != nil then params = $values end
-	  if params[:button] == t('submit.savecontinue')
+  def save_bmps_values()
+	  if @values[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
-  		bmps = Bmp.where(:scenario_id => params[:scenario_id])
+  		bmps = Bmp.where(:scenario_id => @values[:scenario_id])
   		bmps.each do |bmp|
   			@bmp = bmp
   			msg = input_fields("delete", 0)
@@ -128,112 +137,140 @@ class BmpsController < ApplicationController
   				bmp.destroy
   			end
   		end  # bmps.each
-  		#Bmp.where(:scenario_id => params[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
-  		if !(params[:bmp_ai][:irrigation_id] == "") then
-  			if !(params[:bmp_cb1] == nil)
-  				if params[:bmp_cb1] == "1" then
-  					create(1)   #autoirrigation
-  				end
-  				if params[:bmp_cb1] == "2" then
-  					create(1)   #autofertigation
-  				end
-  			end
-  		end
-      if !(params[:bmp_td] == nil)
-  		  if !(params[:bmp_td][:depth] == "") then
+  		#Bmp.where(:scenario_id => @values[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
+      if @values[:bmp_id] != nil then
+    		if !(@values[:bmp_ai][:irrigation_id] == "") then
+    			if !(@values[:bmp_cb1] == nil)
+    				if @values[:bmp_cb1] == "1" then
+    					create(1)   #autoirrigation
+    				end
+    				if @values[:bmp_cb1] == "2" then
+    					create(1)   #autofertigation
+    				end
+    			end
+    		end
+      end
+
+      if !(@values[:bmp_td] == nil)
+  		  if !(@values[:bmp_td][:depth] == "") then
   			 create(3)
   		  end
       end
-  	 	if !(params[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
-    			if !(params[:bmp_ppnd][:width] == "") then
-    				if params[:bmp_cb2] == "4" then
+
+  	 	if !(@values[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
+    			if !(@values[:bmp_ppnd][:width] == "") then
+    				if @values[:bmp_cb2] == "4" then
     					create(4)
     				end
-    				if params[:bmp_cb2] == "5" then
+    				if @values[:bmp_cb2] == "5" then
     					create(4)
     				end
-    				if params[:bmp_cb2] == "6" then
+    				if @values[:bmp_cb2] == "6" then
     					create(4)
     				end
-    				if params[:bmp_cb2] == "7" then
+    				if @values[:bmp_cb2] == "7" then
     					create(4)
     				end
     			end
   		end
-  		if !(params[:bmp_wl][:area] == "") then
-  			create(8)
-  		end
+
+    	if @values[:bmp_wl] != nil then
+      	if !(@values[:bmp_wl][:area] == "") then
+    			create(8)
+    		end
+      end
 		  # =>  pond
-  		if params.has_key?(:select) && !params[:select][:"9"].nil? then
+  		if @values.has_key?(:select) && !@values[:select][:"9"].nil? then
   			create(9)
   		end
 		  #stream fencing
-		  if params.has_key?(:select) && !params[:select][:"10"].nil? then
+		  if @values.has_key?(:select) && !@values[:select][:"10"].nil? then
   			create(10)
   		end
-  		if !(params[:bmp_sbs] == nil)
-  			if params[:bmp_sbs][:id] == "1" then
+
+  		if !(@values[:bmp_sbs] == nil)
+  			if @values[:bmp_sbs][:id] == "1" then
   				create(11)
   			end
   		end
 		  #riparian forest
-  		if !(params[:bmp_fs][:grass_field_portion] == "") then
-  			if !(params[:bmp_cb3] == nil)
-  				if params[:bmp_cb3] == "12" then
-  					create(12)   #riparian forest
-  				end
+      if @values[:bmp_fs] != nil then
+    		if !(@values[:bmp_fs][:grass_field_portion] == "") then
+    			if !(@values[:bmp_cb3] == nil)
+    				if @values[:bmp_cb3] == "12" then
+    					create(12)   #riparian forest
+    				end
+          end
         end
       end
-      if !(params[:bmp_fs][:width] == "") then
-        if !(params[:bmp_cb3] == nil)
-  				if params[:bmp_cb3] == "13" then
-  					create(13)   #filter strip
-  				end
-        end
-			end
+      if @values[:bmp_fs] != nil then
+        if !(@values[:bmp_fs][:width] == "") then
+          if !(@values[:bmp_cb3] == nil)
+    				if @values[:bmp_cb3] == "13" then
+    					create(13)   #filter strip
+    				end
+          end
+  			end
+      end
 
-  		if !(params[:bmp_ww][:width] == "") then
-  			create(14)
-  		end
-      if !(params[:bmp_cb] == nil)
-        if params[:bmp_cb][:width] > "1" then
+      if @values[:bmp_ww] != nil then
+    		if !(@values[:bmp_ww][:width] == "") then
+    			create(14)
+    		end
+      end
+
+      if !(@values[:bmp_cb] == nil)
+        if @values[:bmp_cb][:width] > "1" then
           create(15)
         end
       end
-  		if !(params[:bmp_ll][:slope_reduction] == "") then
-  			create(16)
-  		end
-  		if params.has_key?(:select) && !params[:select][:"17"].nil? then
+
+      if @values[:bmp_ll] != nil then
+    		if !(@values[:bmp_ll][:slope_reduction] == "") then
+    			create(16)
+    		end
+      end
+
+  		if @values.has_key?(:select) && !@values[:select][:"17"].nil? then
   			create(17)
   		end
-		  if !(params[:bmp_mc] == nil) # when this is hidden because there is not manure application
-  			if !(params[:bmp_mc][:animal_id] == "") && !(params[:bmp_mc][:animal_id] == nil) then
+
+		  if !(@values[:bmp_mc] == nil) # when this is hidden because there is not manure application
+  			if !(@values[:bmp_mc][:animal_id] == "") && !(@values[:bmp_mc][:animal_id] == nil) then
   				create(18)
   			end
 		  end
-      if params.has_key?(:select) && !params[:select][:"19"].nil? then
+
+      if @values.has_key?(:select) && !@values[:select][:"19"].nil? then
       #cover crop (bmp_ccr)
         create(19)
       end
-      if params.has_key?(:select) && !params[:select][:"20"].nil? then
+
+      if @values.has_key?(:select) && !@values[:select][:"20"].nil? then
       #rotational grazing (bmp_rg)
         create(20)
       end
-  		if !(params[:select] == nil) and params[:select][:"21"] == "1" then
+
+  		if !(@values[:select] == nil) and @values[:select][:"21"] == "1" then
   			create(21)
   		end
       # =>  liming
-      if params.has_key?(:select) && !params[:select][:"27"].nil? then
+      if @values.has_key?(:select) && !@values[:select][:"27"].nil? then
         create(27)
       end
       # =>  Future Climate
-      if params.has_key?(:select) && !params[:select][:"28"].nil? and params[:bmp_clm1] != nil then
+      if @values.has_key?(:select) && !@values[:select][:"28"].nil? and @values[:bmp_clm1] != nil then
         create(28)
       end
-  		redirect_to project_field_scenarios_path(@project, @field)
+      debugger
+      if @values[:action] == "save_bmps" then
+  		  redirect_to project_field_scenarios_path(@project, @field)
+      else
+        return
+      end
 	  else
 		    redirect_to scenarios_path
-	  end # end if params[:button]
+	  end # end if @values[:button]
   end  # end method
 ################################  SHOW  #################################
 # GET /bmps/1
@@ -297,7 +334,7 @@ class BmpsController < ApplicationController
     @bmpsublist_name = "create"
     msg = "OK"
     @bmp = Bmp.new()
-    @bmp.scenario_id = params[:scenario_id]
+    @bmp.scenario_id = @values[:scenario_id]
     @bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     #@irrigation = Irrigation.arel_table
@@ -310,7 +347,7 @@ class BmpsController < ApplicationController
     	 return "Error saving BMP"
       end
     end
-    if !(params[:select] == nil) && params[:select][:"21"] == "1" && bmpsublist == 21 then
+    if !(@values[:select] == nil) && @values[:select][:"21"] == "1" && bmpsublist == 21 then
     	msg = create_climate("create")
     end
     if msg == "OK" then
@@ -323,7 +360,7 @@ class BmpsController < ApplicationController
 # PATCH/PUT /bmps/1.json
   def update
     @slope = 100
-    @bmp = Bmp.find(params[:id])
+    @bmp = Bmp.find(@values[:id])
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     @climates = Climate.where(:bmp_id => @bmp.id)
     #@irrigation = Irrigation.arel_table
@@ -336,7 +373,7 @@ class BmpsController < ApplicationController
     respond_to do |format|
       if msg == "OK"
         if @bmp.update_attributes(bmp_params)
-          format.html { redirect_to list_bmp_path(params[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
+          format.html { redirect_to list_bmp_path(@values[:scenario_id]), notice: t('operation.bmp') + " " + t('general.updated') }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
@@ -482,11 +519,11 @@ class BmpsController < ApplicationController
     #@soils = Soil.where(:field_id => params[:field_id])
     #@soils.each do |soil|
     @scenario.subareas.each do |subarea|
-      #subarea = soil.subareas.find_by_scenario_id(params[:scenario_id])
+      #subarea = soil.subareas.find_by_scenario_id(@values[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
-  		      @bmp.irrigation_id = params[:bmp_ai][:irrigation_id]
+  		      @bmp.irrigation_id = @values[:bmp_ai][:irrigation_id]
             case @bmp.irrigation_id
               when 1
                 subarea.nirr = 1.0
@@ -497,32 +534,32 @@ class BmpsController < ApplicationController
             end
             subarea.vimx = 5000
             subarea.bir = 0.8
-            subarea.iri = params[:bmp_ai][:days]
+            subarea.iri = @values[:bmp_ai][:days]
 			      @bmp.days = subarea.iri
-            subarea.bir = params[:bmp_ai][:water_stress_factor]
+            subarea.bir = @values[:bmp_ai][:water_stress_factor]
 			      subarea.bir = (100 - subarea.bir) / 100
             @bmp.water_stress_factor = 1-subarea.bir
             if subarea.bir >= 1 then subarea.bir = 0.99 end
-            subarea.efi = 1.0 - (params[:bmp_ai][:irrigation_efficiency].to_f / 100)
+            subarea.efi = 1.0 - (@values[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
-            subarea.armx = params[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-  		      @bmp.maximum_single_application = params[:bmp_ai][:maximum_single_application].to_f
+            subarea.armx = @values[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
+  		      @bmp.maximum_single_application = @values[:bmp_ai][:maximum_single_application].to_f
       		  subarea.fdsf = 0
-      		  @bmp.depth = params[:bmp_cb1]
-        		if params[:bmp_ai][:safety_factor] == nil then
+      		  @bmp.depth = @values[:bmp_cb1]
+        		if @values[:bmp_ai][:safety_factor] == nil then
         			subarea.fdsf = 0
         		else
-        			subarea.fdsf = params[:bmp_ai][:safety_factor]
+        			subarea.fdsf = @values[:bmp_ai][:safety_factor]
         		end
             @bmp.safety_factor = subarea.fdsf
-            if params[:bmp_ai][:n_rate] == nil then
+            if @values[:bmp_ai][:n_rate] == nil then
               subarea.fnp4 = 0
               @bmp.dry_manure = 0
             else
               # 02/03/20. fnp4 and bft
               subarea.fnp4 = 0
-              #subarea.fnp4 = params[:bmp_ai][:n_rate].to_f * LBS_TO_KG
-              @bmp.dry_manure = params[:bmp_ai][:n_rate]
+              #subarea.fnp4 = @values[:bmp_ai][:n_rate].to_f * LBS_TO_KG
+              @bmp.dry_manure = @values[:bmp_ai][:n_rate]
             end
         		if @bmp.depth == 1 then
         			subarea.idf4 = 0.0
@@ -554,22 +591,22 @@ class BmpsController < ApplicationController
 
 ### ID: 3
   def tile_drain(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
-            subarea.idr = params[:bmp_td][:depth].to_f * FT_TO_MM
-            @bmp.depth = params[:bmp_td][:depth]
+            subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
+            @bmp.depth = @values[:bmp_td][:depth]
             @bmp.irrigation_id = 0
             subarea.tdms = 0
             @bmp.crop_id = 0
-            if !(params[:irrigation_id] == nil) then 
+            if !(@values[:irrigation_id] == nil) then 
               @bmp.irrigation_id = 1
               #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
             end
-            if !(params[:crop_id] == nil) then 
+            if !(@values[:crop_id] == nil) then 
               @bmp.crop_id = 1 
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
@@ -588,16 +625,16 @@ class BmpsController < ApplicationController
 ### ID: 4
   def ppnd(type)
   	if type == "create" then
-  		pad_and_pipe = params[:bmp_cb2].to_i
+  		pad_and_pipe = @values[:bmp_cb2].to_i
   	else
   		pad_and_pipe = @bmp.depth
   	end
     case pad_and_pipe
     when 4, 5
-      @bmp.width = params[:bmp_ppnd][:width]
-      @bmp.sides = params[:bmp_ppnd][:sides]
+      @bmp.width = @values[:bmp_ppnd][:width]
+      @bmp.sides = @values[:bmp_ppnd][:sides]
       @bmp.area = 0
-		  @bmp.depth = params[:bmp_cb2]
+		  @bmp.depth = @values[:bmp_cb2]
     when 6
       ppde(type)
     when 7
@@ -609,10 +646,10 @@ class BmpsController < ApplicationController
 
 ### ID: 5
   def ppds(type)
-    @bmp.width = params[:bmp_ppnd][:width]
-    @bmp.sides = params[:bmp_ppnd][:sides]
+    @bmp.width = @values[:bmp_ppnd][:width]
+    @bmp.sides = @values[:bmp_ppnd][:sides]
     @bmp.area = 0
-    @bmp.depth = params[:bmp_cb2]
+    @bmp.depth = @values[:bmp_cb2]
     return pads_pipes(type)
   end   # end method
 
@@ -621,16 +658,16 @@ class BmpsController < ApplicationController
   def ppde(type)
     case type
       when "create"
-    		@bmp.width = params[:bmp_ppnd][:width]
-    		@bmp.sides = params[:bmp_ppnd][:sides]
-    		@bmp.area = params[:bmp_ppnd][:area]
-    		@bmp.depth = params[:bmp_cb2]
+    		@bmp.width = @values[:bmp_ppnd][:width]
+    		@bmp.sides = @values[:bmp_ppnd][:sides]
+    		@bmp.area = @values[:bmp_ppnd][:area]
+    		@bmp.depth = @values[:bmp_cb2]
     		@iops = @field.soils.count
     		@inps = 1
         if @bmp.save then
           msg = pads_pipes(type)
           if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-            create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
+            create_subarea("PPDE", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(@values[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
           end
         else
          return "Error saving BMP"
@@ -649,16 +686,16 @@ class BmpsController < ApplicationController
   def pptw(type)
     case type
       when "create"
-  		  @bmp.width = params[:bmp_ppnd][:width]
-  		  @bmp.sides = params[:bmp_ppnd][:sides]
-  		  @bmp.area = params[:bmp_ppnd][:area]
-  		  @bmp.depth = params[:bmp_cb2]
+  		  @bmp.width = @values[:bmp_ppnd][:width]
+  		  @bmp.sides = @values[:bmp_ppnd][:sides]
+  		  @bmp.area = @values[:bmp_ppnd][:area]
+  		  @bmp.depth = @values[:bmp_cb2]
   		  @iops = @field.soils.count
   		  @inps = 1
   		  if @bmp.save then
   			  msg = pads_pipes(type)
   			  if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
-  				  create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
+  				  create_subarea("PPTW", @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(@values[:field_id]).field_area, @bmp.id, @bmp.depth, false, "create", false)
   			  end
   		  else
   			 return "Error saving BMP"
@@ -677,8 +714,8 @@ class BmpsController < ApplicationController
   def wetlands(type)
     case type
       when "create"
-    	  @bmp.area = params[:bmp_wl][:area]
-    		if params[:bmp_wl][:buffer_land] == nil then
+    	  @bmp.area = @values[:bmp_wl][:area]
+    		if @values[:bmp_wl][:buffer_land] == nil then
     			@bmp.sides = 0
     		else
     			@bmp.sides = 1
@@ -695,11 +732,11 @@ class BmpsController < ApplicationController
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
   def pond(type)
-  	@bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency].to_f 
-    @soils = Soil.where(:field_id => params[:field_id])
+  	@bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f 
+    @soils = Soil.where(:field_id => @values[:field_id])
     i = 0
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -718,12 +755,12 @@ class BmpsController < ApplicationController
     case type
       when "create"
         @bmp.area = 0
-        if params[:bmp_pnd][:irrigation_efficiency] == nil then
+        if @values[:bmp_pnd][:irrigation_efficiency] == nil then
           @bmp.sides = 0
           @bmp.irrigation_efficiency = 0
         else
           @bmp.sides = 1
-          @bmp.irrigation_efficiency = params[:bmp_pnd][:irrigation_efficiency]
+          @bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency]
           @bmp.area = @field.field_area * @bmp.irrigation_efficiency
         end
         if @bmp.save then
@@ -743,20 +780,20 @@ class BmpsController < ApplicationController
 ### ID: 10
   def stream_fencing(type)
     case type
-    when "create"  	#@bmp.number_of_animals = params[:bmp_sf][:number_of_animals]
-  	    @bmp.width = params[:bmp_sf][:width]
+    when "create"  	#@bmp.number_of_animals = @values[:bmp_sf][:number_of_animals]
+  	    @bmp.width = @values[:bmp_sf][:width]
   	    @bmp.depth = Math::sqrt(@field.field_area * AC_TO_FT2)
         @bmp.area = @bmp.width * @bmp.depth / AC_TO_FT2
         op = @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9).first
         if op != nil
           @bmp.crop_id = Crop.find(op.crop_id).number
         end
-      	#@bmp.animal_id = params[:bmp_sf][:animal_id]
-      	#@bmp.dry_manure = params[:bmp_sf][:dry_manure]
-      	#@bmp.no3_n = params[:bmp_sf][:no3_n]
-      	#@bmp.po4_p = params[:bmp_sf][:po4_p]
-      	#@bmp.org_n = params[:bmp_sf][:org_n]
-      	#@bmp.org_p = params[:bmp_sf][:org_p]
+      	#@bmp.animal_id = @values[:bmp_sf][:animal_id]
+      	#@bmp.dry_manure = @values[:bmp_sf][:dry_manure]
+      	#@bmp.no3_n = @values[:bmp_sf][:no3_n]
+      	#@bmp.po4_p = @values[:bmp_sf][:po4_p]
+      	#@bmp.org_n = @values[:bmp_sf][:org_n]
+      	#@bmp.org_p = @values[:bmp_sf][:org_p]
       	#return "OK"
         if @bmp.save then
           if @bmp.area > 0 then
@@ -772,9 +809,9 @@ end
 
 ### ID: 11
   def streambank_stabilization(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -792,19 +829,19 @@ end
   def riparian_forest(type)
     case type
       when "create"
-    		@bmp.area = params[:bmp_fs][:area]
-    		@bmp.width = params[:bmp_fs][:width]
-    		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-    		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-        @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
+    		@bmp.area = @values[:bmp_fs][:area]
+    		@bmp.width = @values[:bmp_fs][:width]
+    		@bmp.grass_field_portion = @values[:bmp_fs][:grass_field_portion]
+    		@bmp.buffer_slope_upland = @values[:bmp_fs][:buffer_slope_upland]
+        @bmp.slope_reduction = @values[:bmp_fs][:floodplain_flow]
     		@bmp.crop_id = 1 #record not found error
         @bmp.bmpsublist_id = 13
-  			if params[:bmp_fs][:buffer_land] == nil then
+  			if @values[:bmp_fs][:buffer_land] == nil then
   				@bmp.sides = 0
   			else
   				@bmp.sides = 1
   			end
-    		@bmp.depth = params[:bmp_cb3]
+    		@bmp.depth = @values[:bmp_cb3]
         if @bmp.area == 0 || @bmp.area == nil then
           length = Math.sqrt(@field.field_area * AC_TO_M2)    #convert ac to m2 and take sqrt to find lenght
           width = (@bmp.width + @bmp.grass_field_portion) * FT_TO_M  # convert width ft to width m
@@ -826,18 +863,18 @@ end
   def filter_strip(type)
     case type
       when "create"
-    		@bmp.area = params[:bmp_fs][:area]
-    		@bmp.width = params[:bmp_fs][:width]
-    		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-    		@bmp.grass_field_portion = params[:bmp_fs][:grass_field_portion]
-        @bmp.slope_reduction = params[:bmp_fs][:floodplain_flow]
-    		@bmp.crop_id = params[:bmp_fs][:crop_id]
-    		if params[:bmp_fs][:buffer_land] == nil then
+    		@bmp.area = @values[:bmp_fs][:area]
+    		@bmp.width = @values[:bmp_fs][:width]
+    		@bmp.buffer_slope_upland = @values[:bmp_fs][:buffer_slope_upland]
+    		@bmp.grass_field_portion = @values[:bmp_fs][:grass_field_portion]
+        @bmp.slope_reduction = @values[:bmp_fs][:floodplain_flow]
+    		@bmp.crop_id = @values[:bmp_fs][:crop_id]
+    		if @values[:bmp_fs][:buffer_land] == nil then
     			@bmp.sides = 0
     		else
     			@bmp.sides = 1
     		end
-    		@bmp.depth = params[:bmp_cb3]
+    		@bmp.depth = @values[:bmp_cb3]
         if @bmp.depth == 12 then
           @bmp.crop_id = 1
         else
@@ -856,7 +893,7 @@ end
     			end
     		end
       when "update"
-    		if params[:bmp_cb1] == "13" then
+    		if @values[:bmp_cb1] == "13" then
     		    update_existing_subarea("FS", 13)
     		else
     			update_existing_subarea("RFFS", 12)
@@ -876,9 +913,9 @@ end
   def waterway(type)
     case type
       when "create"
-		    @bmp.width = params[:bmp_ww][:width]
-		    @bmp.crop_id = params[:bmp_ww][:crop_id]
-        @bmp.slope_reduction = params[:bmp_ww][:floodplain_flow]
+		    @bmp.width = @values[:bmp_ww][:width]
+		    @bmp.crop_id = @values[:bmp_ww][:crop_id]
+        @bmp.slope_reduction = @values[:bmp_ww][:floodplain_flow]
         @bmp.area = 0
   		  if @bmp.save then
 	        return create_new_subarea("WW", 14)
@@ -894,9 +931,9 @@ end
   def contour_buffer(type)
     case type
     when "create"
-      @bmp.crop_id = params[:bmp_cb][:crop_id]
-      @bmp.crop_width = params[:bmp_cb][:crop_width]
-      @bmp.width = params[:bmp_cb][:width]
+      @bmp.crop_id = @values[:bmp_cb][:crop_id]
+      @bmp.crop_width = @values[:bmp_cb][:crop_width]
+      @bmp.width = @values[:bmp_cb][:width]
       @bmp.area = @field.field_area * (@bmp.width / (@bmp.width+@bmp.crop_width))
       if @bmp.save then
         return create_new_subarea("CB",15)
@@ -921,15 +958,15 @@ end
 
 ### ID: 16
   def land_leveling(type)
-    @bmp.slope_reduction = params[:bmp_ll][:slope_reduction].to_f
+    @bmp.slope_reduction = @values[:bmp_ll][:slope_reduction].to_f
     subareas = @scenario.subareas
     subareas.each do |subarea|
-      #subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      #subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create"
             subarea.slp = subarea.slp * (100 - @bmp.slope_reduction) / 100
-            #session[:old_percentage] = params[:bmp_ll][:slope_reduction].to_f / 100
+            #session[:old_percentage] = @values[:bmp_ll][:slope_reduction].to_f / 100
           when "update"
             #subarea.slp = (subarea.slp / (1 - @old_percentage)) - (subarea.slp * (@bmp.slope_reduction / 100))
             #session[:old_percentage] = @bmp.slope_reduction / 100
@@ -950,44 +987,44 @@ end
 
 ### ID: 18
   def manure_control(type)
-  	@bmp.animal_id = params[:bmp_mc][:animal_id]
-  	@bmp.no3_n =params[:bmp_mc][:no3_n]
-  	@bmp.po4_p =params[:bmp_mc][:po4_p]
-  	@bmp.org_n =params[:bmp_mc][:no3_n]
-  	@bmp.org_p =params[:bmp_mc][:po4_p]
+  	@bmp.animal_id = @values[:bmp_mc][:animal_id]
+  	@bmp.no3_n =@values[:bmp_mc][:no3_n]
+  	@bmp.po4_p =@values[:bmp_mc][:po4_p]
+  	@bmp.org_n =@values[:bmp_mc][:no3_n]
+  	@bmp.org_p =@values[:bmp_mc][:po4_p]
     return "OK"
   end   # end method
 
 ### ID: 19
   def cover_crop(type)
     if type == "delete" then return "OK" end
-    @bmp.crop_id = params[:bmp_ccr][:crop_id]
-    @bmp.number_of_animals = params[:bmp_ccr][:year]
-    @bmp.hours = params[:bmp_ccr][:month]
-    @bmp.days = params[:bmp_ccr][:day]
-    @bmp.irrigation_id = params[:bmp_ccr][:type_id]
+    @bmp.crop_id = @values[:bmp_ccr][:crop_id]
+    @bmp.number_of_animals = @values[:bmp_ccr][:year]
+    @bmp.hours = @values[:bmp_ccr][:month]
+    @bmp.days = @values[:bmp_ccr][:day]
+    @bmp.irrigation_id = @values[:bmp_ccr][:type_id]
     return "OK"
   end   # end method
 
 ### ID: 20 
   def rotational_grazing(type)
-    @bmp.animal_id = params[:bmp_rg][:animal_id]
-    @bmp.number_of_animals = params[:bmp_rg][:number_of_animals]
-    @bmp.sides = params[:bmp_rg][:year]
-    @bmp.irrigation_id = params[:bmp_rg][:year_to]
-    @bmp.org_n = params[:bmp_rg][:month]
-    @bmp.org_p = params[:bmp_rg][:month_to]
-    @bmp.no3_n = params[:bmp_rg][:day]
-    @bmp.po4_p = params[:bmp_rg][:day_to]
-    @bmp.hours = params[:bmp_rg][:hours_grazed]
-    @bmp.days = params[:bmp_rg][:days_grazed]
-    @bmp.area = params[:bmp_rg][:rest_time]
+    @bmp.animal_id = @values[:bmp_rg][:animal_id]
+    @bmp.number_of_animals = @values[:bmp_rg][:number_of_animals]
+    @bmp.sides = @values[:bmp_rg][:year]
+    @bmp.irrigation_id = @values[:bmp_rg][:year_to]
+    @bmp.org_n = @values[:bmp_rg][:month]
+    @bmp.org_p = @values[:bmp_rg][:month_to]
+    @bmp.no3_n = @values[:bmp_rg][:day]
+    @bmp.po4_p = @values[:bmp_rg][:day_to]
+    @bmp.hours = @values[:bmp_rg][:hours_grazed]
+    @bmp.days = @values[:bmp_rg][:days_grazed]
+    @bmp.area = @values[:bmp_rg][:rest_time]
     return "OK"
   end
 ### ID: 21
   def climate_change(type)
 	return "OK"
-	#@bmp.bmp = params[:bmp_mc][:animal_id]
+	#@bmp.bmp = @values[:bmp_mc][:animal_id]
   end
 
 ### ID: 22
@@ -997,9 +1034,9 @@ end
   		climate = Climate.new
   		climate.bmp_id = bmp_id
   		climate.month = i
-  		climate.max_temp = params[:bmp_cc]["max_temp" + i.to_s]
-  		climate.min_temp = params[:bmp_cc]["min_temp" + i.to_s]
-  		climate.precipitation = params[:bmp_cc]["precipitation" + i.to_s]
+  		climate.max_temp = @values[:bmp_cc]["max_temp" + i.to_s]
+  		climate.min_temp = @values[:bmp_cc]["min_temp" + i.to_s]
+  		climate.precipitation = @values[:bmp_cc]["precipitation" + i.to_s]
   		climate.save
   	end
     return "OK"
@@ -1007,9 +1044,9 @@ end
 
 ### ID: 23
   def asphalt_concrete(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -1036,9 +1073,9 @@ end
 
 ### ID: 24
   def grass_cover(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -1070,18 +1107,18 @@ end
   def shading(type)
     case type
       when "create"
-		@bmp.area = params[:bmp_fs][:area]
-		@bmp.width = params[:bmp_fs][:width]
-		@bmp.buffer_slope_upland = params[:bmp_fs][:buffer_slope_upland]
-		@bmp.crop_id = params[:bmp_fs][:crop_id]
-		@bmp.depth = params[:bmp_cb1]
+		@bmp.area = @values[:bmp_fs][:area]
+		@bmp.width = @values[:bmp_fs][:width]
+		@bmp.buffer_slope_upland = @values[:bmp_fs][:buffer_slope_upland]
+		@bmp.crop_id = @values[:bmp_fs][:crop_id]
+		@bmp.depth = @values[:bmp_cb1]
         return create_new_subarea("Sdg", 23)
       when "update"
         update_existing_subarea("Sdg", 23)
       when "delete"
-        subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first
+        subarea = Subarea.where(:scenario_id => @values[:scenario_id], :subarea_type => "Sdg").first
         update_wsa("+", subarea.wsa)
-      #Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => "Sdg").first.delete
+      #Subarea.where(:scenario_id => @values[:scenario_id], :subarea_type => "Sdg").first.delete
     end
   end  # end method
 
@@ -1177,9 +1214,9 @@ end
 
   ## Liming. No paramters required. Only change the lm in subarea from 1 to 0
   def liming(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -1202,9 +1239,9 @@ end
 
   ## USED FOR TERRACE SYSTEM(ID: 17) AND FOR SLOPE ADJUSTEMNT(ID: 22)
   def terrace_and_slope(type)
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
           when "create", "update"
@@ -1239,13 +1276,13 @@ end
     #PPND: 1) reduce CN bu 10%, 2) reduce field area by bmp.widht * bmp.sides after calculate area.
     #PPDS: same as PPND and 3) add a pond 0.5 in PCOF.
     #PPDE: Same as PPDS and add a reservoir.
-    @soils = Soil.where(:field_id => params[:field_id])
+    @soils = Soil.where(:field_id => @values[:field_id])
     i = 0
     @soils.each do |soil|
       if @slope > soil.slope then
         @slope = soil.slope
       end
-      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, params[:scenario_id])
+      subarea = Subarea.find_by_soil_id_and_scenario_id(soil.id, @values[:scenario_id])
       if subarea != nil then
         case type
           when "create", "update"
@@ -1267,7 +1304,7 @@ end
     			return "Enable to save value in the subarea file"
     		end
       end #end if subarea !nil
-      soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => params[:scenario_id], :activity_id => 1)
+      soil_ops = SoilOperation.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id], :activity_id => 1)
       soil_ops.each do |soil_op|
         case type
           when "create"
@@ -1430,7 +1467,7 @@ end
     end
 
     if is_filled
-      @soils = Soil.where(:field_id => params[:field_id])
+      @soils = Soil.where(:field_id => @values[:field_id])
       i = 0
       @soils.each do |soil|
         #if soil.selected
@@ -1438,7 +1475,7 @@ end
             @slope = soil.slope
           end
         #end
-        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => params[:scenario_id]).first
+        subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
         if subarea != nil then
           if i == 0 then
             @inps = subarea.inps #select the first soil, which is with bigest area
@@ -1449,9 +1486,9 @@ end
           #end
         end
       end
-      subarea = Subarea.where(:scenario_id => params[:scenario_id], :subarea_type => name).first
+      subarea = Subarea.where(:scenario_id => @values[:scenario_id], :subarea_type => name).first
       update_wsa("-", subarea.wsa)
-      update_subarea(subarea, name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(params[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
+      update_subarea(subarea, name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, Field.find(@values[:field_id]).field_area, @bmp.bmp_id, @bmp.bmpsublist_id, false, "update")
       return "OK"
     else
       return "OK"
@@ -1459,7 +1496,7 @@ end
   end
 
   def delete_existing_subarea(name)
-    subarea = Subarea.find_by_scenario_id_and_subarea_type(params[:scenario_id], name)
+    subarea = Subarea.find_by_scenario_id_and_subarea_type(@values[:scenario_id], name)
   	#if !(subarea == nil) && @bmp.sides == 0 then
     if !(subarea == nil) && !(@bmp.bmpsublist_id == 9) then
   		return update_wsa("+", subarea.wsa)
