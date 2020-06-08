@@ -135,7 +135,7 @@ module ScenariosHelper
 		#line 2
 		subarea.inps = i
 		subarea.iops = i
-		subarea.iow = i
+		subarea.iow = 1
 		subarea.ii = 0
         subarea.iapl = 0
         subarea.nvcn = 0
@@ -208,10 +208,10 @@ module ScenariosHelper
         subarea.lm = 1
         subarea.ifd = 0
         subarea.idr = 0
-        subarea.idf1 = 0
-        subarea.idf2 = 0
-        subarea.idf3 = 0
-        subarea.idf4 = 0
+        subarea.idf1 = 69
+        subarea.idf2 = 2
+        subarea.idf3 = 1
+        subarea.idf4 = 56
         subarea.idf5 = 0
 		#/line 9
 		subarea.bir = 0
@@ -242,16 +242,16 @@ module ScenariosHelper
 		end
 
 		#/line 11
-		subarea.ny1 = 0
-        subarea.ny2 = 0
-        subarea.ny3 = 0
-        subarea.ny4 = 0
-        subarea.ny5 = 0
-        subarea.ny6 = 0
-        subarea.ny7 = 0
-        subarea.ny8 = 0
-        subarea.ny9 = 0
-        subarea.ny10 = 0
+		subarea.ny1 = 1
+        subarea.ny2 = 2
+        subarea.ny3 = 3
+        subarea.ny4 = 4
+        subarea.ny5 = 5
+        subarea.ny6 = 6
+        subarea.ny7 = 7
+        subarea.ny8 = 8
+        subarea.ny9 = 9
+        subarea.ny10 = 10
 		#/line 12
 		subarea.xtp1 = 0
         subarea.xtp2 = 0

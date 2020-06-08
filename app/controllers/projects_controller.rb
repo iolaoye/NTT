@@ -2593,12 +2593,15 @@ class ProjectsController < ApplicationController
     operation.scenario_id = scenario_id
     operation.save
     activity_id = 0
+    crop =  nil
     for i in 0..(new_operation.length - 1)
       p = new_operation[i]
       #new_operation.elements.each do |p|
       case p.name
         when "Crop"
           operation.crop_id = p.text
+          crop = Crop.find_by_number(operation.crop_id)
+          operation.crop_id = crop.id
         when "Operation_Name"   #todo
           case true
             when p.text.include?("Tillage")
@@ -2658,6 +2661,14 @@ class ProjectsController < ApplicationController
             if operation.org_p != nil then operation.org_p *= 100 end
           end
           if operation.activity_id == 6 then operation.depth = p.text * 100 end
+        when "Opv5"
+          operation.opv5 = p.text
+          if operation.activity_id = 1 then
+            #take plant population from crop if Opv5 is zero
+            if operation.opv5 <= 0 then
+              operation.opv5 = crop.plant_population_mt
+            end
+          end
         when "moisture"
           operation.moisture = p.text
         when "org_c"
