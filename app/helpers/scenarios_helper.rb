@@ -208,11 +208,11 @@ module ScenariosHelper
         subarea.lm = 1
         subarea.ifd = 0
         subarea.idr = 0
-        subarea.idf1 = 69
-        subarea.idf2 = 2
-        subarea.idf3 = 1
-        subarea.idf4 = 56
-        subarea.idf5 = 0
+        subarea.idf1 = 0
+        subarea.idf2 = 69
+        subarea.idf3 = 2
+        subarea.idf4 = 1
+        subarea.idf5 = 56
 		#/line 9
 		subarea.bir = 0
         subarea.efi = 0
