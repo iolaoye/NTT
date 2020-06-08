@@ -2631,7 +2631,7 @@ class ProjectsController < ApplicationController
             operation.subtype_id = 1
           end
         when "subtype_id"
-          operation.subtype_id = 1
+          operation.subtype_id = 0
         when "Opv1"
           operation.amount = p.text
           if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
@@ -2679,6 +2679,7 @@ class ProjectsController < ApplicationController
           operation.rotation = p.text
       end
     end
+    if operation.activity_id == 1 then operation.subtype_id = 0 end
     if operation.save then
       add_soil_operation(operation)
       return "OK"
