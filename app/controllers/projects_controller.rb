@@ -2662,11 +2662,11 @@ class ProjectsController < ApplicationController
           end
           if operation.activity_id == 6 then operation.depth = p.text * 100 end
         when "Opv5"
-          operation.opv5 = p.text
+          operation.amount = p.text
           if operation.activity_id = 1 then
             #take plant population from crop if Opv5 is zero
-            if operation.opv5 <= 0 then
-              operation.opv5 = crop.plant_population_mt
+            if operation.amount <= 0 then
+              operation.amount = crop.plant_population_mt
             end
           end
         when "moisture"
