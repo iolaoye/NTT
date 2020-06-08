@@ -636,6 +636,7 @@ class ResultsController < ApplicationController
             if last_year == 0 then
                 last_year = Field.find(params[:field_id]).weather.simulation_final_year
             end
+            avg = 0
             chart_values.each do |c|
                 #
                 # while current_year < c.month_year
@@ -650,12 +651,20 @@ class ResultsController < ApplicationController
                     chart = Array.new
                     chart.push(c.month_year)
                     chart.push(c.value)
+                    avg = avg + c.value
                     charts[i] = chart
                     current_year +=1
                     i += 1
                     if i > last_year then break end
                     #if i > 11 then break end
                 end
+            end
+            if i > 0 then
+              avg = avg / i
+              chart = Array.new
+              chart.push("Avrg")
+              chart.push(avg.round(2))
+              charts[i] = chart
             end
         end
     end

@@ -1079,6 +1079,7 @@ class ProjectsController < ApplicationController
           #@field_ids.push(field_id)
           #add soils
           @field = Field.find(session[:field_id])
+=begin
           request_soils()
           #now create scenario and save it
           scenario.field_id = field.id
@@ -1110,6 +1111,7 @@ class ProjectsController < ApplicationController
             msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
             i += 1
           end  
+=end
         else
           return "field could not be saved"
         end
@@ -1123,22 +1125,39 @@ class ProjectsController < ApplicationController
   end
 
   def upload_bmp_comet_version(scenario_id, new_bmps)
+    params[:button] = t('submit.savecontinue')
     for i in 0..(new_bmps.length - 1)
       bmp = Bmp.new
       bmp.scenario_id = scenario_id
       case new_bmps[i].name
         when "TileDrain"
-          bmp.bmpsublist_id = 3
-          bmp.depth = new_bmps[0].elements[0].text
-          bmp.depth = (bmp.depth / FT_TO_MM).round(1)
-          bmp.save
-          #update subarea file with the TD
-          subareas = Subarea.where(:scenario_id => scenario_id)
-          subareas.each do |subarea|
-            subarea.idr = new_bmps[0].elements[0].text
-            subarea.save
-          end
+          params[:field_id] = @field.id
+          params[:scenario_id] = scenario_id
+          params[:bmp_td] = {}
+          params[:bmp_td][:depth] = (new_bmps[0].elements[0].text.to_f / FT_TO_MM).round(2)
+          #bmp.bmpsublist_id = 3
+          #bmp.depth = new_bmps[0].elements[0].text
+          #bmp.depth = (bmp.depth / FT_TO_MM).round(1)
+          #bmp.save
+          ##update subarea file with the TD
+          #subareas = Subarea.where(:scenario_id => scenario_id)
+          #subareas.each do |subarea|
+            #subarea.idr = new_bmps[0].elements[0].text
+            #subarea.save
+          #end
+        when "AutoIrrigation"
+          params[:scenario_id] = scenario_id
+          params[:bmp_cb1] == "1"
+          params[:bmp_ai][:irrigation_id] = new_bmps[0].elements["Code"].text
+          params[:bmp_ai][:days] = new_bmps[0].elements["Frequency"].text
+          params[:bmp_ai][:water_stress_factor] = new_bmps[0].elements["Stress"].text
+          params[:bmp_ai][:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
+          params[:bmp_ai][:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
+          params[:bmp_ai][:n_rate] = new_bmps[0].elements["ApplicationRate"].text
       end
+      $values = params
+      bmp_controller = BmpsController.new
+      bmp_controller::save_bmps
     end
   end
 
