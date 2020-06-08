@@ -2679,7 +2679,7 @@ class ProjectsController < ApplicationController
           operation.rotation = p.text
       end
     end
-    if operation.activity_id == 1 then operation.subtype_id = 0 end
+    #if operation.activity_id == 1 then operation.subtype_id = 0 end
     if operation.save then
       add_soil_operation(operation)
       return "OK"
