@@ -1106,10 +1106,10 @@ class ProjectsController < ApplicationController
           soils = @field.soils
           msg = "OK"
           i = 1
-          soils.each do |soil|
-            msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
-            i += 1
-          end  
+          #soils.each do |soil|.   #the subareas are added when soils area added.
+            #msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
+            #i += 1
+          #end  
         else
           return "field could not be saved"
         end
