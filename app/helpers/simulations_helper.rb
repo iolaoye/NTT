@@ -1419,6 +1419,7 @@ def send_file_to_DNDC(apex_string, file, state)
           cc_hash[cc_number] = s_o_new_kill
         end #if cover  != nill
       end #end c_cs each
+      @hu = Hash.new 
       cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:activity_id], v[:type_id]]}
       cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
@@ -1562,11 +1563,15 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
-        # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
-        #if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+        #to avoid calling this every time the HU are store in an array and verify that array first
+        if @hu[operation.apex_crop.to_s.to_sym] == nil
+          # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
+          #if request.url.include? "ntt.bk" or request.url.include? "localhost" then
           client = Savon.client(wsdl: URL_SoilsInfo)
           response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
-          operation.opv1 = response.body[:get_hu_response][:get_hu_result]
+          @hu[operation.apex_crop.to_s.to_sym] = response.body[:get_hu_response][:get_hu_result]
+        end 
+        operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
         #end
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
