@@ -2669,7 +2669,7 @@ class ProjectsController < ApplicationController
             operation.subtype_id = 0  #makes subtype different than 1 to avoid consufions with CC.
             if operation.amount != nil then   #take plant population from crop if Opv5 is zero
               if operation.amount <= 0 then
-                operation.amount = crop.plant_population_ft
+                operation.amount = crop.plant_population_ft 
               end
             end
           end
