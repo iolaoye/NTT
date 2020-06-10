@@ -2076,23 +2076,56 @@ def send_file_to_DNDC(apex_string, file, state)
     data = get_file_from_APEX("ACY") #this operation will ask for ACY file
     #todo validate that the file was uploaded correctly
     j = 1
+    year_ant = 0
+    crop_ant = ""
+    yldg = 0
+    yldf = 0
+    ws = 0
+    ns = 0
+    ps = 0
+    ts = 0
+    crop_total = 0
     data.each_line do |tempa|
       if j >= 10 then
         one_crop = Hash.new
         year1 = tempa[18, 4].to_i
         subs = tempa[5, 5].to_i
+        crop1 = tempa[28, 4]
         next if year1 < apex_start_year #take years greater or equal than ApexStartYear.
         #one_crop = oneCrop.new
-        one_crop["sub1"] = subs
-        one_crop["year"] = year1
-        one_crop["name"] = tempa[28, 4]
-        one_crop["yldg"] = tempa[33, 9].to_f
-        one_crop["yldf"] = tempa[43, 9].to_f
-        one_crop["ws"] = tempa[63, 9].to_f
-        one_crop["ns"] = tempa[73, 9].to_f
-        one_crop["ps"] = tempa[83, 9].to_f
-        one_crop["ts"] = tempa[93, 9].to_f
-        crops_data.push(one_crop)
+        if j == 10 then
+          year_ant = year1
+          crop_ant = tempa[28, 4]
+        end
+        if year_ant == year1 and crop_ant == crop1 then
+          yldg += tempa[33, 9].to_f
+          yldf += tempa[43, 9].to_f
+          ws += tempa[63, 9].to_f
+          ns += tempa[73, 9].to_f
+          ps += tempa[83, 9].to_f
+          ts += tempa[93, 9].to_f
+          crop_total += 1
+        else
+          one_crop["sub1"] = subs
+          one_crop["year"] = year1
+          one_crop["name"] = crop1
+          one_crop["yldg"] = yldg / crop_total
+          one_crop["yldf"] = yldf / crop_total
+          one_crop["ws"] = ws / crop_total
+          one_crop["ns"] = ns / crop_total
+          one_crop["ps"] = ps / crop_total
+          one_crop["ts"] = ts / crop_total
+          crops_data.push(one_crop)
+          yldg = tempa[33, 9].to_f
+          yldf = tempa[43, 9].to_f
+          ws = tempa[63, 9].to_f
+          ns = tempa[73, 9].to_f
+          ps = tempa[83, 9].to_f
+          ts = tempa[93, 9].to_f
+          crop_total = 1
+          crop_ant = crop1
+          year_ant = year1
+        end
       end # end if j>=10
       j+=1
     end #end data.each
