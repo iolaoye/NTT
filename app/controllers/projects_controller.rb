@@ -2616,6 +2616,8 @@ class ProjectsController < ApplicationController
               activity_id = 6
             when p.text.include?("Liming")
               activity_id = 12
+            when p.text.include?("Manure")
+              activity_id = 2
             else
               activity_id = 2
           end
