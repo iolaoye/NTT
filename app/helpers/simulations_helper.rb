@@ -2107,8 +2107,8 @@ def send_file_to_DNDC(apex_string, file, state)
           crop_total += 1
         else
           one_crop["sub1"] = subs
-          one_crop["year"] = year1
-          one_crop["name"] = crop1
+          one_crop["year"] = year_ant
+          one_crop["name"] = crop_ant
           one_crop["yldg"] = yldg / crop_total
           one_crop["yldf"] = yldf / crop_total
           one_crop["ws"] = ws / crop_total
