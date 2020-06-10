@@ -484,6 +484,10 @@ class ScenariosController < ApplicationController
     crops = @scenario.crop_results.group(:name).average("yldf+yldg")
     crops.each do |c|
       crop = Crop.find_by_code(c[0])
+      debugger
+      if crop.code.include?("COT") then
+        c[1] = @scenario.crop_results.where(:name => crop.code).average("yldg")
+      end
       crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
       ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
