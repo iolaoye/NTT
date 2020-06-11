@@ -230,6 +230,8 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("facilities"))
 				true
+			elsif request.url.include?(url_for("scenarios"))
+				true
 			else
 				false
 			end
