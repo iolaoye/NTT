@@ -17,7 +17,7 @@ module ApplicationHelper
 				true
 			elsif current_page?(url_for(:controller => 'apex_parameters', :action => 'index'))
 				true
-			elsif request.url.include?(url_for("/scenarios"))
+			elsif request.url.include?(url_for("/scenarios")) && request.parameters[:caller_id] == "NTT"
 				true
 			elsif request.url.include?(url_for("/bmps"))
 				true
@@ -230,7 +230,7 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("facilities"))
 				true
-			elsif request.url.include?(url_for("scenarios"))
+			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "FEM"
 				true
 			else
 				false

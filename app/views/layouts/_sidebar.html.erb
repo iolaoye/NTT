@@ -278,15 +278,14 @@
                  <li>
                     <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :locale=>I18n.locale), :class=>"results-label-sub" %>
                  </li>
-                 <% if controller_name == "fields" %>
+                 <% if controller_name == "scenarios" && request.parameters[:caller_id] == "FEM"%>
                    <div class="header-icon">
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                    </div>
                  <% end %>
                  <li>
-                  <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM") %></li>
+                  <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM"), :class=>"results-label-sub" %></li>
                  </li>
-
              </ul>
             </li>
 
