@@ -197,12 +197,12 @@ class ScenariosController < ApplicationController
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
 	    flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
-        format.html { redirect_to project_field_scenarios_path(@project, @field) }
+        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
       end
     end
   end
-
+        
 ################################  UPDATE  #################################
 # PATCH/PUT /scenarios/1
 # PATCH/PUT /scenarios/1.json
@@ -211,7 +211,7 @@ class ScenariosController < ApplicationController
     @scenario = Scenario.find(params[:id])
     respond_to do |format|
       if @scenario.update_attributes(scenario_params)
-        format.html { redirect_to project_field_scenarios_path(@project, @field), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
+        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT"), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -231,7 +231,7 @@ class ScenariosController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to project_field_scenarios_path(@project, @field) }
+      format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
       format.json { head :no_content }
     end
   end
@@ -249,7 +249,7 @@ class ScenariosController < ApplicationController
   		respond_to do |format|
   		  if msg.eql?("OK") then
   			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-  			format.html { redirect_to project_field_scenarios_path(@project, @field) }
+  			format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
   		  else
   			flash[:error] = "Error simulating scenario - " + msg
   			format.html { render action: "list" }

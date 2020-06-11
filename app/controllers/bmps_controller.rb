@@ -263,7 +263,7 @@ class BmpsController < ApplicationController
         create(28)
       end
       if @values[:action] == "save_bmps" then
-  		  redirect_to project_field_scenarios_path(@project, @field)
+  		  redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       else
         return
       end

@@ -136,7 +136,7 @@ module ApplicationHelper
 			if path_source.nil?
 				flash[:info] = "Error: No simulations exist in this session. " +
 												"Please run a simulation before downloading APEX files."
-				redirect_to project_field_scenarios_path(@project, @field)
+				redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
 			else
 				file_name = path_source.split("\\")
 				path = File.join(DOWNLOAD, file_name[2])
@@ -159,7 +159,7 @@ module ApplicationHelper
 			if path_source.nil?
 				flash[:info] = "Error: No simulations exist in this session. " +
 												"Please run a simulation before downloading APLCAT files."
-				redirect_to project_field_scenarios_path(@project, @field)
+				redirect_to project_field_scenarios_path(@project, @field,:caller_id => "FEM")
 			else
 			    file_name = path_source.split("\\")
 			    path = File.join(DOWNLOAD, file_name[2])
@@ -182,7 +182,7 @@ module ApplicationHelper
 			if path_source.nil?
 				flash[:info] = "Error: No simulations exist in this session. " +
 												"Please run a simulation before downloading APLCAT files."
-				redirect_to project_field_scenarios_path(@project, @field)
+				redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
 			else
 			    file_name = path_source.split("\\")
 			    path = File.join(DOWNLOAD, file_name[2])
@@ -205,7 +205,7 @@ module ApplicationHelper
 			if path_source.nil?
 				flash[:info] = "Error: No simulations exist in this session. " +
 												"Please run a simulation before downloading DNDC files."
-				redirect_to project_field_scenarios_path(@project, @field)
+				redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
 			else
 			    file_name = path_source.split("\\")
 			    path = File.join(DOWNLOAD, file_name[2])
