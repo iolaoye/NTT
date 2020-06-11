@@ -75,7 +75,19 @@ class ScenariosController < ApplicationController
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
-      redirect_to project_field_scenarios_path(@project, @field)
+      case true
+        when params[:commit].include?('NTT')
+          redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
+        #when params[:commit].include?("APLCAT")
+          #msg = simulate_aplcat
+        when params[:commit].include?("FEM")
+          redirect_to project_field_scenarios_path(@project, @field,:caller_id => "FEM")
+        #when params[:commit].include?("DNDC")
+          #msg = simulate_dndc
+        else
+          redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
+      end
+      #redirect_to project_field_scenarios_path(@project, @field)
     else
       @scenarios = Scenario.where(:field_id => @field.id)
       render "index", error: msg
