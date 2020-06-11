@@ -1083,7 +1083,6 @@ class ProjectsController < ApplicationController
           scenario.name = "Scenario1"
           scenario.save
           #add soils
-=begin
           request_soils()
           #save parameters and controls
           load_parameters(0)
@@ -1110,13 +1109,12 @@ class ProjectsController < ApplicationController
           #soils.each do |soil|.   #the subareas are added when soils area added.
             #msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
             #i += 1
-          #end
-=end  
+          #end  
         else
           return "field could not be saved"
         end
       when "OperationInfo"
-        upload_operation_comet_version(scenario.id, p.elements)
+          upload_operation_comet_version(scenario.id, p.elements)
       when "BmpInfo"
         upload_bmp_comet_version(scenario.id, p.elements)
       end
