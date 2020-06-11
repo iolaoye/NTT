@@ -42,9 +42,14 @@
 <% end %>
 
 <div class="page-header"><h1>
-	<%= request.parameters[:caller_id] + " " + t('general.management') + " " + t('menu.scenarios') %>
+	<% if request.parameters[:caller_id] == nil then %>
+		<% req_parm = "NTT" %>
+	<% else %>
+		<% req_parm = request.parameters[:caller_id] %>
+	<% end %>
+	<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
 </h1></div>
-<% if request.parameters[:caller_id] == "FEM" || request.parameters[:caller_id] == "APLCAT" then %>
+<% if req_parm == "FEM" || req_parm == "APLCAT" then %>
 	<% acitive_menu = "style=display:none" %>
 <% end %>
 <div <%=acitive_menu%>>
@@ -71,38 +76,38 @@
 </div>
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
     <% if @scenarios.count > 0 %>
-    	<% if request.parameters[:caller_id] == "NTT"%>
+    	<% if req_parm == "NTT"%>
 			<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
 		<% end %>
         <% unless ENV["APP_VERSION"] == "modified" %>
-        	<% if aplcat == 1 && request.parameters[:caller_id] == "APLCAT"%>
+        	<% if aplcat == 1 && req_parm == "APLCAT"%>
     			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
     		<% end %>
-    		<% if fem == 1 && request.parameters[:caller_id] == "FEM"%>
+    		<% if fem == 1 && req_parm == "FEM"%>
     			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
     		<% end %>
-        	<% if dndc == 1 && request.parameters[:caller_id] == "DNDC"%>
+        	<% if dndc == 1 && req_parm == "DNDC"%>
     			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
     		<% end %>
         <% end %>
 	    <% if @field.annual_results.count > 0 %>
-	    	<% case request.parameters[:caller_id] %>
+	    	<% case req_parm %>
 	    		<%when "FEM"%>
 		    		<%= link_to t('general.view') + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
 	    		<%else %>
 		    		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 	    	<% end %>
 		    <% unless ENV["APP_VERSION"] == "modified" %>
-		    	<% if request.parameters[:caller_id] == "NTT"%>
+		    	<% if req_parm == "NTT"%>
           			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
-          		<% if aplcat == 1 && request.parameters[:caller_id] == "APLCAT"%>
+          		<% if aplcat == 1 && req_parm == "APLCAT"%>
           			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
-         		<% if fem == 1 && request.parameters[:caller_id] == "FEM"%>
+         		<% if fem == 1 && req_parm == "FEM"%>
           			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
-         		<% if dndc == 1 && request.parameters[:caller_id] == "NTT"%>
+         		<% if dndc == 1 && req_parm == "NTT"%>
           			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>
           	<% end %>
