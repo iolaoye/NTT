@@ -60,7 +60,7 @@
         </div>
       <% end %>
       <% if scenario_submenu %>
-		    <%= link_to t('general.management') + " " + t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field) %></li>
+		    <%= link_to t('general.management') + " " + t('menu.scenarios') + "   (" + @scenario.name + ")", project_field_scenarios_path(@project, @field, :caller_id => "NTT") %></li>
         <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
           <li class="<%= controller_name == "operations" ? "active" : "" %>">
             <% if controller_name == "operations" %>
@@ -136,7 +136,7 @@
           <% end %>
         </ul>
 	    <% else %>
-	  		<%= link_to t('general.management') + " " + t('menu.scenarios'), project_field_scenarios_path(@project, @field, :locale=>I18n.locale) %></li>
+	  		<%= link_to t('general.management') + " " + t('menu.scenarios'), project_field_scenarios_path(@project, @field, :caller_id => "NTT", :locale=>I18n.locale) %></li>
       <% end %>
     </li>
 	  <% if @field.results.count > 0 %>
@@ -278,6 +278,15 @@
                  <li>
                     <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :locale=>I18n.locale), :class=>"results-label-sub" %>
                  </li>
+                 <% if controller_name == "fields" %>
+                   <div class="header-icon">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                   </div>
+                 <% end %>
+                 <li>
+                  <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM") %></li>
+                 </li>
+
              </ul>
             </li>
 

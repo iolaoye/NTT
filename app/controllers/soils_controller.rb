@@ -23,6 +23,7 @@ class SoilsController < ApplicationController
 # GET /soils
 # GET /soils.json
   def index
+    session[:field_id] = @field.id
     msg = "OK"
     flash[:info] = nil
     if @project.location.state_id > 0

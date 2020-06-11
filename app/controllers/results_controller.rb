@@ -45,6 +45,7 @@ class ResultsController < ApplicationController
     if params[:simulation] != nil then
         session[:simulation] = params[:simulation]
     end
+    if session[:simulated] == nil then session[:simulation] = "scenario" end
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
         I18n.locale = :es
@@ -74,7 +75,7 @@ class ResultsController < ApplicationController
     @averages3 = []
     simul = ""
 
-    if session[:simulation].eql?('scenario') then
+    if !session[:simulation].eql?('watershed') then
         simul = "scenario_id"
         @field_name = @field.field_name
         if params[:result1] != nil then
@@ -214,7 +215,7 @@ class ResultsController < ApplicationController
                         count = results_data.size
                     end
 
-                    if session[:simulation] == 'scenario'
+                    if !session[:simulation] == 'watershed'
                         total_area = @field.field_area
                         bmps = Scenario.find(scenario_id).bmps
                         bmps.each do |b|
@@ -558,7 +559,7 @@ class ResultsController < ApplicationController
   def get_chart_serie(scenario_id, month_or_year)
     #
     if month_or_year == 1 then #means chart is annual
-        if session[:simulation] != 'scenario' then
+        if session[:simulation] == 'watershed' then
             watershed_scenarios = WatershedScenario.where(:watershed_id => scenario_id)
             watershed_scenarios.each do |ws|
                 params[:field_id] = ws.field_id
@@ -573,7 +574,7 @@ class ResultsController < ApplicationController
                                 .where("field_id = ? AND scenario_id = ? AND soil_id = ? AND crop_id = ? AND month_year > ? AND description_id < ?",
                                         params[:field_id], scenario_id, @soil, @chart_type, first_year, 80).order("month_year desc").reverse
         else
-            if session[:simulation] != 'scenario'
+            if session[:simulation] == 'watershed'
                 chart_values = Chart.select("month_year, value")
                                     .where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year > ?", 0,
                                             scenario_id, @soil, @description, first_year).order("month_year desc").reverse
@@ -584,7 +585,7 @@ class ResultsController < ApplicationController
             end
         end
     else #means chart is monthly average
-      if session[:simulation] != 'scenario'
+      if session[:simulation] == 'watershed'
         chart_values = Chart.select("month_year, value").where("field_id = ? AND watershed_id = ? AND soil_id = ? AND description_id = ? AND month_year <= ?", 0, scenario_id, @soil, @description, 12)
       else
         chart_values = Chart.select("month_year, value").where("field_id = ? AND scenario_id = ? AND soil_id = ? AND description_id = ? AND month_year <= ?", params[:field_id], scenario_id, @soil, @description, 12)
@@ -592,7 +593,7 @@ class ResultsController < ApplicationController
     end
     if chart_values == nil || chart_values.blank? then   # means the scenario hasn't been simulated or it was using the new result file annual_results
         id = "scenario_id"
-        if session[:simulation] != "scenario" then
+        if session[:simulation] == "watershed" then
             id = "watershed_id"
         end
         if month_or_year == 1 then   # get results for annual values sub1 == 0
