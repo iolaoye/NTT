@@ -1212,7 +1212,7 @@ class ProjectsController < ApplicationController
               when 3
                 operation.no3_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.no3_n
                 operation.po4_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.po4_p
-                operation.org_n = (operation.org_c * 0.011982) / ((100 - operation.moisture) / 100) * operation.org_n
+                operation.org_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.org_n
                 operation.org_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.org_p
                 operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
              end            
