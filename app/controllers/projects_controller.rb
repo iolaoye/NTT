@@ -1217,11 +1217,11 @@ class ProjectsController < ApplicationController
                 operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
              end            
           end
-          if operation.activity_id == 6 then operation.depth = p.text * 100 end
+          if operation.activity_id == 6 then operation.depth = p.text.to_f * 100 end
         when "Opv5"
           if operation.activity_id == 1 then
             operation.amount = p.text
-            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufions with CC.
+            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufution with CC.
             if operation.amount != nil then   #take plant population from crop if Opv5 is zero
               if operation.amount <= 0 then operation.amount = crop.plant_population_ft end
             end
