@@ -1204,10 +1204,18 @@ class ProjectsController < ApplicationController
               when 1  
                 operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC
               when 2
+                operation.no3_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.no3_n
+                operation.po4_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.po4_p
+                operation.org_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.org_n
+                operation.org_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.org_p
                 operation.amount = operation.amount / (2247*(100-operation.moisture)/100)
               when 3
+                operation.no3_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.no3_n
+                operation.po4_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.po4_p
+                operation.org_n = (operation.org_c * 0.011982) / ((100 - operation.moisture) / 100) * operation.org_n
+                operation.org_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.org_p
                 operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
-            end            
+             end            
           end
           if operation.activity_id == 6 then operation.depth = p.text * 100 end
         when "Opv5"
