@@ -1083,6 +1083,7 @@ class ProjectsController < ApplicationController
           scenario.name = "Scenario1"
           scenario.save
           #add soils
+=begin
           request_soils()
           #save parameters and controls
           load_parameters(0)
@@ -1109,17 +1110,120 @@ class ProjectsController < ApplicationController
           #soils.each do |soil|.   #the subareas are added when soils area added.
             #msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
             #i += 1
-          #end  
+          #end
+=end  
         else
           return "field could not be saved"
         end
       when "OperationInfo"
-          upload_operation_comet_version(scenario.id, p.elements)
+        upload_operation_comet_version(scenario.id, p.elements)
       when "BmpInfo"
         upload_bmp_comet_version(scenario.id, p.elements)
       end
     end
     return "OK"
+  end
+
+  def upload_operation_comet_version(scenario_id, new_operation)
+    operation = Operation.new
+    operation.scenario_id = scenario_id
+    operation.save
+    activity_id = 0
+    crop =  nil
+    for i in 0..(new_operation.length - 1)
+      p = new_operation[i]
+      #new_operation.elements.each do |p|
+      case p.name
+        when "Crop"
+          operation.crop_id = p.text
+          crop = Crop.find_by_number(operation.crop_id)
+          operation.crop_id = crop.id
+        when "Operation_Name"   #todo
+          case true
+            when p.text.include?("Tillage")
+              activity_id = 3
+            when  p.text.include?("Planting")
+              activity_id = 1
+            when  p.text.include?("Harvest")
+              activity_id = 4
+            when  p.text.include?("Kill")
+              activity_id = 5
+            when  p.text.include?("Irrigation")
+              activity_id = 6
+            when p.text.include?("Liming")
+              activity_id = 12
+            when p.text.include?("Manure")
+              activity_id = 2
+            else
+              activity_id = 2
+          end
+          operation.activity_id = activity_id
+        when "Day"
+          operation.day = p.text
+        when "Month"
+          operation.month_id = p.text
+        when "Year"
+          operation.year = p.text
+        when "Operation"
+          operation.type_id = p.text
+          if p.text == "580" then
+            operation.activity_id = 2
+            operation.subtype_id = 1
+          end
+        when "subtype_id"
+          operation.subtype_id = 0
+        when "Opv1"
+          operation.amount = p.text
+          if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
+          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
+          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
+        when "Opv2"
+          operation.depth = p.text
+        when "Opv3"
+          if operation.activity_id == 6 then operation.type_id = p.text end
+          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
+        when "Opv4"
+          #todo add opv4 for grazing 
+          if operation.activity_id == 2 then 
+            nutrients = p.text.split(",")
+            operation.no3_n = nutrients[0]
+            operation.po4_p = nutrients[1]
+            operation.org_n = nutrients[2]
+            operation.org_p = nutrients[3]
+            operation.nh3 = nutrients[4]
+            operation.type_id = 1
+            if nutrients.count >= 9 then
+              #nutrients[5] is not include because NTT do not ask fot it Org_c
+              operation.org_c = nutrients[6]
+              operation.nh4_n = nutrients[7]
+              operation.moisture = nutrients[8]
+              operation.type_id = nutrients[9].to_i + 1
+            end
+            if operation.no3_n != nil then operation.no3_n *= 100 end
+            #if operation.no3_n > 0 then operation.subtype_id = 1
+            if operation.po4_p != nil then operation.po4_p *= 100 end
+            #if operation.po4_p > 0 then operation.subtype_id = 2
+            if operation.org_n != nil then operation.org_n *= 100 end
+            if operation.org_p != nil then operation.org_p *= 100 end
+          end
+          if operation.activity_id == 6 then operation.depth = p.text * 100 end
+        when "Opv5"
+          if operation.activity_id == 1 then
+            operation.amount = p.text
+            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufions with CC.
+            if operation.amount != nil then   #take plant population from crop if Opv5 is zero
+              if operation.amount <= 0 then operation.amount = crop.plant_population_ft end
+            end
+          end
+      end
+    end
+    operation.rotation = 1
+    if operation.save then
+      add_soil_operation(operation)
+      return "OK"
+    else
+      return "operation could not be saved"
+    end
   end
 
   def upload_bmp_comet_version(scenario_id, new_bmps)
@@ -2582,109 +2686,6 @@ class ProjectsController < ApplicationController
       end
     end
     if operation.save then
-      return "OK"
-    else
-      return "operation could not be saved"
-    end
-  end
-
-  def upload_operation_comet_version(scenario_id, new_operation)
-    operation = Operation.new
-    operation.scenario_id = scenario_id
-    operation.save
-    activity_id = 0
-    crop =  nil
-    for i in 0..(new_operation.length - 1)
-      p = new_operation[i]
-      #new_operation.elements.each do |p|
-      case p.name
-        when "Crop"
-          operation.crop_id = p.text
-          crop = Crop.find_by_number(operation.crop_id)
-          operation.crop_id = crop.id
-        when "Operation_Name"   #todo
-          case true
-            when p.text.include?("Tillage")
-              activity_id = 3
-            when  p.text.include?("Planting")
-              activity_id = 1
-            when  p.text.include?("Harvest")
-              activity_id = 4
-            when  p.text.include?("Kill")
-              activity_id = 5
-            when  p.text.include?("Irrigation")
-              activity_id = 6
-            when p.text.include?("Liming")
-              activity_id = 12
-            when p.text.include?("Manure")
-              activity_id = 2
-            else
-              activity_id = 2
-          end
-          operation.activity_id = activity_id
-        when "Day"
-          operation.day = p.text
-        when "Month"
-          operation.month_id = p.text
-        when "Year"
-          operation.year = p.text
-        when "Operation"
-          operation.type_id = p.text
-          if p.text == "580" then
-            operation.activity_id = 2
-            operation.subtype_id = 1
-          end
-        when "subtype_id"
-          operation.subtype_id = 0
-        when "Opv1"
-          operation.amount = p.text
-          if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
-          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
-          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
-        when "Opv2"
-          operation.depth = p.text
-          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
-        when "Opv4"
-          #todo add opv4 for grazing 
-          if operation.activity_id == 2 then 
-            nutrients = p.text.split(",")
-            operation.no3_n = nutrients[0]
-            operation.po4_p = nutrients[1]
-            operation.org_n = nutrients[2]
-            operation.org_p = nutrients[3]
-            #todo add manure paramters here.
-            operation.type_id = 1
-            if nutrients.count == 9 then
-              operation.type_id = nutrients[8] + 1
-            end
-            if operation.no3_n != nil then operation.no3_n *= 100 end
-            #if operation.no3_n > 0 then operation.subtype_id = 1
-            if operation.po4_p != nil then operation.po4_p *= 100 end
-            #if operation.po4_p > 0 then operation.subtype_id = 2
-            if operation.org_n != nil then operation.org_n *= 100 end
-            if operation.org_p != nil then operation.org_p *= 100 end
-          end
-          if operation.activity_id == 6 then operation.depth = p.text * 100 end
-        when "Opv5"
-          if operation.activity_id == 1 then
-            operation.amount = p.text
-            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufions with CC.
-            if operation.amount != nil then   #take plant population from crop if Opv5 is zero
-              if operation.amount <= 0 then
-                operation.amount = crop.plant_population_ft 
-              end
-            end
-          end
-        when "moisture"
-          operation.moisture = p.text
-        when "org_c"
-          operation.org_c = p.text
-        when "rotation"
-          operation.rotation = p.text
-      end
-    end
-    if operation.save then
-      add_soil_operation(operation)
       return "OK"
     else
       return "operation could not be saved"
