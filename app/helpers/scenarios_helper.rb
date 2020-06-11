@@ -828,6 +828,9 @@ module ScenariosHelper
 		  when 4 #Harvest. Take harvest operation from crop table
 		    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
 		    soil_operation.type_id = operation.subtype_id
+		  when 6 #irrigation
+		  	soil_operation.apex_operation = Irrigation.find(operation.type_id).code
+		  	soil_operation.type_id = operation.type_id
 		  else
 		    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
 		    soil_operation.type_id = operation.type_id
