@@ -1083,6 +1083,7 @@ class ProjectsController < ApplicationController
           scenario.name = "Scenario1"
           scenario.save
           #add soils
+
           request_soils()
           #save parameters and controls
           load_parameters(0)
@@ -1106,10 +1107,7 @@ class ProjectsController < ApplicationController
           soils = @field.soils
           msg = "OK"
           i = 1
-          #soils.each do |soil|.   #the subareas are added when soils area added.
-            #msg = create_subarea("Soil",i,soil.percentage*field.field_area/100,soil.slope,nil,soils.count,field.field_name,scenario.id,soil.id,soil.percentage,100,field.field_area,0,0,false,"create",true)
-            #i += 1
-          #end  
+
         else
           return "field could not be saved"
         end
@@ -1172,7 +1170,6 @@ class ProjectsController < ApplicationController
           operation.subtype_id = 0
         when "Opv1"
           operation.amount = p.text
-          if operation.activity_id == 2 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
           if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
           if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
         when "Opv2"
@@ -1203,6 +1200,14 @@ class ProjectsController < ApplicationController
             #if operation.po4_p > 0 then operation.subtype_id = 2
             if operation.org_n != nil then operation.org_n *= 100 end
             if operation.org_p != nil then operation.org_p *= 100 end
+            case operation.type_id
+              when 1  
+                operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC
+              when 2
+                operation.amount = operation.amount / (2247*(100-operation.moisture)/100)
+              when 3
+                operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
+            end            
           end
           if operation.activity_id == 6 then operation.depth = p.text * 100 end
         when "Opv5"
