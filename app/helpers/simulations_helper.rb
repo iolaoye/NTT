@@ -1603,11 +1603,17 @@ def send_file_to_DNDC(apex_string, file, state)
             org_c = 0.10
           end#          
         end
+        nh3 = 0
+        if oper.nh3 > 0 then
+          nh3 = oper.nh3
+        else
+          nh3 = Fertilizer.find(oper.subtype_id).nh3,
+        end
         if oper != nil then
   		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-  			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
+  			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, nh3, oper.subtype_id, org_c)
   		    else
-  			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, Fertilizer.find(oper.subtype_id).nh3, oper.subtype_id, org_c)
+  			     add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, nh3, oper.subtype_id, org_c)
   		    end
         else
           if operation.activity_id == 2 && operation.type_id == 1 && operation.apex_operation = 580 then
