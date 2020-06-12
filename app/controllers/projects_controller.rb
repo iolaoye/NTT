@@ -1087,6 +1087,11 @@ class ProjectsController < ApplicationController
 
           request_soils()
           #save parameters and controls
+          
+
+
+
+
           load_parameters(0)
           load_controls
           #create site file
@@ -1105,20 +1110,22 @@ class ProjectsController < ApplicationController
           site.xlog = centroid.cx
           site.save
           #add soil p to layer
+          
           soils = @field.soils
-          soils.each do |soil|
-            if field.soil_test != nil then
-              soil_test = SoilTest.find(field.soil_test)
-              if soil_test.id == 7 then
-                soil.layers[0].soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * soil.layers[0].ph.to_f - 32.757 * (field.soilp / field.soil_aliminum) + 90.73
-              else
-                soil.layers[0].soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
-              end
-            end
+          if field.soil_test != nil then
+            soil_test = SoilTest.find(field.soil_test)
+          else
+            field.soilp = 0
           end
-          msg = "OK"
-          i = 1
-
+          soils.each do |soil|
+            layer = soil.layers[0]
+            if soil_test.id == 7 then
+              layer.soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * layer.ph - 32.757 * (field.soil_aliminum) + 90.73
+            else
+              layer.soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+            end
+            layer.save
+          end
         else
           return "field could not be saved"
         end
