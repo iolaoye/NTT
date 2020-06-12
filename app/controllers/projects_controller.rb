@@ -1110,9 +1110,9 @@ class ProjectsController < ApplicationController
             if field.soil_test != nil then
               soil_test = SoilTest.find(field.soil_test)
               if soil_test.id == 7 then
-                soil.layer[0].soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * soil.layer[0].ph.to_f - 32.757 * (field.soilp / ffield.soil_aliminum) + 90.73
+                soil.layers[0].soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * soil.layers[0].ph.to_f - 32.757 * (field.soilp / field.soil_aliminum) + 90.73
               else
-                soil.layer[0].soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
+                soil.layers[0].soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
               end
             end
           end
