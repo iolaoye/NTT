@@ -1053,7 +1053,7 @@ class ProjectsController < ApplicationController
         field.soilp = p.text
       when "Aluminum"
         field.soil_aliminum = p.text
-      when "soil_test"
+      when "SoilP_type"
         field.soil_test = p.text
       when "Coordinates"
         @location.coordinates = p.text
