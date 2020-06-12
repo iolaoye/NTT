@@ -1084,14 +1084,8 @@ class ProjectsController < ApplicationController
           scenario.name = "Scenario1"
           scenario.save
           #add soils
-
           request_soils()
           #save parameters and controls
-          
-
-
-
-
           load_parameters(0)
           load_controls
           #create site file
@@ -1109,8 +1103,7 @@ class ProjectsController < ApplicationController
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.save
-          #add soil p to layer
-          
+          #add soil p to layer         
           soils = @field.soils
           if field.soil_test != nil then
             soil_test = SoilTest.find(field.soil_test)
