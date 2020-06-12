@@ -1053,7 +1053,7 @@ class ProjectsController < ApplicationController
         field.soilp = p.text
       when "Aluminum"
         field.soil_aliminum = p.text
-        if field.soil_aliminum == nil or field.soil_aluminum == "" then field.soil_aluminum = 0 end
+        if field.soil_aliminum == nil or field.soil_aliminum == "" then field.soil_aliminum = 0 end
       when "SoilP_type"
         field.soil_test = p.text
       when "Coordinates"
@@ -1110,7 +1110,7 @@ class ProjectsController < ApplicationController
             if field.soil_test != nil then
               soil_test = SoilTest.find(field.soil_test)
               if soil_test.id == 7 then
-                soil.layer[0].soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * soil.layer[0].ph.to_f - 32.757 * (field.soilp / field.soil_aluminum) + 90.73
+                soil.layer[0].soil_p = soil_test.factor2 * field.soilp - soil_test.factor1 * soil.layer[0].ph.to_f - 32.757 * (field.soilp / ffield.soil_aliminum) + 90.73
               else
                 soil.layer[0].soil_p = soil_test.factor1 + soil_test.factor2 * field.soilp
               end
