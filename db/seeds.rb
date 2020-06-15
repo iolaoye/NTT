@@ -6,7 +6,7 @@
 
 
 cont = false
-if cont then 	
+	
 	file = "db/seeds/crops.rb"
 	load file
 
@@ -15,7 +15,7 @@ if cont then
 
 	file = "db/seeds/activities.rb"
 	load file
-end
+
 
 	file = "db/seeds/counties.rb"
 	load file
