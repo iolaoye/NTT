@@ -1200,8 +1200,8 @@ module ScenariosHelper
 	      layer.clay = 100 - layer.sand - layer.silt
 	      layer.bulk_density = layers[layer_number]["bd"]
 	      layer.organic_matter = layers[layer_number]["om"]
-	      if layer.organic_matter < 0.29 then 
-	      	layer.organic_matter = 0.29
+	      if layer.organic_matter < 0.5 then 
+	      	layer.organic_matter = 0.5
 	      end
 	      layer.ph = layers[layer_number]["ph"]
 	      layer.depth = layers[layer_number]["depth"]
