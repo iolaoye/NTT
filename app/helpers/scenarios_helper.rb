@@ -876,7 +876,7 @@ module ScenariosHelper
 	            if lu_number == 28 then
 	              return (operation.amount / AC_TO_HA).round(0) #plant population converte from ac to ha if it is tree
 		         else
-		          return (operation.amount / FT2_TO_M2).round(6) #plant population converte from ft2 to m2 if it is not tree
+		          return (operation.amount / FT2_TO_M2).round(0) #plant population converte from ft2 to m2 if it is not tree
 	            end
 	          end
 	        end
