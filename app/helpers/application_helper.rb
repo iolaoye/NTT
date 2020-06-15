@@ -9,7 +9,9 @@ module ApplicationHelper
 		end
 
 		def field_submenu
-			if request.url.include?(url_for("/weathers"))
+			if request.url.include?(url_for('/fields')) && (request.parameters[:caller_id] != "FEM")
+				true
+			elsif request.url.include?(url_for("/weathers"))
 				true
 			elsif current_page?(url_for(controller: 'soils', :action => 'index'))
 				true
