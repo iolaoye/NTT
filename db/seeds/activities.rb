@@ -1,10 +1,5 @@
 #to update only set update_only to true
 # To replace all set update only to false
-update_only = false
-
-if update_only then
-	Activity.create!({:id => 13,:name => "Harvest and End crop season",:code => 45,:abbreviation => "HARVKILL",:spanish_name => "Cosechar y Terminar Crop",:apex_code => 623451,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)	
-else
 	Activity.delete_all
 	Activity.create!({:id => 1,:name => "Planting",:order => 1,:code => 1,:abbreviation => "PLNT",:spanish_name => "Plantar",:apex_code => 136,:amount_label => "Seeding Amount, Cantidad de Semillas",:amount_units => "(seeds/ft)(optional)",:depth_label => "",:depth_units => ""}, :without_protection => true)
 	Activity.create!({:id => 2,:name => "Fertilizer",:order => 2,:code => 2,:abbreviation => "NUTC",:spanish_name => "Fertilizante",:apex_code => 580,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "Depth, Profundidad",:depth_units => "(in)"}, :without_protection => true)
@@ -19,5 +14,5 @@ else
 	Activity.create!({:id => 10,:name => "Stop Rotational Grazing",:order => 11,:code => 10,:abbreviation => "RSTP",:spanish_name => "Terminar Pastoreo Rotacional", :apex_code => "427",:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)
 	Activity.create!({:id => 11,:name => "Burn",:order => 12,:code => 11,:abbreviation => "BURN",:spanish_name => "Quema",:apex_code => 397,:amount_label => "Amount, Cantidad",:amount_units => nil,:depth_label => "(lbs/ac)",:depth_units => ""}, :without_protection => true)
 	Activity.create!({:id => 12,:name => "Liming",:order => 13,:code => 12,:abbreviation => "LIME",:spanish_name => "Encalado",:apex_code => 734,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)
+	Activity.create!({:id => 13,:name => "Harvest and End crop season",:code => 45,:abbreviation => "HARVKILL",:spanish_name => "Cosechar y Terminar Crop",:apex_code => 623451,:amount_label => "Amount, Cantidad",:amount_units => "(lbs/ac)",:depth_label => "",:depth_units => ""}, :without_protection => true)	
 	#Activity.create!({:id => 14,:name => "Cover Crop",:code => 10,:abbreviation => "CCRP",:spanish_name => "Cultivo de Proteccion",:apex_code => "",:amount_label => "",:amount_units => nil,:depth_label => "",:depth_units => ""}, :without_protection => true)
-end
