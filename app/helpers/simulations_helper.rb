@@ -1604,7 +1604,7 @@ def send_file_to_DNDC(apex_string, file, state)
           end#          
         end
         nh3 = 0
-        if oper.nh3 > 0 then
+        if oper.nh3 != nil && oper.nh3 > 0 then
           nh3 = oper.nh3
         else
           nh3 = Fertilizer.find(oper.subtype_id).nh3
