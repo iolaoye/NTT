@@ -19,19 +19,38 @@ class StationsController < ApplicationController
       lat_plus = params[:nlat].to_f + LAT_DIF
       lon_less = params[:nlon].to_f - LON_DIF
       lon_plus = params[:nlon].to_f + LON_DIF
-      sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year"
+      sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year, initial_year"
       sql = sql + " FROM stations"
       sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
       sql = sql + " ORDER BY distance"
       @station = Station.find_by_sql(sql).first
+      if params[:state] != nil then
+        file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/N42.29167W92.375.wth"
+        client = Savon.client(wsdl: URL_SoilsInfoDev)
+        ###### Get the WEATHER file to download ########
+        response = client.call(:get_weather_info, message: {"file" => file, "i_year" => @station.initial_year, "f_year" => @station.final_year})
+        if response.body[:get_weather_info_response][:get_weather_info_result].include? "Error" then
+          return response.body[:get_weather_info_response][:get_weather_info_result]
+        end
+        rec = response.body[:get_weather_info_response][:get_weather_info_result][:string]
+        file_name = session[:session_id] + ".wth"
+        path = File.join(DOWNLOAD, file_name)
+        File.open(path, "w+") do |f|
+          rec.each do |row|
+            f << row + "\n"
+          end
+        end
+        #file.write(content)
+        send_file path, :type => "application/xml", :x_sendfile => true
+      end
     else
       @station = Station.find(params[:id])
     end
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @station }
-    end
+    #respond_to do |format|
+      #format.html # show.html.erb
+      #format.json { render json: @station }
+    #end
   end
 
   # GET /stations/new
