@@ -138,7 +138,7 @@ class BmpsController < ApplicationController
   			end
   		end  # bmps.each
   		#Bmp.where(:scenario_id => @values[:scenario_id]).delete_all  #delete all of the bmps for this scenario and then create the new ones that have information.
-      if @values[:bmp_id] != nil then
+      if @values[:bmp_ai] != nil then
     		if !(@values[:bmp_ai][:irrigation_id] == "") then
     			if !(@values[:bmp_cb1] == nil)
     				if @values[:bmp_cb1] == "1" then
