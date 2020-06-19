@@ -43,16 +43,14 @@ class StationsController < ApplicationController
         #file.write(content)
         send_file path, :type => "application/xml", :x_sendfile => true
       else
-        return @station
+        respond_to do |format|
+          format.html # show.html.erb
+          format.json { render json: @station }
+        end
       end
     else
       @station = Station.find(params[:id])
     end
-
-    #respond_to do |format|
-      #format.html # show.html.erb
-      #format.json { render json: @station }
-    #end
   end
 
   # GET /stations/new
