@@ -42,6 +42,8 @@ class StationsController < ApplicationController
         end
         #file.write(content)
         send_file path, :type => "application/xml", :x_sendfile => true
+      else
+        return @station
       end
     else
       @station = Station.find(params[:id])
