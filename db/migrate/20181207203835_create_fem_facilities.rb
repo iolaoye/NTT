@@ -1,4 +1,4 @@
-class CreateFemFacilities < ActiveRecord::Migration
+class CreateFemFacilities < ActiveRecord::Migration[5.2]
   def change
     create_table :fem_facilities do |t|
       t.string :name

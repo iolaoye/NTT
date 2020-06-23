@@ -1,4 +1,4 @@
-class AddBullToAplcatResults < ActiveRecord::Migration
+class AddBullToAplcatResults < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_results, :bull_aws, :float
     add_column :aplcat_results, :bull_dmi, :float

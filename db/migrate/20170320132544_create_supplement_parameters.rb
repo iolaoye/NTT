@@ -1,4 +1,4 @@
-class CreateSupplementParameters < ActiveRecord::Migration
+class CreateSupplementParameters < ActiveRecord::Migration[5.2]
   def change
     create_table :supplement_parameters do |t|
       t.integer :scenario_id

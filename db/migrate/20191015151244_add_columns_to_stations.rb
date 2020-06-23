@@ -1,4 +1,4 @@
-class AddColumnsToStations < ActiveRecord::Migration
+class AddColumnsToStations < ActiveRecord::Migration[5.2]
   def change
 	if !(ActiveRecord::Base.connection.column_exists?(:stations, :lat))
     	add_column :stations, :lat, :float

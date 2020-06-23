@@ -1,4 +1,4 @@
-class FacilityAugmented < ActiveRecord::Migration
+class FacilityAugmented < ActiveRecord::Migration[5.2]
   def change
   end
 end

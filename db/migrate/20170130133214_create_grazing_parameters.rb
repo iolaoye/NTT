@@ -1,4 +1,4 @@
-class CreateGrazingParameters < ActiveRecord::Migration
+class CreateGrazingParameters < ActiveRecord::Migration[5.2]
   def change
     create_table :grazing_parameters do |t|
 	  t.integer :scenario_id

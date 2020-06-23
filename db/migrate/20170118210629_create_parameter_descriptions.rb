@@ -1,4 +1,4 @@
-class CreateParameterDescriptions < ActiveRecord::Migration
+class CreateParameterDescriptions < ActiveRecord::Migration[5.2]
   def change
     create_table :parameter_descriptions do |t|
       t.integer :parameter_desc_id

@@ -1,4 +1,4 @@
-class AddReplacementHeifersToAplcatResults < ActiveRecord::Migration
+class AddReplacementHeifersToAplcatResults < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_results, :rh_aws, :float
     add_column :aplcat_results, :rh_dmi, :float

@@ -10,23 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_194246) do
+ActiveRecord::Schema.define(version: 2020_05_26_145752) do
 
-  create_table "activities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "activities", force: :cascade do |t|
     t.string "name"
     t.integer "code"
     t.string "abbreviation"
     t.string "spanish_name"
     t.integer "apex_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "amount_label"
     t.string "amount_units"
     t.string "depth_label"
     t.string "depth_units"
+    t.integer "order"
   end
 
-  create_table "animal_transports", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "animal_transports", force: :cascade do |t|
     t.integer "trip_number"
     t.integer "scenario_id"
     t.integer "freq_trip"
@@ -45,17 +46,15 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "loading"
     t.float "carcass"
     t.float "boneless_beef"
-    t.float "freqtrip"
-    t.boolean "cattlepro"
     t.integer "num_animal"
   end
 
-  create_table "animals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "animals", force: :cascade do |t|
     t.string "name"
     t.boolean "status"
     t.integer "apex_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "dry_manure"
     t.float "no3n"
     t.float "po4p"
@@ -63,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "orgp"
   end
 
-  create_table "annual_results", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "annual_results", force: :cascade do |t|
     t.integer "scenario_id"
     t.integer "sub1"
     t.integer "year"
@@ -91,23 +90,23 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "biom"
   end
 
-  create_table "apex_controls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "apex_controls", force: :cascade do |t|
     t.integer "control_description_id"
     t.float "value"
     t.integer "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "apex_parameters", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "apex_parameters", force: :cascade do |t|
     t.integer "parameter_description_id"
     t.float "value"
     t.integer "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "aplcat_parameters", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "aplcat_parameters", force: :cascade do |t|
     t.integer "aplcat_param_id"
     t.integer "scenario_id"
     t.integer "noc"
@@ -156,75 +155,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "tnggbc"
     t.integer "mm_type"
     t.float "fmbmm"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float "abwrh"
-    t.integer "nocrh"
-    t.integer "abc"
-    t.integer "forage_id"
-    t.integer "jincrease"
-    t.integer "stabilization"
-    t.integer "decline"
-    t.integer "opt4"
-    t.float "crude_low"
-    t.float "crude_high"
-    t.float "tdn_low"
-    t.float "tdn_high"
-    t.float "ndf_low"
-    t.float "ndf_high"
-    t.float "adf_low"
-    t.float "adf_high"
-    t.float "feed_low"
-    t.float "feed_high"
-    t.integer "tripn"
-    t.integer "freqtrip"
-    t.string "filedetails"
-    t.integer "cattlepro"
-    t.string "purpose"
-    t.integer "codepurpose"
-    t.integer "mdogfc"
-    t.integer "mxdogfc"
-    t.integer "cwsoj"
-    t.integer "cweoj"
-    t.integer "ewc"
-    t.integer "nodew"
-    t.integer "byosm"
-    t.integer "eyosm"
-    t.float "mrgauh"
-    t.integer "plac"
-    t.integer "pcbb"
-    t.integer "domd"
-    t.float "faueea"
-    t.float "acim"
-    t.float "mmppm"
-    t.float "cffm"
-    t.float "fnemm"
-    t.float "effd"
-    t.float "ptbd"
-    t.float "pocib"
-    t.float "bneap"
-    t.float "cneap"
-    t.float "hneap"
-    t.float "pobw"
-    t.float "posw"
-    t.float "posb"
-    t.float "poad"
-    t.float "poada"
-    t.float "cibo"
-    t.float "drinkg"
-    t.float "drinkl"
-    t.float "drinkm"
-    t.float "avgtm"
-    t.float "avghm"
-    t.float "rhae"
-    t.float "tabo"
-    t.float "mpism"
-    t.float "spilm"
-    t.float "pom"
-    t.float "srinr"
-    t.float "sriip"
-    t.float "pogu"
-    t.float "adoa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "n_tfa"
     t.float "n_sr"
     t.integer "n_arnfa"
@@ -415,10 +347,6 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "byos"
     t.integer "eyos"
     t.integer "mm_type_but"
-    t.integer "nit"
-    t.integer "fqd"
-    t.integer "uovfi"
-    t.integer "srwc"
     t.string "running_drinking_water"
     t.string "running_complete_stocker"
     t.string "running_ghg"
@@ -448,7 +376,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.string "twenty_fuel_id"
   end
 
-  create_table "aplcat_results", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "aplcat_results", force: :cascade do |t|
     t.string "month_id"
     t.string "option_id"
     t.datetime "created_at", null: false
@@ -516,15 +444,15 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "scenario_id"
   end
 
-  create_table "bmplists", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "bmplists", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "status"
     t.string "spanish_name"
   end
 
-  create_table "bmps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "bmps", force: :cascade do |t|
     t.integer "bmp_id"
     t.integer "scenario_id"
     t.integer "crop_id"
@@ -550,8 +478,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "crop_width"
     t.float "slope_reduction"
     t.integer "sides"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name"
     t.integer "bmpsublist_id"
     t.float "difference_max_temperature"
@@ -559,22 +487,22 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "difference_precipitation"
   end
 
-  create_table "bmpsublists", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "bmpsublists", force: :cascade do |t|
     t.string "name"
     t.boolean "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "bmplist_id"
     t.string "spanish_name"
   end
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.integer "animal_transport_id"
     t.float "weight"
     t.integer "animals"
   end
 
-  create_table "charts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "charts", force: :cascade do |t|
     t.integer "description_id"
     t.integer "watershed_id"
     t.integer "scenario_id"
@@ -582,36 +510,36 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "soil_id"
     t.integer "month_year"
     t.float "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "crop_id"
   end
 
-  create_table "climates", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "climates", force: :cascade do |t|
     t.integer "bmp_id"
     t.float "max_temp"
     t.float "min_temp"
     t.float "precipitation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "month"
   end
 
-  create_table "climes", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "climes", force: :cascade do |t|
     t.integer "field_id"
     t.string "daily_weather"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer "issue_id"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "control_descriptions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "control_descriptions", force: :cascade do |t|
     t.integer "control_desc_id"
     t.integer "line"
     t.integer "column"
@@ -619,31 +547,31 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.string "name"
     t.float "range_low"
     t.float "range_high"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "controls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "controls", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "default_value"
     t.integer "state_id"
     t.integer "number"
   end
 
-  create_table "counties", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "counties", force: :cascade do |t|
     t.string "county_name"
     t.string "county_code"
     t.integer "status"
     t.integer "state_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "county_state_code"
     t.integer "wind_wp1_code"
     t.string "wind_wp1_name"
   end
 
-  create_table "crop_results", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "crop_results", force: :cascade do |t|
     t.integer "scenario_id"
     t.string "name"
     t.integer "sub1"
@@ -659,17 +587,17 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "watershed_id"
   end
 
-  create_table "crop_schedules", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "crop_schedules", force: :cascade do |t|
     t.integer "crop_schedule_id"
     t.string "name"
     t.string "state_id"
     t.integer "class_id"
     t.boolean "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "cropping_systems", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "cropping_systems", force: :cascade do |t|
     t.string "name"
     t.string "crop"
     t.string "tillage"
@@ -677,11 +605,11 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.string "state_id"
     t.boolean "grazing"
     t.boolean "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "crops", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "crops", force: :cascade do |t|
     t.integer "number"
     t.integer "dndc"
     t.string "code"
@@ -709,24 +637,24 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "dd"
     t.integer "dyam"
     t.string "spanish_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "descriptions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "descriptions", force: :cascade do |t|
     t.boolean "detail"
     t.string "description"
     t.string "spanish_description"
     t.string "unit"
     t.integer "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "period"
     t.integer "order_id"
     t.integer "group_id"
   end
 
-  create_table "drainages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "drainages", force: :cascade do |t|
     t.integer "drainage_id"
     t.string "name"
     t.integer "wtmx"
@@ -734,11 +662,11 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "wtbl"
     t.integer "zqt"
     t.integer "ztk"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "events", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "events", force: :cascade do |t|
     t.integer "event_order"
     t.integer "month"
     t.integer "day"
@@ -750,11 +678,11 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "apex_opv1"
     t.float "apex_opv2"
     t.integer "cropping_system_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "facility_augmenteds", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "facility_augmenteds", force: :cascade do |t|
     t.string "name"
     t.float "lease_rate"
     t.float "new_price"
@@ -770,14 +698,14 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "farm_generals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "farm_generals", force: :cascade do |t|
     t.string "name"
     t.integer "values"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "feeds_augmenteds", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "feeds_augmenteds", force: :cascade do |t|
     t.string "name"
     t.float "selling_price"
     t.float "purchase_price"
@@ -792,7 +720,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "fem_facilities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fem_facilities", force: :cascade do |t|
     t.string "name"
     t.float "lease_rate"
     t.float "new_price"
@@ -813,7 +741,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.boolean "updated"
   end
 
-  create_table "fem_feeds", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fem_feeds", force: :cascade do |t|
     t.string "name"
     t.float "selling_price"
     t.float "purchase_price"
@@ -832,7 +760,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.boolean "updated"
   end
 
-  create_table "fem_generals", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fem_generals", force: :cascade do |t|
     t.string "name"
     t.float "value"
     t.datetime "created_at", null: false
@@ -843,7 +771,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.boolean "updated"
   end
 
-  create_table "fem_machines", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fem_machines", force: :cascade do |t|
     t.string "name"
     t.float "lease_rate"
     t.float "new_price"
@@ -871,7 +799,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.boolean "updated"
   end
 
-  create_table "fem_results", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fem_results", force: :cascade do |t|
     t.float "total_revenue"
     t.float "total_cost"
     t.float "net_return"
@@ -882,14 +810,14 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "watershed_id"
   end
 
-  create_table "fertilizer_types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fertilizer_types", force: :cascade do |t|
     t.string "name"
     t.string "spanish_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "fertilizers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fertilizers", force: :cascade do |t|
     t.integer "code"
     t.string "name"
     t.float "qn"
@@ -903,36 +831,35 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.boolean "status"
     t.boolean "animal"
     t.string "spanish_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "total_n"
     t.float "total_p"
   end
 
-  create_table "fields", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fields", force: :cascade do |t|
     t.integer "location_id"
     t.string "field_name"
     t.float "field_area"
     t.float "field_average_slope"
     t.boolean "field_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "coordinates", limit: 16777215
     t.integer "weather_id"
     t.float "soilp"
     t.boolean "updated"
-    t.integer "soil_test"
     t.float "soil_aliminum"
   end
 
-  create_table "fuels", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "fuels", force: :cascade do |t|
     t.string "code"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "grazing_parameters", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "grazing_parameters", force: :cascade do |t|
     t.integer "scenario_id"
     t.integer "code"
     t.integer "starting_julian_day"
@@ -942,43 +869,43 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "dmi_bulls"
     t.float "dmi_heifers"
     t.float "dmi_calves"
+    t.float "dmi_rheifers"
     t.float "green_water_footprint"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float "green_water_footprint_supplement"
     t.float "for_dmi_cows"
     t.float "for_dmi_bulls"
     t.float "for_dmi_heifers"
     t.float "for_dmi_calves"
     t.float "for_dmi_rheifers"
-    t.float "dmi_rheifers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "green_water_footprint_supplement"
     t.integer "for_button"
     t.integer "supplement_button"
   end
 
-  create_table "groups", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "group_name"
     t.string "spanish_group_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "importances", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "importances", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "irrigations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "irrigations", force: :cascade do |t|
     t.string "name"
     t.boolean "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "spanish_name"
     t.integer "code"
   end
 
-  create_table "issues", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "issues", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "comment_id"
@@ -993,7 +920,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "developer_id"
   end
 
-  create_table "layers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "layers", force: :cascade do |t|
     t.float "depth"
     t.float "soil_p"
     t.float "bulk_density"
@@ -1003,8 +930,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "organic_matter"
     t.float "ph"
     t.integer "soil_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "uw"
     t.float "fc"
     t.float "wn"
@@ -1023,17 +950,17 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "soil_aluminum"
   end
 
-  create_table "locations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "locations", force: :cascade do |t|
     t.integer "state_id"
     t.integer "county_id"
     t.string "status"
     t.integer "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "coordinates"
   end
 
-  create_table "machine_augmenteds", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "machine_augmenteds", force: :cascade do |t|
     t.string "name"
     t.float "lease_rate"
     t.float "new_price"
@@ -1057,7 +984,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "manure_controls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "manure_controls", force: :cascade do |t|
     t.integer "manure_control_id"
     t.string "name"
     t.string "spanish_name"
@@ -1066,16 +993,16 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "orgn"
     t.float "orgp"
     t.float "om"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "modifications", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "modifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "operations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "operations", force: :cascade do |t|
     t.integer "crop_id"
     t.integer "activity_id"
     t.integer "day"
@@ -1089,8 +1016,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "org_n"
     t.float "org_p"
     t.float "nh3"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "scenario_id"
     t.integer "subtype_id"
     t.float "moisture"
@@ -1099,70 +1026,64 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "rotation"
   end
 
-  create_table "parameter_descriptions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "parameter_descriptions", force: :cascade do |t|
     t.integer "parameter_desc_id"
     t.integer "line"
     t.integer "number"
     t.string "name"
     t.float "range_low"
     t.float "range_high"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "parameters", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "parameters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "default_value"
     t.integer "state_id"
     t.integer "number"
   end
 
-  create_table "people", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "people", force: :cascade do |t|
     t.string "name"
     t.integer "age"
     t.string "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "priorities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "projects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "version"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "user_id"
   end
 
-  create_table "results", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "results", force: :cascade do |t|
     t.integer "watershed_id"
     t.integer "field_id"
     t.integer "soil_id"
     t.integer "scenario_id"
     t.float "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "ci_value"
     t.integer "description_id"
     t.integer "crop_id"
   end
 
-  create_table "scenarios", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "scenarios", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "field_id"
     t.datetime "last_simulation"
   end
 
-  create_table "schedules", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "schedules", force: :cascade do |t|
     t.integer "schedule_id"
     t.integer "event_order"
     t.integer "month"
@@ -1175,11 +1096,11 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "apex_opv1"
     t.float "apex_opv2"
     t.integer "crop_schedule_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "sites", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "sites", force: :cascade do |t|
     t.float "ylat"
     t.float "xlog"
     t.float "elev"
@@ -1191,13 +1112,13 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "unr"
     t.float "fir0"
     t.integer "field_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "soil_operations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "soil_operations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "year"
     t.integer "month"
     t.integer "day"
@@ -1219,15 +1140,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "bmp_id"
   end
 
-  create_table "soil_tests", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.string "name"
-    t.float "factor1"
-    t.float "factor2"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "soils", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "soils", force: :cascade do |t|
     t.boolean "selected"
     t.string "key"
     t.string "symbol"
@@ -1238,8 +1151,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "percentage"
     t.integer "field_id"
     t.integer "drainage_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "ffc"
     t.float "wtmn"
     t.float "wtmx"
@@ -1260,35 +1173,35 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "soil_id_old"
   end
 
-  create_table "states", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "states", force: :cascade do |t|
     t.string "state_name"
     t.string "state_code"
     t.integer "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "state_abbreviation"
   end
 
-  create_table "stations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "stations", force: :cascade do |t|
     t.integer "initial_year"
     t.integer "final_year"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "lat"
     t.float "lon"
     t.string "file_name"
   end
 
-  create_table "statuses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "statuses", force: :cascade do |t|
     t.integer "issue_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "subareas", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "subareas", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "soil_id"
     t.integer "bmp_id"
     t.integer "scenario_id"
@@ -1401,9 +1314,10 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "xtp8"
     t.integer "xtp9"
     t.integer "xtp10"
+    t.integer "tdms"
   end
 
-  create_table "supplement_parameters", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "supplement_parameters", force: :cascade do |t|
     t.integer "scenario_id"
     t.integer "code"
     t.integer "dmi_code"
@@ -1412,8 +1326,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.float "dmi_heifers"
     t.float "dmi_calves"
     t.integer "green_water_footprint"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.float "dmi_rheifers"
     t.integer "starting_julian_day"
     t.integer "ending_julian_day"
@@ -1427,7 +1341,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "supplement_button"
   end
 
-  create_table "tillages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "tillages", force: :cascade do |t|
     t.string "name"
     t.integer "code"
     t.string "abbreviation"
@@ -1436,12 +1350,12 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "dndc"
     t.string "eqp"
     t.boolean "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "activity_id"
   end
 
-  create_table "trailers", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "trailers", force: :cascade do |t|
     t.string "code"
     t.string "description"
     t.datetime "created_at", null: false
@@ -1453,59 +1367,59 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.string "height"
   end
 
-  create_table "trucks", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "trucks", force: :cascade do |t|
     t.string "code"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "types", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "types", force: :cascade do |t|
     t.integer "issue_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "hashed_password"
     t.string "name"
     t.string "company"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "admin"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.string "reset_token"
   end
 
-  create_table "watershed_scenarios", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "watershed_scenarios", force: :cascade do |t|
     t.integer "watershed_id"
     t.integer "field_id"
     t.integer "scenario_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "field_id_to"
   end
 
-  create_table "watersheds", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "watersheds", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "location_id"
     t.datetime "last_simulation"
   end
 
-  create_table "ways", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "ways", force: :cascade do |t|
     t.string "way_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "spanish_name"
     t.string "way_value"
   end
 
-  create_table "weathers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+  create_table "weathers", force: :cascade do |t|
     t.integer "field_id"
     t.integer "station_id"
     t.string "station_way"
@@ -1513,8 +1427,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_194246) do
     t.integer "simulation_final_year"
     t.float "longitude"
     t.float "latitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "weather_file"
     t.integer "way_id"
     t.integer "weather_initial_year"

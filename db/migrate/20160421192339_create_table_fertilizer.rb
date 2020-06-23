@@ -1,4 +1,4 @@
-class CreateTableFertilizer < ActiveRecord::Migration
+class CreateTableFertilizer < ActiveRecord::Migration[5.2]
   def change
     create_table :fertilizers do |t|
       t.integer :code

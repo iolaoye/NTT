@@ -1,4 +1,4 @@
-class CreateTillages < ActiveRecord::Migration
+class CreateTillages < ActiveRecord::Migration[5.2]
   def change
     create_table :tillages do |t|
       t.string :name

@@ -1,4 +1,4 @@
-class CreateDrainages < ActiveRecord::Migration
+class CreateDrainages < ActiveRecord::Migration[5.2]
   def change
     create_table :drainages do |t|
       t.integer :drainage_id
