@@ -983,11 +983,11 @@ class ProjectsController < ApplicationController
         return t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
       end
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved')
+      #return t('activerecord.errors.messages.projects.no_saved')
     #end
   end
 
-  def upload_project_comet_version(node)    
+  def upload_project_comet_version(node)
     #begin
     @project = Project.new
     @project.user_id = session[:user_id]
@@ -1029,7 +1029,7 @@ class ProjectsController < ApplicationController
       end
     end   # end if Save
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved')
+    return t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
     #end
   end
 
