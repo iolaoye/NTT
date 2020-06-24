@@ -980,7 +980,7 @@ class ProjectsController < ApplicationController
         #session[:project_id] = @project.id
         return "OK"
       else
-        return t('activerecord.errors.messages.projects.no_saved') + " - " + t('activerecord.errors.messages.projects.exist')
+        return t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
       end
     #rescue
       return t('activerecord.errors.messages.projects.no_saved')
