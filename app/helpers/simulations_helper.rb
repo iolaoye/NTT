@@ -1604,6 +1604,7 @@ def send_file_to_DNDC(apex_string, file, state)
           end#          
         end
         nh3 = 0
+#test
         if oper.nh3 != nil && oper.nh3 > 0 then
           nh3 = oper.nh3
         else
