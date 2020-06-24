@@ -1,4 +1,4 @@
-class AddAveragesTotalToAplcatParameters < ActiveRecord::Migration
+class AddAveragesTotalToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :second_avg_marweight_1, :integer
     add_column :aplcat_parameters, :second_num_animal_1, :integer

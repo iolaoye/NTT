@@ -1,4 +1,4 @@
-class AddEmissionInputToAplcatParameters < ActiveRecord::Migration
+class AddEmissionInputToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :sixth_area, :integer
     add_column :aplcat_parameters, :sixth_equip, :integer

@@ -1,4 +1,4 @@
-class RemoveColumnFromParameters < ActiveRecord::Migration
+class RemoveColumnFromParameters < ActiveRecord::Migration[5.2]
   def up
     remove_column :parameters, :line
     remove_column :parameters, :number

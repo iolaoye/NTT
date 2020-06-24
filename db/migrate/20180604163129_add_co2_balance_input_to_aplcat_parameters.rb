@@ -1,4 +1,4 @@
-class AddCo2BalanceInputToAplcatParameters < ActiveRecord::Migration
+class AddCo2BalanceInputToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :n_tfa, :integer
     add_column :aplcat_parameters, :n_sr, :float

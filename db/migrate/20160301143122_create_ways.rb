@@ -1,4 +1,4 @@
-class CreateWays < ActiveRecord::Migration
+class CreateWays < ActiveRecord::Migration[5.2]
   def change
     create_table :ways do |t|
       t.string :way_name

@@ -1,4 +1,4 @@
-class CreateCropResults < ActiveRecord::Migration
+class CreateCropResults < ActiveRecord::Migration[5.2]
   def change
     create_table :crop_results do |t|
       t.integer :scenario_id

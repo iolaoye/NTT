@@ -1,4 +1,4 @@
-class AddGroupIdToDescriptions < ActiveRecord::Migration
+class AddGroupIdToDescriptions < ActiveRecord::Migration[5.2]
   def change
   	add_column :descriptions, :group_id, :integer
   end

@@ -1,4 +1,4 @@
-class CreateCropSchedules < ActiveRecord::Migration
+class CreateCropSchedules < ActiveRecord::Migration[5.2]
   def change
     create_table :crop_schedules do |t|
       t.integer :crop_schedule_id

@@ -1,4 +1,4 @@
-class AddCowsToAplcatResults < ActiveRecord::Migration
+class AddCowsToAplcatResults < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_results, :cow_aws, :float
     add_column :aplcat_results, :cow_dmi, :float

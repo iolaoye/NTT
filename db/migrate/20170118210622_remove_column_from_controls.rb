@@ -1,4 +1,4 @@
-class RemoveColumnFromControls < ActiveRecord::Migration
+class RemoveColumnFromControls < ActiveRecord::Migration[5.2]
   def up
     remove_column :controls, :line
     remove_column :controls, :column

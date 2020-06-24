@@ -1,4 +1,4 @@
-class AddCalfToAplcatResults < ActiveRecord::Migration
+class AddCalfToAplcatResults < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_results, :calf_aws, :float
     add_column :aplcat_results, :calf_dmi, :float

@@ -1,4 +1,4 @@
-class FarmGeneral < ActiveRecord::Migration
+class FarmGeneral < ActiveRecord::Migration[5.2]
   def change
   end
 end

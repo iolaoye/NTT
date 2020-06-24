@@ -1,4 +1,4 @@
-class AddColumnToSupplementParameters < ActiveRecord::Migration
+class AddColumnToSupplementParameters < ActiveRecord::Migration[5.2]
   def change
     if !(ActiveRecord::Base.connection.column_exists?(:supplement_parameters, :dmi_rheifers)) 
         add_column :supplement_parameters, :dmi_rheifers, :float

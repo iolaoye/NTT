@@ -1,4 +1,4 @@
-class CreateFacilityAugmenteds < ActiveRecord::Migration
+class CreateFacilityAugmenteds < ActiveRecord::Migration[5.2]
   def change
     create_table :facility_augmenteds do |t|
       t.string :name

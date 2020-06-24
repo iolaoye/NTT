@@ -1,4 +1,4 @@
-class AddColumnToParameters < ActiveRecord::Migration
+class AddColumnToParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :parameters, :line, :integer
     add_column :parameters, :number, :integer
