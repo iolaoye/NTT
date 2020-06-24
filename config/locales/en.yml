@@ -12,7 +12,7 @@ en:
       messages:
         record_invalid: "Validation failed: %{errors}"
         projects:
-          no_saved: "%{model} could not be saved"
+          no_saved: "Project could not be saved"
           exist: "Project already exists"
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
@@ -1624,6 +1624,7 @@ en:
     <br><strong>NTT References</strong>
     <br>
     <br>
+    <br>
      <p>
       Saleh, A., Gallego, O., Osei, E., Lai, H., Gross, C., &amp; McKinney, S. (2010). Development and Application of a Modified NTT Tool for Water Quality Trading. In 21st Century Watershed Technology&#58 Improving Water Quality and Environment Conference Proceedings, 21-24 February 2010, Universidad EARTH, Costa Rica (p. 1). American Society of Agricultural and Biological Engineers.
     </p>
@@ -1671,6 +1672,7 @@ en:
     <a href="/re_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
        <br>
     <br><strong>NTT References</strong>
+    <br>
     <br>
     <br>
      <p>
