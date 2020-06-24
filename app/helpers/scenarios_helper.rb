@@ -1017,7 +1017,7 @@ module ScenariosHelper
 	    #client = Savon.client(wsdl: URL_NRCS)
 	 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
 	 	#response = client.call(:run_query, message: { "query" => sql })
-#tes
+#test2
 	    client = Savon.client(wsdl: URL_SoilsInfo, read_timeout: 500)
 	 	#response = client.call(:send_soils, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => APEX_FOLDER + "/APEX" + session[:session_id]})
 	 	response = client.call(:send_soils1, message: {"county" => County.find(@project.location.county_id).county_state_code, "state" => State.find(@project.location.state_id).state_name, "field_coor" => @field.coordinates.strip, "session" => session[:session_id], "outputFolder" => session[:session_id]})
