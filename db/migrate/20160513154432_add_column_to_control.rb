@@ -1,4 +1,4 @@
-class AddColumnToControl < ActiveRecord::Migration
+class AddColumnToControl < ActiveRecord::Migration[5.2]
   def change
     add_column :controls, :line, :integer
     add_column :controls, :column, :integer

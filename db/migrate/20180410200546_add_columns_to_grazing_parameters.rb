@@ -1,4 +1,4 @@
-class AddColumnsToGrazingParameters < ActiveRecord::Migration
+class AddColumnsToGrazingParameters < ActiveRecord::Migration[5.2]
   def change
   	if !ActiveRecord::Base.connection.column_exists?(:grazing_parameters, :for_dmi_cows)
     	add_column :grazing_parameters, :for_dmi_cows, :float

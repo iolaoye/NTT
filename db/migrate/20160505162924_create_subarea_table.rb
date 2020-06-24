@@ -1,4 +1,4 @@
-class CreateSubareaTable < ActiveRecord::Migration
+class CreateSubareaTable < ActiveRecord::Migration[5.2]
   def change
     create_table :subareas do |t|
 

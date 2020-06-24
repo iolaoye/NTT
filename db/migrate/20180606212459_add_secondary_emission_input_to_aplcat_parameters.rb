@@ -1,4 +1,4 @@
-class AddSecondaryEmissionInputToAplcatParameters < ActiveRecord::Migration
+class AddSecondaryEmissionInputToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :theta, :float
     add_column :aplcat_parameters, :fge, :float

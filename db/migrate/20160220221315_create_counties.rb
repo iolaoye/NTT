@@ -1,4 +1,4 @@
-class CreateCounties < ActiveRecord::Migration
+class CreateCounties < ActiveRecord::Migration[5.2]
   def change
     create_table :counties do |t|
       t.string :county_name

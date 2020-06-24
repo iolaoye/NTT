@@ -1,4 +1,4 @@
-class CreateTableAplcatParameters < ActiveRecord::Migration
+class CreateTableAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     create_table :aplcat_parameters do |t|
       t.integer :aplcat_param_id

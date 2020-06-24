@@ -1,4 +1,4 @@
-class CreateLayers < ActiveRecord::Migration
+class CreateLayers < ActiveRecord::Migration[5.2]
   def change
     create_table :layers do |t|
       t.float :depth

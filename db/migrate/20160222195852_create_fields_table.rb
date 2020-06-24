@@ -1,4 +1,4 @@
-class CreateFieldsTable < ActiveRecord::Migration
+class CreateFieldsTable < ActiveRecord::Migration[5.2]
   def change
     create_table :fields do |t|
       t.integer :location_id

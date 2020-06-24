@@ -1,4 +1,4 @@
-class MachineAugmenteds < ActiveRecord::Migration
+class MachineAugmenteds < ActiveRecord::Migration[5.2]
   def change
   end
 end

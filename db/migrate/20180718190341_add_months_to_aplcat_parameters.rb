@@ -1,4 +1,4 @@
-class AddMonthsToAplcatParameters < ActiveRecord::Migration
+class AddMonthsToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :tjan, :float
     add_column :aplcat_parameters, :tfeb, :float

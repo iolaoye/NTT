@@ -1,4 +1,4 @@
-class CreateFeedsAugmenteds < ActiveRecord::Migration
+class CreateFeedsAugmenteds < ActiveRecord::Migration[5.2]
   def change
     create_table :feeds_augmenteds do |t|
       t.string :name

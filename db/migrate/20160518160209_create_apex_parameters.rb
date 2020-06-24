@@ -1,4 +1,4 @@
-class CreateApexParameters < ActiveRecord::Migration
+class CreateApexParameters < ActiveRecord::Migration[5.2]
   def change
     create_table :apex_parameters do |t|
       t.integer :parameter_id

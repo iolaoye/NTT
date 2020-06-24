@@ -1,4 +1,4 @@
-class CreateFertilizerTypes < ActiveRecord::Migration
+class CreateFertilizerTypes < ActiveRecord::Migration[5.2]
   def change
     create_table :fertilizer_types do |t|
       t.string :name

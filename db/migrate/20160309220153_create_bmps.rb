@@ -1,4 +1,4 @@
-class CreateBmps < ActiveRecord::Migration
+class CreateBmps < ActiveRecord::Migration[5.2]
   def change
     create_table :bmps do |t|
 	  t.integer :bmp_id

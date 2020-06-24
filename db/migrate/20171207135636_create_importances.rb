@@ -1,4 +1,4 @@
-class CreateImportances < ActiveRecord::Migration
+class CreateImportances < ActiveRecord::Migration[5.2]
   def change
     create_table :importances do |t|
       t.string :name

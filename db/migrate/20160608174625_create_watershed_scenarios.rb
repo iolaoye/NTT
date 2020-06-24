@@ -1,4 +1,4 @@
-class CreateWatershedScenarios < ActiveRecord::Migration
+class CreateWatershedScenarios < ActiveRecord::Migration[5.2]
   def change
     create_table :watershed_scenarios do |t|
       t.integer :watershed_id

@@ -1,4 +1,4 @@
-class AddForageQuantityInputToAplcatParameters < ActiveRecord::Migration
+class AddForageQuantityInputToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :cpl_lowest, :float
     add_column :aplcat_parameters, :cpl_highest, :float

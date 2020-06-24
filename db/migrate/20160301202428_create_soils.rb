@@ -1,4 +1,4 @@
-class CreateSoils < ActiveRecord::Migration
+class CreateSoils < ActiveRecord::Migration[5.2]
   def change
     create_table :soils do |t|
       t.boolean :selected

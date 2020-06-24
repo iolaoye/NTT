@@ -1,4 +1,4 @@
-class CreateFemResults < ActiveRecord::Migration
+class CreateFemResults < ActiveRecord::Migration[5.2]
   def change
     create_table :fem_results do |t|
       t.float :total_revenue
