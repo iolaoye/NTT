@@ -12,32 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :line %>
-    <%= f.number_field :line%>
+    <%= f.label :id %>
+    <%= f.number_field :id%>
   </div>
   <div class="field">
     <%= f.label :number %>
     <%= f.number_field :number%>
   </div>
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name%>
-  </div>
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description%>
-  </div>
-  <div class="field">
-    <%= f.label :range_low %>
-    <%= f.number_field :range_low%>
-  </div>
-  <div class="field">
-    <%= f.label :range_high %>
-    <%= f.number_field :range_high%>
-  </div>
-  <div class="field">
     <%= f.label :default_value %>
-    <%= f.number_field :default_value, :step => 'any'%>
+    <%= f.text_field :default_value%>
+  </div>
+  <div class="field">
+    <%= f.label :state_id %>
+    <%= f.text_field :state_id%>
   </div>
   <div class="actions">
     <%= f.submit %>
