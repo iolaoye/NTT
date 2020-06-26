@@ -5,7 +5,7 @@ Parameter.create!({:id => 2, :number => 2, :default_value => 2, :state_id => 99}
 Parameter.create!({:id => 3, :number => 3, :default_value => 0.5, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 4, :number => 4, :default_value => 0.9, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 5, :number => 5, :default_value => 0.5, :state_id => 99}, :without_protection => true)
-Parameter.create!({:id => 6, :number => 6, :default_value => 1, :state_id => 99}, :without_protection => true)
+Parameter.create!({:id => 6, :number => 6, :default_value => 0.0, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 7, :number => 7, :default_value => 0.9, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 8, :number => 8, :default_value => 20.0, :state_id => 99}, :without_protection => true)
 Parameter.create!({:id => 9, :number => 9, :default_value => 20.0, :state_id => 99}, :without_protection => true)
