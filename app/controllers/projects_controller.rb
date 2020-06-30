@@ -1181,6 +1181,7 @@ class ProjectsController < ApplicationController
           operation.subtype_id = 0
         when "Opv1"
           operation.amount = p.text
+          if operation.amount == nil then operation.amount = 0 end
           if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
           if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
         when "Opv2"
