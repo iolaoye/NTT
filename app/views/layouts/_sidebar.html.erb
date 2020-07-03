@@ -54,7 +54,7 @@
     <% end %>
 
     <li class="<%= controller_name == "scenarios" ? "active" : "" %>">
-      <% if controller_name == "scenarios" %>
+      <% if controller_name == "scenarios" && request.parameters[:caller_id] == "NTT" %>
         <div class="header-icon">
           <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         </div>
@@ -139,6 +139,64 @@
 	  		<%= link_to t('general.management') + " " + t('menu.scenarios'), project_field_scenarios_path(@project, @field, :caller_id => "NTT", :locale=>I18n.locale) %></li>
       <% end %>
     </li>
+
+    <%# This is FEM submenu. It is inside Fields Under Management Scenarios.%>
+    <% if ENV["APP_VERSION"] == "standard" && fem == 1 %>
+      <li class="<%= ((controller_name == "fem_generals") || (controller_name == "fem_feeds") || (controller_name == "fem_machines") || (controller_name == "fem_facilities")) ? "active" : "" %>">
+        <%= link_to t('menu.fem'), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub"%>
+      </li>
+      <% if fem_submenu %>
+        <ul class="nav nav-pills nav-stacked ">
+          <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
+            <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub">
+               <% if controller_name == "fem_feeds" %>
+                 <div class="header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                 </div>
+               <% end %>
+               <li>
+                  <%= link_to t("fem.feed"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %>
+               </li>
+               <% if controller_name == "fem_machines" %>
+                 <div class="header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                 </div>
+               <% end %>
+               <li>
+                  <%= link_to t("fem.equipment"), project_fem_machines_path(@project, :button => t('fem.equipment'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %>
+               </li>
+               <% if controller_name == "fem_facilities" %>
+                 <div class="header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                 </div>
+               <% end %>
+               <li>
+                  <%= link_to t("fem.facility"), project_fem_facilities_path(@project, :button => t('fem.facility'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %>
+               </li>
+               <% if controller_name == "fem_generals" %>
+                 <div class="header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                 </div>
+               <% end %>
+               <li>
+                  <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %>
+               </li>
+               <% if controller_name == "scenarios" && request.parameters[:caller_id] == "FEM"%>
+                 <div class="header-icon">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                 </div>
+               <% end %>
+               <li>
+                <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM"), :class=>"results-label-sub" %></li>
+               </li>
+           </ul>
+          </li>
+
+        </ul>
+      <% end %>
+    <% end %>
+
+
 	  <% if @field.results.count > 0 %>
 			<li class="<%= controller_name == "results" ? "active" : "" %>">
 			  <% if controller_name == "results" %>
@@ -209,7 +267,7 @@
             <%= link_to t("menu.aplcat") + "-" + t('menu.results'), aplcat_results_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
           </li>
         <%end%>
-
+        <!-- 
         <% if ENV["APP_VERSION"] == "standard" and fem == 1 %>
           <li class="<%= (controller.action_name == "fem_results") ? "active" : "" %>">
             <% if controller.action_name == "fem_results" %>
@@ -219,7 +277,7 @@
             <% end %>
             <%= link_to t("result.fem") + "-" + t('models.results'), fem_results_project_field_result_path(@project, @field, 0, :locale=>I18n.locale), :class=>"results-label-sub"%>
           </li>
-        <%end%>
+        <%end%> -->
       </ul>
     <% end %>
 
@@ -238,60 +296,7 @@
   <% if (!(@project.location == nil) && @project.fields.count > 0) %>
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
   		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && request.url.include?(url_for("/fields/0/results?"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(@project, :locale=>I18n.locale) %></li>
-      <% if ENV["APP_VERSION"] == "standard" && fem == 1 %>
-        <li class="<%= ((controller_name == "fem_generals") || (controller_name == "fem_feeds") || (controller_name == "fem_machines") || (controller_name == "fem_facilities")) ? "active" : "" %>">
-          <%= link_to t('menu.fem'), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale), :class=>"results-label-sub"%>
-        </li>
-        <% if fem_submenu %>
-          <ul class="nav nav-pills nav-stacked ">
-            <li class="<%= (controller.action_name == "index") ? "active" : "0" %>">
-              <ul class="nav nav-pills nav-stacked nav-sidebar-sub">
-                 <% if controller_name == "fem_feeds" %>
-                   <div class="header-icon">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                   </div>
-                 <% end %>
-                 <li>
-                    <%= link_to t("fem.feed"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale), :class=>"results-label-sub" %>
-                 </li>
-                 <% if controller_name == "fem_machines" %>
-                   <div class="header-icon">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                   </div>
-                 <% end %>
-                 <li>
-                    <%= link_to t("fem.equipment"), project_fem_machines_path(@project, :button => t('fem.equipment'), :locale=>I18n.locale), :class=>"results-label-sub" %>
-                 </li>
-                 <% if controller_name == "fem_facilities" %>
-                   <div class="header-icon">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                   </div>
-                 <% end %>
-                 <li>
-                    <%= link_to t("fem.facility"), project_fem_facilities_path(@project, :button => t('fem.facility'), :locale=>I18n.locale), :class=>"results-label-sub" %>
-                 </li>
-                 <% if controller_name == "fem_generals" %>
-                   <div class="header-icon">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                   </div>
-                 <% end %>
-                 <li>
-                    <%= link_to t("fem.general"), project_fem_generals_path(@project, :button => t('fem.general'), :locale=>I18n.locale), :class=>"results-label-sub" %>
-                 </li>
-                 <% if controller_name == "scenarios" && request.parameters[:caller_id] == "FEM"%>
-                   <div class="header-icon">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                   </div>
-                 <% end %>
-                 <li>
-                  <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM"), :class=>"results-label-sub" %></li>
-                 </li>
-             </ul>
-            </li>
 
-          </ul>
-        <% end %>
-      <% end %>
     </ul>
   	<% if watershed_submenu %>
   		<% results = 0 %>

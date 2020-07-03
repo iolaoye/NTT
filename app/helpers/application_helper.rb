@@ -11,9 +11,9 @@ module ApplicationHelper
 		def field_submenu
 			if request.url.include?(url_for('/fields')) && (request.parameters[:caller_id] != "FEM")
 				true
-			elsif request.url.include?(url_for("/weathers"))
+			elsif request.parameters[:caller_id] == "FEM" && request.parameters[:field_id] != nil
 				true
-			elsif current_page?(url_for(controller: 'soils', :action => 'index'))
+			elsif request.url.include?(url_for("/weathers"))
 				true
 			elsif current_page?(url_for(:controller => 'apex_controls', :action => 'index'))
 				true
@@ -40,6 +40,8 @@ module ApplicationHelper
 			elsif request.url.include?(url_for("/grazing_parameters"))
 				true
 			elsif request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
+				true
+			elsif current_page?(url_for(controller: 'soils', :action => 'index'))
 				true
 			else
 				false
@@ -77,8 +79,8 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("/summary"))
 				true
-			elsif request.url.include?("fem")
-				true
+			#elsif request.url.include?("fem")
+				#true
 			elsif request.url.include?(url_for("/results"))
 				true
 			else
