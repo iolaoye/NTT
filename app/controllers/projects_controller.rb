@@ -1187,7 +1187,20 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv3"
-          if operation.activity_id == 6 then operation.type_id = p.text end
+          if ["1"."2","3","7"].include? p.text then 
+            if operation.activity_id == 6 then operation.type_id = p.text end
+          else
+            if operation.activity_id == 6 then
+              case operation.type_id
+                when 500
+                  operation.type_id = 1
+                when 502
+                  operation.type_id = 2
+                when 530
+                  operation.type_id = 3
+              end
+            end
+          end
           if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
         when "Opv4"
           #todo add opv4 for grazing 
