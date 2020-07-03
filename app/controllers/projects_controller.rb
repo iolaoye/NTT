@@ -1187,10 +1187,10 @@ class ProjectsController < ApplicationController
         when "Opv2"
           operation.depth = p.text
         when "Opv3"
-          if ["1"."2","3","7"].include? p.text then 
-            if operation.activity_id == 6 then operation.type_id = p.text end
-          else
-            if operation.activity_id == 6 then
+          if operation.activity_id == 6 then
+            if ["1","2","3","7"].include? p.text then
+              operation.type_id = p.text 
+            else
               case operation.type_id
                 when 500
                   operation.type_id = 1
