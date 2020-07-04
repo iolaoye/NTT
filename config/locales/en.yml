@@ -1418,6 +1418,7 @@ en:
       simul_parms: Simulation Parameters
       water_est: Water Estimation Parameters
       run_parm: RunParm APLCAT
+      tabular_parameters: Tabular Parameters
   aplcat_result:
       aplcat_results: APLCAT Results
       aws: Animal weights
