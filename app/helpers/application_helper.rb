@@ -81,7 +81,25 @@ module ApplicationHelper
 				true
 			#elsif request.url.include?("fem")
 				#true
-			elsif request.url.include?(url_for("/results"))
+			elsif request.url.include?(url_for("/results")) && !(request.url.include?("fem")|| request.url.include?("aplcat"))
+				true
+			else
+				false
+			end
+		end
+
+		def fem_submenu
+			if request.url.include?(url_for('general'))
+				true
+			elsif request.url.include?(url_for('feed'))
+				true
+			elsif request.url.include?(url_for("machine"))
+				true
+			elsif request.url.include?(url_for("facilities"))
+				true
+			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "FEM"
+				true
+			elsif request.url.include?(url_for("fem_results"))
 				true
 			else
 				false
@@ -92,6 +110,8 @@ module ApplicationHelper
 			if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
 				true
 			elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
+				true
+			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "APLCAT"
 				true
 			else
 				false
@@ -223,21 +243,5 @@ module ApplicationHelper
 					send_file path, :type => "application/xml", :x_sendfile => true
 				end
 	  		end
-		end
-
-		def fem_submenu
-			if request.url.include?(url_for('general'))
-				true
-			elsif request.url.include?(url_for('feed'))
-				true
-			elsif request.url.include?(url_for("machine"))
-				true
-			elsif request.url.include?(url_for("facilities"))
-				true
-			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "FEM"
-				true
-			else
-				false
-			end
 		end
 end
