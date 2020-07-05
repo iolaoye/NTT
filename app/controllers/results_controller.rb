@@ -317,10 +317,10 @@ class ResultsController < ApplicationController
           if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
           if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
 
-          when t('activerecord.models.result.aplcat_results')
-            if @scenario1 != "0" && @scenario1 != "" then @aplcat_results1 = Scenario.find(@scenario1).aplcat_results end
-            if @scenario2 != "0" && @scenario2 != "" then @aplcat_results2 = Scenario.find(@scenario2).aplcat_results end
-            if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_results end
+        when t('activerecord.models.result.aplcat_results')
+          if @scenario1 != "0" && @scenario1 != "" then @aplcat_results1 = Scenario.find(@scenario1).aplcat_results end
+          if @scenario2 != "0" && @scenario2 != "" then @aplcat_results2 = Scenario.find(@scenario2).aplcat_results end
+          if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_results end
 
         when t('result.download_pdf')
           #@result_selected = t('result.summary')

@@ -6,4 +6,29 @@ class AplcatResult < ActiveRecord::Base
   :bull_aws, :bull_dmi, :bull_gei, :bull_wi, :bull_sme, :bull_ni, :bull_tne, :bull_tnr, :bull_fne, :bull_une, :bull_eme, :bull_mme
 
   belongs_to :scenario
+
+  after_initialize :init
+
+  def init
+  	self.cow_dmi ||= 0.0
+  	self.cow_wi ||= 0.0
+  	self.cow_eme ||= 0.0
+  	self.cow_mme ||= 0.0
+  	self.bull_dmi ||= 0.0
+  	self.bull_wi ||= 0.0
+  	self.bull_eme ||= 0.0
+  	self.bull_mme ||= 0.0
+  	self.calf_dmi ||= 0.0
+  	self.calf_wi ||= 0.0
+  	self.calf_eme ||= 0.0
+  	self.calf_mme ||= 0.0  	
+  	self.fch_dmi ||= 0.0
+  	self.fch_wi ||= 0.0
+  	self.fch_eme ||= 0.0
+  	self.fch_mme ||= 0.0  	
+  	self.rh_dmi ||= 0.0
+  	self.rh_wi ||= 0.0
+  	self.rh_eme ||= 0.0
+  	self.rh_mme ||= 0.0  	
+  end
 end
