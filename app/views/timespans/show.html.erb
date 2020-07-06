@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bmp:</strong>
+  <%= @timespan.bmp_id %>
+</p>
+
+<p>
+  <strong>Crop:</strong>
+  <%= @timespan.crop_id %>
+</p>
+
+<p>
+  <strong>Start month:</strong>
+  <%= @timespan.start_month %>
+</p>
+
+<p>
+  <strong>Start day:</strong>
+  <%= @timespan.start_day %>
+</p>
+
+<p>
+  <strong>End month:</strong>
+  <%= @timespan.end_month %>
+</p>
+
+<p>
+  <strong>End day:</strong>
+  <%= @timespan.end_day %>
+</p>
+
+<%= link_to 'Edit', edit_timespan_path(@timespan) %> |
+<%= link_to 'Back', timespans_path %>
