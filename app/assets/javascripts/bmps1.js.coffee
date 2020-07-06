@@ -326,6 +326,28 @@ buffers = (opt) ->
     #else
     #  drip_option.removeAttr 'disabled'
 
+
+# get_dates = ->
+#     switch $("#bmp_ai_irrigation_id").val()
+#         when "1" #Sprinkle
+#             $("#bmp_ai_irrigation_efficiency").val(70)
+#             $("#bmp_ai_irrigation_efficiency_lable").val("70 - 80%")
+#         when "2" #Furrow/Flood
+#             $("#bmp_ai_irrigation_efficiency").val(65)
+#             $("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+#         when "3" #Drip
+#             $("#bmp_ai_irrigation_efficiency").val(85)
+#             $("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+#         when "7" #Furow Diken
+#             $("#bmp_ai_irrigation_efficiency").val(90)
+#             $("#bmp_ai_irrigation_efficiency_lable").val("80 - 95%")
+#         when "8" #Tailwater
+#             $("#bmp_ai_irrigation_efficiency").val(65)
+#             $("#bmp_ai_irrigation_efficiency_lable").val("50 - 70%")
+
+getdates = ->
+
+
 #determine the radio button selected for P & P and shows reservoir area if it is 6 or 7.
 
 #bmp_irrigation_id
@@ -373,6 +395,11 @@ $(document).ready ->
         $("#td_n_rate").toggle(false)
     $("#bmp_cb1_2").click ->
         $("#td_n_rate").toggle(true)
+
+    $("#operation_crop_id").change ->
+       getdates()
+
+
     #on 06/05/2020 Dr. Saleh asked to make both check boxes (irrig and crop) allow to check at the same time. Before just one could be checked at a time.
     #$("#irrigation_id").click ->
         #if $("#irrigation_id")[0].checked == true

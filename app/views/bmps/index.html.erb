@@ -127,6 +127,7 @@
                <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
               </td>-->
             </tr>
+
             <tr>
               <% if bmp.depth == 1 %>
                 <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
@@ -138,6 +139,28 @@
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
+
+    
+          <tr>
+            <td class="indent2" colspan="2">
+              <%= label :crop_id, t('operation.crop') %>
+              <% if I18n.locale.equal?(:en) %>
+
+
+                  <%= collection_select :operation, :crop_id, @crops.all, :id, :name,  {:prompt => t('general.select')} %>
+
+              <% else %>
+                  <%= collection_select :bmp_ccr, :crop_id, @crops.all, :id, :spanish_name, {:prompt => t('general.select')} %>
+              <% end %>
+            </td>
+          </tr>
+
+ 
+
+
+
+
+
           <% when 3 %>
             <tr>
               <td class="field indent" id = "depth" colspan="2" >
