@@ -27,6 +27,7 @@ class BmpsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
+    @crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
   	if @project.location.state_id == 25 || @project.location.state_id == 26 then
   		@irrigations = Irrigation.all
   	else

@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :timespans
   resources :fuels
   resources :trailers
   resources :trucks
