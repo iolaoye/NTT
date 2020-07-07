@@ -150,7 +150,7 @@
 	</div>
 </form>
 
-<% if (@type == t("result.summary")) or (@type == t("result.dry_years")) or (@type == t("result.all_years")) or (@type == t("result.wet_years")) then %>
+<% if (@type == t("result.summary")) or (@type == t("result.dry_years")) or (@type == t("result.all_years")) or (@type == t("result.wet_years")) or @type == "View" then %>
 	<div id="tbl_detailed" class="table-responsive">
 		<%= render 'detailed' %>
 	</div>
