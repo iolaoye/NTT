@@ -16,21 +16,8 @@
       </div>
   <% end %>
   <div>
-	  <table>
-  		<tr>
-        <td><%= link_to t('aplcat.animal_feed_parameters'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_gp'), :class => 'btn btn-primary' %></td>
-        <td><%#= link_to t('aplcat.supplement_parameters'), project_field_scenario_supplement_parameters_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_sp'), :class => 'btn btn-primary' %></td>
-        <td><%#= link_to t('menu.aplcat') + " " + t('menu.results'), project_field_scenario_aplcat_results_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_ar'), :class => 'btn btn-primary' %></td>
-        <td><%= link_to t('menu.animal_transport'), project_field_scenario_animal_transports_path(@project, @field, @scenario), :title => t('aplcat_tooltip.go_to_ar'), :class => 'btn btn-primary' %></td>
-      </tr>
-    </table>
-
-    <div id="copy_aplcat">
-      <h4><%#= t('aplcat.other_scenario') %></h4>
-      <td><%#= t('aplcat.select_scenario') %> <%#= collection_select :scenario, :id, Scenario.where(:field_id => 0), :id, :name, {:prompt => t('helpers.select.scenario')} %></td>
-      <td><%#= submit_tag t('general.copy'), data: {disable_with: 'Please wait....'}, method: :get, :class => "btn btn-primary" %></td>
-    </div>
-
+    <td><%= link_to t('aplcat.animal_feed_parameters'), project_field_scenario_grazing_parameters_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
+    <td><%= link_to t('menu.animal_transport'), project_field_scenario_animal_transports_path(@project, @field, @scenario), :class => 'btn btn-primary' %></td>
     <table>
       <tr>
         <td><h4><%= label :bmp_id, t('general.select') %></h4></td>
