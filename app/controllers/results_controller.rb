@@ -138,15 +138,12 @@ class ResultsController < ApplicationController
     @soil = "0"
     #load crop for each scenario selected
     i = 70
-    #if params[:result1] != nil then
     if @scenario1 > "0" then
       @present = true
       @before_button_clicked = false
       @errors = Array.new
     end # end if
-
     if params[:button] != nil
-        #@type = params[:button]
         # dry years menu item was clicked
         if (params[:button] == t('result.dry_years'))
             @type = t("result.dry_years")
@@ -155,9 +152,9 @@ class ResultsController < ApplicationController
             @type = t("result.wet_years")
         # default to tabular / all years
         else
-          if !(@type == t('activerecord.models.result.fem_results')) then
-            @type = t("result.summary")
-          end
+          #if !(@type == t('activerecord.models.result.fem_results')) then
+            #@type = t("result.summary")
+          #end
         end
     else
         if params[:button_annual] != nil

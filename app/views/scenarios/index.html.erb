@@ -1,6 +1,6 @@
 <% aplcat = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
-<% dndc = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
+<% dndc = 0 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% test = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% if notice != nil %>
     <div class="success_alert">
