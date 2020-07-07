@@ -78,8 +78,8 @@ class ScenariosController < ApplicationController
       case true
         when params[:commit].include?('NTT')
           redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
-        #when params[:commit].include?("APLCAT")
-          #msg = simulate_aplcat
+        when params[:commit].include?("APLCAT")
+          redirect_to project_field_scenarios_path(@project, @field,:caller_id => "APLCAT")
         when params[:commit].include?("FEM")
           redirect_to project_field_scenarios_path(@project, @field,:caller_id => "FEM")
         #when params[:commit].include?("DNDC")

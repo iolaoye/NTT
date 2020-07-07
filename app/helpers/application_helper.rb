@@ -57,14 +57,14 @@ module ApplicationHelper
 				true
 			elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 				true
-			elsif params[:scenario_id] != nil
-				if request.url.include?(url_for("/aplcat_parameters"))
-					@scenario_name = Scenario.find(params[:scenario_id]).name
-					true
-				elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
-					@scenario_name = Scenario.find(params[:scenario_id]).name
-					true
-				end
+			#elsif params[:scenario_id] != nil
+				#if request.url.include?(url_for("/aplcat_parameters"))
+					#@scenario_name = Scenario.find(params[:scenario_id]).name
+					#true
+				#elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
+					#@scenario_name = Scenario.find(params[:scenario_id]).name
+					#true
+				#end
 			else
 				false
 			end
@@ -105,18 +105,18 @@ module ApplicationHelper
 				false
 			end
 		end
-
-		def aplcats_submenu
-			if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
-				true
-			elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
-				true
-			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "APLCAT"
-				true
-			else
-				false
-			end
-		end
+		
+		#def aplcats_submenu
+			#if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
+				#true
+			#elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
+				#true
+			#elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "APLCAT"
+				#true
+			#else
+				#false
+			#end
+		#end
 
 		def aplcats_sub_submenu
 			if request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters')) || request.url.include?(url_for('aplcat_parameters'))  || request.url.include?(url_for('animal_transports'))

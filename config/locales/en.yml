@@ -782,7 +782,7 @@ en:
     worst_scenario: Worst Scenario
   fem:
     general: General Inputs
-    equipment: Equipments
+    equipment: Equipment
     facility: Facilities
     feed: Feeds
   months:
