@@ -1,6 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
+<%= form_for :post, :url => {:action => "index"}, method: :post do |f|%>
+  <div class="form-group">
+    <%= f.text_field :search %>
+    <%= f.submit "Search" %>
+  </div>
+<% end %>
 
 <table>
   <thead>

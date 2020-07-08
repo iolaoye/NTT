@@ -3,12 +3,19 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    debugger
+    if params[:post] != nil
+      if params[:post][:search] then
+        @posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
+      end
+    else
+      @posts = Post.all
+    end 
   end
 
   # GET /posts/1
   def show
-    debugger
+    @comment = Comment.new
   end
 
   # GET /posts/new
@@ -22,17 +29,24 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-
-    if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
+    debugger
+    if params[:post] != nil then
+      index
+      render :index
     else
-      render :new
+      @post = Post.new(post_params)
+
+      if @post.save
+        redirect_to @post, notice: 'Post was successfully created.'
+      else
+        render :new
+      end
     end
   end
 
   # PATCH/PUT /posts/1
   def update
+    debugger
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
