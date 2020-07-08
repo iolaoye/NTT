@@ -3,7 +3,7 @@
 <h1>Posts</h1>
 <%= form_for :post, :url => {:action => "index"}, method: :post do |f|%>
   <div class="form-group">
-    <%= f.text_field :search %>
+    <%= f.text_field :search, size: 80 %>
     <%= f.submit "Search" %>
   </div>
 <% end %>
