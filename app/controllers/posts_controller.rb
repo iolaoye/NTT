@@ -3,7 +3,6 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    debugger
     if params[:post] != nil
       if params[:post][:search] then
         @posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
@@ -29,7 +28,6 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    debugger
     if params[:post] != nil then
       index
       render :index
@@ -46,7 +44,6 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    debugger
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
