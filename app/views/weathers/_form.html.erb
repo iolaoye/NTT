@@ -23,9 +23,11 @@
 
     <div class="panel panel-default">
       <div class="panel-body">
+        <% if request.url.include? ".bk." or request.url.include? "local" and (@weather.way_id == 1) then %>
+          <%= f.label :coorinates, @weather.latitude.to_s + ", " + @weather.longitude.to_s + ", " + @weather.weather_file %>
+        <% end %>
        <% for way in Way.all %>
-          <div>
-            <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
+          <div>            <%= f.radio_button :way_id, way.id, onchange: "rbtnStation_onclick(" + "'" + way.way_value + "'" + ")" %>
             <% if (params[:locale] == "en") %>
                 <%= f.label :way, way.way_name %>
                 <% if @weather.weather_file != nil then %>
