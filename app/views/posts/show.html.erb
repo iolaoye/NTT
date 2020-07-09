@@ -8,7 +8,7 @@
 <div>
   <h2>Comments</h2>
   <% @post.comments.each do |c| %>
-    <p><b><%=h c.name %> said:</b><br /><%= time_ago_in_words(c.created_at) %> ago</p>
+    <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
     <p><%=h c.body %></p>
   <% end %>
 </div>
@@ -18,8 +18,11 @@
     <p>
       <%= f.label :name, "Author" %><%= f.label :name, User.find(session[:user_id]).name %><br />
       <%= f.label :body, "Comment Description" %><br />
-      <%= f.text_area :body %>
+      <%= f.text_area :body,  :rows => 10, :cols => 100 %>
     </p>
-    <p><%= f.submit "Add Comment" %></p>
+    <div  class="actions">
+    <%= f.submit "Add Comment" %>
+    <%= link_to 'Back', posts_path %>
+  </div>
   <% end %>
 </div>
