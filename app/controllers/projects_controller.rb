@@ -920,14 +920,16 @@ class ProjectsController < ApplicationController
   end
 
   def sort_column
-    case params[:column].downcase
-      when t('project.project_name').downcase
-        return "Name"
-      #when t('general.last_modified')
-      when t('pdf.date_created').downcase
-        return "created_at"
-      when t('models.user') .downcase
-        return "user_id"
+    if params[:column] != nil
+      case params[:column].downcase
+        when t('project.project_name').downcase
+          return "Name"
+        #when t('general.last_modified')
+        when t('pdf.date_created').downcase
+          return "created_at"
+        when t('models.user') .downcase
+          return "user_id"
+      end
     end
     return "Name"
     #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
