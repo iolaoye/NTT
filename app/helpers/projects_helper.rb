@@ -12,6 +12,7 @@ module ProjectsHelper
 		when column.include?("Project Name")
 			column = "name"
 		when ["User", "Usuario"].include?(column)
+			column = "user_id"
 	end  #end case
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     icon = sort_direction == "asc" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down"
