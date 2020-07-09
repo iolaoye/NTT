@@ -1023,7 +1023,7 @@ es:
     input_info: Información del Projecto
     name: Nombre
     description: Descripción
-    date_created: Fecha de Creacion
+    date_created: "Fecha de Creación"
     report_created: Fecha de Creacion del Informe
     location_info: Ubicación
     state: Estdo
