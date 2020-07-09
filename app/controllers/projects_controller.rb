@@ -916,15 +916,18 @@ class ProjectsController < ApplicationController
   end
 
   def sortable_columns
-    [["Project Name"], "updated_at"]
+    [["Project Name"], "Date Created"]
   end
 
   def sort_column
-    case params[:column]
-      when t('project.project_name')
+    case params[:column].downcase
+      when t('project.project_name').downcase
         return "Name"
-      when t('general.last_modified')
-        return "updated_at"
+      #when t('general.last_modified')
+      when t('pdf.date_created').downcase
+        return "created_at"
+      when t('models.user') .downcase
+        return "user_id"
     end
     return "Name"
     #sortable_columns.include?(params[:column]) ? params[:column] : "Name"

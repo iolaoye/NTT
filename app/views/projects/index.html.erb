@@ -43,9 +43,9 @@
 							  <tr>
 								<th class="project_column"><%= sort_link t('project.project_name') %></th>
 								<th class="project_column"><%= t('general.description') %></th>
-								<th class="project_column"><%= sort_link t('general.last_modified') %></th>
+								<th class="project_column"><%= sort_link t('pdf.date_created') %></th>
 								<th class="project_column"><%= t('general.actions') %></th>
-								<% if @user.admin %> <th class="project_column"><%= t('models.user') %></th> <% end %>
+								<% if @user.admin %> <th class="project_column"><%= sort_link t('models.user') %></th> <% end %>
 							  </tr>
 							</thead>
 							<tbody>
@@ -56,7 +56,7 @@
 							  			<% else %> <td id="<%= project.name %>" class="table-link"><%= link_to project.name, project_fields_path(project) %></td>
 							  			<% end %>
 							  			<td><%= project.description %></td>
-							  			<td><%= project.updated_at.to_date %></td>
+							  			<td><%= project.created_at.to_date %></td>
 							  			<td>
 								  			<%= link_to image_tag("download.gif"), download_project_path(project) %>
 								  			<%= link_to image_tag("edit.png"), edit_user_project_path(@user, project) %>
