@@ -923,7 +923,7 @@ class ProjectsController < ApplicationController
     if params[:column] != nil
       case params[:column].downcase
         when t('project.project_name').downcase
-          return "Name"
+          return "name"
         #when t('general.last_modified')
         when t('pdf.date_created').downcase
           return "created_at"
@@ -931,7 +931,7 @@ class ProjectsController < ApplicationController
           return "user_id"
       end
     end
-    return "Name"
+    return "name"
     #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
   end
 
