@@ -939,7 +939,7 @@ module AplcatParametersHelper
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
     if @aplcat == nil then
-      return "You need to create the APLCAT information before trying to simulate. Click on the scnario you want to work with and check the default information presented."
+      return "You need to create the APLCAT information before trying to simulate. Click on the scenario you want to work with and check the default information presented."
     end
     if create_cow_calf_production_data != "OK"
       return t('aplcat.error') + " " + t('aplcat.cow_calf')
