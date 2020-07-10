@@ -25,7 +25,7 @@ class StationsController < ApplicationController
       sql = sql + " ORDER BY distance"
       @station = Station.find_by_sql(sql).first
       if params[:state] != nil then
-        file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/N42.29167W92.375.wth"
+        file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/" + @station.file_name
         client = Savon.client(wsdl: URL_SoilsInfoDev)
         ###### Get the WEATHER file to download ########
         response = client.call(:get_weather_info, message: {"file" => file, "i_year" => @station.initial_year, "f_year" => @station.final_year})
