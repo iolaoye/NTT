@@ -57,6 +57,109 @@ class ScenariosController < ApplicationController
     end
   end
 
+################################  NEW   #################################
+# GET /scenarios/new
+# GET /scenarios/new.json
+  def new
+    @errors = Array.new
+    @scenario = Scenario.new
+
+    add_breadcrumb t('general.scenarios')
+    add_breadcrumb 'Add New Scenario'
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @scenario }
+    end
+  end
+
+################################  EDIT   #################################
+# GET /scenarios/1/edit
+  def edit
+    @scenario = Scenario.find(params[:id])
+    add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
+    add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
+  end
+
+################################  CREATE  #################################
+# POST /scenarios
+# POST /scenarios.json
+  def create
+    @errors = Array.new
+    @scenario = Scenario.new(scenario_params)
+    @scenario.field_id = @field.id
+    @watershed = Watershed.new(scenario_params)
+    @watershed.save
+    respond_to do |format|
+      if @scenario.save
+        @scenarios = Scenario.where(:field_id => params[:field_id])
+        #add new scenario to soils
+        flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
+        add_scenario_to_soils(@scenario, false)
+        format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
+      else
+      flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
+        format.json { render json: scenario.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+        
+################################  UPDATE  #################################
+# PATCH/PUT /scenarios/1
+# PATCH/PUT /scenarios/1.json
+  def update
+    @errors = Array.new
+    @scenario = Scenario.find(params[:id])
+    respond_to do |format|
+      if @scenario.update_attributes(scenario_params)
+        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT"), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @scenario.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+################################  DESTROY  #################################
+# DELETE /scenarios/1
+# DELETE /scenarios/1.json
+  def destroy
+    @scenario = Scenario.find(params[:id])
+    @errors = Array.new
+    if @scenario.destroy
+      flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
+    end
+
+    respond_to do |format|
+      format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
+      format.json { head :no_content }
+    end
+  end
+
+################################  SHOW - simulate the selected scenario  #################################
+# GET /scenarios/1
+# GET /scenarios/1.json
+  def show()
+    @errors = Array.new
+    ActiveRecord::Base.transaction do
+      msg = run_scenario
+      @scenarios = Scenario.where(:field_id => params[:field_id])
+      @project_name = Project.find(params[:project_id]).name
+      @field_name = Field.find(params[:field_id]).field_name
+      respond_to do |format|
+        if msg.eql?("OK") then
+        flash[:notice] = t('scenario.scenario') + " " + t('general.success')
+        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
+        else
+        flash[:error] = "Error simulating scenario - " + msg
+        format.html { render action: "list" }
+        end # end if msg
+      end
+    end
+  end
+
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
   	msg = "OK"
@@ -155,109 +258,39 @@ class ScenariosController < ApplicationController
     return msg
   end
 
-################################  NEW   #################################
-# GET /scenarios/new
-# GET /scenarios/new.json
-  def new
+  ################################  aplcat - simulate the selected scenario for aplcat #################################
+  def simulate_aplcat
+    msg = "OK"
     @errors = Array.new
-    @scenario = Scenario.new
-
-    add_breadcrumb t('general.scenarios')
-    add_breadcrumb 'Add New Scenario'
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @scenario }
+    if params[:select_scenario] == nil then
+      @errors.push("Select at least one Aplcat to simulate ")
+      return "Select at least one Aplcat to simulate "
     end
-  end
-
-################################  EDIT   #################################
-# GET /scenarios/1/edit
-  def edit
-    @scenario = Scenario.find(params[:id])
-    add_breadcrumb t('menu.scenarios'), project_field_scenarios_path(@project, @field)
-	  add_breadcrumb t('general.editing') + " " +  t('scenario.scenario')
-  end
-
-################################  CREATE  #################################
-# POST /scenarios
-# POST /scenarios.json
-  def create
-    @errors = Array.new
-    @scenario = Scenario.new(scenario_params)
-    @scenario.field_id = @field.id
-    @watershed = Watershed.new(scenario_params)
-    @watershed.save
-    respond_to do |format|
-      if @scenario.save
-        @scenarios = Scenario.where(:field_id => params[:field_id])
-        #add new scenario to soils
-        flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
-        add_scenario_to_soils(@scenario, false)
-        format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
-      else
-	    flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
-        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
-        format.json { render json: scenario.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-        
-################################  UPDATE  #################################
-# PATCH/PUT /scenarios/1
-# PATCH/PUT /scenarios/1.json
-  def update
-    @errors = Array.new
-    @scenario = Scenario.find(params[:id])
-    respond_to do |format|
-      if @scenario.update_attributes(scenario_params)
-        format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT"), notice: t('models.scenario') + " " + @scenario.name + t('notices.updated') }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @scenario.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-################################  DESTROY  #################################
-# DELETE /scenarios/1
-# DELETE /scenarios/1.json
-  def destroy
-    @scenario = Scenario.find(params[:id])
-    @errors = Array.new
-    if @scenario.destroy
-      flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.deleted')
-    end
-
-    respond_to do |format|
-      format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
-      format.json { head :no_content }
-    end
-  end
-
-################################  SHOW - simulate the selected scenario  #################################
-# GET /scenarios/1
-# GET /scenarios/1.json
-  def show()
-    @errors = Array.new
+    @scenarios_selected = params[:select_scenario]
     ActiveRecord::Base.transaction do
-  		msg = run_scenario
-  		@scenarios = Scenario.where(:field_id => params[:field_id])
-  		@project_name = Project.find(params[:project_id]).name
-  		@field_name = Field.find(params[:field_id]).field_name
-  		respond_to do |format|
-  		  if msg.eql?("OK") then
-  			flash[:notice] = t('scenario.scenario') + " " + t('general.success')
-  			format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
-  		  else
-  			flash[:error] = "Error simulating scenario - " + msg
-  			format.html { render action: "list" }
-  		  end # end if msg
-  		end
-  	end
-  end
-
+      @scenarios_selected.each do |scenario_id|
+        @scenario = Scenario.find(scenario_id)
+        msg = get_file_from_APLCAT("APEX.wth")
+        if msg.include? "Error" then
+          msg = "OK"
+          msg = run_scenario
+          if msg != "OK" then @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") end
+          return
+        end
+        msg = run_aplcat
+        unless msg.eql?("OK")
+          if msg.include?('cannot be null')
+              @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+            else
+            @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+          end
+          raise ActiveRecord::Rollback
+        end # end if msg
+      end # end each do params loop
+    end
+    return msg
+  end  # end method simulate_aplcat
+  
 ################################  FEM - simulate the selected scenario for FEM #################################
   def simulate_fem
     @errors = Array.new
@@ -276,7 +309,8 @@ class ScenariosController < ApplicationController
           return
         end
         if @scenario.crop_results.count <=0 then
-          @errors.push("Error simulating scenario " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )")
+          msg = run_scenario()
+          if msg != "OK" then @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") end
           return
         end
         msg = run_fem
@@ -511,7 +545,6 @@ class ScenariosController < ApplicationController
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "fembat01.bat")
     state = State.find(@project.location.state_id).state_abbreviation
-    #@fem_list = Array.new
 
     builder = Nokogiri::XML::Builder.new do |xml|
       xml.additions {
@@ -520,14 +553,11 @@ class ScenariosController < ApplicationController
             get_operations(op, state, xml)
           end
         }
-        #todo add bmps
-
         xml.bmps {
           @scenario.bmps.each do |bmp|
             get_bmps(bmp, state, xml)
           end
         }
-
       }
     end
     fem_list = builder.to_xml  #convert the Nokogiti XML file to XML file text
@@ -536,10 +566,7 @@ class ScenariosController < ApplicationController
     fem_list.gsub! "\n", ""
     fem_list.gsub! "[?xml version=\"1.0\"?]", ""
     #populate local.mdb and run FEM
-
-
     msg = send_file_to_APEX(fem_list, "Operations")
-
     if !msg.include? "Error"
       if !(@scenario.fem_result == nil) then @scenario.fem_result.destroy end
       fem_result = FemResult.new
@@ -829,32 +856,6 @@ class ScenariosController < ApplicationController
                    #COMA + crop_name + COMA + @scenario.soil_operations.last.year.to_s + COMA + "0" + COMA + "0" + COMA + items[0].to_s + COMA + values[0].to_s + COMA + items[1].to_s + COMA + values[1].to_s + COMA + items[2].to_s + COMA + values[2].to_s + COMA + items[3].to_s + COMA + values[3].to_s + COMA + items[4].to_s + COMA +
                    #values[4].to_s + COMA + items[5] + COMA + values[5].to_s + COMA + items[6] + COMA + values[6].to_s + COMA + items[7] + COMA + values[7].to_s + COMA + items[8] + COMA + values[8].to_s)
   end  # end get_operations method
-
-  ################################  aplcat - simulate the selected scenario for aplcat #################################
-  def simulate_aplcat
-    msg = "OK"
-    @errors = Array.new
-  	if params[:select_scenario] == nil then
-  		@errors.push("Select at least one Aplcat to simulate ")
-  		return "Select at least one Aplcat to simulate "
-  	end
-    @scenarios_selected = params[:select_scenario]
-    ActiveRecord::Base.transaction do
-  	  @scenarios_selected.each do |scenario_id|
-  		  @scenario = Scenario.find(scenario_id)
-  		  msg = run_aplcat
-  		  unless msg.eql?("OK")
-    			if msg.include?('cannot be null')
-    		  	  @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-    		  	else
-    			  @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-    			end
-    			raise ActiveRecord::Rollback
-  	    end # end if msg
-      end # end each do params loop
-  	end
-    return msg
-  end  # end method simulate_aplcat
 
   ################################  copy scenario selected  #################################
   def copy_scenario
