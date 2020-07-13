@@ -1336,7 +1336,7 @@ def send_file_to_DNDC(apex_string, file, state)
       cc_number = @scenario.operations.last.id
       @soil_operations.each do |so|
         if bmp1 != nil then
-          if current_year == so.year and bmp1.bmpsublist_id == 1 and bmp1.depth == 2 then     #in this case a new record should be added
+          if current_year == so.year and bmp1.bmpsublist_id == 1 and bmp1.depth == 2 then     #in this case a new record should be added. Autofertigation. The rate is added as a new operation record on 7/15.
             so_new = SoilOperation.new
             so_new.year = current_year
             so_new.month = 7
@@ -1604,13 +1604,12 @@ def send_file_to_DNDC(apex_string, file, state)
           end#          
         end
         nh3 = 0
-#test
-        if oper.nh3 != nil && oper.nh3 > 0 then
-          nh3 = oper.nh3
-        else
-          nh3 = Fertilizer.find(oper.subtype_id).nh3
-        end
         if oper != nil then
+          if oper.nh3 != nil && oper.nh3 > 0 then
+            nh3 = oper.nh3
+          else
+            nh3 = Fertilizer.find(oper.subtype_id).nh3
+          end
   		    if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
   			     add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, nh3, oper.subtype_id, org_c)
   		    else
