@@ -43,12 +43,23 @@
 
 <div class="page-header"><h1>
 	<% if request.parameters[:caller_id] == nil then %>
-		<% req_parm = "NTT" %>
+		<% if request.parameters[:commit] != nil then %>
+			<% case true %>
+				<% when request.parameters[:commit].include?("APLCAT") %>
+					<% req_parm = "APLCAT" %>
+				<% when request.parameters[:commit].include?("FEM") %>
+					<% req_parm = "FEM" %>
+				<% else %>
+					<% req_parm = "NTT" %>
+			<% end %>
+		<% else %>
+			<% req_parm = "NTT" %>
+		<% end %>
 	<% else %>
 		<% req_parm = request.parameters[:caller_id] %>
 	<% end %>
 	<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
-</h1></div>
+</div>
 <% if req_parm == "FEM" || req_parm == "APLCAT" then %>
 	<% acitive_menu = "style=display:none" %>
 <% end %>
@@ -57,8 +68,9 @@
 	<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
 	<% if test == 1 %>
 		<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
+	<% end %>
 </div>
-<% end %>
+
 <% @scenario = Scenario.new %>
 <div style="">
 	<br>

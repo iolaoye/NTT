@@ -211,8 +211,7 @@ class ResultsController < ApplicationController
                     else
                         count = results_data.size
                     end
-
-                    if !session[:simulation] == 'watershed'
+                    if !(session[:simulation] == 'watershed')
                         total_area = @field.field_area
                         bmps = Scenario.find(scenario_id).bmps
                         bmps.each do |b|
@@ -320,12 +319,10 @@ class ResultsController < ApplicationController
           if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_results end
 
         when t('result.download_pdf')
-          #@result_selected = t('result.summary')
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
               @chart_type = 0
           @x = "Year"
-          #@crops = Array.new
           case true
           when @scenario1 != nil && @scenario2 != nil && @scenario3!= nil && @scenario1 != "" && @scenario2 != "" && @scenario3 != ""
             @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ? or scenario_id = ?",@scenario1, @scenario2, @scenario3).group(:name)
@@ -355,7 +352,6 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -363,8 +359,6 @@ class ResultsController < ApplicationController
                 @charts2 = get_chart_serie(@scenario2, 1)
                 if @charts2.count > 0
                   @present2 = true
-                else
-                  #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -372,8 +366,6 @@ class ResultsController < ApplicationController
                 @charts3 = get_chart_serie(@scenario3, 1)
                 if @charts3.count > 0
                   @present3 = true
-                else
-                  #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
             end
@@ -395,8 +387,6 @@ class ResultsController < ApplicationController
                 @charts1 = get_chart_serie(@scenario1, 2)
                 if @charts1.count > 0
                   @present1 = true
-                else
-                  #@errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then

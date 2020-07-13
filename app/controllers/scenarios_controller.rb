@@ -190,10 +190,20 @@ class ScenariosController < ApplicationController
         else
           redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       end
-      #redirect_to project_field_scenarios_path(@project, @field)
     else
       @scenarios = Scenario.where(:field_id => @field.id)
-      render "index", error: msg
+      caller_id = ""
+      case true
+        when params[:commit].include?('NTT')
+          caller_id = "NTT"
+        when params[:commit].include?("APLCAT")
+          caller_id = "APLCAT"
+        when params[:commit].include?("FEM")
+          caller_id = "FEM"
+        else
+          caller_id = "NTT"
+      end
+      render "index", :locals => { :caller_id => caller_id }, error: msg
     end # end if msg
   end
 
@@ -274,8 +284,10 @@ class ScenariosController < ApplicationController
         if msg.include? "Error" then
           msg = "OK"
           msg = run_scenario
-          if msg != "OK" then @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") end
-          return
+          if msg != "OK" then 
+            @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") 
+            return "Error"
+          end
         end
         msg = run_aplcat
         unless msg.eql?("OK")
