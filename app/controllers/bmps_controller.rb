@@ -27,7 +27,7 @@ class BmpsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
-    @crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+
   	if @project.location.state_id == 25 || @project.location.state_id == 26 then
   		@irrigations = Irrigation.all
   	else
@@ -68,8 +68,41 @@ class BmpsController < ApplicationController
             bmp.maximum_single_application = 3
             bmp.dry_manure = 0
   			end
-  		end
-  		@bmps[bmp.bmpsublist_id-1] = bmp
+      end
+
+      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp_id 
+      if bmp.bmpsublist_id == 1 and bmp != nil
+        @crop = Array.new
+        crop_details = Hash.new
+        crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+        crops.each do |c|
+          ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
+          temp_id = c.id
+          temp_hash = {
+            "id":c.id,
+            "name": Crop.find_by(id:c.id).name,
+            "start_month": "0",
+            "start_day":"0",
+            "end_month":"0",
+            "end_day":"0"
+          }
+          @crop << temp_hash
+
+        end
+      else
+        @crop = [{"id"=>15,
+            "name"=>"corn", 
+            "start_month" => 0, 
+            "start_day" =>0, 
+            "end_month" => 0, 
+            "end_day" =>0}, {"id"=>16,
+            "name"=>"cotton", 
+            "start_month" => 0, 
+            "start_day" =>0, 
+            "end_month" => 0, 
+            "end_day" =>0}]
+      end
+     
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
@@ -127,6 +160,11 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
+    debugger
+    
+    @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'], end_day:params['bmp_ed']['0'].to_i)
+    #Rails.log.debug  @timespan 
+
 	  if @values[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.

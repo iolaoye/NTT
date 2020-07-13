@@ -46,6 +46,7 @@
               <% next %>
           <% end %>
           <tr>
+
             <% if bmp.bmpsublist_id <= 18 || bmp.bmpsublist_id > 20 %>
               <% if bmp.id != nil %>
                 <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
@@ -146,21 +147,46 @@
             <td class="indent2" colspan="2">
               <%= label :crop_id, t('operation.crop') %>
               <% if I18n.locale.equal?(:en) %>
-
-
                   <%= collection_select :operation, :crop_id, @crops.all, :id, :name,  {:prompt => t('general.select')} %>
-
               <% else %>
                   <%= collection_select :bmp_ccr, :crop_id, @crops.all, :id, :spanish_name, {:prompt => t('general.select')} %>
               <% end %>
             </td>
           </tr>
           <% end %>
+
+          <tr>
+          <td class="indent2" colspan="2">
+          <table>
+          <tr colspan="5">
+           <td></td>
+           <td style="text-align: center; vertical-align: middle;">Start Month</td>
+           <td style="text-align: center; vertical-align: middle;">Start Day</td>
+           <td style="text-align: center; vertical-align: middle;">End Month</td>
+           <td style="text-align: center; vertical-align: middle;">End Day</td>
+           </tr>
+           <tr colspan="5">
+            <% for item in @crop %>
+                <td><%= check_box_tag "mycrop[#{item['id']}]", true, value="Hello"%> <%= item['name'] %></td>
+                <td><%= number_field :bmp_sm,"#{item['start_day']}", :value => item['start_month'],  :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %></td>
+                <td>
+                <%= number_field :bmp_sd, "#{item['start_day']}", :value => item['start_day'], :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                <%= t('bmp.days_range') %>
+                </td>
+                <td><%= number_field :bmp_em, "#{item['end_month']}", :value => item['end_month'], :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %></td>
+                <td>
+                <%= number_field :bmp_ed, "#{item['end_day']}", :value => item['end_day'],  :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                <%= t('bmp.days_range') %>
+
+               <%= hidden_field_tag "my_crop_id", item['id']%>
+                </td>
  
-
-
-
-
+              </tr>
+            <% end  %>
+           </tr>
+          </table>
+          </td>
+           </tr>
 
           <% when 3 %>
             <tr>
