@@ -5,7 +5,17 @@ class PostsController < ApplicationController
   def index
     if params[:post] != nil
       if params[:post][:search] then
-        @posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
+        words = params[:post][:search].split(/[^[[:word:]]]+/)
+        query = ""
+        or1 = ""
+        words.each do |word|
+          if word.length > 3 then
+            query += or1 + "title LIKE '%" + word + "%'"
+            or1 = " OR "
+          end
+        end
+        #@posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
+        @posts = Post.where(query)
       end
     else
       @posts = Post.all
