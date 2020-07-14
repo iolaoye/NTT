@@ -69,7 +69,7 @@ class BmpsController < ApplicationController
             bmp.dry_manure = 0
   			end
       end
-      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id    #@ seems to be nil
+      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id    
       @crop_arr = Array.new
       temp_hash = Hash.new
       #debugger
@@ -99,38 +99,40 @@ class BmpsController < ApplicationController
         end
          @crop_arr << temp_hash
         end
-      else
-        # crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
-        # crops.each do |c|
-        # temp_hash = {
-        #   "id":c.id,
-        #   "name": Crop.find_by(id:c.id).name,
-        #   "start_month": "0",
-        #   "start_day":"0",
-        #   "end_month":"0",
-        #   "end_day":"0"
-        # }
-
+      else  # seems to always come here
+        crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+        crops.each do |c|
         temp_hash = {
-          "id":18,
-          "name": "test_crop",
-          "start_month": "0",
-          "start_day": "0",
-          "end_month": "0",
-          "end_day": "0"
-        }
-
-        temp_hash_two = {
-
-          "id":19,
-          "name": "test_crop2",
+          "id":c.id,
+          "name": Crop.find_by(id:c.id).name,
           "start_month": "0",
           "start_day": "0",
           "end_month": "0",
           "end_day": "0"
         }
         @crop_arr << temp_hash
-        @crop_arr << temp_hash_two
+        end
+
+        # temp_hash = {
+        #   "id":18,
+        #   "name": "test_crop",
+        #   "start_month": "0",
+        #   "start_day": "0",
+        #   "end_month": "0",
+        #   "end_day": "0"
+        # }
+
+        # temp_hash_two = {
+
+        #   "id":19,
+        #   "name": "test_crop2",
+        #   "start_month": "0",
+        #   "start_day": "0",
+        #   "end_month": "0",
+        #   "end_day": "0"
+        # }
+        # @crop_arr << temp_hash
+        # @crop_arr << temp_hash_two
       end
      
 
