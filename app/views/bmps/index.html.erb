@@ -166,19 +166,19 @@
            <td style="text-align: center; vertical-align: middle;">End Day</td>
            </tr>
            <tr colspan="5">
-            <% for item in @crop %>
-                <td><%= check_box_tag "mycrop[#{item['id']}]", true, value="Hello"%> <%= item['name'] %></td>
-                <td><%= number_field :bmp_sm,"#{item['start_day']}", :value => item['start_month'],  :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %></td>
+            <% @crop_arr.each do |cp| %>
+                <td><%= check_box_tag "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
+                <td><%= number_field :bmp_sm,"#{cp[:start_day]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 100, :class => "gvSmallStyleNumber" %></td>
                 <td>
-                <%= number_field :bmp_sd, "#{item['start_day']}", :value => item['start_day'], :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_sd, "#{cp[:start_day]}", :value => cp[:start_day], :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
                 <%= t('bmp.days_range') %>
                 </td>
-                <td><%= number_field :bmp_em, "#{item['end_month']}", :value => item['end_month'], :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %></td>
+                <td><%= number_field :bmp_em, "#{cp[:end_month]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 100, :class => "gvSmallStyleNumber" %></td>
                 <td>
-                <%= number_field :bmp_ed, "#{item['end_day']}", :value => item['end_day'],  :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ed, "#{cp[:end_day]}", :value => cp[:end_day],  :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
                 <%= t('bmp.days_range') %>
 
-               <%= hidden_field_tag "my_crop_id", item['id']%>
+               <%= hidden_field_tag "my_crop_id", cp[:id]%>
                 </td>
  
               </tr>

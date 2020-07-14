@@ -69,40 +69,71 @@ class BmpsController < ApplicationController
             bmp.dry_manure = 0
   			end
       end
-
-      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp_id 
-      if bmp.bmpsublist_id == 1 and bmp != nil
-        @crop = Array.new
-        crop_details = Hash.new
+      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id    #@ seems to be nil
+      @crop_arr = Array.new
+      temp_hash = Hash.new
+      #debugger
+      break if bmp.bmpsublist_id != 1 && bmp == nil
+      if bmp.bmpsublist_id == 1 && bmp != nil
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
         crops.each do |c|
           ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
-          temp_id = c.id
-          temp_hash = {
-            "id":c.id,
-            "name": Crop.find_by(id:c.id).name,
-            "start_month": "0",
-            "start_day":"0",
-            "end_month":"0",
-            "end_day":"0"
-          }
-          @crop << temp_hash
-
+          if ts != nil
+            temp_hash = {
+              "id":c.id,
+              "name": Crop.find_by(id:c.id).name,
+              "start_month": ts.start_month,
+              "start_day": ts.start_day,
+              "end_month": ts.end_month,
+              "end_day": ts.end_day
+            }
+          else
+            temp_hash = {
+              "id":c.id,
+              "name": Crop.find_by(id:c.id).name,
+              "start_month": "0",
+              "start_day": "0",
+              "end_month": "0",
+              "end_day": "0"
+            }
+        end
+         @crop_arr << temp_hash
         end
       else
-        @crop = [{"id"=>15,
-            "name"=>"corn", 
-            "start_month" => 0, 
-            "start_day" =>0, 
-            "end_month" => 0, 
-            "end_day" =>0}, {"id"=>16,
-            "name"=>"cotton", 
-            "start_month" => 0, 
-            "start_day" =>0, 
-            "end_month" => 0, 
-            "end_day" =>0}]
+        # crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+        # crops.each do |c|
+        # temp_hash = {
+        #   "id":c.id,
+        #   "name": Crop.find_by(id:c.id).name,
+        #   "start_month": "0",
+        #   "start_day":"0",
+        #   "end_month":"0",
+        #   "end_day":"0"
+        # }
+
+        temp_hash = {
+          "id":18,
+          "name": "test_crop",
+          "start_month": "0",
+          "start_day": "0",
+          "end_month": "0",
+          "end_day": "0"
+        }
+
+        temp_hash_two = {
+
+          "id":19,
+          "name": "test_crop2",
+          "start_month": "0",
+          "start_day": "0",
+          "end_month": "0",
+          "end_day": "0"
+        }
+        @crop_arr << temp_hash
+        @crop_arr << temp_hash_two
       end
      
+
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
@@ -160,9 +191,8 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    debugger
-    
-    @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'], end_day:params['bmp_ed']['0'].to_i)
+    #debugger
+    @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
     #Rails.log.debug  @timespan 
 
 	  if @values[:button] == t('submit.savecontinue')
@@ -605,7 +635,11 @@ class BmpsController < ApplicationController
         		else
         			subarea.idf4 = 0.0
         			subarea.bft = 0.0
-        		end
+            end
+            if @bmp.save then
+              #%create time span for crops checked. check params. check what crops are selected by user
+            end
+        
   			  when "delete"
     				subarea.nirr = 0.0
     				subarea.vimx = 0.0
@@ -618,6 +652,8 @@ class BmpsController < ApplicationController
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
             subarea.fmx = 0.0
+            #delete the time span for this bmp.
+            #Timespan.where(:bmp => @bmp.id).destroy
 			  end   # end case type
         if !subarea.save then
   			   return "Unable to save value in the subarea file"
