@@ -156,7 +156,7 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
+    #@timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
     #Rails.log.debug  @timespan 
 
 	  if @values[:button] == t('submit.savecontinue')
