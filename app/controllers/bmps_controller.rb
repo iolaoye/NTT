@@ -69,14 +69,14 @@ class BmpsController < ApplicationController
             bmp.dry_manure = 0
   			end
       end
-      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id    
-      @crop_arr = Array.new
-      temp_hash = Hash.new
-      debugger
-      if bmp.bmpsublist_id == 1 && bmp != nil
+      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id
+      if bmp.bmpsublist_id == 1 then    
+        @crop_arr = Array.new
+        temp_hash = Hash.new
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
         #debugger - > crops 
         crops.each do |c|
+          debugger
           ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
           if ts != nil
             temp_hash = {
@@ -96,46 +96,11 @@ class BmpsController < ApplicationController
               "end_month": "0",
               "end_day": "0"
             }
+          end
+          @crop_arr << temp_hash
         end
-         @crop_arr << temp_hash
-        end
-      else  # seems to always come here
-        crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
-        crops.each do |c|
-        temp_hash = {
-          "id":c.id,
-          "name": Crop.find_by(id:c.id).name,
-          "start_month": "0",
-          "start_day": "0",
-          "end_month": "0",
-          "end_day": "0"
-        }
-        @crop_arr << temp_hash
-        end
-
-        # temp_hash = {
-        #   "id":18,
-        #   "name": "test_crop",
-        #   "start_month": "0",
-        #   "start_day": "0",
-        #   "end_month": "0",
-        #   "end_day": "0"
-        # }
-
-        # temp_hash_two = {
-
-        #   "id":19,
-        #   "name": "test_crop2",
-        #   "start_month": "0",
-        #   "start_day": "0",
-        #   "end_month": "0",
-        #   "end_day": "0"
-        # }
-        # @crop_arr << temp_hash
-        # @crop_arr << temp_hash_two
       end
      
-
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
@@ -181,6 +146,7 @@ class BmpsController < ApplicationController
   end
 
   def save_bmps
+    debugger
     @values = params
     save_bmps_values()
   end
@@ -193,7 +159,7 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    #debugger
+    debugger
     @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
     #Rails.log.debug  @timespan 
 
@@ -654,6 +620,7 @@ class BmpsController < ApplicationController
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
             subarea.fmx = 0.0
+            debugger
             #delete the time span for this bmp.
             #Timespan.where(:bmp => @bmp.id).destroy
 			  end   # end case type
