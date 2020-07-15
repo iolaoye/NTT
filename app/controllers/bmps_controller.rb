@@ -72,10 +72,10 @@ class BmpsController < ApplicationController
       @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id    
       @crop_arr = Array.new
       temp_hash = Hash.new
-      #debugger
-      break if bmp.bmpsublist_id != 1 && bmp == nil
+      debugger
       if bmp.bmpsublist_id == 1 && bmp != nil
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+        #debugger - > crops 
         crops.each do |c|
           ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
           if ts != nil
