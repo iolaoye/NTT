@@ -74,9 +74,7 @@ class BmpsController < ApplicationController
         @crop_arr = Array.new
         temp_hash = Hash.new
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
-        #debugger - > crops 
         crops.each do |c|
-          debugger
           ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
           if ts != nil
             temp_hash = {
@@ -146,7 +144,6 @@ class BmpsController < ApplicationController
   end
 
   def save_bmps
-    debugger
     @values = params
     save_bmps_values()
   end
@@ -159,7 +156,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    debugger
     @timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
     #Rails.log.debug  @timespan 
 
@@ -620,7 +616,6 @@ class BmpsController < ApplicationController
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
             subarea.fmx = 0.0
-            debugger
             #delete the time span for this bmp.
             #Timespan.where(:bmp => @bmp.id).destroy
 			  end   # end case type
