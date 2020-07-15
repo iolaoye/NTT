@@ -3,12 +3,28 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    if params[:post] != nil
+      if params[:post][:search] then
+        words = params[:post][:search].split(/[^[[:word:]]]+/)
+        query = ""
+        or1 = ""
+        words.each do |word|
+          if word.length > 3 then
+            query += or1 + "title LIKE '%" + word + "%'"
+            or1 = " OR "
+          end
+        end
+        #@posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
+        @posts = Post.where(query)
+      end
+    else
+      @posts = Post.all
+    end 
   end
 
   # GET /posts/1
   def show
-    debugger
+    @comment = Comment.new
   end
 
   # GET /posts/new
@@ -22,12 +38,17 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
-
-    if @post.save
-      redirect_to @post, notice: 'Post was successfully created.'
+    if params[:post] != nil then
+      index
+      render :index
     else
-      render :new
+      @post = Post.new(post_params)
+
+      if @post.save
+        redirect_to @post, notice: 'Post was successfully created.'
+      else
+        render :new
+      end
     end
   end
 
