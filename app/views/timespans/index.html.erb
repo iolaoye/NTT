@@ -21,11 +21,9 @@
   <tbody>
     <% @timespans.each do |timespan| %>
       <tr>
-        # <td><%= timespan.bmp_id %></td>
-        # <td><%= timespan.crop_id %></td>
-
-        <td><%= bmp.id %></td>
-        <td><%= crop.id %></td>
+   
+        <td><%= timespan.bmp_id %></td>
+        <td><%= timespan.crop_id %></td>
         <td><%= timespan.start_month %></td>
         <td><%= timespan.start_day %></td>
         <td><%= timespan.end_month %></td>
