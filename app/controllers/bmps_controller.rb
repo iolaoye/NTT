@@ -74,10 +74,7 @@ class BmpsController < ApplicationController
         @crop_arr = Array.new
         temp_hash = Hash.new
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
-        #debugger - > crops 
-        
         crops.each do |c|
-          #debugger
           ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
           if ts != nil
             temp_hash = {
@@ -147,7 +144,6 @@ class BmpsController < ApplicationController
   end
 
   def save_bmps
-    #debugger
     @values = params
     save_bmps_values()
   end
@@ -627,9 +623,6 @@ class BmpsController < ApplicationController
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
             subarea.fmx = 0.0
-           # debugger
-            #delete the time span for this bmp.
-            #Timespan.where(:bmp => @bmp.id).destroy
 			  end   # end case type
         if !subarea.save then
   			   return "Unable to save value in the subarea file"

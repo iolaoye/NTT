@@ -28,7 +28,6 @@
       <% county_id = County.find(@project.location.county_id).id %>
     <% end %>
     <% @bmps.each do |bmp| %>
-    <%# debugger %>
       <% if bmp == nil then %>
         <% next %>
       <% end %>
@@ -166,17 +165,15 @@
            <td style="text-align: center; vertical-align: middle;">End Day</td>
            </tr>
            <tr colspan="5">
-            <% debugger %>
             <% @crop_arr.each do |cp| %>
-            <% debugger %> 
                 <td><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
-                <td><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 1, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                <td><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
                 <td>
-                <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :min => 1, :max => 365, :class => "gvSmallStyleNumber" %>
+                <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
                 </td>
-                <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 1, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
                 <td>
-                <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day],  :min => 1, :max => 365, :class => "gvSmallStyleNumber" %>
+                <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day],  :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
                 </td>
                 <td>
                <%= hidden_field_tag "my_crop_id", cp[:id]%>
