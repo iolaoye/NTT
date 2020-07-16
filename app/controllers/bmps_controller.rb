@@ -70,7 +70,7 @@ class BmpsController < ApplicationController
   			end
       end
       @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id
-      if bmp.bmpsublist_id == 1 then    
+      if bmp.bmpsublist_id == 1 then 
         @crop_arr = Array.new
         temp_hash = Hash.new
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
@@ -156,9 +156,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    #@timespan = Timespan.new(crop_id:params["my_crop_id"].to_i, start_month:params['bmp_sm']['0'].to_i, start_day:params['bmp_sd']['0'].to_i, end_month:params['bmp_em']['0'].to_i, end_day:params['bmp_ed']['0'].to_i)
-    #Rails.log.debug  @timespan 
-
 	  if @values[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -601,6 +598,16 @@ class BmpsController < ApplicationController
         			subarea.bft = 0.0
             end
             if @bmp.save then
+              #debugger
+              params[:mycrop].each do |id, v|
+                #crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+                #tsp = Timespan.find_by_crop_id_and_bmp_id()
+                ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
+                if id && ts == nil
+                  @timespan = Timespan.new(bmp_id: @bmp.id, crop_id:id, start_month:params["bmp_ai"]["sm"][id], start_day:params["bmp_ai"]["sd"][id], end_month:params["bmp_ai"]["em"][id], end_day:params["bmp_ai"]["ed"][id])
+                  @timespan.save
+                end
+              end
               #%create time span for crops checked. check params. check what crops are selected by user
             end
         
@@ -616,8 +623,6 @@ class BmpsController < ApplicationController
     		    subarea.fdsf = 0.0
             subarea.fnp4 = 0.0
             subarea.fmx = 0.0
-            #delete the time span for this bmp.
-            #Timespan.where(:bmp => @bmp.id).destroy
 			  end   # end case type
         if !subarea.save then
   			   return "Unable to save value in the subarea file"
