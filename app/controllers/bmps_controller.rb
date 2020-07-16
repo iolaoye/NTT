@@ -598,10 +598,7 @@ class BmpsController < ApplicationController
         			subarea.bft = 0.0
             end
             if @bmp.save then
-              #debugger
               params[:mycrop].each do |id, v|
-                #crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
-                #tsp = Timespan.find_by_crop_id_and_bmp_id()
                 ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
                 if id && ts == nil
                   @timespan = Timespan.new(bmp_id: @bmp.id, crop_id:id, start_month:params["bmp_ai"]["sm"][id], start_day:params["bmp_ai"]["sd"][id], end_month:params["bmp_ai"]["em"][id], end_day:params["bmp_ai"]["ed"][id])
