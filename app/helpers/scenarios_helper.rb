@@ -465,6 +465,7 @@ module ScenariosHelper
 			when 12    #Riperian Forest
 			when 13    #Filter Strip and reparian forest
 				if @bmp.depth == 12 then
+					#create the Riparian Forest buffer
 					grass_field_portion = @bmp.grass_field_portion / (@bmp.width + @bmp.grass_field_portion)
 					if !checker
 						#line 2
@@ -579,6 +580,7 @@ module ScenariosHelper
 						add_buffer_operation(139, 49, 0, 1400, 0, 22, 2, scenario_id)
 					end
 				else
+					# create the Fileter Strip buffer
 					#line 2
 					subarea.number = 101
 					subarea.iops = soil_id
