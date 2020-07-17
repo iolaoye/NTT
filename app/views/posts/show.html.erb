@@ -1,7 +1,11 @@
 <h2>Origional Post</h2>
 <div class="panel panel-default">
 <p>
-@post</p>
+<b>@post. title</b>
+<br>
+<br>
+@post. body
+</p>
 </div>
 <br>
 <h2>Comments</h2>
@@ -30,17 +34,23 @@
 </div>
 </div>
 
-<div class = "comments">
+<div class = "form-group">
   <%= form_for ([@post, @comment]) do |f| %>
   <br>
   <br>
     <p>
       <h2>LEAVE A REPLY</h2>
       <%= f.label :body, "Comment" %>
-      <%= f.text_area :body,  :rows => 10, :cols => 156 %>
-      <%= f.label :name, "Author: " %><%= f.label :name, User.find(session[:user_id]).name.capitalize %>
-
+      <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: "Enter Your Comment" %>
+      <%# <%= f.label :name, "Author: " %> 
+      <%= f.label :name, "AUTHOR: #{User.find(session[:user_id]).name.capitalize}" %>
     </p>
+
+    <%# <div class="form-group">
+  <label for="exampleFormControlTextarea2">Small textarea</label>
+  <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
+</div> %>
+
     <div  class="actions">
     <%= f.submit "Add Comment" %>
     <%= link_to 'Back', posts_path %>
