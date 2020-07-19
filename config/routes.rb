@@ -71,6 +71,7 @@ NTTG3::Application.routes.draw do
   resources :stations
   resources :users do
     resources :projects
+    resources :posts
   end
 
   resources :posts do
