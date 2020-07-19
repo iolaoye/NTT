@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-layout 'welcome'
+  layout 'welcome'
   # GET /posts
   def index
     if params[:post] != nil

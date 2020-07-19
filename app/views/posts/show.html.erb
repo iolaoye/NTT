@@ -1,59 +1,48 @@
-<h2>Origional Post</h2>
+<h2>Original Post</h2>
 <div class="panel panel-default">
-<p>
-<b>@post. title</b>
-<br>
-<br>
-@post. body
-</p>
+  <p><b><%= @post.title %></b>
+    <br>
+    <%= @post.body %>
+  </p>
 </div>
-<br>
 <h2>Comments</h2>
 <div class="panel panel-default">
-<div class="table-responsive">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+    		<% i=1 %>
+    		<% @post.comments.each do |c| %>
+    			<% if (i % 2 == 0) %>
+            <tr class="gvRowStyleEven">
+            <% else %>
+            <tr class="gvRowStyleOdd">
+            <% end %>
+            <td id="TestScenario" class="gvCellStyleText">
+            <%#= h c.name %>
+              <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
+              <p><%=h c.body %></p>
+            </td>
 
-<table class="table table-striped">
- <tbody>
-		<% i=1 %>
-		<% @post.comments.each do |c| %>
-			<% if (i % 2 == 0) %>
-        <tr class="gvRowStyleEven">
-        <% else %>
-        <tr class="gvRowStyleOdd">
-        <% end %>
-        <td id="TestScenario" class="gvCellStyleText">
-        <%= h c.name %>
-            <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
-          <p><%=h c.body %></p>
-        </td>
-
-				<% i = i + 1 %>
-		<% end %>
-  </tbody>
-  </table>
-</div>
-</div>
-
-<div class = "form-group">
-  <%= form_for ([@post, @comment]) do |f| %>
-  <br>
-  <br>
-    <p>
-      <h2>LEAVE A REPLY</h2>
-      <%= f.label :body, "Comment" %>
-      <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: "Enter Your Comment" %>
-      <%# <%= f.label :name, "Author: " %> 
-      <%= f.label :name, "AUTHOR: #{User.find(session[:user_id]).name.capitalize}" %>
-    </p>
-
-    <%# <div class="form-group">
-  <label for="exampleFormControlTextarea2">Small textarea</label>
-  <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3"></textarea>
-</div> %>
-
-    <div  class="actions">
-    <%= f.submit "Add Comment" %>
-    <%= link_to 'Back', posts_path %>
+    				<% i = i + 1 %>
+    		<% end %>
+      </tbody>
+    </table>
   </div>
-  <% end %>
 </div>
+
+<% if !(session[:user_id] == nil or session[:user_id] == "") %>
+  <div class = "form-group">
+    <%= form_for ([@post, @comment]) do |f| %>
+      <p>
+        <h2>LEAVE A REPLY</h2>
+        <%= f.label :body, "Comment" %>
+        <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: "Enter Your Comment" %>
+        <%= f.label :name, "AUTHOR: #{User.find(session[:user_id]).name.capitalize}" %>
+      </p>
+      <div  class="actions">
+        <%= f.submit "Add Comment" %>
+        <%= link_to 'Back', posts_path %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
