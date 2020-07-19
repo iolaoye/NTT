@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+layout 'welcome'
   # GET /posts
   def index
     if params[:post] != nil
@@ -20,6 +20,10 @@ class PostsController < ApplicationController
     else
       @posts = Post.all
     end 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @posts }
+    end
   end
 
   # GET /posts/1
