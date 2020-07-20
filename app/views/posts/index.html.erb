@@ -1,3 +1,6 @@
+<% if params[:notice] != nil then %>
+  <% notice = params[:notice] %>
+<% end %>
 <p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
@@ -8,7 +11,12 @@
   </div>
 <% end %>
 
-<table>
+<% if !(session[:user_id] == nil or session[:user_id] == "") %>
+  <%= link_to 'New Post', new_post_path, :class => "btn btn-primary" %>
+<% end %>
+
+
+
   <!-- <thead>
     <tr>
       <th>Title</th>
@@ -16,16 +24,16 @@
       <th colspan="3"></th>
     </tr>
   </thead> -->
-
-  <tbody>
-    <%= link_to 'New Post', new_post_path, :class => "btn btn-primary" %>
-    <% @posts.each do |post| %>
+<br>
+<br>
+<div class="panel panel-default">
+  <% @posts.each do |post| %>
     <table class="table table-striped">
       <tr class="post-link">
         <td ><%= link_to post.title,post , class: "post-link"%></td>
       </tr>
       <tr>
-        <td><%= post.body %></td>
+        <td><%=h truncate(post.body, :length => 80) %></td>
       </tr>
     </table>
       <!--
@@ -33,8 +41,7 @@
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr> -->
-    <% end %>
-  </tbody>
-</table>
+  <% end %>
+</div>
 
-<br>
+
