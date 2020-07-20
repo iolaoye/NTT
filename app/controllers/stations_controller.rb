@@ -27,7 +27,7 @@ class StationsController < ApplicationController
         sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
         sql = sql + " ORDER BY distance"
         @station = Station.find_by_sql(sql).first
-        times += 0.5
+        times = times + 0.5
       end 
       if params[:state] != nil then
         file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/" + @station.file_name
