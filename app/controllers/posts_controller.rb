@@ -16,6 +16,8 @@ class PostsController < ApplicationController
         end
         #@posts = Post.where("title LIKE '%" + params[:post][:search] + "%'")
         @posts = Post.where(query)
+      else
+        @posts = Post.all
       end
     else
       @posts = Post.all
@@ -42,18 +44,21 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
-    if params[:post] != nil then
-      index
-      render :index
-    else
+    #if params[:post] == nil then
+      #index
+      #render :index
+    #else
       @post = Post.new(post_params)
 
       if @post.save
-        redirect_to @post, notice: 'Post was successfully created.'
+        #index
+        #render :index
+        redirect_to action: "index", notice: 'Post was successfully created.'
+        #redirect_to @posts, notice: 'Post was successfully created.'
       else
         render :new
       end
-    end
+    #end
   end
 
   # PATCH/PUT /posts/1
