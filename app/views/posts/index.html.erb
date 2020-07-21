@@ -5,7 +5,7 @@
 
 <h1>Posts</h1>
 <%= form_for :post, :url => {:action => "index"}, method: :post do |f|%>
-  <div class="form-group">
+  <div>
     <%= f.text_field :search, size: 80 %>
     <%= f.submit "Search" %>
   </div>
@@ -26,16 +26,18 @@
   </thead> -->
 <br>
 <br>
-<div class="panel panel-default">
+<div>
   <% @posts.each do |post| %>
-    <table class="table table-striped">
-      <tr class="post-link">
-        <td ><%= link_to post.title,post , class: "post-link"%></td>
+  <div class="panel panel-primary">
+    <table class="table ">
+      <tr >
+        <td class="optable"><h3><%= link_to post.title,post, :class => "table-link" %></h3></td>
       </tr>
-      <tr>
+      <tr >
         <td><%=h truncate(post.body, :length => 80) %></td>
       </tr>
     </table>
+  </div>
       <!--
         <td><%= link_to post.title, post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
