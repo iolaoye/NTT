@@ -3,19 +3,18 @@
 <% end %>
 <p id="notice"><%= notice %></p>
 
-<h1>Posts</h1>
+<h1><%= t('forum.posts')%> </h1>
 <%= form_for :post, :url => {:action => "index"}, method: :post do |f|%>
   <div>
     <%= f.text_field :search, size: 80 %>
-    <%= f.submit "Search" %>
+    <%# <%= f.submit "Search" %>
+    <%= f.submit t('forum.search')%> 
   </div>
 <% end %>
 
 <% if !(session[:user_id] == nil or session[:user_id] == "") %>
-  <%= link_to 'New Post', new_post_path, :class => "btn btn-primary" %>
+  <%= link_to t('soil.new') + ' ' + t('forum.post'), new_post_path, :class => "btn btn-primary" %>
 <% end %>
-
-
 
   <!-- <thead>
     <tr>
@@ -31,18 +30,22 @@
   <div class="panel panel-primary">
     <table class="table ">
       <tr >
-        <td class="optable"><h3><%= link_to post.title,post, :class => "table-link" %></h3></td>
+        <td class="optable"><h3><%= link_to post.title,post, :class => "table-link" %></h3>
+        </td>
       </tr>
       <tr >
-        <td><%=h truncate(post.body, :length => 80) %></td>
+        <td>
+          <%=h truncate(post.body, :length => 240) %>
+          <% if !(session[:user_id] == nil or session[:user_id] == "") %>
+            <%= link_to 'Edit', edit_post_path(post), style: 'float: right' %>
+            <br>
+            <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, style: 'float: right' %>
+          <% end %>
+        </td>
       </tr>
     </table>
   </div>
-      <!--
-        <td><%= link_to post.title, post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr> -->
+      
   <% end %>
 </div>
 
