@@ -29,27 +29,18 @@
   </div>
 </div>
 <br>
-<br>
-<br>
 <% if !(session[:user_id] == nil or session[:user_id] == "") %>
   <div class = "form-group">
     <%= form_for ([@post, @comment]) do |f| %>
-      <p>
         <h2><%= t('forum.reply')%></h2>
-        <%= f.label :body, t('forum.comment') %>
-        <br>
+        <%#= f.label :body, t('forum.comment') %>
         <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: t('forum.enter')%>
         <br>
         <%= f.label :name, t('forum.author') + ": " + "#{User.find(session[:user_id]).name.capitalize}" %>
-      </p>
-      <div  class="actions">
-        <%# <%= f.submit "Add Comment" %> 
-        <%= f.submit t('general.add') + ' ' + t('forum.comment') %> 
-        <%# <%= link_to 'Back', posts_path %>
-        <%= link_to t('general.back') %>
-      </div>
-      <br>
-      <br>
+        <div  class="actions">
+          <%= f.submit t('general.add') + ' ' + t('forum.comment') %> 
+          <%= link_to t('general.back'), posts_path %>
+        </div>
     <% end %>
   </div>
 <% end %>
