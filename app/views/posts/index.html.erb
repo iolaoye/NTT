@@ -13,7 +13,7 @@
 <% end %>
 
 <% if !(session[:user_id] == nil or session[:user_id] == "") %>
-  <%= link_to t('soil.new') + ' ' + t('forum.post'), new_post_path, :class => "btn btn-primary" %>
+  <%= link_to t('soil.new').sub("o","a") + ' ' + t('forum.post'), new_post_path, :class => "btn btn-primary" %>
 <% end %>
 
   <!-- <thead>

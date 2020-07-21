@@ -403,6 +403,7 @@ es:
     listing: Lista de
     editing: Editando
     adding: Añadiendo
+    add: Adicionar
     type: Clase
     value: Valor
     fraction: fracción
@@ -910,6 +911,14 @@ es:
     value: Valor
     low_range: Bajo Alcance
     high_range: Alto Alcance
+  forum:
+    comment: Comentario
+    comments: comentarios
+    post: Publicación
+    posts: Publicaciones
+    title: Título
+    body: Body
+    search: Buscar
   # about:
   #   overview0: 'Visión General'
   #   overview1: 'Nutrient Tracking Tool (NTT) fue diseñado y desarrollado por Texas Institute for Applied Environmental Research (TIAER), Tarleton State University con fondos del programa Conservation Innovation Grants de USDA-NRCS y varias agencias del estado.'
