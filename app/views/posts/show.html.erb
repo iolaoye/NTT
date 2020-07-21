@@ -22,7 +22,6 @@
               <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
               <p><%=h c.body %></p>
             </td>
-
     				<% i = i + 1 %>
     		<% end %>
       </tbody>
@@ -40,8 +39,10 @@
         <%= f.label :name, "AUTHOR: #{User.find(session[:user_id]).name.capitalize}" %>
       </p>
       <div  class="actions">
-        <%= f.submit "Add Comment" %>
-        <%= link_to 'Back', posts_path %>
+        <%# <%= f.submit "Add Comment" %> 
+        <%= f.submit t('general.add') + ' ' + t('forum.comment') %> 
+        <%# <%= link_to 'Back', posts_path %>
+        <%= link_to t('general.back') %>
       </div>
     <% end %>
   </div>

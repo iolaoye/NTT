@@ -402,6 +402,7 @@ en:
     listing: Listing
     editing: Editing
     adding: Adding
+    add: Add
     type: Type
     value: Value
     fraction: fraction
@@ -927,6 +928,14 @@ en:
     value: Value
     low_range: Low Range
     high_range: High Range
+  forum:
+    comment: Comment
+    comments: Comments
+    post: Post
+    posts: Posts
+    title: Title
+    body: Body
+    search: Search
   about:
     overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
     overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
