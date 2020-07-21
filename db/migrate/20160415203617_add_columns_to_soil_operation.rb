@@ -1,4 +1,4 @@
-class AddColumnsToSoilOperation < ActiveRecord::Migration
+class AddColumnsToSoilOperation < ActiveRecord::Migration[5.2]
   def change
     add_column :soil_operations, :year, :integer
     add_column :soil_operations, :month, :integer

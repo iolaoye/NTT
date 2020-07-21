@@ -138,15 +138,12 @@ class ResultsController < ApplicationController
     @soil = "0"
     #load crop for each scenario selected
     i = 70
-    #if params[:result1] != nil then
     if @scenario1 > "0" then
       @present = true
       @before_button_clicked = false
       @errors = Array.new
     end # end if
-
     if params[:button] != nil
-        #@type = params[:button]
         # dry years menu item was clicked
         if (params[:button] == t('result.dry_years'))
             @type = t("result.dry_years")
@@ -155,9 +152,9 @@ class ResultsController < ApplicationController
             @type = t("result.wet_years")
         # default to tabular / all years
         else
-          if !(@type == t('activerecord.models.result.fem_results')) then
-            @type = t("result.summary")
-          end
+          #if !(@type == t('activerecord.models.result.fem_results')) then
+            #@type = t("result.summary")
+          #end
         end
     else
         if params[:button_annual] != nil
@@ -214,8 +211,7 @@ class ResultsController < ApplicationController
                     else
                         count = results_data.size
                     end
-
-                    if !session[:simulation] == 'watershed'
+                    if !(session[:simulation] == 'watershed')
                         total_area = @field.field_area
                         bmps = Scenario.find(scenario_id).bmps
                         bmps.each do |b|
@@ -317,18 +313,16 @@ class ResultsController < ApplicationController
           if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
           if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
 
-          when t('activerecord.models.result.aplcat_results')
-            if @scenario1 != "0" && @scenario1 != "" then @aplcat_results1 = Scenario.find(@scenario1).aplcat_results end
-            if @scenario2 != "0" && @scenario2 != "" then @aplcat_results2 = Scenario.find(@scenario2).aplcat_results end
-            if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_results end
+        when t('activerecord.models.result.aplcat_results')
+          if @scenario1 != "0" && @scenario1 != "" then @aplcat_results1 = Scenario.find(@scenario1).aplcat_results end
+          if @scenario2 != "0" && @scenario2 != "" then @aplcat_results2 = Scenario.find(@scenario2).aplcat_results end
+          if @scenario3 != "0" && @scenario3 != "" then @aplcat_results3 = Scenario.find(@scenario3).aplcat_results end
 
         when t('result.download_pdf')
-          #@result_selected = t('result.summary')
 
         when t("general.view") + " " + t('result.annual') + "-" + t('result.charts')
               @chart_type = 0
           @x = "Year"
-          #@crops = Array.new
           case true
           when @scenario1 != nil && @scenario2 != nil && @scenario3!= nil && @scenario1 != "" && @scenario2 != "" && @scenario3 != ""
             @crops=CropResult.joins("INNER JOIN crops ON crops.code = crop_results.name").select("crops.name, crops.id as crop_id").where("scenario_id = ? or scenario_id = ? or scenario_id = ?",@scenario1, @scenario2, @scenario3).group(:name)
@@ -358,7 +352,6 @@ class ResultsController < ApplicationController
                 if @charts1.count > 0
                   @present1 = true
                 else
-                  #@errors.push(t('result.first_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then
@@ -366,8 +359,6 @@ class ResultsController < ApplicationController
                 @charts2 = get_chart_serie(@scenario2, 1)
                 if @charts2.count > 0
                   @present2 = true
-                else
-                  #@errors.push(t('result.second_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
               if params[:result3][:scenario_id] != "" then
@@ -375,8 +366,6 @@ class ResultsController < ApplicationController
                 @charts3 = get_chart_serie(@scenario3, 1)
                 if @charts3.count > 0
                   @present3 = true
-                else
-                  #@errors.push(t('result.third_scenario_error') + " " + t('general.values').pluralize.downcase)
                 end
               end
             end
@@ -398,8 +387,6 @@ class ResultsController < ApplicationController
                 @charts1 = get_chart_serie(@scenario1, 2)
                 if @charts1.count > 0
                   @present1 = true
-                else
-                  #@errors.push(t('result.first_scenario_error') + " " + t('result.charts').pluralize.downcase)
                 end
               end
               if params[:result2][:scenario_id] != "" then

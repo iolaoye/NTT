@@ -15,17 +15,22 @@ class StationsController < ApplicationController
   # GET /stations/1.json
   def show
     if params[:nlat] != nil then
-      lat_less = params[:nlat].to_f - LAT_DIF
-      lat_plus = params[:nlat].to_f + LAT_DIF
-      lon_less = params[:nlon].to_f - LON_DIF
-      lon_plus = params[:nlon].to_f + LON_DIF
-      sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year, initial_year"
-      sql = sql + " FROM stations"
-      sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
-      sql = sql + " ORDER BY distance"
-      @station = Station.find_by_sql(sql).first
+      times = 1.0
+      @station = nil
+      while @station == nil and times <= 3.0
+        lat_less = params[:nlat].to_f - LAT_DIF * times
+        lat_plus = params[:nlat].to_f + LAT_DIF * times
+        lon_less = params[:nlon].to_f - LON_DIF * times
+        lon_plus = params[:nlon].to_f + LON_DIF * times
+        sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year, initial_year"
+        sql = sql + " FROM stations"
+        sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+        sql = sql + " ORDER BY distance"
+        @station = Station.find_by_sql(sql).first
+        times = times + 0.5
+      end 
       if params[:state] != nil then
-        file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/N42.29167W92.375.wth"
+        file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/" + @station.file_name
         client = Savon.client(wsdl: URL_SoilsInfoDev)
         ###### Get the WEATHER file to download ########
         response = client.call(:get_weather_info, message: {"file" => file, "i_year" => @station.initial_year, "f_year" => @station.final_year})

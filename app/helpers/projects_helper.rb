@@ -3,14 +3,16 @@ module ProjectsHelper
     title ||= column.titleize
 	#todo check this.
 	case true
-		when column.include?("Last Modified")
-			column = "updated_at"
-		when column.include?("ltima Modificaci")
-			column = "updated_at"
+		when column.include?("Date Created")
+			column = "created_at"
+		when column.include?("Fecha de Creaci")
+			column = "created_at"
 		when column.include?("Nombre")
 			column = "name"
 		when column.include?("Project Name")
 			column = "name"
+		when ["User", "Usuario"].include?(column)
+			column = "user_id"
 	end  #end case
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
     icon = sort_direction == "asc" ? "glyphicon glyphicon-chevron-up" : "glyphicon glyphicon-chevron-down"

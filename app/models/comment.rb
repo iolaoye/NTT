@@ -1,5 +1,4 @@
-class Comment < ActiveRecord::Base
-	attr_accessible :issue_id, :description
-
-	default_scope {order("description ASC")}
+class Comment < ApplicationRecord
+  attr_accessible :name, :body, :post_id
+  belongs_to :post
 end

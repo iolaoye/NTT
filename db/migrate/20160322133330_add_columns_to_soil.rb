@@ -1,4 +1,4 @@
-class AddColumnsToSoil < ActiveRecord::Migration
+class AddColumnsToSoil < ActiveRecord::Migration[5.2]
   def change
     add_column :soils, :ffc, :float
     add_column :soils, :wtmn, :float

@@ -1,4 +1,4 @@
-class CreateModifications < ActiveRecord::Migration
+class CreateModifications < ActiveRecord::Migration[5.2]
   def change
     create_table :modifications do |t|
 

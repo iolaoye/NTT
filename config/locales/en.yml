@@ -1,3 +1,4 @@
+
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 en:
@@ -401,6 +402,7 @@ en:
     listing: Listing
     editing: Editing
     adding: Adding
+    add: Add
     type: Type
     value: Value
     fraction: fraction
@@ -781,7 +783,7 @@ en:
     worst_scenario: Worst Scenario
   fem:
     general: General Inputs
-    equipment: Equipments
+    equipment: Equipment
     facility: Facilities
     feed: Feeds
   months:
@@ -926,6 +928,14 @@ en:
     value: Value
     low_range: Low Range
     high_range: High Range
+  forum:
+    comment: Comment
+    comments: Comments
+    post: Post
+    posts: Posts
+    title: Title
+    body: Body
+    search: Search
   about:
     overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
     overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
@@ -1417,6 +1427,7 @@ en:
       simul_parms: Simulation Parameters
       water_est: Water Estimation Parameters
       run_parm: RunParm APLCAT
+      tabular_parameters: Tabular Parameters
   aplcat_result:
       aplcat_results: APLCAT Results
       aws: Animal weights
@@ -1717,12 +1728,11 @@ en:
       <p>
      Guo, T., Confesor Jr, R., Saleh, A., & King, K. (2020). Crop growth, hydrology, and water quality dynamics in agricultural fields across the Western Lake Erie Basin&#58 Multi-site verification of the Nutrient Tracking Tool (NTT). Science of The Total Environment, 138485.
       </p>
-
   instructions:
-    projects: To select an existing project, click on the project name
-    fields: To select a field, click on the field name
+    projects: "To select an existing project, click on the project name"
+    fields: "Click on the field name for model simulation"
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
-    scenarios: To select a scenario click on the scenario name, to simulate scenarios click on the check box
+    scenarios: "To select a scenario click on the scenario name, to simulate scenarios click on the check box"
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
     header: System Requirements

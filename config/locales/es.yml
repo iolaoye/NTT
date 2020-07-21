@@ -766,7 +766,7 @@ es:
     worst_scenario: Peor Escenario
   fem:
     general: Entradas Generales
-    equipment: Equipos
+    equipment: Máquinaria
     facility: Estructuras
     feed: Alimentos
   months:
@@ -1023,7 +1023,7 @@ es:
     input_info: Información del Projecto
     name: Nombre
     description: Descripción
-    date_created: Fecha de Creacion
+    date_created: "Fecha de Creación"
     report_created: Fecha de Creacion del Informe
     location_info: Ubicación
     state: Estdo
@@ -1404,6 +1404,7 @@ es:
       simul_parms: Simulation Parameters
       water_est: Water Estimation Parameters
       run_parm: RunParm APLCAT
+      tabular_parameters: Parámetros Tabulares 
   grazing:
       type:
       start_julian:
@@ -1570,11 +1571,11 @@ es:
       supplement_parameters:
   graze:
     forage: 'Read daily forage production data (from APEX/other external source)'
-    yes: 'Yes'
+    yes: 'Si'
     no: 'No'
     total: 'Total number of grasses grazed by cattle'
-    code_for_html: What the animal eat; Forage ID from
-    code_supp_html: What the animal eat; Suplement/concentrate ID from
+    code_for_html: Que come el animal; Forage ID from
+    code_supp_html: Que come el animal; Suplement/concentrate ID from
     code: 'Type of grass grazed by animals (refer to feed composition table file "FCT-NASEM-2016.txt")'
     sjd: 'Starting julian day of grazing'
     ejd: 'Ending julian day of grazing'
@@ -1691,12 +1692,11 @@ es:
       <p>
      Guo, T., Confesor Jr, R., Saleh, A., & King, K. (2020). Crop growth, hydrology, and water quality dynamics in agricultural fields across the Western Lake Erie Basin&#58 Multi-site verification of the Nutrient Tracking Tool (NTT). Science of The Total Environment, 138485.
       </p>
-
   instructions:
-    projects: Para seleccionar un proyecto existente, haga clic en el nombre del proyecto
-    fields: Para seleccionar una parcela, haga clic en el nombre de la parcela
-    watersheds: Para seleccionar un cuenca, haga clic en el nombre de la cuenca
-    scenarios: Para seleccionar un escenario haga clic en el nombre del escenario, para currer la simulación cheque el check box
+    projects: "Para seleccionar un proyecto existente, haga clic en el nombre del proyecto"
+    fields: "Clic en el nombre de la parcela para simulación del modelo."
+    watersheds: "Para seleccionar un cuenca, haga clic en el nombre de la cuenca"
+    scenarios: "Para seleccionar un escenario haga clic en el nombre del escenario, para correr la simulación seleccione el cuadro"
     watershed_scenarios: Adicione las parcelas en el orden en que se enrutan de una a otra y seleccione el escenario que va a ser simulado con la parcela seleccionada.
   sysreq:
     header: Requisitos del Sistema
@@ -1784,8 +1784,8 @@ es:
     checkbox: Checkbox debe ser seleccionado
   contact_html:
     <strong>Contact Us Page</strong><br></br>
-    This page provides Contact informations.<br>
-    Click <strong>Return to Table of Contents</strong> to go to the help page.
+    Está página provee información de contacto.<br>
+    Clic <strong>Regraser a la Tabla de Contenidos</strong> para ir a la paágina de ayuda.
   help_html:
     <strong>Página de ayuda</strong><br></br>
   help_body1: Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>

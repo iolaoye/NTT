@@ -727,6 +727,7 @@ module AplcatParametersHelper
       #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
       if aplcatresult.count > 0 then AplcatResult.where(:scenario_id => @scenario.id).delete_all end
       aplcatresult = AplcatResult.new
+      aplcatresult.scenario_id = @scenario.id
       #download the results files
       data = get_file_from_APLCAT("AnimalWeights.txt")
       if data.include? "Error =>" then
@@ -923,7 +924,11 @@ module AplcatParametersHelper
         aplcatresult.rh_fne = data_rh_fne[4]
         aplcatresult.rh_tne = data_rh_tne[4]
         aplcatresult.rh_tnr = data_rh_tnr[4]
-        return "OK"
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
       end
   end
 
@@ -934,7 +939,7 @@ module AplcatParametersHelper
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
     if @aplcat == nil then
-      return "You need to create the APLCAT information before trying to simulate. Click on the scnario you want to work with and then select APLCAT option from the side menu"
+      return "You need to create the APLCAT information before trying to simulate. Click on the scenario you want to work with and check the default information presented."
     end
     if create_cow_calf_production_data != "OK"
       return t('aplcat.error') + " " + t('aplcat.cow_calf')

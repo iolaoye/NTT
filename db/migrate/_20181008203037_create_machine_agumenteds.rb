@@ -1,4 +1,4 @@
-class CreateMachineAgumenteds < ActiveRecord::Migration
+class CreateMachineAgumenteds < ActiveRecord::Migration[5.2]
   def change
     create_table :machine_agumenteds do |t|
       t.string :name

@@ -27,6 +27,7 @@ class BmpsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
     @scenario = Scenario.find(params[:scenario_id])
+
   	if @project.location.state_id == 25 || @project.location.state_id == 26 then
   		@irrigations = Irrigation.all
   	else
@@ -67,8 +68,37 @@ class BmpsController < ApplicationController
             bmp.maximum_single_application = 3
             bmp.dry_manure = 0
   			end
-  		end
-  		@bmps[bmp.bmpsublist_id-1] = bmp
+      end
+      @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id
+      if bmp.bmpsublist_id == 1 then 
+        @crop_arr = Array.new
+        temp_hash = Hash.new
+        crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
+        crops.each do |c|
+          ts = Timespan.find_by_bmp_id_and_crop_id(bmp.id, c.id)
+          if ts != nil
+            temp_hash = {
+              "id":c.id,
+              "name": Crop.find_by(id:c.id).name,
+              "start_month": ts.start_month,
+              "start_day": ts.start_day,
+              "end_month": ts.end_month,
+              "end_day": ts.end_day
+            }
+          else
+            temp_hash = {
+              "id":c.id,
+              "name": Crop.find_by(id:c.id).name,
+              "start_month": "0",
+              "start_day": "0",
+              "end_month": "0",
+              "end_day": "0"
+            }
+          end
+          @crop_arr << temp_hash
+        end
+      end
+     
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
@@ -566,7 +596,18 @@ class BmpsController < ApplicationController
         		else
         			subarea.idf4 = 0.0
         			subarea.bft = 0.0
-        		end
+            end
+            if @bmp.save then
+              params[:mycrop].each do |id, v|
+                ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
+                if id && ts == nil
+                  @timespan = Timespan.new(bmp_id: @bmp.id, crop_id:id, start_month:params["bmp_ai"]["sm"][id], start_day:params["bmp_ai"]["sd"][id], end_month:params["bmp_ai"]["em"][id], end_day:params["bmp_ai"]["ed"][id])
+                  @timespan.save
+                end
+              end
+              #%create time span for crops checked. check params. check what crops are selected by user
+            end
+        
   			  when "delete"
     				subarea.nirr = 0.0
     				subarea.vimx = 0.0

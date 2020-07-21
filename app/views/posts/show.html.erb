@@ -1,0 +1,55 @@
+<h2><%= t('forum.orig')%></h2>
+<div class="panel panel-default">
+  <p><b><%= @post.title %></b>
+    <br>
+    <%= @post.body %>
+  </p>
+</div>
+<h2><%= t('forum.comments')%></h2>
+<div class="panel panel-default">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+    		<% i=1 %>
+    		<% @post.comments.each do |c| %>
+    			<% if (i % 2 == 0) %>
+            <tr class="gvRowStyleEven">
+            <% else %>
+            <tr class="gvRowStyleOdd">
+            <% end %>
+            <td id="TestScenario" class="gvCellStyleText">
+            <%#= h c.name %>
+              <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
+              <p><%=h c.body %></p>
+            </td>
+    				<% i = i + 1 %>
+    		<% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<% if !(session[:user_id] == nil or session[:user_id] == "") %>
+  <div class = "form-group">
+    <%= form_for ([@post, @comment]) do |f| %>
+      <p>
+        <h2><%= t('forum.reply')%></h2>
+        <%= f.label :body, t('forum.comment') %>
+        <br>
+        <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: t('forum.enter')%>
+        <br>
+        <%= f.label :name, t('forum.author') + ": " + "#{User.find(session[:user_id]).name.capitalize}" %>
+      </p>
+      <div  class="actions">
+        <%# <%= f.submit "Add Comment" %> 
+        <%= f.submit t('general.add') + ' ' + t('forum.comment') %> 
+        <%# <%= link_to 'Back', posts_path %>
+        <%= link_to t('general.back') %>
+      </div>
+      <br>
+      <br>
+    <% end %>
+  </div>
+<% end %>

@@ -1,4 +1,4 @@
-class AddColumnsToLayer < ActiveRecord::Migration
+class AddColumnsToLayer < ActiveRecord::Migration[5.2]
   def change
     add_column :layers, :uw, :float
     add_column :layers, :fc, :float

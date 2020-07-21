@@ -1,4 +1,4 @@
-class CreateMachineAugmenteds < ActiveRecord::Migration
+class CreateMachineAugmenteds < ActiveRecord::Migration[5.2]
   def change
     create_table :machine_augmenteds do |t|
       t.string :name

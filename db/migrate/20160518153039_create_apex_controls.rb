@@ -1,4 +1,4 @@
-class CreateApexControls < ActiveRecord::Migration
+class CreateApexControls < ActiveRecord::Migration[5.2]
   def change
     create_table :apex_controls do |t|
       t.integer :control_id

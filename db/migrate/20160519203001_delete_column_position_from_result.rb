@@ -1,4 +1,4 @@
-class DeleteColumnPositionFromResult < ActiveRecord::Migration
+class DeleteColumnPositionFromResult < ActiveRecord::Migration[5.2]
 	def change
 		remove_column :results, :position
 		remove_column :results, :description

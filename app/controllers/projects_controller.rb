@@ -916,17 +916,22 @@ class ProjectsController < ApplicationController
   end
 
   def sortable_columns
-    [["Project Name"], "updated_at"]
+    [["Project Name"], "Date Created"]
   end
 
   def sort_column
-    case params[:column]
-      when t('project.project_name')
-        return "Name"
-      when t('general.last_modified')
-        return "updated_at"
+    if params[:column] != nil
+      case params[:column].downcase
+        when t('project.project_name').downcase
+          return "name"
+        #when t('general.last_modified')
+        when t('pdf.date_created').downcase
+          return "created_at"
+        when t('models.user') .downcase
+          return "user_id"
+      end
     end
-    return "Name"
+    return "name"
     #sortable_columns.include?(params[:column]) ? params[:column] : "Name"
   end
 
@@ -980,14 +985,14 @@ class ProjectsController < ApplicationController
         #session[:project_id] = @project.id
         return "OK"
       else
-        return t('activerecord.errors.messages.projects.no_saved') + " - " + t('activerecord.errors.messages.projects.exist')
+        return t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
       end
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved')
+      #return t('activerecord.errors.messages.projects.no_saved')
     #end
   end
 
-  def upload_project_comet_version(node)    
+  def upload_project_comet_version(node)
     #begin
     @project = Project.new
     @project.user_id = session[:user_id]
@@ -1029,7 +1034,7 @@ class ProjectsController < ApplicationController
       end
     end   # end if Save
     #rescue
-      return t('activerecord.errors.messages.projects.no_saved')
+    return t('project.project_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
     #end
   end
 
@@ -1181,12 +1186,26 @@ class ProjectsController < ApplicationController
           operation.subtype_id = 0
         when "Opv1"
           operation.amount = p.text
+          if operation.amount == nil then operation.amount = 0 end
           if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
           if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
         when "Opv2"
           operation.depth = p.text
         when "Opv3"
-          if operation.activity_id == 6 then operation.type_id = p.text end
+          if operation.activity_id == 6 then
+            if ["1","2","3","7"].include? p.text then
+              operation.type_id = p.text 
+            else
+              case operation.type_id
+                when 500
+                  operation.type_id = 1
+                when 502
+                  operation.type_id = 2
+                when 530
+                  operation.type_id = 3
+              end
+            end
+          end
           if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
         when "Opv4"
           #todo add opv4 for grazing 

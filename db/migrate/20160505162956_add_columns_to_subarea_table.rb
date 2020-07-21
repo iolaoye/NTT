@@ -1,4 +1,4 @@
-class AddColumnsToSubareaTable < ActiveRecord::Migration
+class AddColumnsToSubareaTable < ActiveRecord::Migration[5.2]
   def change
     add_column :subareas, :soil_id, :integer
     add_column :subareas, :bmp_id, :integer

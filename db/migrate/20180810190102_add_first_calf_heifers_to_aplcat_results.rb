@@ -1,4 +1,4 @@
-class AddFirstCalfHeifersToAplcatResults < ActiveRecord::Migration
+class AddFirstCalfHeifersToAplcatResults < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_results, :fch_aws, :float
     add_column :aplcat_results, :fch_dmi, :float

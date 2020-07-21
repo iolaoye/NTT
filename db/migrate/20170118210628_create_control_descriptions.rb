@@ -1,4 +1,4 @@
-class CreateControlDescriptions < ActiveRecord::Migration
+class CreateControlDescriptions < ActiveRecord::Migration[5.2]
   def change
     create_table :control_descriptions do |t|
       t.integer :control_desc_id

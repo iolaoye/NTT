@@ -1,4 +1,4 @@
-class CreateAnnualResults < ActiveRecord::Migration
+class CreateAnnualResults < ActiveRecord::Migration[5.2]
   def change
     create_table :annual_results do |t|
       t.integer :scenario_id

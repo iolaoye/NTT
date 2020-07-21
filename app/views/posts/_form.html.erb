@@ -1,0 +1,28 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %><%= t('form_errors.one')%></h2>
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, t('forum.title')%>
+    <%= form.text_field :title, :size => 115 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :body, t('forum.body') %>
+    <%= form.text_area :body, :rows => 10, :cols => 100%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+    <%= link_to t('general.back'), posts_path %>
+  </div>
+
+<% end %>

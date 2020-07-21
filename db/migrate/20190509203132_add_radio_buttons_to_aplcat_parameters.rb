@@ -1,4 +1,4 @@
-class AddRadioButtonsToAplcatParameters < ActiveRecord::Migration
+class AddRadioButtonsToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
   	if !(ActiveRecord::Base.connection.column_exists?(:aplcat_parameters, :mm_type_but)) 
     	add_column :aplcat_parameters, :mm_type_but, :integer

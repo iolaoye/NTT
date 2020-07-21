@@ -1,4 +1,8 @@
 NTTG3::Application.routes.draw do
+  resources :posts, :has_many => :comments
+  resources :posts
+  resources :comments
+  resources :timespans
   resources :fuels
   resources :trailers
   resources :trucks
@@ -14,7 +18,6 @@ NTTG3::Application.routes.draw do
   resources :importances
   resources :types
   resources :statuses
-  resources :comments
   resources :issues
   resources :groups
   resources :soil_tests
@@ -68,6 +71,11 @@ NTTG3::Application.routes.draw do
   resources :stations
   resources :users do
     resources :projects
+    resources :posts
+  end
+
+  resources :posts do
+    resources :comments
   end
 
   get '/serve_image/:filename' => 'application#serve'

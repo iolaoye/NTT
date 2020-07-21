@@ -1,4 +1,4 @@
-class CreateClimates < ActiveRecord::Migration
+class CreateClimates < ActiveRecord::Migration[5.2]
   def change
     create_table :climates do |t|
       t.integer :bmp_id

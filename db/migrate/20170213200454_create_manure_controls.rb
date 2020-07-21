@@ -1,4 +1,4 @@
-class CreateManureControls < ActiveRecord::Migration
+class CreateManureControls < ActiveRecord::Migration[5.2]
   def change
     create_table :manure_controls  do |t|
       t.integer :manure_control_id

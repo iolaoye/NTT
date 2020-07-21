@@ -1,15 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<div class="page-header"><h1><%= "Issue Comment" %></h1></div>
+<h1>Comments</h1>
 
-<%= link_to 'New Comment', new_comment_path(:issue_id => @issue_id), class: "btn btn-primary" %>
-<%= link_to t('general.back'), issues_path(:dev => session[:dev]), :class => "btn btn-primary" %><br>
-<table class="table table-striped">
+<table>
   <thead>
     <tr>
-      <th>Number</th>
-      <th>Comment</th>
-      <th>Posted</th>
+      <th>Name</th>
+      <th>Body</th>
+      <th>Post</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,9 +15,9 @@
   <tbody>
     <% @comments.each do |comment| %>
       <tr>
-        <td><%= comment.id %></td>
-        <td><%= comment.description %></td>
-        <td><%= comment.created_at %></td>
+        <td><%= comment.name %></td>
+        <td><%= comment.body %></td>
+        <td><%= comment.post %></td>
         <td><%= link_to 'Show', comment %></td>
         <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
         <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -29,3 +27,5 @@
 </table>
 
 <br>
+
+<%= link_to 'New Comment', new_comment_path %>

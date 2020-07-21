@@ -1,0 +1,41 @@
+
+<p id="notice"><%= notice %></p>
+
+<h1>Timespans List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>bmp_id</th>
+      <th>crop_id</th>
+      <th>Start month</th>
+      <th>Start day</th>
+      <th>End month</th>
+      <th>End day</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @timespans.each do |timespan| %>
+      <tr>
+   
+        <td><%= timespan.bmp_id %></td>
+        <td><%= timespan.crop_id %></td>
+        <td><%= timespan.start_month %></td>
+        <td><%= timespan.start_day %></td>
+        <td><%= timespan.end_month %></td>
+        <td><%= timespan.end_day %></td>
+        <td><%= link_to 'Show', timespan %></td>
+        <td><%= link_to 'Edit', edit_timespan_path(timespan) %></td>
+        <td><%= link_to 'Destroy', timespan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Timespan', new_timespan_path %>

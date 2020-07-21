@@ -1,3 +1,4 @@
+<% lines_dev = 0 %>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
   <head><%#= javascript_include_tag "gen_validatorv4" %></head>
@@ -27,7 +28,6 @@
       <% county_id = County.find(@project.location.county_id).id %>
     <% end %>
     <% @bmps.each do |bmp| %>
-    <%# debugger %>
       <% if bmp == nil then %>
         <% next %>
       <% end %>
@@ -45,6 +45,7 @@
               <% next %>
           <% end %>
           <tr>
+
             <% if bmp.bmpsublist_id <= 18 || bmp.bmpsublist_id > 20 %>
               <% if bmp.id != nil %>
                 <td><%= check_box_tag "select[#{bmp.bmpsublist_id}]", true, value="1"%></td>
@@ -127,6 +128,7 @@
                <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
               </td>-->
             </tr>
+
             <tr>
               <% if bmp.depth == 1 %>
                 <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
@@ -136,6 +138,38 @@
                <%= label :days, t('result.annual') + " " + t('operation.application_rate') + " " + t('activerecord.attributes.apex.for') + " " + t('bmp.autofertigation') + " (" + t('bmp.lbs') + "/" + t("bmp.acres") + ")"%>
                <%= number_field :bmp_ai, :n_rate, :value => bmp.dry_manure, :step => 'any', :min => 0.00, :class => "gvTitleStyleNumber" %>
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="indent2" colspan="2">
+                <table>
+                  <tr colspan="5">
+                   <td>Crop</td>
+                   <td >Start Month</td>
+                   <td >Start Day</td>
+                   <td >End Month</td>
+                   <td >End Day</td>
+                   </tr>
+                   <tr colspan="5">
+                    <% @crop_arr.each do |cp| %>
+                        <td><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
+                        <td><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                        <td>
+                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
+                        </td>
+                        <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                        <td>
+                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day],  :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
+                        </td>
+                        <td>
+                       <%= hidden_field_tag "my_crop_id", cp[:id]%>
+                        </td>
+         
+                      </tr>
+                    <% end  %>
+                   </tr>
+                </table>
               </td>
             </tr>
           <% when 3 %>

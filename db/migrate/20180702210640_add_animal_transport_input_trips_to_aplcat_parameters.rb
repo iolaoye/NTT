@@ -1,4 +1,4 @@
-class AddAnimalTransportInputTripsToAplcatParameters < ActiveRecord::Migration
+class AddAnimalTransportInputTripsToAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     add_column :aplcat_parameters, :trans_1, :integer
     add_column :aplcat_parameters, :categories_trans_1, :integer

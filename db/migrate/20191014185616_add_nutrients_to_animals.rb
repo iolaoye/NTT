@@ -1,4 +1,4 @@
-class AddNutrientsToAnimals < ActiveRecord::Migration
+class AddNutrientsToAnimals < ActiveRecord::Migration[5.2]
   def change
   	if !(ActiveRecord::Base.connection.column_exists?(:animals, :dry_manure))
     	add_column :animals, :dry_manure, :float

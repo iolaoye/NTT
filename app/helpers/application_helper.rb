@@ -11,9 +11,9 @@ module ApplicationHelper
 		def field_submenu
 			if request.url.include?(url_for('/fields')) && (request.parameters[:caller_id] != "FEM")
 				true
-			elsif request.url.include?(url_for("/weathers"))
+			elsif request.parameters[:caller_id] == "FEM" && request.parameters[:field_id] != nil
 				true
-			elsif current_page?(url_for(controller: 'soils', :action => 'index'))
+			elsif request.url.include?(url_for("/weathers"))
 				true
 			elsif current_page?(url_for(:controller => 'apex_controls', :action => 'index'))
 				true
@@ -41,6 +41,8 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
 				true
+			elsif current_page?(url_for(controller: 'soils', :action => 'index'))
+				true
 			else
 				false
 			end
@@ -55,14 +57,14 @@ module ApplicationHelper
 				true
 			elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 				true
-			elsif params[:scenario_id] != nil
-				if request.url.include?(url_for("/aplcat_parameters"))
-					@scenario_name = Scenario.find(params[:scenario_id]).name
-					true
-				elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
-					@scenario_name = Scenario.find(params[:scenario_id]).name
-					true
-				end
+			#elsif params[:scenario_id] != nil
+				#if request.url.include?(url_for("/aplcat_parameters"))
+					#@scenario_name = Scenario.find(params[:scenario_id]).name
+					#true
+				#elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
+					#@scenario_name = Scenario.find(params[:scenario_id]).name
+					#true
+				#end
 			else
 				false
 			end
@@ -77,24 +79,44 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("/summary"))
 				true
-			elsif request.url.include?("fem")
-				true
-			elsif request.url.include?(url_for("/results"))
+			#elsif request.url.include?("fem")
+				#true
+			elsif request.url.include?(url_for("/results")) && !(request.url.include?("fem")|| request.url.include?("aplcat"))
 				true
 			else
 				false
 			end
 		end
 
-		def aplcats_submenu
-			if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
+		def fem_submenu
+			if request.url.include?(url_for('general'))
 				true
-			elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
+			elsif request.url.include?(url_for('feed'))
+				true
+			elsif request.url.include?(url_for("machine"))
+				true
+			elsif request.url.include?(url_for("facilities"))
+				true
+			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "FEM"
+				true
+			elsif request.url.include?(url_for("fem_results"))
 				true
 			else
 				false
 			end
 		end
+		
+		#def aplcats_submenu
+			#if request.url.include?(url_for('aplcat_parameters')) || request.url.include?(url_for('operation')) || request.url.include?(url_for('bmps'))
+				#true
+			#elsif request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters'))  || request.url.include?(url_for('animal_transports'))
+				#true
+			#elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "APLCAT"
+				#true
+			#else
+				#false
+			#end
+		#end
 
 		def aplcats_sub_submenu
 			if request.url.include?(url_for('grazing_parameters')) || request.url.include?(url_for('supplement_parameters')) || request.url.include?(url_for('aplcat_parameters'))  || request.url.include?(url_for('animal_transports'))
@@ -221,21 +243,5 @@ module ApplicationHelper
 					send_file path, :type => "application/xml", :x_sendfile => true
 				end
 	  		end
-		end
-
-		def fem_submenu
-			if request.url.include?(url_for('general'))
-				true
-			elsif request.url.include?(url_for('feed'))
-				true
-			elsif request.url.include?(url_for("machine"))
-				true
-			elsif request.url.include?(url_for("facilities"))
-				true
-			elsif request.url.include?(url_for("scenarios")) && request.parameters[:caller_id] == "FEM"
-				true
-			else
-				false
-			end
 		end
 end

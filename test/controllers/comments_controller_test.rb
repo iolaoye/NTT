@@ -1,49 +1,48 @@
 require 'test_helper'
 
-class CommentsControllerTest < ActionController::TestCase
+class CommentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @comment = comments(:one)
   end
 
   test "should get index" do
-    get :index
+    get comments_url
     assert_response :success
-    assert_not_nil assigns(:comments)
   end
 
   test "should get new" do
-    get :new
+    get new_comment_url
     assert_response :success
   end
 
   test "should create comment" do
     assert_difference('Comment.count') do
-      post :create, comment: { issue_id: @comment.issue_id, name: @comment.name }
+      post comments_url, params: { comment: { body: @comment.body, name: @comment.name, post_id: @comment.post_id } }
     end
 
-    assert_redirected_to comment_path(assigns(:comment))
+    assert_redirected_to comment_url(Comment.last)
   end
 
   test "should show comment" do
-    get :show, id: @comment
+    get comment_url(@comment)
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @comment
+    get edit_comment_url(@comment)
     assert_response :success
   end
 
   test "should update comment" do
-    patch :update, id: @comment, comment: { issue_id: @comment.issue_id, name: @comment.name }
-    assert_redirected_to comment_path(assigns(:comment))
+    patch comment_url(@comment), params: { comment: { body: @comment.body, name: @comment.name, post_id: @comment.post_id } }
+    assert_redirected_to comment_url(@comment)
   end
 
   test "should destroy comment" do
     assert_difference('Comment.count', -1) do
-      delete :destroy, id: @comment
+      delete comment_url(@comment)
     end
 
-    assert_redirected_to comments_path
+    assert_redirected_to comments_url
   end
 end

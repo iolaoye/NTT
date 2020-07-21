@@ -77,8 +77,10 @@
 	end
 
 #coordinates distance vilaues
-    LAT_DIF=0.04
-    LON_DIF = 0.09
+	LAT_DIF=0.02084
+    #LAT_DIF=0.04167
+    #LON_DIF = 0.042
+    LON_DIF = 0.021
 #convertion values
 	AC_TO_HA = 0.404685645
 	AC_TO_FT2 = 43560
