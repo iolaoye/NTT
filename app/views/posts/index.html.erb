@@ -37,9 +37,6 @@
         <td>
           <%=h truncate(post.body, :length => 240) %>
           <% if !(session[:user_id] == nil or session[:user_id] == "") %>
-            <%= link_to 'Edit', edit_post_path(post), style: 'float: right' %>
-            <br>
-            <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, style: 'float: right' %>
           <% end %>
         </td>
       </tr>
@@ -48,5 +45,8 @@
       
   <% end %>
 </div>
+
+<%# <%= link_to 'Edit', edit_post_path(post), style: 'float: right' %>
+<%# <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, style: 'float: right' %>
 
 

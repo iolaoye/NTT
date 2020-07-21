@@ -1,11 +1,11 @@
-<h2>Original Post</h2>
+<h2><%= t('forum.orig')%></h2>
 <div class="panel panel-default">
   <p><b><%= @post.title %></b>
     <br>
     <%= @post.body %>
   </p>
 </div>
-<h2>Comments</h2>
+<h2><%= t('forum.comments')%></h2>
 <div class="panel panel-default">
   <div class="table-responsive">
     <table class="table table-striped">
@@ -28,15 +28,19 @@
     </table>
   </div>
 </div>
-
+<br>
+<br>
+<br>
 <% if !(session[:user_id] == nil or session[:user_id] == "") %>
   <div class = "form-group">
     <%= form_for ([@post, @comment]) do |f| %>
       <p>
-        <h2>LEAVE A REPLY</h2>
-        <%= f.label :body, "Comment" %>
-        <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: "Enter Your Comment" %>
-        <%= f.label :name, "AUTHOR: #{User.find(session[:user_id]).name.capitalize}" %>
+        <h2><%= t('forum.reply')%></h2>
+        <%= f.label :body, t('forum.comment') %>
+        <br>
+        <%= f.text_area :body,  :rows => 10, :cols => 156, placeholder: t('forum.enter')%>
+        <br>
+        <%= f.label :name, t('forum.author') + ": " + "#{User.find(session[:user_id]).name.capitalize}" %>
       </p>
       <div  class="actions">
         <%# <%= f.submit "Add Comment" %> 
@@ -44,6 +48,8 @@
         <%# <%= link_to 'Back', posts_path %>
         <%= link_to t('general.back') %>
       </div>
+      <br>
+      <br>
     <% end %>
   </div>
 <% end %>
