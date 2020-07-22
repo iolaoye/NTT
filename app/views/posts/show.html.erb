@@ -19,7 +19,7 @@
             <% end %>
             <td id="TestScenario" class="gvCellStyleText">
             <%#= h c.name %>
-              <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> ago)</p>
+              <p><b><%=h c.name %> said:</b>(<%= time_ago_in_words(c.created_at) %> <%= t('forum.ago')%>)</p>
               <p><%=h c.body %></p>
             </td>
     				<% i = i + 1 %>
