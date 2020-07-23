@@ -407,6 +407,7 @@ $("[name='sim_final_year']").change(function(){
 	
 	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
 		alert("Initial year cannot be greater than or equal to final year");
+		//return false;
 	}
 	return true;
   }

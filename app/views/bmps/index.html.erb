@@ -140,27 +140,27 @@
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
-
+            <% if request.url.include?("local") || request.url.include?(".bk.") then %>     
             <tr>
               <td class="indent2" colspan="2">
-                <table>
+                <table >
                   <tr colspan="5">
                    <td>Crop</td>
-                   <td >Start Month</td>
-                   <td >Start Day</td>
-                   <td >End Month</td>
-                   <td >End Day</td>
+                   <td ><%=t('general.start') + " " + t('pdf.month')%> </td>
+                   <td ><%=t('general.start')+ " " + t('pdf.day')%></td>
+                   <td ><%=t('general.stop') + " " + t('pdf.month')%></td>
+                   <td ><%=t('general.stop')+ " " + t('pdf.day')%></td>
                    </tr>
-                   <tr colspan="5">
+                   <tr colspan="5" style="height:0px">
                     <% @crop_arr.each do |cp| %>
-                        <td><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
-                        <td><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                        <td style="height:0px"><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
+                        <td style="color:transparent"><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber"%></td>
                         <td>
-                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
+                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
                         </td>
-                        <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvSmallStyleNumber" %></td>
+                        <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber" %></td>
                         <td>
-                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day],  :min => 0, :max => 365, :class => "gvSmallStyleNumber" %>
+                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
                         </td>
                         <td>
                        <%= hidden_field_tag "my_crop_id", cp[:id]%>
@@ -172,6 +172,7 @@
                 </table>
               </td>
             </tr>
+            <% end %>
           <% when 3 %>
             <tr>
               <td class="field indent" id = "depth" colspan="2" >
