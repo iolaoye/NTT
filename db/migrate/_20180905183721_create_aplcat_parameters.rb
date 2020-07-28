@@ -1,6 +1,7 @@
 class CreateAplcatParameters < ActiveRecord::Migration[5.2]
   def change
     create_table :aplcat_parameters do |t|
+      t.integer :scenario_id
       t.integer :noc
       t.integer :nomb
       t.integer :norh
@@ -13,6 +14,7 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.float :abwrh
       t.float :adwgbc
       t.float :adwgbh
+      t.float :mrga
       t.integer :jdcc
       t.integer :gpc
       t.float :tpwg
@@ -38,11 +40,27 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.float :mpsm
       t.float :splm
       t.float :pmme
+      t.integer :mm_type
       t.integer :mm_type_amp
+      t.integer :mm_type_but
+      t.integer :nit
+      t.integer :fqd
+      t.integer :nit
+      t.integer :uovfi
+      t.integer :srwc
+      t.string :running_drinking_water
+      t.string :running_complete_stocker
+      t.string :running_ghg
+      t.string :number_of_forage
+      t.boolean :forage
+      t.string :fuel_id
+      t.float :fmbmm
+      t.datetime :created_at
+      t.datetime :updated_at
       t.float :fmbmm_amp
       t.float :rhaeba
       t.float :toaboba
-      t.float :vsim_gp
+      t.float :vsim_gp?
       t.float :foue
       t.float :ash
       t.float :mmppfm
@@ -54,7 +72,9 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.float :dwawfmb
       t.float :pgu
       t.float :ada
+      t.flat :ape
       t.float :ape_wpp
+      t.integer :tnggbc
       t.float :platc
       t.float :pctbb
       t.float :ptdife
@@ -85,12 +105,19 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.integer :mxdogfc
       t.integer :cwsoj
       t.integer :cweoj
+      t.integer :ewc
       t.integer :nodew
-      t.integer :byosm
-      t.integer :eyosm
+      t.integer :byos
+      t.integer :eyos
+      t.integer :byosm?
+      t.integer :eyosm?
       t.float :drinkg
       t.float :drinkl
       t.float :drinkm
+      t.float :avgtm
+      t.float :rhae
+      t.float :tabo
+      t.float :mpism
       t.float :tjan
       t.float :tfeb
       t.float :tmar
@@ -115,6 +142,66 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.float :hoct
       t.float :hnov
       t.float :hdec
+      t.integer :sixth_area
+      t.integer :sixth_equip
+      t.integer :sixth_fuel
+      t.integer :sixth_fuel_id
+      t.integer :seventh_area
+      t.integer :seventh_equip
+      t.integer :seventh_fuel
+      t.integer :seventh_fuel_id
+      t.integer :eighth_area
+      t.integer :eighth_equip
+      t.integer :eighth_fuel
+      t.integer :eighth_fuel_id
+      t.integer :ninth_area
+      t.integer :ninth_equip
+      t.integer :ninth_fuel
+      t.integer :ninth_fuel_id
+      t.integer :tenth_area
+      t.integer :tenth_equip
+      t.integer :tenth_fuel
+      t.integer :tenth_fuel_id
+      t.integer :eleventh_area
+      t.integer :eleventh_equip
+      t.integer :eleventh_fuel
+      t.integer :eleventh_fuel_id
+      t.integer :twelveth_area
+      t.integer :twelveth_equip
+      t.integer :twelveth_fuel
+      t.integer :twelveth_fuel_id
+      t.integer :thirteen_area
+      t.integer :thirteen_equip
+      t.integer :thirteen_fuel
+      t.integer :thirteen_fuel_id
+      t.integer :fourteen_area
+      t.integer :fourteen_equip
+      t.integer :fourteen_fuel
+      t.integer :fourteen_fuel_id
+      t.integer :fifteen_area
+      t.integer :fifteen_equip
+      t.integer :fifteen_fuel
+      t.integer :fifteen_fuel_id
+      t.integer :sixteen_area
+      t.integer :sixteen_equip
+      t.integer :sixteen_fuel
+      t.integer :sixteen_fuel_id
+      t.integer :seventeen_area
+      t.integer :seventeen_equip
+      t.integer :seventeen_fuel
+      t.integer :seventeen_fuel_id
+      t.integer :eighteen_area
+      t.integer :eighteen_equip
+      t.integer :eighteen_fuel
+      t.integer :eighteen_fuel_id
+      t.integer :ninteen_area
+      t.integer :ninteen_equip
+      t.integer :ninteen_fuel
+      t.integer :ninteen_fuel_id
+      t.integer :twenty_area
+      t.integer :twenty_equip
+      t.integer :twenty_fuel
+      t.integer :twenty_fuel_id
       t.integer :rhae
       t.float :tabo
       t.integer :mpism
@@ -140,6 +227,7 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.float :adf_highest
       t.float :fir_lowest
       t.float :fir_highest
+      t.integer :trans_1
       t.integer :categories_trans_1
       t.float :categories_slaug_1
       t.integer :avg_marweight_1
@@ -151,8 +239,11 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.string :trailer_1
       t.string :trucks_1
       t.string :fuel_type_1
+      t.integer :same_vehicle_1
+      t.integer :loading_1
       t.float :carcass_1
       t.float :boneless_beef_1
+      t.integer :trans_2
       t.integer :categories_trans_2
       t.float :categories_slaug_2
       t.integer :avg_marweight_2
@@ -164,8 +255,11 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.string :trailer_2
       t.string :trucks_2
       t.string :fuel_type_2
+      t.integer :same_vehicle_2
+      t.integer :loading_2
       t.float :carcass_2
       t.float :boneless_beef_2
+      t.integer :trans_3
       t.integer :categories_trans_3
       t.float :categories_slaug_3
       t.integer :avg_marweight_3
@@ -177,8 +271,11 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.string :trailer_3
       t.string :trucks_3
       t.string :fuel_type_3
+      t.integer :same_vehicle_3
+      t.integer :loading_3
       t.float :carcass_3
       t.float :boneless_beef_3
+      t.integer :trans_4
       t.integer :categories_trans_4
       t.float :categories_slaug_4
       t.integer :avg_marweight_4
@@ -190,12 +287,26 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.string :trailer_4
       t.string :trucks_4
       t.string :fuel_type_4
+      t.integer :same_vehicle_4
+      t.integer :loading_4
       t.float :carcass_4
       t.float :boneless_beef_4
+      t.float :crude_low
+      t.float :crude_high
+      t.float :tdn_low
+      t.float :tdn_high
+      t.float :ndf_low
+      t.float :ndf_high
+      t.float :adf_low
+      t.float :adf_high
+      t.float :feed_low
+      t.float :feed_high
       t.integer :tripn
       t.integer :freqtrip
       t.string :filedetails
-      t.string :purpose
+      t.integer :cattlepro
+      t.integer :codepurpose
+      t.string :purpose?
       t.integer :n_tfa
       t.integer :n_sr
       t.integer :n_arnfa
@@ -227,14 +338,24 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.integer :fde
       t.integer :first_area
       t.integer :first_equip
+      t.integer :first_fuel
+      t.integer :first_fuel_id
       t.integer :second_area
       t.integer :second_equip
+      t.integer :second_fuel
+      t.integer :second_fuel_id
       t.integer :third_area
       t.integer :third_equip
+      t.integer :third_fuel
+      t.integer :third_fuel_id
       t.integer :fourth_area
       t.integer :fourth_equip
+      t.integer :fourth_fuel
+      t.integer :fourth_fuel_id
       t.integer :fifth_area
       t.integer :fifth_equip
+      t.integer :fifth_fuel
+      t.integer :fifth_fuel_id
 
       t.timestamps
     end
