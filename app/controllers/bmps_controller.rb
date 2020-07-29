@@ -598,14 +598,15 @@ class BmpsController < ApplicationController
         			subarea.bft = 0.0
             end
             if @bmp.save then
-              params[:mycrop].each do |id, v|
-                ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
-                if id && ts == nil
-                  @timespan = Timespan.new(bmp_id: @bmp.id, crop_id:id, start_month:params["bmp_ai"]["sm"][id], start_day:params["bmp_ai"]["sd"][id], end_month:params["bmp_ai"]["em"][id], end_day:params["bmp_ai"]["ed"][id])
-                  @timespan.save
+              if params[:mycrop] != nil then 
+                params[:mycrop].each do |id, v|
+                  ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
+                  if id && ts == nil
+                    @timespan = Timespan.new(bmp_id: @bmp.id, crop_id:id, start_month:params["bmp_ai"]["sm"][id], start_day:params["bmp_ai"]["sd"][id], end_month:params["bmp_ai"]["em"][id], end_day:params["bmp_ai"]["ed"][id])
+                    @timespan.save
+                  end
                 end
               end
-              #%create time span for crops checked. check params. check what crops are selected by user
             end
         
   			  when "delete"

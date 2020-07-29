@@ -50,7 +50,6 @@
         <%= link_to image_tag("delete.png"), project_field_scenario_aplcat_result_path(@project, @field, @scenario, aplcat_result), method: :delete, data: { confirm: 'Are you sure?' }, :title => t('aplcat_tooltip.delete_all') %>
         <%= link_to image_tag("edit.png"), edit_project_field_scenario_aplcat_result_path(@project, @field, @scenario, aplcat_result) %></td>
       </tr>
-
       <tr>
         <td> Replacement Heifers </td>
           <td> <%= aplcat_result.rh_aws %> </td>

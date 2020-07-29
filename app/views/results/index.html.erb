@@ -376,13 +376,38 @@
     });
   });
 
-  function validateForm() {
-	console.log("hi");
-	console.log("Initial and final", initial_year, final_year);
+$("[name='sim_initial_year']").change(function(){
+      var html=$("[name='sim_initial_year']").html();
+      localStorage.setItem("select-initial",html);
+      localStorage.setItem("selected-initial",$("[name='sim_initial_year']").val());              //to retain selected value
+})
+
+$("[name='sim_final_year']").change(function(){
+      var html=$("[name='sim_final_year']").html();
+      localStorage.setItem("select-final",html);
+      localStorage.setItem("selected-final",$("[name='sim_final_year']").val());              //to retain selected value
+})
+
+	window.onload=function()
+{
+    if(localStorage.getItem("select-initial")!="" && localStorage.getItem("select-initial")!=undefined)
+    {
+        $("[name='sim_initial_year']").html(localStorage.getItem("select-initial"));
+        $("[name='sim_initial_year']").val(localStorage.getItem("selected-initial"));                 //to get previously selected value
+    }
 	
-	if (initial_year > final_year) {
-		alert("Initial Year cannot be greater than or equal to final year");
-		return false;
+	if(localStorage.getItem("select-final")!="" && localStorage.getItem("select-final")!=undefined)
+    {
+        $("[name='sim_final_year']").html(localStorage.getItem("select-final"));
+        $("[name='sim_final_year']").val(localStorage.getItem("selected-final"));                 //to get previously selected value
+    }
+}
+
+  function validateForm() {
+	
+	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
+		alert("Initial year cannot be greater than or equal to final year");
+		//return false;
 	}
 	return true;
   }
