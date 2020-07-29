@@ -356,7 +356,6 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
       t.integer :fifth_equip
       t.integer :fifth_fuel
       t.integer :fifth_fuel_id
-
       t.timestamps
     end
   end
