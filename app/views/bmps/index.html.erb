@@ -154,7 +154,7 @@
                    <tr colspan="5" style="height:0px">
                     <% @crop_arr.each do |cp| %>
                         <td style="height:0px"><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
-                        <td style="color:transparent"><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber"%></td>
+                        <td ><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber"%></td>
                         <td>
                         <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
                         </td>
