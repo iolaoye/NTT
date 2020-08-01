@@ -98,12 +98,25 @@ class AplcatParametersController < ApplicationController
         #add_breadcrumb 'Secondary Emissions Input'
   	else
   	  add_breadcrumb 'Animal Parameters'
-  	end
+    end
+
     @aplcat_parameter = AplcatParameter.find_by_scenario_id(@scenario.id)
-  	if @aplcat_parameter == nil then
-  		new()
-  	end
-  end
+    if @aplcat_parameter == nil then
+      new()
+    end
+  end 
+
+#   begin
+#     @aplcat_parameter = AplcatParameter.find_by_scenario_id(@scenario.id)
+#     if @aplcat_parameter == nil then
+#       new()
+#     end
+#   rescue NoMethodError=> e
+#     debugger
+#     puts e.backtrace
+#   end
+# end
+
 
   # POST /aplcat_parameters
   # POST /aplcat_parameters.json
