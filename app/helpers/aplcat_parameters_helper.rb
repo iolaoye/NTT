@@ -734,6 +734,7 @@ module AplcatParametersHelper
         return data
       else
         weights = data.lines.grep(/Ave./)
+        debugger
         weights = weights[0]
         weights = weights.split
         #read line by line of the file
@@ -743,6 +744,82 @@ module AplcatParametersHelper
         aplcatresult.cow_aws = weights[4]
         aplcatresult.bull_aws = weights[5]
       end
+
+
+      #####
+      data = get_file_from_APLCAT("IntakeDMIcows.txt")
+      #save the information needed in aplcatresult
+      if data.include? "Error =>" then
+      return data
+      else
+      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
+      debugger
+      data_rh_gei = data_rh_gei[0]
+      #read line by line of the file
+      aplcatresult.rh_gei = data_rh_gei[3]
+      aplcatresult.rh_ni = data_rh_ni[4]
+      aplcatresult.rh_une = data_rh_une[4]
+      aplcatresult.rh_fne = data_rh_fne[4]
+      aplcatresult.rh_tne = data_rh_tne[4]
+      aplcatresult.rh_tnr = data_rh_tnr[4]
+      if aplcatresult.save then
+      return "OK"
+      else
+      return "Error Saving APLCAT results"
+      end
+      end
+      #####
+
+      #####
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
+      #save the information needed in aplcatresult
+      if data.include? "Error =>" then
+      return data
+      else
+      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
+      debugger
+      data_rh_gei = data_rh_gei[0]
+      #read line by line of the file
+      aplcatresult.rh_gei = data_rh_gei[3]
+      aplcatresult.rh_ni = data_rh_ni[4]
+      aplcatresult.rh_une = data_rh_une[4]
+      aplcatresult.rh_fne = data_rh_fne[4]
+      aplcatresult.rh_tne = data_rh_tne[4]
+      aplcatresult.rh_tnr = data_rh_tnr[4]
+      if aplcatresult.save then
+      return "OK"
+      else
+      return "Error Saving APLCAT results"
+      end
+      end
+      #####
+
+
+       #####
+      data = get_file_from_APLCAT("All_GWF_results.txt")
+      data = File.open("All_GWF_results.txt")
+      #save the information needed in aplcatresult
+
+      total = 0
+      all_lines = data.lines.grep(/:/)
+      puts all_lines.length
+      all_lines.each do |l|
+        puts l
+        ar = l.split(':')
+        n = ar[1].split()
+        total += n[8].to_f
+        puts "total: #{total}"
+      end
+      final_total = total   # Where to put this value?
+      if aplcatresult.save then
+      return "OK"
+      else
+      return "Error Saving APLCAT results"
+      end
+      end
+      #####
+
+    
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
@@ -936,6 +1013,7 @@ module AplcatParametersHelper
   def run_aplcat
     msg = "OK"
     msg = send_file_to_APEX("APLCAT", "APLCAT") #this operation will create APLCAT+session folder from APLCAT folder
+    
     #find the aplcat parameters for the sceanrio selected
     @aplcat = AplcatParameter.find_by_scenario_id(@scenario.id)
     if @aplcat == nil then
@@ -1122,7 +1200,7 @@ module AplcatParametersHelper
       #apex_string += aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "|" + aplcatresult.calf_aws.to_s + "\t" + aplcatresult.rh_aws.to_s + "\t" + aplcatresult.fch_aws.to_s + "\t" + aplcatresult.cow_aws.to_s + "\t" + aplcatresult.bull_aws.to_s + "\t" + "Animal weights (lb | kg)" + "\n"
       #apex_string = "\n"
       #apex_string = "Feed Intake Rates" + "\n"
-      #apex_string += aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "|" + aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "\t" + "Dry Matter Intake ('kg',daily | annual)" + "\n"
+      #apex_string += aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "|" + aplcatresult.calf_dmi.to_s + "\t" + aplcatresult.rh_dmi.to_s + "\t" + aplcatresult.fch_dmi.to_s + "\t" + aplcatresult.cow_dmi.to_s + "\t" + aplcatresult.bull_dmi.to_s + "\t" +  
       #apex_string += aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "|" + aplcatresult.calf_gei.to_s + "\t" + aplcatresult.rh_gei.to_s + "\t" + aplcatresult.fch_gei.to_s + "\t" + aplcatresult.cow_gei.to_s + "\t" + aplcatresult.bull_gei.to_s + "\t" + "Gross Energy Intake ('daily',Mcal | MJ)" + "\n"
       #apex_string = "\n"
       #apex_string = "Water Intake Results" + "\n"
