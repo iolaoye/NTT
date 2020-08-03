@@ -1,4 +1,4 @@
-Schedule.delete_all
+1Schedule.delete_all
 Schedule.create!({:id => 1,:schedule_id => nil,:event_order => 1,:month => 4,:day => 15,:year => 1,:activity_id => 2,:apex_operation => 580,:apex_crop => 2,:apex_fertilizer => 1,:apex_opv1 => 180.0,:apex_opv2 => 0.0,:crop_schedule_id => 1}, :without_protection => true)
 Schedule.create!({:id => 2,:schedule_id => nil,:event_order => 2,:month => 4,:day => 15,:year => 1,:activity_id => 2,:apex_operation => 580,:apex_crop => 2,:apex_fertilizer => 2,:apex_opv1 => 60.0,:apex_opv2 => 0.0,:crop_schedule_id => 1}, :without_protection => true)
 Schedule.create!({:id => 4,:schedule_id => nil,:event_order => 4,:month => 5,:day => 5,:year => 1,:activity_id => 1,:apex_operation => 136,:apex_crop => 2,:apex_fertilizer => 0,:apex_opv1 => 0.0,:apex_opv2 => 0.0,:crop_schedule_id => 1}, :without_protection => true)
