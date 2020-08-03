@@ -3,7 +3,6 @@ class PostsController < ApplicationController
   layout 'welcome'
   # GET /posts
   def index
-    debugger
     if params[:post] != nil
       if params[:post][:search] then
         words = params[:post][:search].split(/[^[[:word:]]]+/)
