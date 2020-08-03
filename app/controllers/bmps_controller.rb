@@ -1061,11 +1061,11 @@ end
     @bmp.po4_p = @values[:bmp_rs][:rsyn].to_f 
     @bmp.org_n = @values[:bmp_rs][:rshc].to_f 
     @bmp.hours = @values[:bmp_rs][:rsdp].to_f 
-    @bmp.org_p = @values[:bmp_rs][:rsbd].to_f 
-    @soils = Soil.where(:field_id => @values[:field_id])
+    @bmp.org_p = @values[:bmp_rs][:rsbd].to_f
+    @soil = @field.soils.last
     i = 0
-    @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).last
+    #@soils.each do |soil|
+      subarea = Subarea.where(:soil_id => @soil.id, :scenario_id => @values[:scenario_id]).last
       if subarea != nil then
         case type
           when "create", "update"
@@ -1099,7 +1099,7 @@ end
         end
         if !subarea.save then return "Enable to save value in the subarea file" end
       end #end if subarea !nil
-    end # end soils.each
+    #end # end soils.each
     return "OK"
   end     # end method
 
