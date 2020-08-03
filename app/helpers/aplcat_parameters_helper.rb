@@ -812,11 +812,12 @@ module AplcatParametersHelper
       end
       final_total = total   # Where to put this value?
       if aplcatresult.save then
-      return "OK"
+        return "OK"
       else
-      return "Error Saving APLCAT results"
+        return "Error Saving APLCAT results"
       end
-      end
+
+
       #####
 
     
@@ -840,12 +841,12 @@ module AplcatParametersHelper
         data_bull = data.lines.grep(/Bull                :/)
         data_bull = data_bull[0]
         data_bull = data_bull.split
-          #read line by line of the file
-            aplcatresult.calf_sme = data_calf[2]
-            aplcatresult.rh_sme = data_rh[3]
-            aplcatresult.fch_sme = data_fch[4]
-            aplcatresult.cow_sme = data_cow[2]
-            aplcatresult.bull_sme = data_bull[2]
+        #read line by line of the file
+        aplcatresult.calf_sme = data_calf[2]
+        aplcatresult.rh_sme = data_rh[3]
+        aplcatresult.fch_sme = data_fch[4]
+        aplcatresult.cow_sme = data_cow[2]
+        aplcatresult.bull_sme = data_bull[2]
       end
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
       #save the information needed in aplcatresult
