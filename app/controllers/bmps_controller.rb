@@ -277,7 +277,7 @@ class BmpsController < ApplicationController
       end
 
       if @values.has_key?(:select) && !@values[:select][:"20"].nil? then
-      #rotational grazing (bmp_rg)
+      #Reservoir
         create(20)
       end
 
@@ -479,7 +479,7 @@ class BmpsController < ApplicationController
       when 19
         return cover_crop(type)
       when 20
-        return rotational_grazing(type)
+        return reservoir(type)
       when 21
         return climate_change(type)
       when 22
@@ -1048,20 +1048,61 @@ end
   end   # end method
 
 ### ID: 20 
-  def rotational_grazing(type)
-    @bmp.animal_id = @values[:bmp_rg][:animal_id]
-    @bmp.number_of_animals = @values[:bmp_rg][:number_of_animals]
-    @bmp.sides = @values[:bmp_rg][:year]
-    @bmp.irrigation_id = @values[:bmp_rg][:year_to]
-    @bmp.org_n = @values[:bmp_rg][:month]
-    @bmp.org_p = @values[:bmp_rg][:month_to]
-    @bmp.no3_n = @values[:bmp_rg][:day]
-    @bmp.po4_p = @values[:bmp_rg][:day_to]
-    @bmp.hours = @values[:bmp_rg][:hours_grazed]
-    @bmp.days = @values[:bmp_rg][:days_grazed]
-    @bmp.area = @values[:bmp_rg][:rest_time]
+  def reservoir(type)
+    @bmp.water_stress_factor = @values[:bmp_rs][:rsee].to_f 
+    @bmp.irrigation_efficiency = @values[:bmp_rs][:rsae].to_f 
+    @bmp.maximum_single_application = @values[:bmp_rs][:rsve].to_f 
+    @bmp.safety_factor = @values[:bmp_rs][:rsep].to_f 
+    @bmp.depth = @values[:bmp_rs][:rsap].to_f 
+    @bmp.area = @values[:bmp_rs][:rsvp].to_f 
+    @bmp.dry_manure = @values[:bmp_rs][:rsv].to_f 
+    @bmp.days = @values[:bmp_rs][:rsrr].to_f 
+    @bmp.no3_n = @values[:bmp_rs][:rsys].to_f 
+    @bmp.po4_p = @values[:bmp_rs][:rsyn].to_f 
+    @bmp.org_n = @values[:bmp_rs][:rshc].to_f 
+    @bmp.hours = @values[:bmp_rs][:rsdp].to_f 
+    @bmp.org_p = @values[:bmp_rs][:rsbd].to_f 
+    @soils = Soil.where(:field_id => @values[:field_id])
+    i = 0
+    @soils.each do |soil|
+      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).last
+      if subarea != nil then
+        case type
+          when "create", "update"
+            subarea.rsee = @bmp.water_stress_factor  
+            subarea.rsae = @bmp.irrigation_efficiency 
+            subarea.rsve = @bmp.maximum_single_application 
+            subarea.rsep = @bmp.safety_factor 
+            subarea.rsap = @bmp.depth 
+            subarea.rsvp = @bmp.area 
+            subarea.rsv = @bmp.dry_manure  
+            subarea.rsrr = @bmp.days  
+            subarea.rsys = @bmp.no3_n 
+            subarea.rsyn = @bmp.po4_p  
+            subarea.rshc = @bmp.org_n 
+            subarea.rsdp = @bmp.hours 
+            subarea.rsbd = @bmp.org_p  
+          when "delete"
+            subarea.rsee = 0  
+            subarea.rsae = 0
+            subarea.rsve = 0
+            subarea.rsep = 0 
+            subarea.rsap = 0
+            subarea.rsvp = 0 
+            subarea.rsv = 0  
+            subarea.rsrr = 0  
+            subarea.rsys = 0
+            subarea.rsyn = 0
+            subarea.rshc = 0
+            subarea.rsdp = 0
+            subarea.rsbd = 0
+        end
+        if !subarea.save then return "Enable to save value in the subarea file" end
+      end #end if subarea !nil
+    end # end soils.each
     return "OK"
-  end
+  end     # end method
+
 ### ID: 21
   def climate_change(type)
 	return "OK"
