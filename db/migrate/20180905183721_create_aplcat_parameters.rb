@@ -61,7 +61,7 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
             t.float :fmbmm_amp
             t.float :rhaeba
             t.float :toaboba
-            t.float :vsim_gp?
+            t.float :vsim_gp
             t.float :foue
             t.float :ash
             t.float :mmppfm
@@ -110,8 +110,8 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
             t.integer :nodew
             t.integer :byos
             t.integer :eyos
-            t.integer :byosm?
-            t.integer :eyosm?
+            t.integer :byosm
+            t.integer :eyosm
             t.float :drinkg
             t.float :drinkl
             t.float :drinkm
@@ -307,7 +307,7 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
             t.string :filedetails
             t.integer :cattlepro
             t.integer :codepurpose
-            t.string :purpose?
+            t.string :purpose
             t.integer :n_tfa
             t.integer :n_sr
             t.integer :n_arnfa
