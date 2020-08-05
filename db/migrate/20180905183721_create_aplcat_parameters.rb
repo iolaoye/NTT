@@ -1,5 +1,4 @@
 class CreateAplcatParameters < ActiveRecord::Migration[5.2]
-  if !(ActiveRecord::Base.connection.data_source_exists? 'aplcat_parameters')
         def change
           create_table :aplcat_parameters do |t|
             t.integer :scenario_id
@@ -361,5 +360,4 @@ class CreateAplcatParameters < ActiveRecord::Migration[5.2]
             t.timestamps
           end
         end
-      end
 end
