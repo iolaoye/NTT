@@ -35,8 +35,8 @@
 			<% if @projects.count > 0 %>
 				<%= t('instructions.projects') %>.<br><br>
 				<div class="table-responsive">
-					<!-- <div class="panel panel-default"> -->
-					   	<table class="table table-striped panel panel-default">
+					<div class="panel panel-default">
+					   	<table class="table table-striped">
 							<thead>
 							  <tr>
 								<th class="project_column"><%= sort_link t('project.project_name') %></th>
@@ -66,7 +66,7 @@
 						  		<% end %>
 							</tbody>
 					  	</table>
-					<!-- </div> -->
+					</div>
 				</div>
 			<% end %>
 	  	</div>
