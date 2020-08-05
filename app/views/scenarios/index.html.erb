@@ -60,9 +60,7 @@
 	<% end %>
 	<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
 </div>
-<% if req_parm == "FEM" || req_parm == "APLCAT" then %>
-	<% acitive_menu = "style=display:none" %>
-<% end %>
+<% if req_parm == "FEM" || req_parm == "APLCAT" then %><% acitive_menu = "style=display:none" %><% end %>
 <div <%=acitive_menu%>>
 	<%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
 	<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
