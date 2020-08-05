@@ -734,7 +734,6 @@ module AplcatParametersHelper
         return data
       else
         weights = data.lines.grep(/Ave./)
-        debugger
         weights = weights[0]
         weights = weights.split
         #read line by line of the file
@@ -753,7 +752,6 @@ module AplcatParametersHelper
       return data
       else
       data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
-      debugger
       data_rh_gei = data_rh_gei[0]
       #read line by line of the file
       aplcatresult.rh_gei = data_rh_gei[3]
@@ -777,7 +775,6 @@ module AplcatParametersHelper
       return data
       else
       data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
-      debugger
       data_rh_gei = data_rh_gei[0]
       #read line by line of the file
       aplcatresult.rh_gei = data_rh_gei[3]
