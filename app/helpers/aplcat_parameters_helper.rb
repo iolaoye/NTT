@@ -751,6 +751,7 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
+<<<<<<< HEAD
         data = File.open("IntakeDMIcows.txt")
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each cow/)
         data_calf = data_calf[0]
@@ -762,6 +763,17 @@ module AplcatParametersHelper
         else
           return "Error Saving APLCAT results"
         end
+=======
+        weights = data.lines.grep(/Ave./)
+        weights = weights[0]
+        weights = weights.split
+        #read line by line of the file
+        aplcatresult.calf_aws = weights[1]
+        aplcatresult.rh_aws = weights[2]
+        aplcatresult.fch_aws = weights[3]
+        aplcatresult.cow_aws = weights[4]
+        aplcatresult.bull_aws = weights[5]
+>>>>>>> 26d17909886fb93564ff9ac98aadd35ded1a48b5
       end
       #####
 
@@ -790,6 +802,7 @@ module AplcatParametersHelper
       if data.include? "Error =>" then
         return data
       else
+<<<<<<< HEAD
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each calf/)
         data_calf = data_calf[0]
         #puts data_calf[61..65]
@@ -809,6 +822,19 @@ module AplcatParametersHelper
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
+=======
+      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
+      data_rh_gei = data_rh_gei[0]
+      #read line by line of the file
+      aplcatresult.rh_gei = data_rh_gei[3]
+      aplcatresult.rh_ni = data_rh_ni[4]
+      aplcatresult.rh_une = data_rh_une[4]
+      aplcatresult.rh_fne = data_rh_fne[4]
+      aplcatresult.rh_tne = data_rh_tne[4]
+      aplcatresult.rh_tnr = data_rh_tnr[4]
+      if aplcatresult.save then
+      return "OK"
+>>>>>>> 26d17909886fb93564ff9ac98aadd35ded1a48b5
       else
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer/)
         data_calf = data_calf[0]
@@ -846,7 +872,23 @@ module AplcatParametersHelper
       data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
+<<<<<<< HEAD
         return data
+=======
+      return data
+      else
+      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
+      data_rh_gei = data_rh_gei[0]
+      #read line by line of the file
+      aplcatresult.rh_gei = data_rh_gei[3]
+      aplcatresult.rh_ni = data_rh_ni[4]
+      aplcatresult.rh_une = data_rh_une[4]
+      aplcatresult.rh_fne = data_rh_fne[4]
+      aplcatresult.rh_tne = data_rh_tne[4]
+      aplcatresult.rh_tnr = data_rh_tnr[4]
+      if aplcatresult.save then
+      return "OK"
+>>>>>>> 26d17909886fb93564ff9ac98aadd35ded1a48b5
       else
         data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
         data_rh_gei = data_rh_gei[0]
