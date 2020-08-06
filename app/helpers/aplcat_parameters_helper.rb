@@ -754,7 +754,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each cow/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        puts data_calf[-2]
+        aplcat_result.cow_dmi = data_calf[-2]
         if aplcatresult.save then
           return "OK"
         else
@@ -770,7 +770,7 @@ module AplcatParametersHelper
         data_calf = data_calf[0]
         data_calf = data_calf.split()
         debugger
-        puts data_calf[-2]
+        aplcat_result.bull_dmi = data_calf[-2]
         if aplcatresult.save then
           return "OK"
         else
@@ -786,6 +786,7 @@ module AplcatParametersHelper
         data_calf = data_calf[0]
         data_calf = data_calf.split()
         puts data_calf[-2]
+        aplcatresult.calf_dmi = data_calf[-2]
         if aplcatresult.save then
           return "OK"
         else
@@ -801,7 +802,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        puts data_calf[-2]
+        aplcat_result.rh_dmi = data_calf[-2]
         if aplcatresult.save then
           return "OK"
         else
@@ -817,8 +818,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer_calf/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        puts data_calf[-2]
-
+        aplcat_result.fch_dmi = data_calf[-2]
         if aplcatresult.save then
           return "OK"
         else
