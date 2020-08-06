@@ -600,6 +600,7 @@ class ScenariosController < ApplicationController
     items = Array.new
     values = Array.new
     apex_op = ''
+    operation_name = ""
     for i in 0..(8 - 1)
       items[i] = ""
       values[i] = 0
@@ -607,6 +608,7 @@ class ScenariosController < ApplicationController
 
     case bmp.bmpsublist_id
       when 1 #autoirrigation or autofertigation
+        operation_name = "Autoirrigation"
         items[0] = "Type"
         values[0] = Irrigation.find(bmp.irrigation_id).name
         items[1] = "Efficiency"
@@ -622,12 +624,13 @@ class ScenariosController < ApplicationController
         apex_op = "AI"
 
         if bmp.depth == 2 then   #autofertigaation
-
+          operation_name = "Autofertigation"
           items[5] = "Application Depth"
           values[5] = bmp.dry_manure
           apex_op = "AF"
         end
       when 3 #Tile Drain
+        operation_name = "Tile_Drain"
         items[0] = "Depth"
         values[0] = bmp.depth
         apex_op = "TD"
@@ -640,20 +643,25 @@ class ScenariosController < ApplicationController
       when 7 # Pads and Pipes              #Grazing - kind and number of animals
         apex_op = "PP"
       when 8 #wetland
+        operation_name = "Wetlands"
         items[0] = "Area"
         values[0] = bmp.area
         apex_op = "WL"
       when 9 #Ponds
+        operation_name = "Ponds"
         items[0] = "Fraction"
         values[0] = bmp.irrigation_efficiency
         apex_op = "PND"
       when 10   #stream Fencing
+        operation_name = "Stream_Fencing"
         items[0] = "Fence Width"
         values[0] = bmp.width
         apex_op = "SF"
       when 11 # Streambank stabilization
+        operation_name = "Streambank_Stabilization"
         apex_op = "SB"
       when 13   #Riparian forest (12) or Filter StrIp (13)
+        operation_name = "Grass_Buffer"
         items[0] = "Area"
         values[0] = bmp.area
         items[1] = "Grass Width"
@@ -661,6 +669,7 @@ class ScenariosController < ApplicationController
         items[3] = "Fraction treated by buffer"
         values[3] = bmp.slope_reduction
         if bmp.depth == 12
+          operation_name = "Forest_Buffer"
           items[2] = "Forest width"
           values[2] = bmp.grass_field_portion
           apex_op = "RF"
@@ -673,6 +682,7 @@ class ScenariosController < ApplicationController
       when 12  # Filter Strip
 
       when 14  #waterways
+        operation_name = "Grass_Waterway"
         items[4] = "Crop"
         values[4] = Crop.find(bmp.crop_id).name
         items[1] = "Width"
@@ -681,6 +691,7 @@ class ScenariosController < ApplicationController
         values[3] = bmp.slope_reduction
         apex_op = "WW"
       when 15  #contour buffer
+        operation_name = "Contour_Buffer"
         items[4] = "Crop"
         values[4] = Crop.find(bmp.crop_id).name
         items[1] =  "Grass Buffer"
@@ -689,14 +700,16 @@ class ScenariosController < ApplicationController
         values[2] = bmp.crop_width
         apex_op = "CF"
       when 16   #Land Leveling
+        operation_name = "Land_Leveling"
         items[0] = "Slope Reduction"
         values[0] = bmp.slope_reduction
         apex_op = "LL"
       when 17  #Terrace System
+        operation_name = "Terrace_System"
         apex_op = "TS"
       when 18  #Manure nutrient change
+        operation_name = "Manure_Nutrient_Change"
         apex_op = "MA"
-
       when 28  #future climate
         items[0] = "Scenario Simulated"
         values[0] = bmp.depth   #1=Best, 2=Normal, 3=Worst
@@ -713,7 +726,8 @@ class ScenariosController < ApplicationController
       xml.month 0
       xml.day 0
       xml.apex_operation apex_op
-      xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
+      #xml.operation_name Bmpsublist.find(bmp.bmpsublist_id).name
+      xml.operation_name operation_name
       xml.apex_crop 0
       xml.crop_name 'None'
       xml.year_in_rotation 0
