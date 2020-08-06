@@ -74,7 +74,7 @@
             <% end %>
 					</tr>
           <tr id = "cow_row1" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Animal Weights (lb|kg)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Animal Weights (lb)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_aws) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_aws) %></td>
@@ -84,7 +84,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row2" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Dry Matter Intake  ('kg', daily|annual)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Dry Matter Intake  ('kg', daily)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_dmi) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_dmi) %></td>
@@ -94,7 +94,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row3" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Gross Energy Intake ('daily', Mcal|MJ)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Gross Energy Intake (MJ/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_gei) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_gei) %></td>
@@ -134,7 +134,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row7" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Solid Manure excr. (manu|manu_N)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Solid Manure excr. (kg manu_N)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_sme) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_sme) %></td>
@@ -144,7 +144,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row8" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Nitrogen Intake (g/day|kg/year)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Nitrogen Intake (g/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_ni) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_ni) %></td>
@@ -154,7 +154,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row9" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen excretion (g/day|kg/year)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen excretion (g/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_tne) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_tne) %></td>
@@ -164,7 +164,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row10" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen retained (g/day|kg/year)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Total Nitrogen retained (g/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_tnr) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_tnr) %></td>
@@ -174,7 +174,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row11" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Fecal Nitrogen excretion (g/day|kg/year)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Fecal Nitrogen excretion (g/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_fne) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_fne) %></td>
@@ -184,7 +184,7 @@
             <% end %>
     			</tr>
           <tr id = "cow_row12" class="gvRowStyleEven" style="display:none">
-    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Urine Nitrogen excretion (g/day|kg/year)" %></a></th>
+    				<th class="gvDetailText bottom_border" style="border-right: thick double #ff0000"><a class="gvTotalText"><%= "Urine Nitrogen excretion (g/day)" %></a></th>
             <td class="gvTotalText" style="border-right: thick double #ff0000; background-color:#FFE8F9"><%= sprintf("%8.2f", @aplcat_results1[0].cow_une) %></td>
             <% if @scenario2 != "0" && @scenario2 != "" then %>
             <td class="gvTotalText" colspan="2" style="border-right: thick double #ff0000; background-color:#DEFFFD"><%#= sprintf("%8.2f", @aplcat_results2.cow_une) %></td>
