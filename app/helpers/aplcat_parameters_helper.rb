@@ -745,51 +745,124 @@ module AplcatParametersHelper
       end
 
 
-      #####
+      ### IntakeDMIsection
       data = get_file_from_APLCAT("IntakeDMIcows.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
-      return data
+        return data
       else
-      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
-      data_rh_gei = data_rh_gei[0]
-      #read line by line of the file
-      aplcatresult.rh_gei = data_rh_gei[3]
-      aplcatresult.rh_ni = data_rh_ni[4]
-      aplcatresult.rh_une = data_rh_une[4]
-      aplcatresult.rh_fne = data_rh_fne[4]
-      aplcatresult.rh_tne = data_rh_tne[4]
-      aplcatresult.rh_tnr = data_rh_tnr[4]
-      if aplcatresult.save then
-      return "OK"
-      else
-      return "Error Saving APLCAT results"
+        data_calf = data.lines.grep(/Average daily dry matter intake for the year for each cow/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+        puts data_calf[-2]
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
       end
-      end
-      #####
 
-      #####
-      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
+      data = get_file_from_APLCAT("IntakeDMIbulls.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_calf = data.lines.grep(/Average daily dry matter intake for the year for each bull/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+        debugger
+        puts data_calf[-2]
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
+      end
+
+      data = get_file_from_APLCAT("IntakeDMIcalves.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_calf = data.lines.grep(/Average daily dry matter intake for the year for each calf/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+        puts data_calf[-2]
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
+      end
+
+
+      data = get_file_from_APLCAT("IntakeDMIheifers.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+        puts data_calf[-2]
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
+      end
+
+      data = get_file_from_APLCAT("IntakeDMIheifercalves.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
-      return data
+        return data
       else
-      data_rh_gei = data.lines.grep(/dry matter intake for the year for each cow/)
-      data_rh_gei = data_rh_gei[0]
-      #read line by line of the file
-      aplcatresult.rh_gei = data_rh_gei[3]
-      aplcatresult.rh_ni = data_rh_ni[4]
-      aplcatresult.rh_une = data_rh_une[4]
-      aplcatresult.rh_fne = data_rh_fne[4]
-      aplcatresult.rh_tne = data_rh_tne[4]
-      aplcatresult.rh_tnr = data_rh_tnr[4]
-      if aplcatresult.save then
-      return "OK"
-      else
-      return "Error Saving APLCAT results"
+        data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer_calf/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+        puts data_calf[-2]
+
+        if aplcatresult.save then
+          return "OK"
+        else
+          return "Error Saving APLCAT results"
+        end
       end
-      end
-      #####
+
+      ### 
+
+      ### Water Intake Cows
+
+      data = File.open("WaterEnergyOutputCowCalf.txt")
+
+      # Method 1
+      all_lines = data.lines.grep(/Cows     :/)
+      al = all_lines[0].split(':')
+      puts "we", al[1].split('L')[0].strip
+      cows = al[1].split('L')[0].strip
+      puts cows
+
+      all_lines = data.lines.grep(/Bulls    :/)
+      puts all_lines
+      al = all_lines[0].split(':')
+      bulls = al[1].split('L')[0].strip
+      puts bulls
+
+      all_lines = data.lines.grep(/Heifers  :/)
+      puts all_lines
+      al = all_lines[0].split(':')
+      heifers = al[1].split('L')[0].strip
+      puts heifers
+
+      # Method 2
+      calves = data.each_line.grep(/Calves   :/)
+      puts calves
+      c = calves[0].match(/\d*\.?\d+/)
+      calves = c.to_s
+      puts calves
+
+      hef_calves = data.each_line.grep(/Hef_caf  :/)
+      puts hef_calves
+      hc = hef_calves[0].match(/\d*\.?\d+/)
+      hef_calves = hc.to_s
+      puts hef_calves
 
 
        #####
@@ -814,10 +887,6 @@ module AplcatParametersHelper
         return "Error Saving APLCAT results"
       end
 
-
-      #####
-
-    
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       #save the information needed in aplcatresult
       if data.include? "Error =>" then
