@@ -725,10 +725,11 @@ module AplcatParametersHelper
   def read_aplcat_results
       aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
       #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
+      #download the results files
       if aplcatresult.count > 0 then AplcatResult.where(:scenario_id => @scenario.id).delete_all end
       aplcatresult = AplcatResult.new
       aplcatresult.scenario_id = @scenario.id
-      #download the results files
+      # Get weights for various species
       data = get_file_from_APLCAT("AnimalWeights.txt")
       if data.include? "Error =>" then
         return data
@@ -744,22 +745,15 @@ module AplcatParametersHelper
         aplcatresult.bull_aws = weights[5]
       end
 
-
-      ### IntakeDMIsection
+      # Get values for IntakeDMI for various species
       data = get_file_from_APLCAT("IntakeDMIcows.txt")
-      #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each cow/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        aplcat_result.cow_dmi = data_calf[-2]
-        if aplcatresult.save then
-          return "OK"
-        else
-          return "Error Saving APLCAT results"
-        end
+        aplcatresult.cow_dmi = data_calf[-2]
       end
 
       data = get_file_from_APLCAT("IntakeDMIbulls.txt")
@@ -769,13 +763,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each bull/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        debugger
-        aplcat_result.bull_dmi = data_calf[-2]
-        if aplcatresult.save then
-          return "OK"
-        else
-          return "Error Saving APLCAT results"
-        end
+        aplcatresult.bull_dmi = data_calf[-2]
       end
 
       data = get_file_from_APLCAT("IntakeDMIcalves.txt")
@@ -787,13 +775,7 @@ module AplcatParametersHelper
         data_calf = data_calf.split()
         puts data_calf[-2]
         aplcatresult.calf_dmi = data_calf[-2]
-        if aplcatresult.save then
-          return "OK"
-        else
-          return "Error Saving APLCAT results"
-        end
       end
-
 
       data = get_file_from_APLCAT("IntakeDMIheifers.txt")
       if data.include? "Error =>" then
@@ -802,272 +784,360 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        aplcat_result.rh_dmi = data_calf[-2]
-        if aplcatresult.save then
-          return "OK"
-        else
-          return "Error Saving APLCAT results"
-        end
+        aplcatresult.rh_dmi = data_calf[-2]
       end
 
       data = get_file_from_APLCAT("IntakeDMIheifercalves.txt")
-      #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer_calf/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        aplcat_result.fch_dmi = data_calf[-2]
-        if aplcatresult.save then
-          return "OK"
-        else
-          return "Error Saving APLCAT results"
-        end
+        aplcatresult.fch_dmi = data_calf[-2]
       end
 
-      ### 
-
-      ### Water Intake Cows
-
-      data = File.open("WaterEnergyOutputCowCalf.txt")
-
-      # Method 1
-      all_lines = data.lines.grep(/Cows     :/)
+      # Get values for water intake for various species
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
+      all_lines = data.each_line.grep(/Cows     :/)
       al = all_lines[0].split(':')
-      puts "we", al[1].split('L')[0].strip
       cows = al[1].split('L')[0].strip
-      puts cows
 
-      all_lines = data.lines.grep(/Bulls    :/)
-      puts all_lines
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
+      all_lines = data.each_line.grep(/Bulls    :/)
       al = all_lines[0].split(':')
       bulls = al[1].split('L')[0].strip
-      puts bulls
 
-      all_lines = data.lines.grep(/Heifers  :/)
-      puts all_lines
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
+      all_lines = data.each_line.grep(/Heifers  :/)
       al = all_lines[0].split(':')
       heifers = al[1].split('L')[0].strip
-      puts heifers
 
-      # Method 2
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
       calves = data.each_line.grep(/Calves   :/)
-      puts calves
       c = calves[0].match(/\d*\.?\d+/)
       calves = c.to_s
-      puts calves
-
+      
+      data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
       hef_calves = data.each_line.grep(/Hef_caf  :/)
-      puts hef_calves
       hc = hef_calves[0].match(/\d*\.?\d+/)
       hef_calves = hc.to_s
-      puts hef_calves
+
+      aplcatresult.cow_wi = cows
+      aplcatresult.bull_wi = bulls
+      aplcatresult.rh_wi = heifers
+      aplcatresult.calf_wi = calves
+      aplcatresult.fch_wi = hef_calves
 
 
-       #####
+       # Water Intake - sum of all the numbers under the column "Emb_water" 
       data = get_file_from_APLCAT("All_GWF_results.txt")
-      data = File.open("All_GWF_results.txt")
-      #save the information needed in aplcatresult
-
       total = 0
       all_lines = data.lines.grep(/:/)
-      puts all_lines.length
       all_lines.each do |l|
-        puts l
         ar = l.split(':')
         n = ar[1].split()
         total += n[8].to_f
         puts "total: #{total}"
       end
       final_total = total   # Where to put this value?
-      if aplcatresult.save then
-        return "OK"
+
+      # Manure excretion for all species
+      data = get_file_from_APLCAT("ManureOutputFile.txt")
+      if data.include? "Error =>" then
+        return data
       else
-        return "Error Saving APLCAT results"
+        data = get_file_from_APLCAT("ManureOutputFile.txt")
+        data_calf = data.each_line.grep(/Calf                :/)
+        data_calf = data_calf[0]
+        data_calf = data_calf.split()
+
+        data = get_file_from_APLCAT("ManureOutputFile.txt")
+        data_rh = data.each_line.grep(/Replacement heifer  :/)
+        data_rh = data_rh[0]
+        data_rh = data_rh.split()
+
+        data = get_file_from_APLCAT("ManureOutputFile.txt")
+        data_fch = data.each_line.grep(/First calf heifer   :/)
+        data_fch = data_fch[0]
+        data_fch = data_fch.split()
+
+        data = get_file_from_APLCAT("ManureOutputFile.txt")
+        data_cow = data.each_line.grep(/Cow                 :/)
+        data_cow = data_cow[0]
+        data_cow = data_cow.split()
+
+        data = get_file_from_APLCAT("ManureOutputFile.txt")
+        data_bull = data.each_line.grep(/Bull                :/)
+        data_bull = data_bull[0]
+        data_bull = data_bull.split()
+
+        aplcatresult.calf_sme = data_calf[6]
+        aplcatresult.rh_sme = data_rh[8]
+        aplcatresult.fch_sme = data_fch[10]
+        aplcatresult.cow_sme = data_cow[6]
+        aplcatresult.bull_sme = data_bull[6]
       end
 
-      data = get_file_from_APLCAT("ManureOutputFile.txt")
-      #save the information needed in aplcatresult
-      if data.include? "Error =>" then
-        return data
-      else
-        data_calf = data.lines.grep(/Calf                :/)
-        data_calf = data_calf[0]
-        data_calf = data_calf.split
-        data_rh = data.lines.grep(/Replacement heifer  :/)
-        data_rh = data_rh[0]
-        data_rh = data_rh.split
-        data_fch = data.lines.grep(/First calf heifer   :/)
-        data_fch = data_fch[0]
-        data_fch = data_fch.split
-        data_cow = data.lines.grep(/Cow                 :/)
-        data_cow = data_cow[0]
-        data_cow = data_cow.split
-        data_bull = data.lines.grep(/Bull                :/)
-        data_bull = data_bull[0]
-        data_bull = data_bull.split
-        #read line by line of the file
-        aplcatresult.calf_sme = data_calf[2]
-        aplcatresult.rh_sme = data_rh[3]
-        aplcatresult.fch_sme = data_fch[4]
-        aplcatresult.cow_sme = data_cow[2]
-        aplcatresult.bull_sme = data_bull[2]
-      end
+      # Emissions for calves
       data = get_file_from_APLCAT("EmissionOutputCalves.txt")
-      #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_calf_gei = data.lines.grep(/Gross energy intake/)
-        data_calf_gei = data_calf_gei[0]
-        data_calf_gei = data_calf_gei.split
-        data_calf_ni = data.lines.grep(/nitrogen intake/)
-        data_calf_ni = data_calf_ni[0]
-        data_calf_ni = data_calf_ni.split
-        data_calf_une = data.lines.grep(/urine nitrogen excretion/)
-        data_calf_une = data_calf_une[0]
-        data_calf_une = data_calf_une.split
-        data_calf_fne = data.lines.grep(/fecal nitrogen excretion/)
-        data_calf_fne = data_calf_fne[0]
-        data_calf_fne = data_calf_fne.split
-        data_calf_tne = data.lines.grep(/total nitrogen excretion/)
-        data_calf_tne = data_calf_tne[0]
-        data_calf_tne = data_calf_tne.split
-        data_calf_tnr = data.lines.grep(/nitrogen retained/)
-        data_calf_tnr = data_calf_tnr[0]
-        data_calf_tnr = data_calf_tnr.split
-        #read line by line of the file
-        aplcatresult.calf_gei = data_calf_gei[3]
-        aplcatresult.calf_ni = data_calf_ni[3]
-        aplcatresult.calf_une = data_calf_une[4]
-        aplcatresult.calf_fne = data_calf_fne[4]
-        aplcatresult.calf_tne = data_calf_tne[4]
-        aplcatresult.calf_tnr = data_calf_tnr[4]
-      end
-      data = get_file_from_APLCAT("EmsnOutBulls.txt")
-      #save the information needed in aplcatresult
-      if data.include? "Error =>" then
-        return data
-      else
-        data_bull_gei = data.lines.grep(/Gross energy intake/)
-        data_bull_gei = data_bull_gei[0]
-        data_bull_gei = data_bull_gei.split
-        data_bull_ni = data.lines.grep(/nitrogen intake/)
-        data_bull_ni = data_bull_ni[0]
-        data_bull_ni = data_bull_ni.split
-        data_bull_une = data.lines.grep(/urine nitrogen excretion/)
-        data_bull_une = data_bull_une[0]
-        data_bull_une = data_bull_une.split
-        data_bull_fne = data.lines.grep(/fecal nitrogen excretion/)
-        data_bull_fne = data_bull_fne[0]
-        data_bull_fne = data_bull_fne.split
-        data_bull_tne = data.lines.grep(/total nitrogen excretion/)
-        data_bull_tne = data_bull_tne[0]
-        data_bull_tne = data_bull_tne.split
-        data_bull_tnr = data.lines.grep(/nitrogen retained/)
-        data_bull_tnr = data_bull_tnr[0]
-        data_bull_tnr = data_bull_tnr.split
-        #read line by line of the file
-        aplcatresult.bull_gei = data_bull_gei[3]
-        aplcatresult.bull_ni = data_bull_ni[3]
-        aplcatresult.bull_une = data_bull_une[4]
-        aplcatresult.bull_fne = data_bull_fne[4]
-        aplcatresult.bull_tne = data_bull_tne[4]
-        aplcatresult.bull_tnr = data_bull_tnr[4]
-      end
-      data = get_file_from_APLCAT("EmsnOutCows.txt")
-      #save the information needed in aplcatresult
-      if data.include? "Error =>" then
-        return data
-      else
-        data_cow_gei = data.lines.grep(/Gross energy intake/)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_gei = data.each_line.grep(/Gross energy intake/)
         data_cow_gei = data_cow_gei[0]
         data_cow_gei = data_cow_gei.split
-        data_cow_ni = data.lines.grep(/nitrogen intake/)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_ni = data.each_line.grep(/nitrogen intake/)
         data_cow_ni = data_cow_ni[0]
         data_cow_ni = data_cow_ni.split
-        data_cow_une = data.lines.grep(/urine nitrogen excretion/)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_une = data.each_line.grep(/urine nitrogen excretion/)
         data_cow_une = data_cow_une[0]
         data_cow_une = data_cow_une.split
-        data_cow_fne = data.lines.grep(/fecal nitrogen excretion/)
+        data =get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_fne = data.each_line.grep(/fecal nitrogen excretion/)
         data_cow_fne = data_cow_fne[0]
         data_cow_fne = data_cow_fne.split
-        data_cow_tne = data.lines.grep(/total nitrogen excretion/)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_tne = data.each_line.grep(/total nitrogen excretion/)
         data_cow_tne = data_cow_tne[0]
         data_cow_tne = data_cow_tne.split
-        data_cow_tnr = data.lines.grep(/nitrogen retained/)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        data_cow_tnr = data.each_line.grep(/nitrogen retained/)
         data_cow_tnr = data_cow_tnr[0]
         data_cow_tnr = data_cow_tnr.split
-        #read line by line of the file
+        aplcatresult.calf_gei = data_cow_gei[3]
+        aplcatresult.calf_ni = data_cow_ni[3]
+        aplcatresult.calf_une = data_cow_une[4]
+        aplcatresult.calf_fne = data_cow_fne[4]
+        aplcatresult.calf_tne = data_cow_tne[4]
+        aplcatresult.calf_tnr = data_cow_tnr[4]
+        # Enteric methane emission (g/day)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        daily_em = data.each_line.grep(/From/)
+        line = daily_em[0].split
+        aplcatresult.calf_eme = line[3]
+        # Manure methane emission (kg/year)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        total_mm= data.each_line.grep(/total manure methane emission/)
+        line = total_mm[0].split
+        puts line[9]
+        # Manure methane emission (g/day)
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        daily_mm = data.each_line.grep(/daily manure methane emission/)
+        line = daily_mm[0].split
+        aplcatresult.calf_mme = line[9]
+      end
+
+      # Emissions for bulls
+      data = get_file_from_APLCAT("EmsnOutBulls.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_gei = data.each_line.grep(/Gross energy intake/)
+        data_cow_gei = data_cow_gei[0]
+        data_cow_gei = data_cow_gei.split
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_ni = data.each_line.grep(/nitrogen intake/)
+        data_cow_ni = data_cow_ni[0]
+        data_cow_ni = data_cow_ni.split
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_une = data.each_line.grep(/urine nitrogen excretion/)
+        data_cow_une = data_cow_une[0]
+        data_cow_une = data_cow_une.split
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_fne = data.each_line.grep(/fecal nitrogen excretion/)
+        data_cow_fne = data_cow_fne[0]
+        data_cow_fne = data_cow_fne.split
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_tne = data.each_line.grep(/total nitrogen excretion/)
+        data_cow_tne = data_cow_tne[0]
+        data_cow_tne = data_cow_tne.split
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        data_cow_tnr = data.each_line.grep(/nitrogen retained/)
+        data_cow_tnr = data_cow_tnr[0]
+        data_cow_tnr = data_cow_tnr.split
+        aplcatresult.bull_gei = data_cow_gei[3]
+        aplcatresult.bull_ni = data_cow_ni[3]
+        aplcatresult.bull_une = data_cow_une[4]
+        aplcatresult.bull_fne = data_cow_fne[4]
+        aplcatresult.bull_tne = data_cow_tne[4]
+        aplcatresult.bull_tnr = data_cow_tnr[4]
+        # Enteric methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        daily_em = data.each_line.grep(/From/)
+        line = daily_em[0].split
+        aplcatresult.bull_eme = line[3]
+        # Manure methane emission (kg/year)
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        total_mm= data.each_line.grep(/total manure methane emission/)
+        line = total_mm[0].split
+        puts line[9]
+        # Manure methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        daily_mm = data.each_line.grep(/daily manure methane emission/)
+        line = daily_mm[0].split
+        aplcatresult.bull_mme = line[9]
+      end
+
+      # Emissions for cows
+      data = get_file_from_APLCAT("EmsnOutCows.txt")
+      if data.include? "Error =>" then
+        return data
+      else
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_gei = data.each_line.grep(/Gross energy intake/)
+        data_cow_gei = data_cow_gei[0]
+        data_cow_gei = data_cow_gei.split
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_ni = data.each_line.grep(/nitrogen intake/)
+        data_cow_ni = data_cow_ni[0]
+        data_cow_ni = data_cow_ni.split
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_une = data.each_line.grep(/urine nitrogen excretion/)
+        data_cow_une = data_cow_une[0]
+        data_cow_une = data_cow_une.split
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_fne = data.each_line.grep(/fecal nitrogen excretion/)
+        data_cow_fne = data_cow_fne[0]
+        data_cow_fne = data_cow_fne.split
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_tne = data.each_line.grep(/total nitrogen excretion/)
+        data_cow_tne = data_cow_tne[0]
+        data_cow_tne = data_cow_tne.split
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        data_cow_tnr = data.each_line.grep(/nitrogen retained/)
+        data_cow_tnr = data_cow_tnr[0]
+        data_cow_tnr = data_cow_tnr.split
         aplcatresult.cow_gei = data_cow_gei[3]
         aplcatresult.cow_ni = data_cow_ni[4]
         aplcatresult.cow_une = data_cow_une[4]
         aplcatresult.cow_fne = data_cow_fne[4]
         aplcatresult.cow_tne = data_cow_tne[4]
         aplcatresult.cow_tnr = data_cow_tnr[4]
+        # Enteric methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        daily_em = data.each_line.grep(/From/)
+        line = daily_em[0].split
+        aplcatresult.cow_eme = line[3]
+        # Manure methane emission (kg/year)
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        total_mm= data.each_line.grep(/total manure methane emission/)
+        line = total_mm[0].split
+        puts line[9]
+        # Manure methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        daily_mm = data.each_line.grep(/daily manure methane emission/)
+        line = daily_mm[0].split
+        aplcatresult.cow_mme = line[9]
       end
+
+      # Emissions for Calf Heifers
       data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
-      #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_fch_gei = data.lines.grep(/Gross energy intake/)
-        data_fch_gei = data_fch_gei[0]
-        data_fch_gei = data_fch_gei.split
-        data_fch_ni = data.lines.grep(/nitrogen intake/)
-        data_fch_ni = data_fch_ni[0]
-        data_fch_ni = data_fch_ni.split
-        data_fch_une = data.lines.grep(/urine nitrogen excretion/)
-        data_fch_une = data_fch_une[0]
-        data_fch_une = data_fch_une.split
-        data_fch_fne = data.lines.grep(/fecal nitrogen excretion/)
-        data_fch_fne = data_fch_fne[0]
-        data_fch_fne = data_fch_fne.split
-        data_fch_tne = data.lines.grep(/total nitrogen excretion/)
-        data_fch_tne = data_fch_tne[0]
-        data_fch_tne = data_fch_tne.split
-        data_fch_tnr = data.lines.grep(/nitrogen retained/)
-        data_fch_tnr = data_fch_tnr[0]
-        data_fch_tnr = data_fch_tnr.split
-        #read line by line of the file
-        aplcatresult.fch_gei = data_fch_gei[3]
-        aplcatresult.fch_ni = data_fch_ni[4]
-        aplcatresult.fch_une = data_fch_une[4]
-        aplcatresult.fch_fne = data_fch_fne[4]
-        aplcatresult.fch_tne = data_fch_tne[4]
-        aplcatresult.fch_tnr = data_fch_tnr[4]
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_gei = data.each_line.grep(/Gross energy intake/)
+        data_cow_gei = data_cow_gei[0]
+        data_cow_gei = data_cow_gei.split
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_ni = data.each_line.grep(/nitrogen intake/)
+        data_cow_ni = data_cow_ni[0]
+        data_cow_ni = data_cow_ni.split
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_une = data.each_line.grep(/urine nitrogen excretion/)
+        data_cow_une = data_cow_une[0]
+        data_cow_une = data_cow_une.split
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_fne = data.each_line.grep(/fecal nitrogen excretion/)
+        data_cow_fne = data_cow_fne[0]
+        data_cow_fne = data_cow_fne.split
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_tne = data.each_line.grep(/total nitrogen excretion/)
+        data_cow_tne = data_cow_tne[0]
+        data_cow_tne = data_cow_tne.split
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        data_cow_tnr = data.each_line.grep(/nitrogen retained/)
+        data_cow_tnr = data_cow_tnr[0]
+        data_cow_tnr = data_cow_tnr.split
+        aplcatresult.fch_gei = data_cow_gei[3]
+        aplcatresult.fch_ni = data_cow_ni[4]
+        aplcatresult.fch_une = data_cow_une[4]
+        aplcatresult.fch_fne = data_cow_fne[4]
+        aplcatresult.fch_tne = data_cow_tne[4]
+        aplcatresult.fch_tnr = data_cow_tnr[4]
+        # Enteric methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        daily_em = data.each_line.grep(/From/)
+        line = daily_em[0].split
+        aplcatresult.fch_eme = line[3]
+         # Manure methane emission (kg/year)
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        total_mm= data.each_line.grep(/total manure methane emission/)
+        line = total_mm[0].split
+        puts line[9]
+        # Manure methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        daily_mm = data.each_line.grep(/daily manure methane emission/)
+        line = daily_mm[0].split
+        aplcatresult.fch_mme = line[9]
       end
+
+       # Emissions for Heifers 
       data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
-      #save the information needed in aplcatresult
       if data.include? "Error =>" then
         return data
       else
-        data_rh_gei = data.lines.grep(/Gross energy intake/)
-        data_rh_gei = data_rh_gei[0]
-        data_rh_gei = data_rh_gei.split
-        data_rh_ni = data.lines.grep(/nitrogen intake/)
-        data_rh_ni = data_rh_ni[0]
-        data_rh_ni = data_rh_ni.split
-        data_rh_une = data.lines.grep(/urine nitrogen excretion/)
-        data_rh_une = data_rh_une[0]
-        data_rh_une = data_rh_une.split
-        data_rh_fne = data.lines.grep(/fecal nitrogen excretion/)
-        data_rh_fne = data_rh_fne[0]
-        data_rh_fne = data_rh_fne.split
-        data_rh_tne = data.lines.grep(/total nitrogen excretion/)
-        data_rh_tne = data_rh_tne[0]
-        data_rh_tne = data_rh_tne.split
-        data_rh_tnr = data.lines.grep(/nitrogen retained/)
-        data_rh_tnr = data_rh_tnr[0]
-        data_rh_tnr = data_rh_tnr.split
-        #read line by line of the file
-        aplcatresult.rh_gei = data_rh_gei[3]
-        aplcatresult.rh_ni = data_rh_ni[4]
-        aplcatresult.rh_une = data_rh_une[4]
-        aplcatresult.rh_fne = data_rh_fne[4]
-        aplcatresult.rh_tne = data_rh_tne[4]
-        aplcatresult.rh_tnr = data_rh_tnr[4]
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_gei = data.each_line.grep(/Gross energy intake/)
+        data_cow_gei = data_cow_gei[0]
+        data_cow_gei = data_cow_gei.split
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_ni = data.each_line.grep(/nitrogen intake/)
+        data_cow_ni = data_cow_ni[0]
+        data_cow_ni = data_cow_ni.split
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_une = data.each_line.grep(/urine nitrogen excretion/)
+        data_cow_une = data_cow_une[0]
+        data_cow_une = data_cow_une.split
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_fne = data.each_line.grep(/fecal nitrogen excretion/)
+        data_cow_fne = data_cow_fne[0]
+        data_cow_fne = data_cow_fne.split
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_tne = data.each_line.grep(/total nitrogen excretion/)
+        data_cow_tne = data_cow_tne[0]
+        data_cow_tne = data_cow_tne.split
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        data_cow_tnr = data.each_line.grep(/nitrogen retained/)
+        data_cow_tnr = data_cow_tnr[0]
+        data_cow_tnr = data_cow_tnr.split
+        aplcatresult.rh_gei = data_cow_gei[3]
+        aplcatresult.rh_ni = data_cow_ni[4]
+        aplcatresult.rh_une = data_cow_une[4]
+        aplcatresult.rh_fne = data_cow_fne[4]
+        aplcatresult.rh_tne = data_cow_tne[4]
+        aplcatresult.rh_tnr = data_cow_tnr[4]
+        # Enteric methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        daily_em = data.each_line.grep(/From/)
+        line = daily_em[0].split
+        aplcatresult.rh_eme = line[3]
+        # Manure methane emission (kg/year)
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        total_mm= data.each_line.grep(/total manure methane emission/)
+        line = total_mm[0].split
+        puts line[10]
+        # Manure methane emission (g/day)
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        daily_mm = data.each_line.grep(/daily manure methane emission/)
+        line = daily_mm[0].split
+        aplcatresult.rh_mme = line[10]
+        aplcatresult.save!
         if aplcatresult.save then
           return "OK"
         else
