@@ -521,6 +521,7 @@ en:
   languages:
     english: 'English'
     spanish: 'Spanish'
+    portuguese: Portuguese
   weather:
     longitude: Longitude
     latitude: Latitude

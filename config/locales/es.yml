@@ -518,6 +518,7 @@ es:
   languages:
     english: Inglés
     spanish: Español
+    portuguese: Portugués
   weather:
     longitude: Longitud
     latitude: Latitud
