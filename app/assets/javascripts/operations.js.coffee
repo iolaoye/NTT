@@ -336,10 +336,10 @@ display_hours = (access) ->
   if (access.checked)
     $("#div_hours_in_stream")[0].style.display="inline"
   else
-    $("#div_hours_in_stream")[0].style.display='none'
+    $("#div_hours_in_stream")[0].style.display="none"
 
 $(document).ready ->
-   $("#access_to_stream").click ->
+   $("#check_access_to_stream").click ->
         display_hours(this)
    $("#day1").click ->
         upload_days($("#day1"), $("#month_id1").val())
@@ -422,3 +422,5 @@ $(document).ready ->
           $('#year_label').toggle(true)
           $('#plant_title').toggle(true)
       return
+
+
