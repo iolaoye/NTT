@@ -44,7 +44,7 @@ module SimulationsHelper
               c.value = final
               @diff = initial - final   
             end
-            #if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
+            if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
             if c.control_description_id == 2
               c.value += @diff
             end 
