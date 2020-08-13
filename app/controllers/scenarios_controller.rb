@@ -787,6 +787,11 @@ class ScenariosController < ApplicationController
         values[0] = operation.opv1
         items[1] = "Curve Number"
         values[1] = operation.opv2
+        #check if crop is cover crop and add the speciat information in item2
+        if Operation.find(operation.operation_id).subtype_id == 1 then
+          items[2] = "Special"
+          values[2] = "Cover_Crop"
+        end
       when 2 # fertilizer            #fertilizer or fertilizer(folier)
         items[0] = op.type_id   #fertilizer code'
         values[0] = op.amount * AC_TO_HA
