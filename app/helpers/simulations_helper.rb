@@ -33,6 +33,15 @@ module SimulationsHelper
       @apex_controls.each do |c|
         case c.control_description_id
           when 1..19 #line 1
+            if c.control_description_id == 1
+              # Find highest multiple of largest year. Jennifer 8/13/20
+              @largest_year = @scenario.operations.reorder("year")[-1]["year"]
+              total = c.value
+              while total % @largest_year != 0
+                total -= 1
+              end
+              c.value = total           
+            end
             if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += " " end
             @apex_control += sprintf("%4d", c.value)
           when 20
