@@ -722,7 +722,7 @@ module AplcatParametersHelper
     return send_file_to_APEX(apex_string, "BeefCattleNutrition.txt")
   end
 
-  def read_aplcat_results
+  def read_aplcat_results    # Updated by Jennifer 8/17/20
       aplcatresult = AplcatResult.where(:scenario_id => @scenario.id)
       #if simulation successful. Do. 1) delete the previous results 2) donwload the new results and save in database
       #download the results files
@@ -797,7 +797,7 @@ module AplcatParametersHelper
         aplcatresult.fch_dmi = data_calf[-2]
       end
 
-      # Get values for water intake for various species
+      # Get values for drinking water intake for various species
       data = get_file_from_APLCAT("WaterEnergyOutputCowCalf.txt")
       all_lines = data.each_line.grep(/Cows     :/)
       al = all_lines[0].split(':')
@@ -830,19 +830,48 @@ module AplcatParametersHelper
       aplcatresult.fch_wi = hef_calves
 
 
-       # Water Intake - sum of all the numbers under the column "Emb_water" 
+      # Water intake with feed (L/year) - Jennifer 8/17/20
       data = get_file_from_APLCAT("All_GWF_results.txt")
-      total = 0
+
+      heifer_total = 0   # Heifer, Heif_S
+      heifer_calf_total = 0  #Hfcf, Hfcf_S
+      cow_total = 0    #Cow, Cow_S
+      bull_total = 0   # Bull, Bull_S
+      # Missing data for calves in txt file
+
       all_lines = data.lines.grep(/:/)
       all_lines.each do |l|
-        ar = l.split(':')
-        n = ar[1].split()
-        total += n[8].to_f
-        puts "total: #{total}"
-      end
-      final_total = total   # Where to put this value?
+        if l.include?("Heifer") || l.include?("Heif_S")
+          ar = l.split(':')
+          n = ar[1].split
+          heifer_total += n[8].to_f
+        end
 
-      # Manure excretion for all species
+        if l.include?("Hfcf") || l.include?("Hfcf_S")
+          ar = l.split(':')
+          n = ar[1].split
+          heifer_calf_total += n[8].to_f
+        end
+
+        if l.include?("Cow") || l.include?("Cow_S")
+          ar = l.split(':')
+          n = ar[1].split
+          cow_total += n[8].to_f
+        end
+
+        if l.include?("Bull") || l.include?("Bull_S")
+          ar = l.split(':')
+          n = ar[1].split
+          bull_total += n[8].to_f
+        end
+        aplcatresult.cow_wif = data_cow[2]
+        aplcatresult.bull_wif = data_bull[2]
+        aplcatresult.rh_wif  = data_rh[3]  
+        aplcatresult.calf_wif = data_calf[2]
+        aplcatresult.fch_wif = data_fch[4]
+      end
+
+      # Quantity of manure and nitrogen present in manure for all species
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       if data.include? "Error =>" then
         return data
@@ -872,6 +901,14 @@ module AplcatParametersHelper
         data_bull = data_bull[0]
         data_bull = data_bull.split()
 
+        # Quantity of manure excreted
+        aplcatresult.calf_qme = data_calf[2]
+        aplcatresult.rh_qme = data_rh[3]
+        aplcatresult.fch_qme = data_fch[4]
+        aplcatresult.cow_qme = data_cow[2]
+        aplcatresult.bull_qme = data_bull[2]
+
+        # Nitrogen present in manure  - Jennifer 8/17/20
         aplcatresult.calf_sme = data_calf[6]
         aplcatresult.rh_sme = data_rh[8]
         aplcatresult.fch_sme = data_fch[10]
