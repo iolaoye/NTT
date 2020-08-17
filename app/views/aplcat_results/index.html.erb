@@ -16,19 +16,22 @@
         <th style="text-align:center" class="gvCellStyleTitle" colspan="2">Greenhouse gas Emissions</th>
         <th style="text-align:center" class="gvCellStyleTitle" rowspan="2" colspan="2"><%= t('general.actions') %></th>
       </tr>
+<!--     Updated Sections - Jennifer 8/14/20 -->
       <tr>
         <th class="gvCellStyleTitle"> Animal Weights (lb)</th>
         <th class="gvCellStyleTitle"> Dry Matter Intake (kg/day)</th>
         <th class="gvCellStyleTitle"> Gross Energy Intake (MJ/day)</th>
-        <th class="gvCellStyleTitle"> Water Intake (L/year, Emb_feed|drinking)</th>
-        <th class="gvCellStyleTitle"> Solid Manure excr. (kg_daily, manu|manu_N)</th>
+        <th class="gvCellStyleTitle"> Drinking water intake (L/year)</th>
+        <th class="gvCellStyleTitle"> Water intake with feed (L/year)</th>
+        <th class="gvCellStyleTitle"> Quantity of manure excreted (kg/day)</th>
+        <th class="gvCellStyleTitle"> Nitrogen present in manure (kg/year)</th>
         <th class="gvCellStyleTitle"> Nitrogen Intake (g/day)</th>
         <th class="gvCellStyleTitle"> Total Nitrogen excretion (g/day)</th>
         <th class="gvCellStyleTitle"> Total Nitrogen retained (g/day)</th>
         <th class="gvCellStyleTitle"> Fecal Nitrogen excretion (g/day)</th>
         <th class="gvCellStyleTitle"> Urine Nitrogen excretion (g/day)</th>
-        <th class="gvCellStyleTitle"> Enteric methane emission (g/day, kg/year)</th>
-        <th class="gvCellStyleTitle"> Manure methane emission (g/day, kg/year)</th>
+        <th class="gvCellStyleTitle"> Enteric methane emission (g/day)</th>
+        <th class="gvCellStyleTitle"> Manure methane emission (g/day)</th>
       </tr>
 <tbody class="gvRowStyleOdd">
   <% @aplcat_results.each do |aplcat_result| %>
@@ -38,7 +41,8 @@
         <td> <%= aplcat_result.calf_dmi %> </td>
         <td> <%= aplcat_result.calf_gei %> </td>
         <td> <%= aplcat_result.calf_wi %> </td>
-        <td> <%= aplcat_result.calf_sme %> </td>
+        <td> <%= aplcat_result.calf_qme %> </td> 
+        <td> <%= aplcat_result.calf_sme %> </td> 
         <td> <%= aplcat_result.calf_ni %> </td>
         <td> <%= aplcat_result.calf_tne %> </td>
         <td> <%= aplcat_result.calf_tnr %> </td>
