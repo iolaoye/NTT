@@ -912,7 +912,6 @@ module AplcatParametersHelper
         aplcatresult.fch_sme = data_fch[10]
         aplcatresult.cow_sme = data_cow[6]
         aplcatresult.bull_sme = data_bull[6]
-
       end
 
       # Emissions for calves
