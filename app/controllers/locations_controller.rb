@@ -301,7 +301,7 @@ class LocationsController < ApplicationController
           if (@field.weather_id == nil or @field.weather == nil) then
             #create the weather for this field
             @weather = Weather.new
-            save_prism()
+            msg = save_prism(@field.coordinates)
           else
             #update the weather for this field
             @weather = Weather.find(@field.weather_id)
