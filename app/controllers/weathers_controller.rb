@@ -155,7 +155,7 @@ include ScenariosHelper
     end
 
     if (params[:weather][:way_id] == "1")
-      save_prism
+      msg = save_prism
     end
 
     respond_to do |format|
