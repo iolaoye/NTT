@@ -829,8 +829,7 @@ module AplcatParametersHelper
       aplcatresult.calf_wi = calves
       aplcatresult.fch_wi = hef_calves
 
-
-      # Water intake with feed (L/year) - Jennifer 8/17/20
+# Water intake with feed (L/year) - Jennifer 8/17/20
       data = get_file_from_APLCAT("All_GWF_results.txt")
 
       heifer_total = 0   # Heifer, Heif_S
@@ -863,13 +862,12 @@ module AplcatParametersHelper
           ar = l.split(':')
           n = ar[1].split
           bull_total += n[8].to_f
-        end
-        aplcatresult.cow_wif = data_cow[2]
-        aplcatresult.bull_wif = data_bull[2]
-        aplcatresult.rh_wif  = data_rh[3]  
-        aplcatresult.calf_wif = data_calf[2]
-        aplcatresult.fch_wif = data_fch[4]
+        end    
       end
+      aplcatresult.cow_wif = cow_total
+      aplcatresult.bull_wif = bull_total
+      aplcatresult.rh_wif  = heifer_total
+      aplcatresult.fch_wif = heifer_calf_total
 
       # Quantity of manure and nitrogen present in manure for all species
       data = get_file_from_APLCAT("ManureOutputFile.txt")
@@ -901,19 +899,20 @@ module AplcatParametersHelper
         data_bull = data_bull[0]
         data_bull = data_bull.split()
 
-        # Quantity of manure excreted
+        # Quantity of manure excreted  - Jennifer 8/17/20
         aplcatresult.calf_qme = data_calf[2]
         aplcatresult.rh_qme = data_rh[3]
         aplcatresult.fch_qme = data_fch[4]
         aplcatresult.cow_qme = data_cow[2]
         aplcatresult.bull_qme = data_bull[2]
 
-        # Nitrogen present in manure  - Jennifer 8/17/20
+        # Nitrogen present in manure 
         aplcatresult.calf_sme = data_calf[6]
         aplcatresult.rh_sme = data_rh[8]
         aplcatresult.fch_sme = data_fch[10]
         aplcatresult.cow_sme = data_cow[6]
         aplcatresult.bull_sme = data_bull[6]
+
       end
 
       # Emissions for calves
