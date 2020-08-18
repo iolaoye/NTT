@@ -70,6 +70,9 @@
                       <span class="tooltiptext">
                         <%= link_to t("languages.english"), :locale=>'en', :project_id => params[:project_id]%><br>
                         <%= link_to t("languages.spanish"), :locale=>'es', :project_id => params[:project_id]%>
+                        <% if request.url.include? ".bk.?" or request.url.include? "localhost" %>
+                          <%= link_to t("languages.portuguese"), :locale=>'pt', :project_id => params[:project_id]%>
+                        <% end %>
                       </span>
                     </div>
                   </li>
