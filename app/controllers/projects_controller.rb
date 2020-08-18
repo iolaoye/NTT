@@ -1070,7 +1070,7 @@ class ProjectsController < ApplicationController
         @weather = Weather.new
         @weather.way_id = 1
         @weather.station_way ="map"
-        msg = save_prism
+        msg = save_prism(field.coordinates)
         #@weather.weather_file = "No set Yet"
         #@weather.weather_initial_year = @initial_year
         #@weather.weather_final_year = @initial_year + @number_years
