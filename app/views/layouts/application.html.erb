@@ -10,11 +10,13 @@
 		 <script src="https://cdn.rawgit.com/googlemaps/v3-utility-library/master/infobox/src/infobox.js"></script> -->
 	</head>
 	<body>
-		<% if NTTG3::Application.config.language == "en" %>
+		<% I18n.default_locale = NTTG3::Application.config.language.to_sym %>
+		
+		<!-- <% if NTTG3::Application.config.language == "en" %>
 			<% I18n.default_locale = :en %>
 		<% else %>
 			<% I18n.default_locale = :es %>
-		<% end %>
+		<% end %> -->
 
         <div id="navbar" class="navbar-collapse collapse">
    			<%= render "layouts/header" %>
