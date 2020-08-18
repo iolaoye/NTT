@@ -1065,16 +1065,18 @@ class ProjectsController < ApplicationController
         @location.coordinates = p.text
         @location.save
         field.coordinates = p.text
+        centroid = calculate_centroid(field.coordinates)
         #add weather
         @weather = Weather.new
-        @weather.way_id = 2
-        @weather.station_way ="Own"
-        @weather.weather_file = "No set Yet"
-        @weather.weather_initial_year = @initial_year
-        @weather.weather_final_year = @initial_year + @number_years
-        @weather.simulation_initial_year = @weather.weather_initial_year + 5
-        @weather.simulation_final_year = @weather.weather_final_year 
-        @weather.save
+        @weather.way_id = 1
+        @weather.station_way ="map"
+        msg = save_prism
+        #@weather.weather_file = "No set Yet"
+        #@weather.weather_initial_year = @initial_year
+        #@weather.weather_final_year = @initial_year + @number_years
+        #@weather.simulation_initial_year = @weather.weather_initial_year + 5
+        #@weather.simulation_final_year = @weather.weather_final_year 
+        #@weather.save
         field.weather_id = @weather.id
         if field.save! then
           #save weathr again to take field.id
@@ -1104,7 +1106,7 @@ class ProjectsController < ApplicationController
           site.rfnx = 0
           site.unr = 0
           site.upr = 0
-          centroid = calculate_centroid()
+          #centroid = calculate_centroid()
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.save

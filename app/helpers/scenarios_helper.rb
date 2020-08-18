@@ -963,7 +963,7 @@ module ScenariosHelper
 	    return opv2
 	end #end set_opval2
 
-	def calculate_centroid()
+	def calculate_centroid(coordinates)
 	    #https://en.wikipedia.org/wiki/Centroid.
 	    centroid_structure = Struct.new(:cy, :cx)
 	    centroid = centroid_structure.new(0.0, 0.0)
@@ -1251,7 +1251,7 @@ module ScenariosHelper
 	# GET /weathers/1.json
   	def save_prism
 	    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
-	    centroid = calculate_centroid()
+	    centroid = calculate_centroid(@field.coordinates)
 	    @weather.latitude = centroid.cy
 	    @weather.longitude = centroid.cx
 	    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
