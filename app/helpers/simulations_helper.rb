@@ -89,22 +89,22 @@ module SimulationsHelper
     msg = "OK"
   end
 
-  def calculate_centroid()
+  #def calculate_centroid(coordinates)
     #https://en.wikipedia.org/wiki/Centroid.
-    centroid_structure = Struct.new(:cy, :cx)
-    centroid = centroid_structure.new(0.0, 0.0)
-    points = @field.coordinates.split(" ")
-    i=0
+    #centroid_structure = Struct.new(:cy, :cx)
+    #centroid = centroid_structure.new(0.0, 0.0)
+    #points = @field.coordinates.split(" ")
+    #i=0
 
-    points.each do |point|
-      i+=1
-      centroid.cx += point.split(",")[0].to_f
-      centroid.cy += point.split(",")[1].to_f
-    end
-    centroid.cx = centroid.cx / (i)
-    centroid.cy = centroid.cy / (i)
-    return centroid
-  end
+    #points.each do |point|
+      #i+=1
+      #centroid.cx += point.split(",")[0].to_f
+      #centroid.cy += point.split(",")[1].to_f
+    #end
+    #centroid.cx = centroid.cx / (i)
+    #centroid.cy = centroid.cy / (i)
+    #return centroid
+  #end
 
   def get_future_climate(option, lat, lon)
     #i_year = 2020

@@ -147,7 +147,7 @@ class LocationsController < ApplicationController
             #create the site for this field
             site = Site.new
           end #end weather validation
-          centroid = calculate_centroid()
+          centroid = calculate_centroid(@field.coordinates)
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.elev = 0
@@ -284,7 +284,7 @@ class LocationsController < ApplicationController
             #create the site for this field
             site = Site.new
           end #end weather validation
-          centroid = calculate_centroid()
+          centroid = calculate_centroid(@field.coordinates)
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.elev = 0
