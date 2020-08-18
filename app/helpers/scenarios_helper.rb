@@ -967,7 +967,7 @@ module ScenariosHelper
 	    #https://en.wikipedia.org/wiki/Centroid.
 	    centroid_structure = Struct.new(:cy, :cx)
 	    centroid = centroid_structure.new(0.0, 0.0)
-	    points = @field.coordinates.split(" ")
+	    points = coordinates.split(" ")
 	    i=0
 
 	    points.each do |point|
