@@ -1023,6 +1023,7 @@ def send_file_to_DNDC(apex_string, file, state)
 
   #this is the new subarea creation method for regular simulatons
   def create_subareas(operation_number)  # operation_number is used for subprojects. for simple scenarios is 1
+    @reservoir = false  #identify is there is a reservoir or not.
     last_owner1 = 0
     i=0
     nirr = 0
@@ -1033,6 +1034,10 @@ def send_file_to_DNDC(apex_string, file, state)
       subareas[0].wsa = @field.field_area * AC_TO_HA
     end
     subareas.each do |subarea|
+      #determine if the subarea has a reservoir added. In that case identify it in order to route through the last subarea in add_subarea_file method.
+      if subarea.rsee > 0 then #this subarea has a reservoir
+        @reservoir = true
+      end
       soil = subarea.soil
       #if soil.selected then
       create_operations(soil.id, soil.percentage, operation_number, 0)   # 0 for subarea from soil. Subarea_type = Soil
@@ -1144,7 +1149,7 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%8.2f", _subarea_info.angl)
     @subarea_file.push(sLine + "\n")
     #/line 4
-    bmp = @scenario.bmps.where("bmpsublist_id = 4 or bmpsublist_id = 5").first
+    bmp = @scenario.bmps.where("bmpsublist_id = 4 or bmpsublist_id = 5").first   #change area for PP
     if bmp != nil then
       field_area = calculate_filter_area(bmp.width * FT_TO_KM, _subarea_info.wsa, bmp.sides)
       _subarea_info.wsa = field_area
@@ -1174,9 +1179,10 @@ def send_file_to_DNDC(apex_string, file, state)
         _subarea_info.rchl = _subarea_info.chl
       end
       if (operation_number > 1 && i == 0) then
-        _subarea_info.rchl = _subarea_info.rchl * 0.9
+        _subarea_info.rchl = _subarea_info.chl * 0.9
       end
     end
+    if @reservoir then _subarea_info.rchl = _subarea_info.chl * 0.9 end
     sLine = sprintf("%8.4f", _subarea_info.rchl)
     sLine += sprintf("%8.2f", _subarea_info.rchd)
     sLine += sprintf("%8.2f", _subarea_info.rcbw)
