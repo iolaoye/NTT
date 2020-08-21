@@ -285,7 +285,7 @@ class ScenariosController < ApplicationController
           msg = "OK"
           msg = run_scenario
           if msg != "OK" then 
-            @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") 
+            @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating APLCAT)") 
             return "Error"
           end
         end
@@ -300,6 +300,7 @@ class ScenariosController < ApplicationController
         end # end if msg
       end # end each do params loop
     end
+
     return msg
   end  # end method simulate_aplcat
   
