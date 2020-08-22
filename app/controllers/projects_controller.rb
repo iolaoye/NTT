@@ -1096,6 +1096,11 @@ class ProjectsController < ApplicationController
           #save parameters and controls
           load_parameters(0)
           load_controls
+          #update the initial year and years of simulation with the ones uploaded
+          @project.apex_controls[1].value = @initial_year
+          @project.apex_controls[1].save
+          @project.apex_controls[0].value = @number_years
+          @project.apex_controls[0].save
           #create site file
           site = Site.new
           site.field_id = field.id
