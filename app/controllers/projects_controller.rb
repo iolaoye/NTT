@@ -226,7 +226,8 @@ class ProjectsController < ApplicationController
           redirect_to projects_upload_path(@upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
         end
-        @data = Nokogiri::XML(params[:project])
+        original_data = params[:project].read
+        @data = Nokogiri::XML(original_data.gsub("[","<").gsub("]",">"))        
         @upload_id = 2       
       end
       @data.root.elements.each do |node|
