@@ -1485,8 +1485,12 @@ def send_file_to_DNDC(apex_string, file, state)
           cc_hash[cc_number] = s_o_new_kill
         end #if cover  != nill
       end #end c_cs each
-      @hu = Hash.new 
-      cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:activity_id], v[:type_id]]}
+      @hu = Hash.new
+      if @project.version == "Comet" then
+        cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day]]}
+      else
+        cc_hash_sorted = cc_hash.sort_by {|k, v| [v[:year], v[:month], v[:day], v[:activity_id], v[:type_id]]}
+      end
       cc_hash_sorted.each do |soil_operation|
         # ask for 1=planting, 5=kill, 3=tillage
         if soil_operation[1].apex_crop == CropMixedGrass && (soil_operation[1].activity_id == 1 || soil_operation[1].activity_id == 5 || soil_operation[1].activity_id == 3) then
