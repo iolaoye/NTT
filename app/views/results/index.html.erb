@@ -53,9 +53,6 @@
 		      			</select>
 		      		</td> 
 		      	<% end %>
-			    <%# debug Weather.select(:simulation_initial_year).uniq.each %>
-			    <td><%# collection_select :result1, :scenario_id, @field.scenarios.all("last_simulation > ?", 0), :id, :name, 
-			    	{:include_blank => "Final Year", :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
 			    <% field_id = 0 %>
 		        <% if session[:simulation] == 'scenario' %>
 				  <% field_id = @field.id %>
