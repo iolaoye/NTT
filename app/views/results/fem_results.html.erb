@@ -9,11 +9,12 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
-	      		 <!-- Show records which have both last_simulation and fem_last_simulation. Jennifer 8/24/2020 -->
+	      		 <!-- Show scenarios with records containing fem_last_simulation data. Jennifer 8/24/2020 -->
 	  			<% if session[:simulation] == 'scenario' %>
-		          <td><%= collection_select :result1, :scenario_id,@field.scenarios.where("fem_last_simulation > ?", 0).where("last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-		          <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("fem_last_simulation > ?", 0).where("last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-		          <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("fem_last_simulation > ?", 0).where("last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
+                    <% field_id = @field.id %>
+		          <td><%= collection_select :result1, :scenario_id,@field.scenarios.where("fem_last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
+		          <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("fem_last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
+		          <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("fem_last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
 		        <% else %>
 		          <td><%= collection_select :result1, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed1'), 
 		          	:selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
