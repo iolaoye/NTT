@@ -2960,7 +2960,7 @@ def send_file_to_DNDC(apex_string, file, state)
         if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
       end
       if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
-      @scenario.last_simulation = Time.now
+      #@scenario.last_simulation = Time.now
       if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
       return msg
     end # end show method
