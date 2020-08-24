@@ -280,6 +280,7 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
+        @scenario.aplcat_last_simulation = Time.now
         msg = get_file_from_APLCAT("APEX.wth")
         if msg.include? "Error" then
           msg = "OK"
@@ -317,6 +318,7 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
+        @scenario.fem_last_simulation = Time.now
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
