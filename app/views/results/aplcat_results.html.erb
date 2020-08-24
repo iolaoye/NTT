@@ -14,9 +14,10 @@
                 <% end %>
             </tr>
             <tr>
-                  <!-- Show scenarios with records containing aplcat_last_simulation data. Jennifer 8/24/2020 -->
-                  <td><%= collection_select :result1, :scenario_id, @field.scenarios.where("aplcat_last_simulation > ?", 0),
-                    :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
+             <!-- Show scenarios with records containing aplcat_last_simulation data. Jennifer 8/24/2020 -->
+                <% if session[:simulation] == 'scenario' %>
+                    <% field_id = @field.id %>
+                  <td><%= collection_select :result1, :scenario_id, @field.scenarios.where("aplcat_last_simulation > ?", 0), :id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
                   <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("aplcat_last_simulation > ?", 0), :id, :name,
                     {:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
                   <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("aplcat_last_simulation > ?", 0), :id, :name,
