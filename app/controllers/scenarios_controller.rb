@@ -238,8 +238,10 @@ class ScenariosController < ApplicationController
   			   @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
   			   raise ActiveRecord::Rollback
   	    end # end unless msg
-       @scenario.last_simulation = Time.now
-       @scenario.save!
+        if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
+         @scenario.last_simulation = Time.now
+         @scenario.save!
+        end
       end # end each do params loop
     end
   	return msg
@@ -302,9 +304,11 @@ class ScenariosController < ApplicationController
           end
           raise ActiveRecord::Rollback
         end # end if msg
+        if msg.eql?("OK")
+            @scenario.aplcat_last_simulation = Time.now 
+            @scenario.save!
+        end
       end # end each do params loop
-       @scenario.aplcat_last_simulation = Time.now
-       @scenario.save!
     end
 
     return msg
@@ -337,8 +341,10 @@ class ScenariosController < ApplicationController
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
         end # end unless msg
-        @scenario.fem_last_simulation = Time.now
-        @scenario.save!
+        if msg.eql?("OK")
+          @scenario.fem_last_simulation = Time.now
+          @scenario.save!
+        end
       end # end each do params loop
     end
     return msg
