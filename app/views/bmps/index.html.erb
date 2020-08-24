@@ -36,7 +36,7 @@
         <% if (manure_operations == 0 && bmp.bmpsublist_id == 18) || (bmp.bmpsublist_id == 18 && county_id != 2939) %>
           <% next %>
         <% end %>
-        <% if (bmp.bmpsublist_id == 20) && ENV["APP_VERSION"] == "modified" ) %>
+        <% if (bmp.bmpsublist_id == 20 && ENV["APP_VERSION"] == "modified") %>
           <% next %>
         <% end %>
 
