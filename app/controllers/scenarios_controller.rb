@@ -170,8 +170,10 @@ class ScenariosController < ApplicationController
   			msg = simulate_ntt
   		when params[:commit].include?("APLCAT")
   			msg = simulate_aplcat
+
       when params[:commit].include?("FEM")
         msg = simulate_fem
+
       when params[:commit].include?("DNDC")
         msg = simulate_dndc
   	end
@@ -236,6 +238,8 @@ class ScenariosController < ApplicationController
   			   @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
   			   raise ActiveRecord::Rollback
   	    end # end unless msg
+       @scenario.last_simulation = Time.now
+       @scenario.save!
       end # end each do params loop
     end
   	return msg
@@ -280,7 +284,6 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
-        @scenario.aplcat_last_simulation = Time.now
         msg = get_file_from_APLCAT("APEX.wth")
         if msg.include? "Error" then
           msg = "OK"
@@ -300,6 +303,8 @@ class ScenariosController < ApplicationController
           raise ActiveRecord::Rollback
         end # end if msg
       end # end each do params loop
+       @scenario.aplcat_last_simulation = Time.now
+       @scenario.save!
     end
 
     return msg
@@ -318,7 +323,6 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
-        @scenario.fem_last_simulation = Time.now
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
@@ -333,6 +337,8 @@ class ScenariosController < ApplicationController
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
         end # end unless msg
+        @scenario.fem_last_simulation = Time.now
+        @scenario.save!
       end # end each do params loop
     end
     return msg
