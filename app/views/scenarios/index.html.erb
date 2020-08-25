@@ -223,12 +223,12 @@
 								<% end %>
 							</td>
 							<td class="gvCellStyleText">
-							<%= scenario.aplcat_last_simulation %> <%# scenario.last_simulation %>
+							<%= scenario.aplcat_last_simulation %> 
 							</td>
 							</tr>
 						<%end%>
 					<%else%>
-					<!-- For FEM and NTT -->
+					<!-- For FEM and NTT. Jennifer 8/24/2020 -->
 						<td id="<%= scenario.name %>" class="gvCellStyleText">
 						  <%= check_box_tag "select_scenario[]", scenario.id %>
 						</td>
@@ -312,5 +312,3 @@
 		</div>
     <% end %>
 <% end %>
-
-<br>

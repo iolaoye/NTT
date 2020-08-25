@@ -170,8 +170,10 @@ class ScenariosController < ApplicationController
   			msg = simulate_ntt
   		when params[:commit].include?("APLCAT")
   			msg = simulate_aplcat
+
       when params[:commit].include?("FEM")
         msg = simulate_fem
+
       when params[:commit].include?("DNDC")
         msg = simulate_dndc
   	end
@@ -236,6 +238,10 @@ class ScenariosController < ApplicationController
   			   @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
   			   raise ActiveRecord::Rollback
   	    end # end unless msg
+        if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
+         @scenario.last_simulation = Time.now
+         @scenario.save!
+        end
       end # end each do params loop
     end
   	return msg
@@ -298,6 +304,10 @@ class ScenariosController < ApplicationController
           end
           raise ActiveRecord::Rollback
         end # end if msg
+        if msg.eql?("OK")
+            @scenario.aplcat_last_simulation = Time.now 
+            @scenario.save!
+        end
       end # end each do params loop
     end
 
@@ -331,6 +341,10 @@ class ScenariosController < ApplicationController
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
           raise ActiveRecord::Rollback
         end # end unless msg
+        if msg.eql?("OK")
+          @scenario.fem_last_simulation = Time.now
+          @scenario.save!
+        end
       end # end each do params loop
     end
     return msg
@@ -1016,8 +1030,17 @@ class ScenariosController < ApplicationController
         end
         msg = upload_scenarios_txt
       when "3"
-        @data = Nokogiri::XML(params[:scenarios])
-        msg = upload_scenarios_xml
+        original_data = params[:scenarios].read
+        @data = Nokogiri::XML(original_data.gsub("[","<").gsub("]",">")) 
+        if @data.elements[0].name.downcase == "navigation"  #this is a comet project
+          @data.root.elements.each do |node|
+            if node.name == "FieldInfo"
+              msg = upload_scenarios_comet(node)
+            end
+          end          
+        else
+          msg = upload_scenarios_xml
+        end
         if msg.include? "Error"
           return
         end
@@ -1031,6 +1054,37 @@ class ScenariosController < ApplicationController
       format.html { render action: "index" }
       format.json { render json: @scenarios }
     end
+  end
+
+  def upload_scenarios_comet(node)
+    #@data.xpath("//OperationInfo").each do |scn|
+      ActiveRecord::Base.transaction do
+        begin
+          scenario = Scenario.new
+          #scenario.name = scn.xpath("name").text
+          scenario.name = @field.scenarios.last.name + "_1"
+          scenario.field_id = @field.id
+          if scenario.save
+            #Copy subareas info by scenario
+            add_scenario_to_soils(scenario, false)
+            node.elements.each do |opr|
+              if opr.name == "OperationInfo"
+                msg = upload_operation_comet_version(scenario.id, opr.elements)
+              end
+              if opr.name == "BmpInfo"
+                msg = upload_bmp_comet_version(scenario.id, opr.elements)
+              end
+            end   # end node cicle
+          end  # if scenario.save
+        rescue => e
+          @errors.push = "Failed, Error: " + e.inspect
+          raise ActiveRecord::Rollback
+        ensure
+          next
+        end   #end begin/rescue/ensure
+      end  # end transaction
+    #end  # end reading data elements.
+    return "OK"
   end
 
   def upload_scenarios_txt
@@ -1174,7 +1228,7 @@ class ScenariosController < ApplicationController
       msg = "XML files does not have nodes"
       @errors.push msg
       return msg
-    when @data.elements[0].name.downcase != "ntt"
+    when @data.elements[0].name.downcase != "ntt" 
       msg = "Element[0] is not NTT - Please fix the xml file and try again."
       @errors.push msg
       return msg
