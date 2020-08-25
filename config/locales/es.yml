@@ -1418,7 +1418,7 @@ es:
       simul_parms: Simulation Parameters
       water_est: Water Estimation Parameters
       run_parm: RunParm APLCAT
-      tabular_parameters: Parámetros Tabulares 
+      tabular_parameters: Parámetros Tabulares
   grazing:
       type:
       start_julian:
@@ -2734,8 +2734,11 @@ es:
     build:
         header: Escenario de construcción de cuencas hidrográficas
         body1: 'Una vez que haya creado y nombrado su enrutamiento de parcela / escenario de cuenca, aparecerá en la lista de escenarios de cuencas hidrográficas. Haga clic en el escenario <strong> nombre </strong> de cuenca para comenzar a definir su escenario de cuenca.'
-        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela). Para agregar combinaciones de parcela / escenario al escenario de cuenca, seleccione el parcela y el escenario de las listas desplegables y haga clic en <strong> Agregar parcelas / Escenario </strong>. Continúe agregando parcelas / escenarios hasta que se complete su escenario de cuenca hidrográfica.'
-        body3: 'Una vez que haya terminado de seleccionar, haga clic en <strong> Atrás </strong> para volver a la página de la cuenca.'
+        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela).'
+    add_watershed:
+        header: 'Adding Watershed'
+        body1: 'To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body2: 'Once you have finished selecting, The selected field/scenario table will appear under the wateshed.'
     manage:
         header: Administrar escenarios de cuencas hidrográficas
         body1: 'La lista de escenarios de cuencas hidrográficas que ha creado aparecerá en la página Enrutamiento de parcela (Cuenca).'

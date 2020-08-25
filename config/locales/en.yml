@@ -1740,7 +1740,7 @@ en:
     projects: "To select an existing project, click on the project name"
     fields: "Click on the field name for model simulation"
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
-    aplcat_notice: "The following list only include scenarios with grazing operations" 
+    aplcat_notice: "The following list only include scenarios with grazing operations"
     scenarios: "To select a scenario click on the scenario name, to simulate scenarios click on the check box"
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
@@ -2667,8 +2667,11 @@ en:
     build:
         header: Build Watershed Scenario
         body1: 'Once you have created and named your field routing/watershed scenario, it will appear in the list of watershed scenarios. Click the watershed scenario <strong>name</strong> to begin defining your watershed scenario.'
-        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route the flow between fields. You may not add a field more than once to the same watershed scenario (the idea is combining fields to simulate as one field). To add field/scenario combinations to the watershed scenario, select the field and scenario from the drop down lists and click <strong>Add Fields / Scenario</strong>. Continue to add fields/scenarios until your watershed scenario is complete.'
-        body3: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
+        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route the flow between fields. You may not add a field more than once to the same watershed scenario (the idea is combining fields to simulate as one field).'
+    add_watershed:
+        header: Adding Watershed
+        body1: 'To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body2: 'Once you have finished selecting, The selected field/scenario table will appear under the wateshed.'
     manage:
         header: Manage Watershed Scenarios
         body1: 'The list of watershed scenarios that you have created will appear on the Field Routing (Watershed) page.'
