@@ -2164,10 +2164,24 @@ def send_file_to_DNDC(apex_string, file, state)
     ns = 0
     ps = 0
     ts = 0
+    subs = ""
     crop_total = 0
+    #define an inner function to add crops results to crops_data including the last year.
+    add_crop = ->() {
+      one_crop = Hash.new
+      one_crop["sub1"] = subs
+      one_crop["year"] = year_ant
+      one_crop["name"] = crop_ant
+      one_crop["yldg"] = yldg / crop_total
+      one_crop["yldf"] = yldf / crop_total
+      one_crop["ws"] = ws / crop_total
+      one_crop["ns"] = ns / crop_total
+      one_crop["ps"] = ps / crop_total
+      one_crop["ts"] = ts / crop_total
+      crops_data.push(one_crop)
+    }
     data.each_line do |tempa|
       if j >= 10 then
-        one_crop = Hash.new
         year1 = tempa[18, 4].to_i
         subs = tempa[5, 5].to_i
         crop1 = tempa[28, 4]
@@ -2186,16 +2200,8 @@ def send_file_to_DNDC(apex_string, file, state)
           ts += tempa[93, 9].to_f
           crop_total += 1
         else
-          one_crop["sub1"] = subs
-          one_crop["year"] = year_ant
-          one_crop["name"] = crop_ant
-          one_crop["yldg"] = yldg / crop_total
-          one_crop["yldf"] = yldf / crop_total
-          one_crop["ws"] = ws / crop_total
-          one_crop["ns"] = ns / crop_total
-          one_crop["ps"] = ps / crop_total
-          one_crop["ts"] = ts / crop_total
-          crops_data.push(one_crop)
+          #call the inner funtion defined above.
+          add_crop.call
           yldg = tempa[33, 9].to_f
           yldf = tempa[43, 9].to_f
           ws = tempa[63, 9].to_f
@@ -2209,6 +2215,9 @@ def send_file_to_DNDC(apex_string, file, state)
       end # end if j>=10
       j+=1
     end #end data.each
+    #this includes the last year fo simulation
+    add_crop.call
+
     if session[:simulation] == "scenario" then
       @scenario.crop_results.create(crops_data)
     else
