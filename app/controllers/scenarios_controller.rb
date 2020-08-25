@@ -1070,6 +1070,7 @@ class ScenariosController < ApplicationController
             node.elements.each do |opr|
               if opr.name == "OperationInfo"
                 msg = upload_operation_comet_version(scenario.id, opr.elements)
+              end
               if opr.name == "BmpInfo"
                 msg = upload_bmp_comet_version(scenario.id, opr.elements)
               end
