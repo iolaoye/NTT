@@ -1672,9 +1672,9 @@ def send_file_to_DNDC(apex_string, file, state)
           when 3  #liquid manure
             org_c = 0.10
           end#
-          if !(operation.org_c == nil) then
-            if operation.org_c > 0 then
-              org_c = operation.org_c
+          if !(oper.org_c == nil) then
+            if oper.org_c > 0 then
+              org_c = oper.org_c
             end
           end
         end
