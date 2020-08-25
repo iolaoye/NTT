@@ -494,4 +494,47 @@ module ProjectsHelper
 	    end
 	end
 
+    ######################## Upload BMPs from Comet ################################################
+  	def upload_bmp_comet_version(scenario_id, new_bmps)
+	    values = {}
+	    values[:action] = "save_bmps_from_load"
+	    values[:project_id] = @project.id
+	    values[:button] = t('submit.savecontinue')
+	    for i in 0..(new_bmps.length - 1)
+	      #bmp = Bmp.new
+	      #bmp.scenario_id = scenario_id
+	      case new_bmps[i].name
+	        when "TileDrain"
+	          values[:field_id] = @field.id
+	          values[:scenario_id] = scenario_id
+	          values[:bmp_td] = {}
+	          values[:bmp_td][:depth] = (new_bmps[0].elements[0].text.to_f / FT_TO_MM).round(1)
+	          values[:bmpsublist_id] = 3
+	          #bmp.depth = new_bmps[0].elements[0].text
+	          #bmp.depth = (bmp.depth / FT_TO_MM).round(1)
+	          #bmp.save
+	          #update subarea file with the TD
+	          #subareas = Subarea.where(:scenario_id => scenario_id)
+	          #subareas.each do |subarea|
+	            #subarea.idr = new_bmps[0].elements[0].text
+	            #subarea.save
+	          #end
+	        when "AutoIrrigation"
+	          #params[:scenario_id] = scenario_id
+	          values[:bmpsublist_id] = 1
+	          values[:irrigation_id] = new_bmps[0].elements["Code"].text
+	          values[:days] = new_bmps[0].elements["Frequency"].text
+	          values[:water_stress_factor] = new_bmps[0].elements["Stress"].text
+	          values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
+	          values[:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
+	          values[:dry_manure] = new_bmps[0].elements["ApplicationRate"].text
+	      end
+	      #$params = params
+	      bmp_controller = BmpsController.new
+	      bmp_controller.request = request
+	      bmp_controller.response = response
+	      bmp_controller.save_bmps_from_load(values)
+	    end
+	end
+
 end
