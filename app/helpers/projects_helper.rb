@@ -447,7 +447,7 @@ module ProjectsHelper
 	            operation.type_id = 1
 	            if nutrients.count >= 9 then
 	              operation.org_c = nutrients[5] 
-	              total_n = nutrients[6]
+	              total_n = nutrients[6].to_f
 	              operation.nh4_n = nutrients[7]
 	              operation.moisture = nutrients[8]
 	              operation.type_id = nutrients[9].to_i + 1
@@ -462,6 +462,7 @@ module ProjectsHelper
 	              when 1  
 	                operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC
 	              when 2
+	              	debugger
 	                operation.no3_n = (total_n/ 2000) / ((100 - operation.moisture) / 100) * operation.no3_n
 	                operation.po4_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.po4_p
 	                operation.org_n = (total_n/ 2000) / ((100 - operation.moisture) / 100) * operation.org_n
