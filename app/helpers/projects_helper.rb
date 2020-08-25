@@ -435,7 +435,8 @@ module ProjectsHelper
 	          end
 	          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
 	        when "Opv4"
-	          #todo add opv4 for grazing 
+	          #todo add opv4 for grazing
+	          total_n = 0
 	          if operation.activity_id == 2 then 
 	            nutrients = p.text.split(",")
 	            operation.no3_n = nutrients[0]
@@ -445,8 +446,8 @@ module ProjectsHelper
 	            operation.nh3 = nutrients[4]
 	            operation.type_id = 1
 	            if nutrients.count >= 9 then
-	              #nutrients[5] is not include because NTT do not ask fot it Org_c
-	              operation.org_c = nutrients[6]
+	              operation.org_c = nutrients[5] 
+	              total_n = nutrients[6]
 	              operation.nh4_n = nutrients[7]
 	              operation.moisture = nutrients[8]
 	              operation.type_id = nutrients[9].to_i + 1
@@ -461,15 +462,15 @@ module ProjectsHelper
 	              when 1  
 	                operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC
 	              when 2
-	                operation.no3_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.no3_n
+	                operation.no3_n = (total_n/ 2000) / ((100 - operation.moisture) / 100) * operation.no3_n
 	                operation.po4_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.po4_p
-	                operation.org_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.org_n
+	                operation.org_n = (total_n/ 2000) / ((100 - operation.moisture) / 100) * operation.org_n
 	                operation.org_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.org_p
 	                operation.amount = operation.amount / (2247*(100-operation.moisture)/100)
 	              when 3
-	                operation.no3_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.no3_n
+	                operation.no3_n = (total_n * 0.011982) / (100 - operation.moisture) * operation.no3_n
 	                operation.po4_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.po4_p
-	                operation.org_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.org_n
+	                operation.org_n = (total_n * 0.011982) / (100 - operation.moisture) * operation.org_n
 	                operation.org_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.org_p
 	                operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
 	             end            
