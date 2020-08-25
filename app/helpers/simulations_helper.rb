@@ -1668,10 +1668,15 @@ def send_file_to_DNDC(apex_string, file, state)
         if operation.activity_id == 2 then
           case operation.type_id
           when 2 # solid Manure              
-            org_c = 0.25               
+            org_c = 0.25
           when 3  #liquid manure
             org_c = 0.10
-          end#          
+          end#
+          if !(operation.org_c == nil) then
+            if operation.org_c > 0 then
+              org_c = operation.org_c
+            end
+          end
         end
         nh3 = 0
         if oper != nil then
