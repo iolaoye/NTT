@@ -52,6 +52,7 @@
 					<th ><%= t('general.change') + "(%)"%></th>
 				</tr>
 		  	</thead>
+		  <% if @field.scenarios.where("fem_last_simulation > ?", 0).count > 0%>
 		  	<tbody>
 				<% if @scenario1 != "0" && @scenario1 != "" then %>
 					<tr class="gvRowStyleOdd">
@@ -111,6 +112,7 @@
 					</tr>
 				<% end %>
 			</tbody>
+		  <% end %>	
 		</table>
 	</div>
 </form>
