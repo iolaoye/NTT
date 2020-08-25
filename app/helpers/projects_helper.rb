@@ -447,7 +447,7 @@ module ProjectsHelper
 	            operation.type_id = 1
 	            if nutrients.count >= 9 then
 	              operation.org_c = nutrients[5] 
-	              total_n = nutrients[6]
+	              total_n = nutrients[6].to_f
 	              operation.nh4_n = nutrients[7]
 	              operation.moisture = nutrients[8]
 	              operation.type_id = nutrients[9].to_i + 1
