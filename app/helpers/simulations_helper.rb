@@ -2102,9 +2102,9 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result["co2"] = tempa[163, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result["biom"] = tempa[324, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         if subs == 0 then
-          one_result["qdr"] = qdr_sum / total_subs
-          one_result["qdrn"] = qdrn_sum / total_subs
-          one_result["qdrp"] = qdrp_sum / total_subs
+          #one_result["qdr"] = qdr_sum / total_subs
+          #one_result["qdrn"] = qdrn_sum / total_subs
+          #one_result["qdrp"] = qdrp_sum / total_subs
           one_result["dprk"] = dprk_sum / total_subs
           one_result["irri"] = irri_sum / total_subs
           one_result["prkn"] = prkn_sum / total_subs
@@ -2122,9 +2122,9 @@ def send_file_to_DNDC(apex_string, file, state)
           biom = 0
           total_subs = 0
         else
-          qdr_sum += one_result["qdr"]
-          qdrn_sum += one_result["qdrn"]
-          qdrp_sum += one_result["qdrp"]
+          #qdr_sum += one_result["qdr"]
+          #qdrn_sum += one_result["qdrn"]
+          #qdrp_sum += one_result["qdrp"]
           irri_sum += one_result["irri"]
           dprk_sum += one_result["dprk"]
           prkn_sum += one_result["prkn"]
