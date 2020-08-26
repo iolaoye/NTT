@@ -899,7 +899,7 @@ module AplcatParametersHelper
         data_bull = data_bull[0]
         data_bull = data_bull.split()
 
-        # Quantity of manure excreted  - Jennifer 8/17/20
+        # Quantity of solid manure excreted  - Jennifer 8/17/20
         aplcatresult.calf_qme = data_calf[2]
         aplcatresult.rh_qme = data_rh[3]
         aplcatresult.fch_qme = data_fch[4]
