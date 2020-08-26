@@ -135,6 +135,12 @@ class ResultsController < ApplicationController
             @scenario3 = session[:scenario3] unless session[:scenario3] == nil or session[:scenario3] == "" or @project.location.watersheds.find_by_id(session[:scenario3]) == nil
         end
     end
+    #Oscar Gallego - 8/26/20 controling the first time user click in Results to avoid crashing if the scenario hasn't been simulated.
+    if params[:button] != "View" and params[:action] != "index"
+      @scenario1 = "0"
+      @scenario2 = "0"
+      @scenario3 = "0"
+    end
     @soil = "0"
     #load crop for each scenario selected
     i = 70

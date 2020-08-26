@@ -54,7 +54,8 @@
 		  	</thead>
 		  	<tbody>
 				<% if @scenario1 != "0" && @scenario1 != "" then %>
-					<% if @fem_results1.total_revenue &&  @fem_results2.total_revenue &&  @fem_results3.total_revenue then %>
+					<%# Oscar Gallego - 8/26/20 removing this condition because it produces an error if the scenario 1, 2, or 3 hasn't been simulated.
+					<%# if @fem_results1.total_revenue &&  @fem_results2.total_revenue &&  @fem_results3.total_revenue then %>
 						<tr class="gvRowStyleOdd">
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
 								<%= "Total Revenue" %>
@@ -73,8 +74,8 @@
 								<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
 							<% end %>
 						</tr>
-					<% end %>
-					<% if @fem_results1.total_cost && @fem_results1.total_cost && @fem_results1.total_cost then %>
+					<%# end %>
+					<%# if @fem_results1.total_cost && @fem_results1.total_cost && @fem_results1.total_cost then %>
 						<tr class="gvRowStyleOdd">
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
 								<%= "Total Cost" %>
@@ -94,8 +95,8 @@
 								<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
 							<% end %>
 						</tr>
-					<% end %>
-					<% if @fem_results1.net_return && @fem_results2.net_return && @fem_results3.net_return then %>
+					<%# end %>
+					<%# if @fem_results1.net_return && @fem_results2.net_return && @fem_results3.net_return then %>
 						<tr class="gvRowStyleOdd">
 							<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">
 								<%= "Net Return" %>
@@ -114,7 +115,7 @@
 								<td class= "gvTotalText" style="background-color:#CADCFF"><%= sprintf("%8.1f", difference1).to_s + " (" + sprintf("%8.1f", reduction1).to_s + ")" %></td>
 							<% end %>
 						</tr>
-					<% end %>
+					<%# end %>
 				<% end %>
 			</tbody>
 		</table>
