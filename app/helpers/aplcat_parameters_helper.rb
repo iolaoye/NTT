@@ -869,7 +869,7 @@ module AplcatParametersHelper
       aplcatresult.rh_wif  = heifer_total
       aplcatresult.fch_wif = heifer_calf_total
 
-      # Quantity of manure and nitrogen present in manure for all species
+      # Quantity of manure and nitrogen present in solid manure for all species
       data = get_file_from_APLCAT("ManureOutputFile.txt")
       if data.include? "Error =>" then
         return data
@@ -906,7 +906,7 @@ module AplcatParametersHelper
         aplcatresult.cow_qme = data_cow[2]
         aplcatresult.bull_qme = data_bull[2]
 
-        # Nitrogen present in manure 
+        # Nitrogen present in solid manure 
         aplcatresult.calf_sme = data_calf[6]
         aplcatresult.rh_sme = data_rh[8]
         aplcatresult.fch_sme = data_fch[10]
@@ -1056,8 +1056,14 @@ module AplcatParametersHelper
         # Enteric methane emission (g/day)
         data = get_file_from_APLCAT("EmsnOutCows.txt")
         daily_em = data.each_line.grep(/From/)
-        line = daily_em[0].split
-        aplcatresult.cow_eme = line[3]
+        lower = daily_em[0].split
+        l = lower[3].to_f
+        data = get_file_from_APLCAT("EmsnOutCows.txt")
+        daily_em_up = data.each_line.grep(/To/)
+        upper = daily_em_up[0].split
+        u = upper[3].to_f
+        avg = (l + u)/2
+        aplcatresult.cow_eme = avg
         # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmsnOutCows.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
