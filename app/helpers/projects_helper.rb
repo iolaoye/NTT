@@ -369,6 +369,7 @@ module ProjectsHelper
 	    operation.save
 	    activity_id = 0
 	    crop =  nil
+	    crop_ant = 0
 	    for i in 0..(new_operation.length - 1)
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
@@ -376,6 +377,11 @@ module ProjectsHelper
 	        when "Crop"
 	          operation.crop_id = p.text
 	          crop = Crop.find_by_number(operation.crop_id)
+	          if crop == nil then 
+	          	crop.id = crop_ant
+	          else
+	          	crop_ant = crop.id
+	          end
 	          operation.crop_id = crop.id
 	        when "Operation_Name"   #todo
 	          case true
@@ -393,6 +399,12 @@ module ProjectsHelper
 	              activity_id = 12
 	            when p.text.include?("Manure")
 	              activity_id = 2
+	            when p.text.include?("Grazing Start")
+	              activity_id = 7
+	            when p.text.include?("Grazing End")
+	              activity_id = 8
+	            when p.text.include?("Burn")
+	              activity_id = 11
 	            else
 	              activity_id = 2
 	          end
@@ -414,8 +426,9 @@ module ProjectsHelper
 	        when "Opv1"
 	          operation.amount = p.text
 	          if operation.amount == nil then operation.amount = 0 end
-	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
-	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
+	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end #irrigation - volume
+	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end #liming application
+	          if operation.activity_id == 7 then operation.amount = @field.field_area / operation.amount end # stoking rate for grazing
 	        when "Opv2"
 	          operation.depth = p.text
 	        when "Opv3"
