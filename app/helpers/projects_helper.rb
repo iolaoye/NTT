@@ -430,7 +430,7 @@ module ProjectsHelper
 	          if operation.amount == nil then operation.amount = 0 end
 	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end #irrigation - volume
 	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end #liming application
-	          if operation.activity_id == 7 then operation.amount = operation.amount end # Number of animal units
+	          #if operation.activity_id == 7 then operation.amount = operation.amount end # Number of animal units
 	        when "Opv2"
 	          operation.depth = p.text
 	        when "Opv3"
