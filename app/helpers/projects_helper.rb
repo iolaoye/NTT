@@ -369,7 +369,6 @@ module ProjectsHelper
 	    operation.save
 	    activity_id = 0
 	    crop =  nil
-	    crop_ant = 0
 	    for i in 0..(new_operation.length - 1)
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
@@ -378,11 +377,11 @@ module ProjectsHelper
 	          operation.crop_id = p.text
 	          crop = Crop.find_by_number(operation.crop_id)
 	          if crop == nil then 
-	          	crop.id = crop_ant
+	          	operation.crop_id = 0
 	          else
-	          	crop_ant = crop.id
+	          	operation.crop_id = crop.id
 	          end
-	          operation.crop_id = crop.id
+	          
 	        when "Operation_Name"   #todo
 	          case true
 	            when p.text.include?("Tillage")
