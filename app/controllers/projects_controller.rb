@@ -1051,6 +1051,7 @@ class ProjectsController < ApplicationController
         field.field_name = p.text
       when "Area"
         field.field_area = p.text
+        field.field_area = field.field_area / HA_TO_AC   #convert to acres.
       when "field_average_slope"
         field.field_average_slope = p.text
       when "Type"
