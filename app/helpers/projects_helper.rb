@@ -376,7 +376,12 @@ module ProjectsHelper
 	        when "Crop"
 	          operation.crop_id = p.text
 	          crop = Crop.find_by_number(operation.crop_id)
-	          operation.crop_id = crop.id
+	          if crop == nil then 
+	          	operation.crop_id = 0
+	          else
+	          	operation.crop_id = crop.id
+	          end
+	          
 	        when "Operation_Name"   #todo
 	          case true
 	            when p.text.include?("Tillage")
@@ -393,6 +398,12 @@ module ProjectsHelper
 	              activity_id = 12
 	            when p.text.include?("Manure")
 	              activity_id = 2
+	            when p.text.include?("Grazing Start")
+	              activity_id = 7
+	            when p.text.include?("Grazing End")
+	              activity_id = 8
+	            when p.text.include?("Burn")
+	              activity_id = 11
 	            else
 	              activity_id = 2
 	          end
@@ -414,8 +425,9 @@ module ProjectsHelper
 	        when "Opv1"
 	          operation.amount = p.text
 	          if operation.amount == nil then operation.amount = 0 end
-	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
-	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
+	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end #irrigation - volume
+	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end #liming application
+	          if operation.activity_id == 7 then operation.amount = @field.field_area / operation.amount end # stoking rate for grazing
 	        when "Opv2"
 	          operation.depth = p.text
 	        when "Opv3"
@@ -447,7 +459,7 @@ module ProjectsHelper
 	            operation.type_id = 1
 	            if nutrients.count >= 9 then
 	              operation.org_c = nutrients[5] 
-	              total_n = nutrients[6]
+	              total_n = nutrients[6].to_f
 	              operation.nh4_n = nutrients[7]
 	              operation.moisture = nutrients[8]
 	              operation.type_id = nutrients[9].to_i + 1
