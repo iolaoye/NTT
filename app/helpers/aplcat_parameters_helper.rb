@@ -784,7 +784,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        aplcatresult.rh_dmi = data_calf[-2]
+        aplcatresult.fch_dmi = data_calf[-2]
       end
 
       data = get_file_from_APLCAT("IntakeDMIheifercalves.txt")
@@ -794,7 +794,7 @@ module AplcatParametersHelper
         data_calf = data.lines.grep(/Average daily dry matter intake for the year for each heifer_calf/)
         data_calf = data_calf[0]
         data_calf = data_calf.split()
-        aplcatresult.fch_dmi = data_calf[-2]
+        aplcatresult.rh_dmi = data_calf[-2]
       end
 
       # Get values for drinking water intake for various species
@@ -836,6 +836,7 @@ module AplcatParametersHelper
       heifer_calf_total = 0  #Hfcf, Hfcf_S
       cow_total = 0    #Cow, Cow_S
       bull_total = 0   # Bull, Bull_S
+      calf_total = 0
       # Missing data for calves in txt file
 
       all_lines = data.lines.grep(/:/)
@@ -863,8 +864,16 @@ module AplcatParametersHelper
           n = ar[1].split
           bull_total += n[8].to_f
         end    
+
+        if l.include?("Calf") || l.include?("Calf_S")
+          ar = l.split(':')
+          n = ar[1].split
+          calf_total += n[8].to_f
+        end 
+
       end
       aplcatresult.cow_wif = cow_total
+      aplcatresult.calf_wif = calf_total
       aplcatresult.bull_wif = bull_total
       aplcatresult.rh_wif  = heifer_total
       aplcatresult.fch_wif = heifer_calf_total

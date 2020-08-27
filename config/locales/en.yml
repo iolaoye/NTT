@@ -1442,7 +1442,7 @@ en:
       wi: Water intake         # AKA Drinking water intake
       wif: Water intake with feed   #jennifer 8/14/20
       qme: Quantity of solid manure excreted  #jennifer 8/26/20
-      sme: Solid manure excretion  # AKA Nitrogen present in manure
+      sme: Nitrogen present in solid manure  # AKA Nitrogen present in manure
       ni: Nitrogen intake
       tne: Total nitrogen excretion
       tnr: Total nitrogen retained
