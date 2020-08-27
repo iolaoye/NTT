@@ -952,8 +952,14 @@ module AplcatParametersHelper
         # Enteric methane emission (g/day)
         data = get_file_from_APLCAT("EmissionOutputCalves.txt")
         daily_em = data.each_line.grep(/From/)
-        line = daily_em[0].split
-        aplcatresult.calf_eme = line[3]
+        lower = daily_em[0].split
+        l = lower[3].to_f
+        data = get_file_from_APLCAT("EmissionOutputCalves.txt")
+        daily_em_up = data.each_line.grep(/To/)
+        upper = daily_em_up[0].split
+        u = upper[3].to_f
+        calf_avg = (l + u)/2
+        aplcatresult.calf_eme = calf_avg
         # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmissionOutputCalves.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
@@ -1004,8 +1010,14 @@ module AplcatParametersHelper
         # Enteric methane emission (g/day)
         data = get_file_from_APLCAT("EmsnOutBulls.txt")
         daily_em = data.each_line.grep(/From/)
-        line = daily_em[0].split
-        aplcatresult.bull_eme = line[3]
+        lower = daily_em[0].split
+        l = lower[3].to_f
+        data = get_file_from_APLCAT("EmsnOutBulls.txt")
+        daily_em_up = data.each_line.grep(/To/)
+        upper = daily_em_up[0].split
+        u = upper[3].to_f
+        bull_avg = (l + u)/2
+        aplcatresult.bull_eme = bull_avg
         # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmsnOutBulls.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
@@ -1062,8 +1074,8 @@ module AplcatParametersHelper
         daily_em_up = data.each_line.grep(/To/)
         upper = daily_em_up[0].split
         u = upper[3].to_f
-        avg = (l + u)/2
-        aplcatresult.cow_eme = avg
+        cow_avg = (l + u)/2
+        aplcatresult.cow_eme = cow_avg
         # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmsnOutCows.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
@@ -1114,8 +1126,14 @@ module AplcatParametersHelper
         # Enteric methane emission (g/day)
         data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
         daily_em = data.each_line.grep(/From/)
-        line = daily_em[0].split
-        aplcatresult.fch_eme = line[3]
+        lower = daily_em[0].split
+        l = lower[3].to_f
+        data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
+        daily_em_up = data.each_line.grep(/To/)
+        upper = daily_em_up[0].split
+        u = upper[3].to_f
+        ch_avg = (l + u)/2
+        aplcatresult.fch_eme = ch_avg
          # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmsnOutFirstCalfHeifers.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
@@ -1166,8 +1184,14 @@ module AplcatParametersHelper
         # Enteric methane emission (g/day)
         data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
         daily_em = data.each_line.grep(/From/)
-        line = daily_em[0].split
-        aplcatresult.rh_eme = line[3]
+        lower = daily_em[0].split
+        l = lower[3].to_f
+        data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
+        daily_em_up = data.each_line.grep(/To/)
+        upper = daily_em_up[0].split
+        u = upper[3].to_f
+        rh_avg = (l + u)/2
+        aplcatresult.rh_eme = rh_avg
         # Manure methane emission (kg/year)
         data = get_file_from_APLCAT("EmsnOutReplHeifers.txt")
         total_mm= data.each_line.grep(/total manure methane emission/)
