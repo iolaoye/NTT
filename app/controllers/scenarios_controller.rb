@@ -1067,6 +1067,7 @@ class ScenariosController < ApplicationController
           if scenario.save
             #Copy subareas info by scenario
             add_scenario_to_soils(scenario, false)
+            @graz_oper_id = 0
             node.elements.each do |opr|
               if opr.name == "OperationInfo"
                 msg = upload_operation_comet_version(scenario.id, opr.elements)

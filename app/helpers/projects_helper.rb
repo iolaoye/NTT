@@ -416,6 +416,9 @@ module ProjectsHelper
 	          operation.year = p.text
 	        when "Operation"
 	          operation.type_id = p.text
+	          if p.text == "427" then 
+	          	operation.type_id = @graz_oper_id 
+	          end
 	          if p.text == "580" then
 	            operation.activity_id = 2
 	            operation.subtype_id = 1
@@ -427,7 +430,7 @@ module ProjectsHelper
 	          if operation.amount == nil then operation.amount = 0 end
 	          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end #irrigation - volume
 	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end #liming application
-	          if operation.activity_id == 7 then operation.amount = @field.field_area / operation.amount end # stoking rate for grazing
+	          #if operation.activity_id == 7 then operation.amount = operation.amount end # Number of animal units
 	        when "Opv2"
 	          operation.depth = p.text
 	        when "Opv3"
@@ -446,6 +449,7 @@ module ProjectsHelper
 	            end
 	          end
 	          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
+	          if operation.activity_id == 7 then operation.type_id = p.text end
 	        when "Opv4"
 	          #todo add opv4 for grazing
 	          total_n = 0
@@ -488,6 +492,10 @@ module ProjectsHelper
 	             end            
 	          end
 	          if operation.activity_id == 6 then operation.depth = p.text.to_f * 100 end
+	          if operation.activity_id == 7 then 
+	          	operation.nh3 = p.text 
+	          	operation.org_c = 1
+	          end
 	        when "Opv5"
 	          if operation.activity_id == 1 then
 	            operation.amount = p.text
@@ -496,10 +504,14 @@ module ProjectsHelper
 	              if operation.amount <= 0 then operation.amount = crop.plant_population_mt * FT2_TO_M2 end
 	            end
 	          end
+	          if operation.activity_id == 7 then operation.subtype_id = p.text end
 	      end
 	    end
 	    operation.rotation = 1
 	    if operation.save then
+	      if operation.activity_id == 7 then #means this is a Grazing Start operations. We need to save the id to add into the type_id for Grazing End operation 
+	      	@graz_oper_id = operation.id
+	      end
 	      add_soil_operation(operation)
 	      return "OK"
 	    else
