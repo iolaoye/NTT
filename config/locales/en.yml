@@ -1439,8 +1439,10 @@ en:
       aws: Animal weights
       dmi: Dry matter intake
       gei: Gross energy intake
-      wi: Water intake
-      sme: Solid manure excretion
+      wi: Water intake         # AKA Drinking water intake
+      wif: Water intake with feed   #jennifer 8/14/20
+      qme: Quantity of solid manure excreted  #jennifer 8/26/20
+      sme: Nitrogen present in solid manure  # AKA Nitrogen present in manure
       ni: Nitrogen intake
       tne: Total nitrogen excretion
       tnr: Total nitrogen retained
@@ -1738,6 +1740,7 @@ en:
     projects: "To select an existing project, click on the project name"
     fields: "Click on the field name for model simulation"
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
+    aplcat_notice: "The following list only include scenarios with grazing operations" 
     scenarios: "To select a scenario click on the scenario name, to simulate scenarios click on the check box"
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:

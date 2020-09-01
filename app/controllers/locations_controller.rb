@@ -147,7 +147,7 @@ class LocationsController < ApplicationController
             #create the site for this field
             site = Site.new
           end #end weather validation
-          centroid = calculate_centroid()
+          centroid = calculate_centroid(@field.coordinates)
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.elev = 0
@@ -284,7 +284,7 @@ class LocationsController < ApplicationController
             #create the site for this field
             site = Site.new
           end #end weather validation
-          centroid = calculate_centroid()
+          centroid = calculate_centroid(@field.coordinates)
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.elev = 0
@@ -301,7 +301,7 @@ class LocationsController < ApplicationController
           if (@field.weather_id == nil or @field.weather == nil) then
             #create the weather for this field
             @weather = Weather.new
-            save_prism()
+            msg = save_prism(@field.coordinates)
           else
             #update the weather for this field
             @weather = Weather.find(@field.weather_id)
