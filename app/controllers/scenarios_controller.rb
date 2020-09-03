@@ -9,6 +9,7 @@ class ScenariosController < ApplicationController
   include FemHelper
   include AplcatParametersHelper
   include DndcHelper
+  #include NrcsHelper
   ##############################  scenario bmps #################################
 # GET /scenarios/1
 # GET /1/scenarios.json
