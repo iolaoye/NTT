@@ -1015,6 +1015,8 @@ en:
     email: '<a href="mailto:gallego@tarleton.edu?Subject=Hello%20again" target="_top">gallego@tarleton.edu</a>'
   help:
     header: NTT Table of Contents
+    next: Next >
+    previous: < Previous
     return_to_table: 'Return to Table of Contents'
     overview: Overview
     overview1: About NTT
