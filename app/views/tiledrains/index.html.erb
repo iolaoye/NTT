@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tiledrains</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tiledrains.each do |tiledrain| %>
+      <tr>
+        <td><%= link_to 'Show', tiledrain %></td>
+        <td><%= link_to 'Edit', edit_tiledrain_path(tiledrain) %></td>
+        <td><%= link_to 'Destroy', tiledrain, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tiledrain', new_tiledrain_path %>
