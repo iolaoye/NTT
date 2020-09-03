@@ -451,7 +451,6 @@ module ProjectsHelper
 	          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
 	          if operation.activity_id == 7 then operation.type_id = p.text end
 	        when "Opv4"
-	          #todo add opv4 for grazing
 	          total_n = 0
 	          if operation.activity_id == 2 then 
 	            nutrients = p.text.split(",")

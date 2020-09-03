@@ -1418,7 +1418,7 @@ es:
       simul_parms: Simulation Parameters
       water_est: Water Estimation Parameters
       run_parm: RunParm APLCAT
-      tabular_parameters: Parámetros Tabulares 
+      tabular_parameters: Parámetros Tabulares
   grazing:
       type:
       start_julian:
@@ -2114,6 +2114,9 @@ es:
         header: Copiar escenario de otro parcela
         body1: 'El usuario puede copiar escenarios de otros parcelas y usarlos en el parcela existente. Para copiar escenarios, haga clic en <strong> Copiar escenario de otro parcela </strong> en la parte superior de la página, luego seleccione el parcela y el escenario que desea copiar. Haga clic en el botón <strong> Copiar </strong> cuando haya terminado. El escenario se copiará y aparecerá en la lista de escenarios de gestión para ese parcela. Además, un escenario puede ser duplicado y renombrado y modificado para diferentes escenarios de gestión dentro de un parcela usando la tecla de copia debajo de las opciones de acción.'
         body2: 'El usuario no necesita agregar BMP para avanzar o para que se ejecute el escenario. Sin embargo, el usuario necesita agregar un sistema de cultivo. Para agregar un sistema de cultivo o BMP, el usuario debe ir a su página respectiva y seguir las instrucciones que se describen a continuación.'
+    upload_scenarios:
+        header: Upload your own scenarios
+        body1: 'The user can upload their own scenarios from their local computer. To upload scenarios, click <strong>Upload your own scenarios</strong> and select the type of file you would like to upload and select <strong>Choose File</strong>.'
     operation:
         header: Administrar escenarios de parcela
         body: 'La página Escenarios de gestión incluye una lista de los escenarios creados para el parcela. La lista incluye el nombre del escenario, los parcelas de clima, suelos y operaciones, fecha de simulación y una columna de acciones.'
@@ -2294,6 +2297,7 @@ es:
       <strong>Escenarios</strong><br></br>
       El usuario puede crear un escenario dando clic en el botón  <b>Agregar nuevo escenario</b>. Esto abrirá una nueva página donde el usuario debe dar un nombre al escenario, por ejemplo, "Baseline" o "Alternativa" o "Riego automático", etc. Después de dar un nombre al escenario, el usuario debe dar clic en el botón <strong>Guardar</strong>, que creará el escenario y lo llevará a la página de operaciones.<br><br>
       El usuario puede copiar escenarios de otras parcelas y usarlos en el proyecto existente. para copiar escenarios, haga clic en el botón <strong>Copiar escenario de otra parcela</strong> que creará una copia del escenario seleccionado.<br><br>
+      The user can also upload their own scenarios and use it in the existing project. In order to upload, click <strong>Upload your own scenarios</strong> and select the type of file you want to upload. Click on <strong>Choose File</strong> which will then upload your scenarios.<br><br>
       Puede agregar tantos escenarios como sea necesario. Para simular escenarios, el usuario debe seleccionar los escenarios a simular y hacer clic en botón <strong>Simular NTT</strong>.<br><br>
       Para ver los resultados de los escenarios simulados, de clic in el botón <strong>Ver Resultados</strong>.<br><br>
       <strong>Opciones</strong><br>
@@ -2734,8 +2738,11 @@ es:
     build:
         header: Escenario de construcción de cuencas hidrográficas
         body1: 'Una vez que haya creado y nombrado su enrutamiento de parcela / escenario de cuenca, aparecerá en la lista de escenarios de cuencas hidrográficas. Haga clic en el escenario <strong> nombre </strong> de cuenca para comenzar a definir su escenario de cuenca.'
-        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela). Para agregar combinaciones de parcela / escenario al escenario de cuenca, seleccione el parcela y el escenario de las listas desplegables y haga clic en <strong> Agregar parcelas / Escenario </strong>. Continúe agregando parcelas / escenarios hasta que se complete su escenario de cuenca hidrográfica.'
-        body3: 'Una vez que haya terminado de seleccionar, haga clic en <strong> Atrás </strong> para volver a la página de la cuenca.'
+        body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela).'
+    add_watershed:
+        header: 'Adding Watershed'
+        body1: 'To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body2: 'Once you have finished selecting, The selected field/scenario table will appear under the wateshed.'
     manage:
         header: Administrar escenarios de cuencas hidrográficas
         body1: 'La lista de escenarios de cuencas hidrográficas que ha creado aparecerá en la página Enrutamiento de parcela (Cuenca).'
