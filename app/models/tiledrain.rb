@@ -1,2 +1,0 @@
-class Tiledrain < ApplicationRecord
-end
