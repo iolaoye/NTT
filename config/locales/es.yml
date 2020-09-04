@@ -1005,6 +1005,8 @@ es:
     email: <a href="mailto:gallego@tarleton.edu?Subject=Hello%20again" target="_top"></a>
   help:
     header: NTT Tabla de Contenidos
+    next: Next >
+    previous: < Previous
     return_to_table: 'Regresar a la Tabla de Contenidos'
     overview: Visión General
     overview1: Acerca de NTT
