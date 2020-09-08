@@ -91,6 +91,9 @@ class FieldsController < ApplicationController
 # GET /fields/1
 # GET /fields/1.json
   def show
+    if params[:format] == "json" then
+      coor = Field.find(params[:id]).coordinates
+    end
     session[:simulation] = "scenario"
     #session[:field_id] = params[:id]
     #@project = Project.find(params[:project_id])
@@ -102,7 +105,8 @@ class FieldsController < ApplicationController
       else
         format.html { redirect_to edit_project_field_weather_path(@project, @field, @field.weather.id) }
       end
-      format.json { render json: @field, status: :created, weather: @field.id }
+      #format.json { render json: @field, status: :created, weather: @field.id }
+      format.json { render json: coor }
     end
   end
 
