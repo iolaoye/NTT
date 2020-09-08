@@ -564,7 +564,7 @@ class ScenariosController < ApplicationController
       crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
       ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
-    ntt_fem_Options += "APEXFolder|" + folder + "\n"
+    #ntt_fem_Options += "APEXFolder|" + folder + "\n"
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file
