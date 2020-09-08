@@ -25,7 +25,8 @@
 						<th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
 					<% end %>
 					<th><%= t('field.field_name')%></th>
-					<th class="gvTitleStyleNumber"><%= t('field.field_area') + " (ac)"%></th>
+					<th><%= t('field.field_tile_drain')%></th>
+					<th><%= t('field.field_area') + " (ac)"%></th>
 					<!-- <th class="gvTitleStyleNumber"><%= t('field.field_avg_slope')%></th> -->
 					<th><%#= t('field.field_type')%></th>
 					<th><%= t('general.actions')%></th>
@@ -40,6 +41,7 @@
 							</td>
 						<% end %>
 						<td id="<%= field.field_name %>"class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field), data: {disable_with: 'Please wait. . . .'} %></td>
+						<td class="table-link"><%= link_to "Add Tile Drain", edit_project_field_path(@project.id, field), title: t('general.edit') %></td>
 						<td class="gvCellStyleNumber"><%= field.field_area %></td>
 						<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
 						<td><%= link_to image_tag("edit.png"), edit_project_field_path(@project.id, field), title: t('general.edit') %>
