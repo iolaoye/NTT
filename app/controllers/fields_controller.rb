@@ -161,7 +161,10 @@ class FieldsController < ApplicationController
   	msg = ""
   	field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
-  	field.field_area = params[:field][:field_area]
+    field.field_area = params[:field][:field_area]
+    field.depth = params[:field][:depth]
+    field.tile_bioreactors = params[:field][:tile_bioreactors]
+    field.drainage_water_management = params[:field][:drainage_water_management]
     field.soil_test = params[:field][:soil_test]
   	field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
@@ -354,7 +357,7 @@ class FieldsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def field_params
-    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp, :soil_test)
+    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp, :soil_test, :depth, :tile_bioreactors, :drainage_water_management)
   end
 
   def update_field()
