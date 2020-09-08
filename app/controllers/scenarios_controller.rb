@@ -552,7 +552,6 @@ class ScenariosController < ApplicationController
     ntt_fem_Options += "NTTPath|" + folder + "\n"
     ntt_fem_Options += "COUNTY|" + County.find(@project.location.county_id).county_state_code + "\n"
     ntt_fem_Options += "Scenario|" + @scenario.name + "\n"
-    ntt_fem_Options += "APEXFolder|" + folder + "\n"
     #find if there are bmps with area taken from the field
     bmps_area = @scenario.bmps.where("area>0").sum(:area)
     #find the crops in the scenario a take crop, yield, unit, field area, field area without bmps.
@@ -565,6 +564,7 @@ class ScenariosController < ApplicationController
       crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
       ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
+    ntt_fem_Options += "APEXFolder|" + folder + "\n"
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file
