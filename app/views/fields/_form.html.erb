@@ -1,16 +1,15 @@
-<%= form_for [@project, @field] do |f| %>
+<%= form_for [@project, @field], :url => project_field_path(@project) do |f| %>
   <% if @field.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('activerecord.form_errors', :count => @field.errors.count, :model => t('models.field').downcase) %></h2>
       <ul>
+     
       <% @field.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
-
-  <% if ENV["APP_VERSION"] == "modified" %>
     <div class="field" title="Name of Field">
       <%= f.label t('field.field_name') %>
       <%= f.text_field :field_name %>
@@ -19,61 +18,21 @@
       <%= f.label t('field.field_area') %>
       <%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
+    <div id="fsetSimulation" class="panel panel-default">
+      <div class="panel-heading"><%= t('pdf.tile_drain') + " Information" %></div>
+      <div class="panel-body">
     <div class="field" title="Field Depth">
-      <%= f.label t('field.depth') + " (ft)"%>
+      <%= f.label t('bmp.depth') + " (ft)"%>
        <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
         <div class="field" title="Tile Bioreactors">
-      <%= f.label t('field.tile_bioreactors') %>
+      <%= f.label t('bmp.tile_bioreactors') %>
       <%= f.check_box :tile_bioreactors %>
     </div>
     <div class="field" title="Drainage Water Management">
-      <%= f.label t('field.drainage_water_management') %>
+      <%= f.label t('bmp.drainage_management') %>
       <%= f.check_box :drainage_water_management %>
     </div>    
-    <div class="actions">
-      <%= f.submit :class => "btn btn-primary" %>
-      <%= link_to t('general.back'), project_fields_path(@project), :class => "btn btn-primary" %>
-    </div>
-
-    <!-- <div class="field">
-    <%= f.label t('field.field_avg_slope') %>
-      <%= f.number_field :field_average_slope, :class => 'gvTitleStyleNumber', :step => "any", disabled: true  %>  <a href="#" id="trigger">[?]</a>
-    </div>
-    <div class="field">
-      <%= f.label t('field.coordinate') + " (long, lat)" %><br>
-      <%= f.text_area :coordinates, :required => 'true', disabled: true %>
-    </div>
-    <div class="actions">
-      <%= f.submit :class => "btn btn-primary" %>
-  	<%= link_to t('general.back'), project_fields_path(@project), :class => "btn btn-primary" %>
-    </div> -->
-  <% else %>
-    <div class="field" title="Name of Field">
-      <%= f.label t('field.field_name') %>
-      <%= f.text_field :field_name %>
-    </div>
-    <div class="field" title="Field Area (Ac.). Must be greater than 0.">
-      <%= f.label t('field.field_area') %>
-      <%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any" %>
-    </div>
-    <div class="field" title="Field Depth">
-      <%= f.label t('field.depth') + " (ft)"%>
-       <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
-    </div>
-        <div class="field" title="Tile Bioreactors">
-      <%= f.label t('field.tile_bioreactors') %>
-      <%= f.check_box :tile_bioreactors %>
-    </div>
-    <div class="field" title="Drainage Water Management">
-      <%= f.label t('field.drainage_water_management') %>
-      <%= f.check_box :drainage_water_management %>
-    </div>    
-    <div class="actions">
-      <%= f.submit :class => "btn btn-primary" %>
-      <%= link_to t('general.back'), project_fields_path(@project), :class => "btn btn-primary" %>
-    </div>
-
     <!-- <div class="field">
     <%= f.label t('field.field_avg_slope') %>
       <%= f.number_field :field_average_slope, :class => 'gvTitleStyleNumber', :step => "any", :disabled => true %>
@@ -83,7 +42,14 @@
       <%= f.label t('field.coordinate') + " (long, lat)" %><br>
       <%= f.text_area :coordinates, :readonly => true %>
     </div> -->
-  <% end %>
+      </div>
+    </div>
+    <div class="actions">
+      <%# <%= f.submit, project_fields_path(@project, @field), :class => "btn btn-primary" %> 
+      <%= f.submit :class => "btn btn-primary" %> 
+      <%= link_to t('general.back'), project_fields_path(@project), :class => "btn btn-primary" %>
+    </div>
+ 
 <% end %>
 
 <script>
