@@ -21,7 +21,7 @@
     </div>
     <div class="field" title="Field Depth">
       <%= f.label t('field.depth') + " (ft)"%>
-       <%= f.number_field :depth, :min => .001, :class => 'gvTitleStyleNumber', :step => "any" %>
+       <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
         <div class="field" title="Tile Bioreactors">
       <%= f.label t('field.tile_bioreactors') %>
@@ -59,7 +59,7 @@
     </div>
     <div class="field" title="Field Depth">
       <%= f.label t('field.depth') + " (ft)"%>
-       <%= f.number_field :depth, :min => 1, :class => 'gvTitleStyleNumber', :step => "any" %>
+       <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
         <div class="field" title="Tile Bioreactors">
       <%= f.label t('field.tile_bioreactors') %>
