@@ -204,7 +204,8 @@ class FieldsController < ApplicationController
     respond_to do |format|
       if msg.eql?("OK") then
   	    #get_field_list(@field.location_id)
-  	    format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
+        format.html { redirect_to project_fields_path(@project) , notice: 'Field was successfully updated.' }
+        # format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         if msg.include?("duplicate")
