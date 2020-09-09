@@ -83,8 +83,7 @@ class WatershedsController < ApplicationController
 
   def simulate_fem
     @errors = Array.new
-    msg = "OK"
-    #msg = fem_tables()  
+    msg = "OK" 
     if params[:select_watershed] == nil then
       @errors.push("Select at least one watershed to simulate ")
       return "Select at least one watershed to simulate "
@@ -92,12 +91,6 @@ class WatershedsController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:select_watershed].each do |id|
         @watershed = Watershed.find(id)
-        byebug
-        # if @watershed.operations.count <= 0 then
-        #   @errors.push(@watershed.name + " " + t('scenario.add_crop_rotation'))
-        #   return
-        # end
-        #msg = create_fem_tables  Should be added when tables are able to be modified such us feed table etc.
         msg = run_fem
         unless msg.eql?("OK")
           @errors.push("Error simulating watershed " + @watershed.name + " (" + msg + ")")
@@ -148,10 +141,16 @@ class WatershedsController < ApplicationController
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
-  def new_scenario()
+  def new_scenario
     # validates taht field does not exist in the watershed
     field_id = params[("field" + params[:watershed_number]).to_sym]
+    if field_id == "" then
+      return "Error => Please select a Field"
+    end
     scenario_id = params[("scenario" + params[:watershed_number]).to_sym]
+    if scenario_id == "" then
+      return "Error => Please select a Scenario"
+    end
     item = WatershedScenario.find_by_field_id_and_watershed_id(field_id, params[:watershed_id])
 	  if item == nil && field_id != nil && scenario_id != nil
 			@new_watershed_scenario = WatershedScenario.new
@@ -170,14 +169,14 @@ class WatershedsController < ApplicationController
   end
 
   ################################  SHOW used for simulation   #################################
-  def show()
+  def show
     # GET /watersheds/1
     # GET /watersheds/1.json
     simulate
   end
 
   ################################  simulation   #################################
-  def simulate 
+  def simulate
     msg = "OK"
     @errors = Array.new
     if params[:action] != nil

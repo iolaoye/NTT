@@ -8,7 +8,7 @@
     <% if @errors.length > 0 %>
         <div id="error_explanation">
 			<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-			<h2>Simulation failed to run</h2>
+		 	<h2>Error Message</h2>
 			<ul>
 				<% @errors.each do |error| %>
 					<li> <%= error %></li>
@@ -95,19 +95,20 @@
 									<table class='table table-striped'>
 										<tr>
 											<td>
-												<%= select_tag field_id.to_sym, options_for_select(Field.where(:location_id => @project.location.id).collect {|c| [c.field_name, c.id]}, :selected => 0), {:prompt => t('helpers.select.field'), :required => true}%>
-												<%= select_tag scenario_id.to_sym, options_for_select(@scenarios, :selected => 0), {:prompt => t('helpers.select.scenario'), :required => true}%>
+												<%= select_tag field_id.to_sym, options_for_select(Field.where(:location_id => @project.location.id).collect {|c| [c.field_name, c.id]}, :selected => 0), {:prompt => t('helpers.select.field')}%>
+												<%= select_tag scenario_id.to_sym, options_for_select(@scenarios, :selected => 0), {:prompt => t('helpers.select.scenario')}%>
 											</td>
 											<div >
 												<%= button_tag("Add", :class=>"btn btn-primary", :id=>"button",:name=>"submit") %>
 											</div>
 										</tr>
 									</table>
+									<%= form_tag new_scenario_project_watershed_path(@project, w), method: :post do |p| %>
 									<table class='table table-condensed table-bordered' style="background-color: #fefbd8">
 										<thead>
 										  <tr>
 							    			<th class="gvCellStyleTitle"><%= t('field.field_name')%></th>
-							    			<th class="gvCellStyleTitle"><%= t('fwatershed_scenario.routing_to') %></th>
+							    			<th class="gvCellStyleTitle"><%= t('watershed_scenario.routing_to') %></th>
 							    			<th class="gvCellStyleTitle"><%= t('scenario.scenario_name')%></th>
 							    			<th class="gvCellStyleTitle"><%= t('general.actions')%></th>
 							  			  </tr>
@@ -138,6 +139,7 @@
 								  			<% end %>
 										</tbody>
 									</table>
+									<% end %>
 								</td>
 							</tr>
 						<% end %>
