@@ -180,15 +180,18 @@ class FieldsController < ApplicationController
         end
       end
     end
-    
+
     if field.save
-      field.soils.each do |soil|
-        soil.subareas.each do |subarea| 
-        # Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
-          subarea.idr = params[:field][:depth].to_f * FT_TO_MM
-          subarea.save!
+      if field.soils.count > 0
+        field.soils.each do |soil|
+          soil.subareas.each do |subarea| 
+            debugger
+            # Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
+            subarea.idr = params[:field][:depth].to_f * FT_TO_MM
+            subarea.save!
+          end
         end
-      end
+      end 
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
