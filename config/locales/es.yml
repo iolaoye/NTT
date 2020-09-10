@@ -940,6 +940,7 @@ es:
   #   note1: '* A. Saleh, O. Gallego, E. Osei, H. Lal, C. Gross, S. McKinney and H. Cover. 2011. Nutrient Tracking Tool—a user-friendly tool for calculating nutrient reductions for water quality trading.  Soil and Water Conservation Society.  November/December 2011 vol. 66 no. 6 400-410.'
   #   note2: '** Williams J.R., Arnold J.G., Srinivasan R.. 2000. The APEX Model. BRC Report No. 00-06, Oct. 2000.'
   about:
+    header: 'Nutrient Tracking Tool (NTT) Visón General'
     overview1: 'La <strong> herramienta de seguimiento de nutrientes (NTT) </strong> fue diseñada y desarrollada por el Instituto de Texas para la Investigación Ambiental Aplicada (TIAER) de la Universidad Estatal de Tarleton con fondos de la Oficina de Mercados Ambientales del USDA, el programa de subvenciones para la innovación de conservación USDA-NRCS. y varias agencias estatales.'
     overview2: 'NTT es una aplicación web específica para un sitio que estima las pérdidas de nutrientes y sedimentos a escala de parcela o en la escala de cuenca pequeña.'
     overview3: 'Los productores agrícolas y los administradores de la tierra pueden definir una serie de escenarios de gestión y generar un informe que muestre las diferencias de pérdida de nutrientes esperadas entre los escenarios seleccionados para un parcela determinado o pequeña cuenca.'
@@ -1005,8 +1006,8 @@ es:
     email: <a href="mailto:gallego@tarleton.edu?Subject=Hello%20again" target="_top"></a>
   help:
     header: NTT Tabla de Contenidos
-    next: Next >
-    previous: < Previous
+    next: Siguiente >
+    previous: < Anterior
     return_to_table: 'Regresar a la Tabla de Contenidos'
     overview: Visión General
     overview1: Acerca de NTT
@@ -2119,8 +2120,8 @@ es:
         body1: 'El usuario puede copiar escenarios de otros parcelas y usarlos en el parcela existente. Para copiar escenarios, haga clic en <strong> Copiar escenario de otro parcela </strong> en la parte superior de la página, luego seleccione el parcela y el escenario que desea copiar. Haga clic en el botón <strong> Copiar </strong> cuando haya terminado. El escenario se copiará y aparecerá en la lista de escenarios de gestión para ese parcela. Además, un escenario puede ser duplicado y renombrado y modificado para diferentes escenarios de gestión dentro de un parcela usando la tecla de copia debajo de las opciones de acción.'
         body2: 'El usuario no necesita agregar BMP para avanzar o para que se ejecute el escenario. Sin embargo, el usuario necesita agregar un sistema de cultivo. Para agregar un sistema de cultivo o BMP, el usuario debe ir a su página respectiva y seguir las instrucciones que se describen a continuación.'
     upload_scenarios:
-        header: Upload your own scenarios
-        body1: 'The user can upload their own scenarios from their local computer. To upload scenarios, click <strong>Upload your own scenarios</strong> and select the type of file you would like to upload and select <strong>Choose File</strong>.'
+        header: 'Cargar su propio escenario'
+        body1: 'El usuario puede cargar sus propios escenarios desde un computador local. Para cargar escenarios, presione <strong>Cargar sus propios escenarios</strong> y seleccione el tipo de archivo que quiere cargar y seleccione <strong>Choose File</strong>.'
     operation:
         header: Administrar escenarios de parcela
         body: 'La página Escenarios de gestión incluye una lista de los escenarios creados para el parcela. La lista incluye el nombre del escenario, los parcelas de clima, suelos y operaciones, fecha de simulación y una columna de acciones.'
@@ -2301,7 +2302,7 @@ es:
       <strong>Escenarios</strong><br></br>
       El usuario puede crear un escenario dando clic en el botón  <b>Agregar nuevo escenario</b>. Esto abrirá una nueva página donde el usuario debe dar un nombre al escenario, por ejemplo, "Baseline" o "Alternativa" o "Riego automático", etc. Después de dar un nombre al escenario, el usuario debe dar clic en el botón <strong>Guardar</strong>, que creará el escenario y lo llevará a la página de operaciones.<br><br>
       El usuario puede copiar escenarios de otras parcelas y usarlos en el proyecto existente. para copiar escenarios, haga clic en el botón <strong>Copiar escenario de otra parcela</strong> que creará una copia del escenario seleccionado.<br><br>
-      The user can also upload their own scenarios and use it in the existing project. In order to upload, click <strong>Upload your own scenarios</strong> and select the type of file you want to upload. Click on <strong>Choose File</strong> which will then upload your scenarios.<br><br>
+      El usuario puede cargar sus propios escenarios desde un computador local. Para cargar escenarios, presione <strong>Cargar sus propios escenarios</strong> y seleccione el tipo de archivo que quiere cargar y seleccione <strong>Choose File</strong>.<br><br>
       Puede agregar tantos escenarios como sea necesario. Para simular escenarios, el usuario debe seleccionar los escenarios a simular y hacer clic en botón <strong>Simular NTT</strong>.<br><br>
       Para ver los resultados de los escenarios simulados, de clic in el botón <strong>Ver Resultados</strong>.<br><br>
       <strong>Opciones</strong><br>
@@ -2666,7 +2667,7 @@ es:
         body4: 'NTT is designed to compare a baseline scenario (present) with an alternative scenario (future). Because of this, it is assumed that the user will be looking for improvements in the alternative scenario. This means that <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
         body5: 'The Difference is the amount decreased (First Scenario – Second Scenario) for Total N, Total P, Total Flow, and Sediment. “Reduction” is the “Difference” expressed as a percentage. For these, a negative value on “Reduction” and “Difference” indicates an increase from “First Scenario” to “Second Scenario”. Conversely, for Total Area and Crops, the difference is expressed as the amount increased from “First Scenario” to “Second Scenario”. Negative numbers here indicate a reduction from “First Scenario” to “Second Scenario”. Again, <strong>negative numbers in the difference and reduction % represent an undesirable result and positive numbers indicate a desired result.</strong>'
         body6: 'The Total Area column represents something different than the Total Area row. Because the results under the two scenarios are PER ACRE, the Total Area column allows you to view the difference that this would cause for the entire area selected by the user in previous pages. For instance, in the example shown above, the Total Area value for CORN is 1100. This means that for the entire field (not just per acre), the user is produces 1100 more crops using the alternative scenario versus the baseline scenario. For Total N, Total P, Total Flow, and Sediment a negative value on <strong>Total Area</strong> indicate an increase from <strong>First Scenario</strong> to <strong>Second Scenario</strong>. For these, you can calculate <strong>Total Area</strong> by using the following formula: <strong>(baseline value * total area) – (alternative value * total area)</strong>. Conversely for Crops, a negative value on <strong>Total Area</strong> indicates a decrease from <strong>First Scenario</strong> to <strong>Second Scenario.</strong> For Crops, you can calculate the <strong>Total Area</strong> by using the following formula: <strong>(alternative value * total area) – (baseline value * total area).</strong>'
-        body7: Viewing Results Graphically
+        body7: 'Ver Resultados Gráficamente'
         body8: 'Además de poder ver los resultados en forma de tabla, NTT también ofrece la opción de ver los resultados de manera gráfica. Hay dos vistas gráficas para que el usuario seleccione entre: resultados anuales y mensuales. El usuario puede seleccionar estas vistas usando el menú de navegación izquierdo.'
         item1: '<strong> Gráficos anuales (últimos 12 años): </strong> Los gráficos anuales permiten a los usuarios ver las pérdidas promedio anuales de un componente específico (por ejemplo, flujo o sedimento) durante los últimos 12 años de la simulación. Para seleccionar la vista anual, haga clic en Annual-Chart en el menú de navegación izquierdo. Una vez que se ha seleccionado esta opción, el usuario selecciona los escenarios que le gustaría comparar y el componente que desea ver, como se muestra a continuación. Esto mostrará los resultados seleccionados en el gráfico. Además del gráfico, los resultados anuales se muestran debajo del gráfico en forma de tabla y también se pueden exportar.'
         item2: '<strong> Gráfico mensual (todo el período): </strong> la vista de gráfico mensual permite a los usuarios ver las pérdidas de promedios mensuales para los componentes particulares durante el período de la simulación (35 años). Para ver la vista de gráfico mensual, haga clic en Gráfico mensual en el menú de navegación de la izquierda. Los gráficos mensuales están limitados a los constituyentes que APEX resume mensualmente (consulte las opciones de la lista desplegable a continuación).'
@@ -2744,9 +2745,9 @@ es:
         body1: 'Una vez que haya creado y nombrado su enrutamiento de parcela / escenario de cuenca, aparecerá en la lista de escenarios de cuencas hidrográficas. Haga clic en el escenario <strong> nombre </strong> de cuenca para comenzar a definir su escenario de cuenca.'
         body2: 'Al construir su escenario de cuenca hidrográfica, comenzará a agregar parcelas / escenarios en el orden en que desea encaminar el flujo entre los parcelas. No puede agregar un parcela más de una vez al mismo escenario de cuenca (la idea es combinar parcelas para simular como un parcela).'
     add_watershed:
-        header: 'Adding Watershed'
-        body1: 'To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.'
-        body2: 'Once you have finished selecting, The selected field/scenario table will appear under the wateshed.'
+        header: 'Adicionar Cuenca'
+        body1: 'Para adicionar combinaciones de parcel/escenario a un escenario de cuenca, seleccione la cuenca que desea accesar. La fila de la cuenca se expanderá.'
+        body2: 'Seleccione la parcela y el escenario que desee y presione Add para adicionar la selección. Repita el proceso para adicionar más parcelas/escenarios'
     manage:
         header: Administrar escenarios de cuencas hidrográficas
         body1: 'La lista de escenarios de cuencas hidrográficas que ha creado aparecerá en la página Enrutamiento de parcela (Cuenca).'
