@@ -181,12 +181,31 @@ class FieldsController < ApplicationController
       end
     end
 
+    # Save soil Tile Drain values into Bmp table
+    values = {}
+    values[:action] = "save_bmps_from_load"
+    values[:project_id] = @project.id
+    values[:button] = t('submit.savecontinue')
+    values[:field_id] = field.id
+     # values[:scenario_id] = scenario_id ### one field has multiple scenarios
+    values[:bmp_td] = {}
+    values[:bmp_td][:depth] = params[:field][:depth]
+     # Add irrigation_id
+    params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
+     # Add crop_id
+    params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1: values[:bmp_td][:crop_id] = 0
+    bmp_controller = BmpsController.new
+    bmp_controller.request = request
+    bmp_controller.response = response
+    bmp_controller.save_bmps_from_load(values)
+
     if field.save
+      @depth = params[:field][:depth].to_f * FT_TO_MM
+      #Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
       if field.soils.count > 0
         field.soils.each do |soil|
           soil.subareas.each do |subarea| 
-            # Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
-            subarea.idr = params[:field][:depth].to_f * FT_TO_MM
+            subarea.idr = @depth
             subarea.save!
           end
         end
@@ -218,8 +237,8 @@ class FieldsController < ApplicationController
     respond_to do |format|
       if msg.eql?("OK") then
   	    #get_field_list(@field.location_id)
-        format.html { redirect_to project_fields_path(@project) , notice: 'Field was successfully updated.' }
-        # format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
+        #format.html { redirect_to project_scenarios_path(@project) , notice: 'Field was successfully updated.' }
+        format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         if msg.include?("duplicate")
