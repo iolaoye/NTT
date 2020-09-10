@@ -630,11 +630,15 @@ module ScenariosHelper
 				#line 2
 				subarea.number = 104
 				subarea.iops = soil_id
-				#subarea.iow = 1
 				#line 5
 				subarea.rchl = (@bmp.width * FT_TO_KM).round(4)   #soil_area here is the reservior area
 				#line 4
-				subarea.wsa = temp_length * subarea.rchl * 100
+				if @bmp.grass_field_portion > 0 then
+					subarea.wsa = (@bmp.grass_field_portion * FT_TO_KM) * subarea.rchl * 100  #convert length to km and the area to ha.
+				else
+					subarea.wsa = temp_length * subarea.rchl * 100
+				end
+				
 				update_wsa("-", subarea.wsa)
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
