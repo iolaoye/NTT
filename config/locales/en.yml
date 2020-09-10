@@ -809,9 +809,6 @@ en:
     field: Field
     field_name: Field Name
     field_area: Field Area
-    depth: Depth
-    tile_bioreactors: Tile Bioreactors
-    drainage_water_management: Drainage Water Management
     field_avg_slope: Field Average Slope
     new_field: New Field
     field_title: Fields
