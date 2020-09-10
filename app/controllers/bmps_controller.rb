@@ -635,7 +635,6 @@ class BmpsController < ApplicationController
     @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
-      debugger
       if subarea != nil then
         case type
           when "create", "update"
@@ -655,7 +654,7 @@ class BmpsController < ApplicationController
 			      subarea.drt = 2
           when "delete"
             subarea.idr = params[:field][:depth]
-            # subarea.idr = Field.where(:id => @values[:field_id])
+            # subarea.idr = Field.where(:id => @values[:field_id]).first[:depth]
             subarea.drt = 0
             subarea.tdms = 0
         end
