@@ -163,14 +163,14 @@ class FieldsController < ApplicationController
 # PATCH/PUT /fields/1.json
   def update
   	msg = ""
-  	field = Field.find(params[:id])
+    field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
     field.field_area = params[:field][:field_area]
     field.depth = params[:field][:depth]
     field.tile_bioreactors = params[:field][:tile_bioreactors]
     field.drainage_water_management = params[:field][:drainage_water_management]
     field.soil_test = params[:field][:soil_test]
-  	field.soilp = params[:field][:soilp]
+    field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
     fields = @project.fields.pluck(:id, :field_name)
     fields.each do |key, value|
@@ -180,7 +180,17 @@ class FieldsController < ApplicationController
         end
       end
     end
-  	if field.save
+
+    if field.save
+      if field.soils.count > 0
+        field.soils.each do |soil|
+          soil.subareas.each do |subarea| 
+            # Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
+            subarea.idr = params[:field][:depth].to_f * FT_TO_MM
+            subarea.save!
+          end
+        end
+      end 
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
