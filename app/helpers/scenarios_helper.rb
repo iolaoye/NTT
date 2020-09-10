@@ -335,7 +335,7 @@ module ScenariosHelper
         			subarea.bft = 0.8
         		end
 			when 3  #tile drain
-				subarea.idr = 0
+				subarea.idr = @bmp.depth * FT_TO_MM
 				subarea.drt = 2
 			when 4   #PPDE, PPTW
 				if @bmp.depth == 6 || @bmp.depth == 7 then
