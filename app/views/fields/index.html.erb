@@ -18,14 +18,14 @@
 	<%= t('instructions.fields') %><br>
 	<div class="table-responsive">
 		<div class="panel panel-default">
-		  <table class="table table-striped", id="tbl_fields", name="tbl_fields">
+		  <table class="table table-striped", id="tbl_fields", name="tbl_fields", table style= "table-layout:fixed">
 			<thead>
 				<tr>
 					<%if ENV["APP_VERSION"] == "standard" and field_simulation == 1 then%>
 						<th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
 					<% end %>
 					<th><%= t('field.field_name')%></th>
-					<th><%= t('field.field_tile_drain')%></th>
+					<%# <th><%= t('field.field_tile_drain')%>
 					<th><%= t('field.field_area') + " (ac)"%></th>
 					<!-- <th class="gvTitleStyleNumber"><%= t('field.field_avg_slope')%></th> -->
 					<th><%#= t('field.field_type')%></th>
@@ -41,8 +41,8 @@
 							</td>
 						<% end %>
 						<td id="<%= field.field_name %>"class="table-link"><%= link_to field.field_name, project_field_soils_path(@project, field), data: {disable_with: 'Please wait. . . .'} %></td>
-						<td class="table-link"><%= link_to "Has Tile Drain?", edit_project_field_path(@project.id, field), title: t('general.edit') %></td>
-						<td class="gvCellStyleNumber"><%= field.field_area %></td>
+						<%# <td class="table-link"><%= link_to "Has Tile Drain?", edit_project_field_path(@project.id, field), title: t('general.edit') %>
+						<td id="field_area"><%= field.field_area %></td>
 						<td><%#= check_box_tag :field_type, name="chk_forestry", field.field_type, disabled: true%></td>
 						<td><%= link_to image_tag("edit.png"), edit_project_field_path(@project.id, field), title: t('general.edit') %>
 							<%= link_to image_tag("delete.png"), project_field_path(@project, field), title: t('general.delete'), method: :delete, data: { confirm: t('general.confirm') } %>
