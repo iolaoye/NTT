@@ -70,7 +70,7 @@ class BmpsController < ApplicationController
   			end
       end
       @bmps[bmp.bmpsublist_id-1] = bmp # contains bmp.id
-      if bmp.bmpsublist_id == 1 then 
+      if bmp.bmpsublist_id == 1 then
         @crop_arr = Array.new
         temp_hash = Hash.new
         crops = Crop.where(id: @scenario.operations.select(:crop_id).distinct)
@@ -98,7 +98,7 @@ class BmpsController < ApplicationController
           @crop_arr << temp_hash
         end
       end
-     
+
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
   			climates = Climate.where(:bmp_id => bmp.id)
   			i=0
@@ -598,7 +598,7 @@ class BmpsController < ApplicationController
         			subarea.bft = 0.0
             end
             if @bmp.save then
-              if params[:mycrop] != nil then 
+              if params[:mycrop] != nil then
                 params[:mycrop].each do |id, v|
                   ts = Timespan.find_by_bmp_id_and_crop_id(@bmp.id, id)
                   if id && ts == nil
@@ -608,7 +608,7 @@ class BmpsController < ApplicationController
                 end
               end
             end
-        
+
   			  when "delete"
     				subarea.nirr = 0.0
     				subarea.vimx = 0.0
@@ -643,12 +643,12 @@ class BmpsController < ApplicationController
             @bmp.irrigation_id = 0
             subarea.tdms = 0
             @bmp.crop_id = 0
-            if !(@values[:irrigation_id] == nil) then 
+            if !(@values[:irrigation_id] == nil) then
               @bmp.irrigation_id = 1
               #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
             end
-            if !(@values[:crop_id] == nil) then 
-              @bmp.crop_id = 1 
+            if !(@values[:crop_id] == nil) then
+              @bmp.crop_id = 1
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
 			      subarea.drt = 2
@@ -712,7 +712,7 @@ class BmpsController < ApplicationController
           end
         else
          return "Error saving BMP"
-        end          
+        end
       when "update"
         if @bmp.area != nil && @bmp.width != nil && @bmp.sides != nil
           update_existing_subarea("PPDE")
@@ -773,7 +773,7 @@ class BmpsController < ApplicationController
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
   def pond(type)
-  	@bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f 
+  	@bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f
     @soils = Soil.where(:field_id => @values[:field_id])
     i = 0
     @soils.each do |soil|
@@ -866,7 +866,7 @@ end
     return "OK"
   end    # end method
 
-### ID: 12 
+### ID: 12
   def riparian_forest(type)
     case type
       when "create"
@@ -956,6 +956,7 @@ end
       when "create"
 		    @bmp.width = @values[:bmp_ww][:width]
 		    @bmp.crop_id = @values[:bmp_ww][:crop_id]
+        @bmp.grass_field_portion = @values[:bmp_ww][:length]
         @bmp.slope_reduction = @values[:bmp_ww][:floodplain_flow]
         @bmp.area = 0
   		  if @bmp.save then
@@ -983,7 +984,7 @@ end
       @bmp.crop_width = 0
       @bmp.width = 0
       @bmp.crop_id = 0
-      #delete all of CB subarea_type 
+      #delete all of CB subarea_type
       subareas = @scenario.subareas.where(:subarea_type => "CB")
       subareas.destroy_all
       #delete all of the SoilOperations ofor CB
@@ -1047,20 +1048,20 @@ end
     return "OK"
   end   # end method
 
-### ID: 20 
+### ID: 20
   def reservoir(type)
-    @bmp.water_stress_factor = @values[:bmp_rs][:rsee].to_f 
-    @bmp.irrigation_efficiency = @values[:bmp_rs][:rsae].to_f 
-    @bmp.maximum_single_application = @values[:bmp_rs][:rsve].to_f 
-    @bmp.safety_factor = @values[:bmp_rs][:rsep].to_f 
-    @bmp.depth = @values[:bmp_rs][:rsap].to_f 
-    @bmp.area = @values[:bmp_rs][:rsvp].to_f 
-    @bmp.dry_manure = @values[:bmp_rs][:rsv].to_f 
-    @bmp.days = @values[:bmp_rs][:rsrr].to_f 
-    @bmp.no3_n = @values[:bmp_rs][:rsys].to_f 
-    @bmp.po4_p = @values[:bmp_rs][:rsyn].to_f 
-    @bmp.org_n = @values[:bmp_rs][:rshc].to_f 
-    @bmp.hours = @values[:bmp_rs][:rsdp].to_f 
+    @bmp.water_stress_factor = @values[:bmp_rs][:rsee].to_f
+    @bmp.irrigation_efficiency = @values[:bmp_rs][:rsae].to_f
+    @bmp.maximum_single_application = @values[:bmp_rs][:rsve].to_f
+    @bmp.safety_factor = @values[:bmp_rs][:rsep].to_f
+    @bmp.depth = @values[:bmp_rs][:rsap].to_f
+    @bmp.area = @values[:bmp_rs][:rsvp].to_f
+    @bmp.dry_manure = @values[:bmp_rs][:rsv].to_f
+    @bmp.days = @values[:bmp_rs][:rsrr].to_f
+    @bmp.no3_n = @values[:bmp_rs][:rsys].to_f
+    @bmp.po4_p = @values[:bmp_rs][:rsyn].to_f
+    @bmp.org_n = @values[:bmp_rs][:rshc].to_f
+    @bmp.hours = @values[:bmp_rs][:rsdp].to_f
     @bmp.org_p = @values[:bmp_rs][:rsbd].to_f
     @soil = @field.soils.last
     i = 0
@@ -1069,28 +1070,28 @@ end
       if subarea != nil then
         case type
           when "create", "update"
-            subarea.rsee = @bmp.water_stress_factor  
-            subarea.rsae = @bmp.irrigation_efficiency 
-            subarea.rsve = @bmp.maximum_single_application 
-            subarea.rsep = @bmp.safety_factor 
-            subarea.rsap = @bmp.depth 
-            subarea.rsvp = @bmp.area 
-            subarea.rsv = @bmp.dry_manure  
-            subarea.rsrr = @bmp.days  
-            subarea.rsys = @bmp.no3_n 
-            subarea.rsyn = @bmp.po4_p  
-            subarea.rshc = @bmp.org_n 
-            subarea.rsdp = @bmp.hours 
-            subarea.rsbd = @bmp.org_p  
+            subarea.rsee = @bmp.water_stress_factor
+            subarea.rsae = @bmp.irrigation_efficiency
+            subarea.rsve = @bmp.maximum_single_application
+            subarea.rsep = @bmp.safety_factor
+            subarea.rsap = @bmp.depth
+            subarea.rsvp = @bmp.area
+            subarea.rsv = @bmp.dry_manure
+            subarea.rsrr = @bmp.days
+            subarea.rsys = @bmp.no3_n
+            subarea.rsyn = @bmp.po4_p
+            subarea.rshc = @bmp.org_n
+            subarea.rsdp = @bmp.hours
+            subarea.rsbd = @bmp.org_p
           when "delete"
-            subarea.rsee = 0  
+            subarea.rsee = 0
             subarea.rsae = 0
             subarea.rsve = 0
-            subarea.rsep = 0 
+            subarea.rsep = 0
             subarea.rsap = 0
-            subarea.rsvp = 0 
-            subarea.rsv = 0  
-            subarea.rsrr = 0  
+            subarea.rsvp = 0
+            subarea.rsv = 0
+            subarea.rsrr = 0
             subarea.rsys = 0
             subarea.rsyn = 0
             subarea.rshc = 0
@@ -1457,8 +1458,8 @@ end
       if id == 15 then   #contour buffer
         total_width = @bmp.width + @bmp.crop_width
         total_strips = ((@field.field_area * AC_TO_HA * 10000) / (total_width * FT_TO_MM)).to_i
-        buffer_area = @bmp.width / total_width 
-        crop_area = @bmp.crop_width / total_width 
+        buffer_area = @bmp.width / total_width
+        crop_area = @bmp.crop_width / total_width
         if total_strips > MAX_STRIPS then total_strips = MAX_STRIPS end
         subareas = @scenario.subareas
         number = subareas.count + 1
@@ -1514,7 +1515,7 @@ end
             end
           end
         end
-      else  # others 
+      else  # others
         create_subarea(name, @inps, @bmp.area, @slope, false, 0, "", @bmp.scenario_id, @iops, 0, 0, @field.field_area, @bmp.id, id, false, "create", false)
       end
       return "OK"
