@@ -114,8 +114,12 @@ module ScenariosHelper
  ###################################### create_subarea ###################################### 
  ## Create subareas from soils receiving from map for each field and for each scenario ###
 	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
-		subarea = Subarea.new
-		update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
+		# Check if soil has tile drain
+		@tile_drain_depth = Field.find(params[:field_id]).depth 
+		if bmp_id == 0 && bmpsublist_id == 0 
+			subarea = Subarea.new 
+			update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
+		end
 	end
 
 	def update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
@@ -206,7 +210,7 @@ module ScenariosHelper
         subarea.iri = 0
         subarea.ira = 0
         subarea.lm = 1
-        subarea.ifd = 0
+		subarea.ifd = 0
         subarea.idr = 0
         subarea.idf1 = 0
         subarea.idf2 = 69
@@ -297,9 +301,8 @@ module ScenariosHelper
 			end #if operations no nill
 		end # end if scneario_id == 0
 		if subarea.save then
-			
+
 		else
-			
 		end
 	end
 
@@ -332,7 +335,7 @@ module ScenariosHelper
         			subarea.bft = 0.8
         		end
 			when 3  #tile drain
-				subarea.idr = @bmp.depth * FT_TO_MM  # update the tile drain depth in mm.
+				subarea.idr = @tile_drain_depth  
 				subarea.drt = 2
 			when 4   #PPDE, PPTW
 				if @bmp.depth == 6 || @bmp.depth == 7 then
