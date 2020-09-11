@@ -17,7 +17,7 @@
         <tbody>
           <% @fem_generals.each do |fem_general| %>
             <tr>
-              <td><%= fem_general.name %></td>
+              <td><%= fem_general.name.capitalize %></td>
               <td><%= fem_general.codes %></td>
               <td><%= fem_general.value %></td>
               <td><%#= link_to 'Show', project_fem_general_path(fem_general) %></td>

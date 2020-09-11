@@ -9,7 +9,7 @@ csv.each do |row|
     puts row.to_hash
     FarmGeneral.create!(
         {:id => row[0],
-         :name => row[1],
+         :name => row[1].capitalize,
          :value => row[2],
          :project_id => @project.id
         }, 

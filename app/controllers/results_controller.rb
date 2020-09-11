@@ -314,6 +314,12 @@ class ResultsController < ApplicationController
             @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
             @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
             @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
+            if @type == t("general.view") or @type == t('result.all_years') then
+              #find the results for FEM.
+              if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
+              if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
+              if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
+            end
         when t('activerecord.models.result.fem_results')
           if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
           if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end

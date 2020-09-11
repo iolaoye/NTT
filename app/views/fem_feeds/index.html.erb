@@ -24,7 +24,7 @@
         <tbody>
           <% @fem_feeds.each do |fem_feed| %>
             <tr>
-              <td><%= fem_feed.name %></td>
+              <td><%= fem_feed.name.capitalize %></td>
               <td><%= fem_feed.codes %></td>
               <td><%= fem_feed.selling_price %></td>
               <td><%= fem_feed.purchase_price %></td>

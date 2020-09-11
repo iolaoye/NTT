@@ -12,7 +12,7 @@ module FemHelper
           puts row.to_hash
           FemFeed.create!(
               {
-               :name => row[1],
+               :name => row[1].capitalize,
                :selling_price => row[3],
                :purchase_price => row[4],
                :concentrate => row[5],
@@ -42,7 +42,7 @@ module FemHelper
           puts row.to_hash
           FemFacility.create!(
               {
-               :name => row[1],
+               :name => row[1].capitalize,
                :lease_rate => row[4],
                :new_price => row[5],
                :new_life => row[6],
@@ -76,7 +76,7 @@ module FemHelper
 	        puts row.to_hash
 	        FemGeneral.create!(
 	            {
-	             :name => row[1],
+	             :name => row[1].capitalize,
 	             :value => row[2],
 	             :project_id => @project.id,
 	             
@@ -99,7 +99,7 @@ module FemHelper
           puts row.to_hash
           FemMachine.create!(
               {
-               :name => row[1],
+               :name => row[1].capitalize,
                :lease_rate => row[4],
                :new_price => row[5],
                :new_hours => row[6],
