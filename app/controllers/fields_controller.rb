@@ -181,35 +181,32 @@ class FieldsController < ApplicationController
       end
     end
 
-    # Save soil Tile Drain values into Bmp table
-    values = {}
-    values[:action] = "save_bmps_from_load"
-    values[:project_id] = @project.id
-    values[:button] = t('submit.savecontinue')
-    values[:field_id] = field.id
-     # values[:scenario_id] = scenario_id ### one field has multiple scenarios
-    values[:bmp_td] = {}
-    values[:bmp_td][:depth] = params[:field][:depth]
-     # Add irrigation_id
-    params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
-     # Add crop_id
-    params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1: values[:bmp_td][:crop_id] = 0
-    bmp_controller = BmpsController.new
-    bmp_controller.request = request
-    bmp_controller.response = response
-    bmp_controller.save_bmps_from_load(values)
-
     if field.save
-      @depth = params[:field][:depth].to_f * FT_TO_MM
-      #Assign converted depth to idr column in subarea table - Jennifer 9/9/2020
-      if field.soils.count > 0
-        field.soils.each do |soil|
-          soil.subareas.each do |subarea| 
-            subarea.idr = @depth
-            subarea.save!
-          end
+      # Save soil Tile Drain values into Bmp table
+      values = {}
+      values[:action] = "save_bmps_from_load"
+      values[:project_id] = @project.id
+      values[:button] = t('submit.savecontinue')
+      values[:field_id] = field.id
+      # values[:scenario_id] = scenario_id ### one field has multiple scenarios
+      values[:bmp_td] = {}
+      values[:bmp_td][:depth] = params[:field][:depth].to_f * FT_TO_MM
+      # Add irrigation_id
+      params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
+      # Add crop_id
+      params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1: values[:bmp_td][:crop_id] = 0
+      bmp_controller = BmpsController.new
+      bmp_controller.request = request
+      bmp_controller.response = response
+
+      if field.scenarios.count >= 1
+        field.scenarios.each do |scenario|
+          # debugger
+          values[:scenario_id] = scenario.id
+          bmp_controller.save_bmps_from_load(values)
         end
-      end 
+      end
+
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
