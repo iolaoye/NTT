@@ -768,6 +768,8 @@ es:
     normal_scenario: Normal Escenario
     worst_scenario: Peor Escenario
   fem:
+    eco_input: Información de costos
+    economic: Costos
     general: Entradas Generales
     equipment: Máquinaria
     facility: Estructuras

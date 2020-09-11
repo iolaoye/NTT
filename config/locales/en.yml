@@ -44,7 +44,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
-        fem_results: "FEM Results"
+        fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
@@ -466,7 +466,7 @@ en:
     ceeot2: 'for more information.'
     ntt: Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants.
   menu:
-    fem: FEM
+    fem: Economic Evaluation
     welcome: Welcome
     projects: Projects
     location: Location
@@ -784,6 +784,8 @@ en:
     normal_scenario: Normal Scenario
     worst_scenario: Worst Scenario
   fem:
+    eco_input: Economic Input Information
+    economic: Economic
     general: General Inputs
     equipment: Equipment
     facility: Facilities
