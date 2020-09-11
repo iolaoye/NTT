@@ -776,7 +776,10 @@ class BmpsController < ApplicationController
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
   def pond(type)
-  	@bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f
+    #debugger
+    if @values[:bmp_pnd] != nil
+      @bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f
+    end
     @soils = Soil.where(:field_id => @values[:field_id])
     i = 0
     @soils.each do |soil|
