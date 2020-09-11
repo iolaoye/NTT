@@ -93,6 +93,28 @@ class ScenariosController < ApplicationController
     @watershed.save
     respond_to do |format|
       if @scenario.save
+        # Check if tiledrain exists in field
+        if @field.depth != nil && @field.depth > 0
+          # Save soil Tile Drain values into Bmp table
+          values = {}
+          values[:action] = "save_bmps_from_load"
+          values[:project_id] = @project.id
+          values[:button] = t('submit.savecontinue')
+          values[:field_id] =  params[:field_id]
+          values[:bmp_td] = {}
+          debugger
+          values[:bmp_td][:depth] = @field.depth
+          #debugger
+          values[:scenario_id] = @scenario.id
+          # Add irrigation_id
+          @field.tile_bioreactors == "1" || @field.tile_bioreactors == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
+          # Add crop_id
+          @field.drainage_water_management == "1" || @field.drainage_water_management == true ? values[:bmp_td][:crop_id] = 1: values[:bmp_td][:crop_id] = 0
+          bmp_controller = BmpsController.new
+          bmp_controller.request = request
+          bmp_controller.response = response
+          bmp_controller.save_bmps_from_load(values)
+        end
         @scenarios = Scenario.where(:field_id => params[:field_id])
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')

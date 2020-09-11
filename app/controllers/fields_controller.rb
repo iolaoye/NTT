@@ -198,10 +198,9 @@ class FieldsController < ApplicationController
       bmp_controller = BmpsController.new
       bmp_controller.request = request
       bmp_controller.response = response
-
       if field.scenarios.count >= 1
         field.scenarios.each do |scenario|
-          # debugger
+          #debugger
           values[:scenario_id] = scenario.id
           bmp_controller.save_bmps_from_load(values)
         end
