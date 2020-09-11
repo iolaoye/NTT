@@ -101,7 +101,7 @@ class LayersController < ApplicationController
           else
             params[:layer][:soil_p] = soil_test.factor1 + soil_test.factor2 * params[:layer][:soil_p_initial].to_f
           end
-          if params[:layer][:soil_p] < 0 then params[:layer][:soil_p] = 0
+          if params[:layer][:soil_p] < 0 then params[:layer][:soil_p] = 0 end
         end
       end
       if @layer.update_attributes(layer_params)
