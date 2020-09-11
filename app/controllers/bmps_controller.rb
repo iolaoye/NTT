@@ -653,10 +653,10 @@ class BmpsController < ApplicationController
               @bmp.crop_id = 1
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
-			      subarea.drt = 2
+            subarea.drt = 2
           when "delete"
-            subarea.idr = params[:field][:depth]
-            # subarea.idr = Field.where(:id => @values[:field_id]).first[:depth]
+            #subarea.idr = params[:field][:depth]
+            subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
             subarea.drt = 0
             subarea.tdms = 0
         end
@@ -776,10 +776,7 @@ class BmpsController < ApplicationController
 
 ### ID: 9. This was the old pond version. It only adda the pond fraction to the fields in the subarea file
   def pond(type)
-    #debugger
-    if @values[:bmp_pnd] != nil
-      @bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f
-    end
+    @bmp.irrigation_efficiency = @values[:bmp_pnd][:irrigation_efficiency].to_f
     @soils = Soil.where(:field_id => @values[:field_id])
     i = 0
     @soils.each do |soil|
