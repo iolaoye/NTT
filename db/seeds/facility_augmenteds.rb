@@ -9,7 +9,7 @@ csv.each do |row|
     puts row.to_hash
     Facility.create!(
         {:id => row[0],
-         :name => row[1],
+         :name => row[1].capitalize,
          :lease_rate => row[4],
          :new_price => row[5],
          :new_life => row[6],

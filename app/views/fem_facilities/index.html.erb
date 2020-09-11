@@ -25,7 +25,7 @@
         <tbody>
           <% @fem_facilities.each do |fem_facility| %>
             <tr>
-              <td><%= fem_facility.name %></td>
+              <td><%= fem_facility.name.capitalize %></td>
               <td><%= fem_facility.codes %></td>
               <td><%= fem_facility.lease_rate %></td>
               <td><%= fem_facility.new_price %></td>
