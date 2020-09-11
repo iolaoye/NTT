@@ -152,6 +152,7 @@ class BmpsController < ApplicationController
     @values = values
     @project = Project.find(@values[:project_id])
     @scenario = Scenario.find(@values[:scenario_id])
+    @field = @scenario.field
     save_bmps_values()
   end
 ################################  save BMPS  #################################
