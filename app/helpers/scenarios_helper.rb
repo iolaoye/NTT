@@ -776,12 +776,10 @@ module ScenariosHelper
 		#soils = Soil.where(:field_id => params[:field_id], :selected => true)
 		soils.each do |soil|
 			subarea = @scenario.subareas.find_by_soil_id(soil.id)
-			if subarea != nil
-				if operation == "+"
-					subarea.wsa += wsa * soil.percentage / 100
-				else
-					subarea.wsa -= wsa * soil.percentage / 100
-				end
+			if operation == "+"
+				subarea.wsa += wsa * soil.percentage / 100
+			else
+				subarea.wsa -= wsa * soil.percentage / 100
 			end
 			if subarea.save then
 				#return "OK"   # if save no problem - cotinue with the next soil
