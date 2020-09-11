@@ -151,6 +151,7 @@ class BmpsController < ApplicationController
   def save_bmps_from_load(values)
     @values = values
     @project = Project.find(@values[:project_id])
+    @scenario = Scenario.find(@values[:scenario_id])
     save_bmps_values()
   end
 ################################  save BMPS  #################################
