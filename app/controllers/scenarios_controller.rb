@@ -106,9 +106,9 @@ class ScenariosController < ApplicationController
           values[:bmp_td][:depth] = @field.depth
           values[:scenario_id] = @scenario.id
           # Add irrigation_id
-          @field.tile_bioreactors == "1" || @field.tile_bioreactors == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
+          @field.tile_bioreactors == "1" || @field.tile_bioreactors == true ? values[:irrigation_id] = 1 : values[:irrigation_id] = nil
           # Add crop_id
-          @field.drainage_water_management == "1" || @field.drainage_water_management == true ? values[:bmp_td][:crop_id] = 1: values[:bmp_td][:crop_id] = 0
+          @field.drainage_water_management == "1" || @field.drainage_water_management == true ? values[:crop_id] = 1 : values[:crop_id] = nil
           bmp_controller = BmpsController.new
           bmp_controller.request = request
           bmp_controller.response = response
