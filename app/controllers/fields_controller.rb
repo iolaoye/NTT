@@ -190,7 +190,7 @@ class FieldsController < ApplicationController
       values[:field_id] = field.id
       # values[:scenario_id] = scenario_id ### one field has multiple scenarios
       values[:bmp_td] = {}
-      values[:bmp_td][:depth] = params[:field][:depth].to_f * FT_TO_MM
+      values[:bmp_td][:depth] = params[:field][:depth]
       # Add irrigation_id
       params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
       # Add crop_id
@@ -198,10 +198,9 @@ class FieldsController < ApplicationController
       bmp_controller = BmpsController.new
       bmp_controller.request = request
       bmp_controller.response = response
-
       if field.scenarios.count >= 1
         field.scenarios.each do |scenario|
-          # debugger
+          #debugger
           values[:scenario_id] = scenario.id
           bmp_controller.save_bmps_from_load(values)
         end
