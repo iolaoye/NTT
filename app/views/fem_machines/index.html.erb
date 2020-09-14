@@ -32,7 +32,7 @@
         <tbody>
           <% @fem_machines.each do |fem_machine| %>
             <tr>
-              <td><%= fem_machine.name %></td>
+              <td><%= fem_machine.name.capitalize %></td>
               <td><%= fem_machine.codes %></td>
               <td><%= fem_machine.lease_rate %></td>
               <td><%= fem_machine.new_price %></td>

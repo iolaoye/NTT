@@ -9,7 +9,7 @@ csv.each do |row|
     puts row.to_hash
     Machine.create!(
         {:id => row[0],
-         :name => row[1],
+         :name => row[1].capitalize,
          :lease_rate => row[4],
          :new_price => row[5],
          :new_hours => row[6],

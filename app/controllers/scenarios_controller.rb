@@ -166,18 +166,22 @@ class ScenariosController < ApplicationController
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
-  	case true
-  		when params[:commit].include?('NTT')
+  	#case true
+  		#when params[:commit].include?('NTT')
+      if params[:select_ntt] != nil
   			msg = simulate_ntt
-  		when params[:commit].include?("APLCAT")
-  			msg = simulate_aplcat
-
-      when params[:commit].include?("FEM")
-        msg = simulate_fem
-
-      when params[:commit].include?("DNDC")
-        msg = simulate_dndc
-  	end
+      end 
+      if params[:select_fem] != nil and msg == "OK"
+  		#when params[:commit].include?("APLCAT")
+  			msg = simulate_fem
+      end
+      if params[:select_aplcat] != nil and msg == "OK"
+      #when params[:commit].include?("FEM")
+        msg = simulate_aplcat
+      end
+      #when params[:commit].include?("DNDC")
+        #msg = simulate_dndc
+  	#end
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
@@ -215,16 +219,16 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     @apex_version = 806
-    if params[:select_scenario] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
+    if params[:select_ntt] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
   	if msg != "OK" then
   		@errors.push(msg)
   		return msg
   	end
-    if params[:select_scenario] == nil then
+    if params[:select_ntt] == nil then
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
     else
-      @scenarios_selected = params[:select_scenario]
+      @scenarios_selected = params[:select_ntt]
       @apex_version = 806
     end
     ActiveRecord::Base.transaction do
@@ -252,12 +256,12 @@ class ScenariosController < ApplicationController
   def simulate_dndc
     msg = "OK"
     @errors = Array.new
-    if params[:select_scenario] == nil then msg = "Select at least one scenario to simulate " end
+    if params[:select_dndc] == nil then msg = "Select at least one scenario to simulate " end
     if msg != "OK" then
       @errors.push(msg)
       return msg
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_dndc]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
@@ -279,11 +283,11 @@ class ScenariosController < ApplicationController
   def simulate_aplcat
     msg = "OK"
     @errors = Array.new
-    if params[:select_scenario] == nil then
+    if params[:select_aplcat] == nil then
       @errors.push("Select at least one Aplcat to simulate ")
       return "Select at least one Aplcat to simulate "
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_aplcat]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
@@ -320,11 +324,11 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     msg = fem_tables()
-    if params[:select_scenario] == nil then
+    if params[:select_fem] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_fem]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)

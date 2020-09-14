@@ -44,7 +44,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
-        fem_results: "FEM Results"
+        fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
@@ -450,6 +450,7 @@ en:
     related_tools: Related Tools
     updates: "UPDATES"
     close: Close
+    table: Table
   welcome_note:
     header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
@@ -465,7 +466,7 @@ en:
     ceeot2: 'for more information.'
     ntt: Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants.
   menu:
-    fem: FEM
+    fem: Economic Evaluation
     welcome: Welcome
     projects: Projects
     location: Location
@@ -783,10 +784,12 @@ en:
     normal_scenario: Normal Scenario
     worst_scenario: Worst Scenario
   fem:
+    eco_input: Economic Input Information
+    economic: Economic
     general: General Inputs
     equipment: Equipment
     facility: Facilities
-    feed: Feeds
+    feed: Commodity Prices
   months:
     january: January
     february: February

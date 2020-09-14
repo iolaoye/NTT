@@ -87,7 +87,7 @@
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
     <% if @scenarios.count > 0 %>
     	<% if req_parm == "NTT"%>
-			<%= submit_tag t('scenario.simulate') + ' ' + 'NTT', data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
+			<%= submit_tag t('scenario.simulate'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
 		<% end %>
         <% unless ENV["APP_VERSION"] == "modified" %>
         	<% if aplcat == 1 && req_parm == "APLCAT"%>
@@ -137,7 +137,9 @@
 			<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
 			  <thead>
 				<tr>
-				  <th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
+				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
+				  <th>Environment</th>
+				  <th><%=t('fem.economic')%></th>
 				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 				  	<th>1501</th>
 				  <%end %>
@@ -169,12 +171,10 @@
 							<%end%>
 						<%end%>
 						<%  if flag == true%>
-							<td id="<%= scenario.name %>" class="gvCellStyleText">
-							<%= check_box_tag "select_scenario[]", scenario.id %>
-							</td>
+							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_scenario[]", scenario.id %></td>
 							<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 								<td id="<%= scenario.name %>" class="gvCellStyleText">
-								<%= check_box_tag "select_1501[]", scenario.id %>
+									<%= check_box_tag "select_1501[]", scenario.id %>
 								</td>
 							<%end %>
 							<td class="table-link">
@@ -229,9 +229,8 @@
 						<%end%>
 					<%else%>
 					<!-- For FEM and NTT. Jennifer 8/24/2020 -->
-						<td id="<%= scenario.name %>" class="gvCellStyleText">
-						  <%= check_box_tag "select_scenario[]", scenario.id %>
-						</td>
+						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
+						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
  						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 							<td id="<%= scenario.name %>" class="gvCellStyleText">
 							  <%= check_box_tag "select_1501[]", scenario.id %>
