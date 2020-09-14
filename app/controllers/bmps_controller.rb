@@ -158,7 +158,6 @@ class BmpsController < ApplicationController
 ################################  save BMPS  #################################
 # POST /bmps/scenario
   def save_bmps_values()
-    debugger
 	  if @values[:button] == t('submit.savecontinue')
   		@slope = 100
   		#take the Bmps that already exist for that scenario and then delete them and any other information related one by one.
@@ -367,15 +366,6 @@ class BmpsController < ApplicationController
     msg = "OK"
     @bmp = Bmp.new()
     @bmp.scenario_id = @values[:scenario_id]
-    if @values[:bmp_td] != nil
-      @bmp.depth =  @values[:bmp_td][:depth]
-      if @values[:bmp_td][:irrigation_id] == 1 
-      @bmp.irrigation_id = 1
-      end
-      if @values[:bmp_td][:crop_id] == 1 
-      @bmp.crop_id = 1
-      end
-    end
     @bmp.bmpsublist_id = bmpsublist
     @animals = Fertilizer.where(:fertilizer_type_id => 2)
     #@irrigation = Irrigation.arel_table
