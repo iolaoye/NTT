@@ -102,9 +102,7 @@ class ScenariosController < ApplicationController
           values[:button] = t('submit.savecontinue')
           values[:field_id] =  params[:field_id]
           values[:bmp_td] = {}
-          debugger
           values[:bmp_td][:depth] = @field.depth
-          #debugger
           values[:scenario_id] = @scenario.id
           # Add irrigation_id
           @field.tile_bioreactors == "1" || @field.tile_bioreactors == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = 0
