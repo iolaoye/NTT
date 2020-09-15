@@ -161,7 +161,7 @@ class FieldsController < ApplicationController
   	msg = ""
   	field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
-  	field.field_area = params[:field][:field_area]
+    field.field_area = params[:field][:field_area]
     field.soil_test = params[:field][:soil_test]
   	field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
@@ -173,7 +173,7 @@ class FieldsController < ApplicationController
         end
       end
     end
-  	if field.save
+    if field.save
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
@@ -195,8 +195,15 @@ class FieldsController < ApplicationController
   					msg = "Error saving soil information"
   				end
   			end		# end soils.each
-  		end  # end if modified version
-  	end
+      end  # end if modified version
+
+      # get depth for each soil - Jennifer 9/15
+      for i in 0..(field.soils.count - 1)
+        soils = field.soils[i]
+        soils.tile_depth = params["tile_depth"][i]
+        soils.save
+      end
+    end
 
     respond_to do |format|
       if msg.eql?("OK") then
