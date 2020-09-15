@@ -2453,11 +2453,11 @@ en:
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
-    <strong>Creating a Field Routing Scenario</strong><br>
-    <strong>Naming Your Watershed</strong><br>
-    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
-    <strong>Selecting Fields/Scenarios to Simulate</strong><br>
-    Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field or scenario, click on the given name of the field routing.<br><br>
+    <strong>Creating/Naming your Field Routing Scenario</strong><br>
+    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will appear where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
+    <strong>Adding Watershed</strong><br>
+    To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.
+    Once you have finished selecting, The selected field/scenario table will appear under the wateshed.<br><br>
     <strong>Simulating/Viewing Results for Field Routing</strong><br>
     Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.<br><br>
     <strong>Actions</strong><br>
