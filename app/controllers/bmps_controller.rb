@@ -636,9 +636,6 @@ class BmpsController < ApplicationController
   def tile_drain(type)
     @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
-      soil.wtmn = 1
-      soil.wtmx = 5
-      soil.wtbl = 2
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
@@ -657,6 +654,9 @@ class BmpsController < ApplicationController
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
             subarea.drt = 2
+            soil.wtmn = 1
+            soil.wtmx = 5
+            soil.wtbl = 2
           when "delete"
             soil.wtmn = 0
             soil.wtmx = 0
@@ -666,6 +666,7 @@ class BmpsController < ApplicationController
             subarea.drt = 0
             subarea.tdms = 0
         end
+        soil.save
         if !subarea.save then return "Unable to save value in the subarea file" end
       end #end if subarea !nil
     end # end soils.each
