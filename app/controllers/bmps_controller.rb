@@ -636,6 +636,9 @@ class BmpsController < ApplicationController
   def tile_drain(type)
     @soils = Soil.where(:field_id => @values[:field_id])
     @soils.each do |soil|
+      soil.wtmn = 1
+      soil.wtmx = 5
+      soil.wtbl = 2
       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
       if subarea != nil then
         case type
@@ -655,6 +658,9 @@ class BmpsController < ApplicationController
             end
             subarea.drt = 2
           when "delete"
+            soil.wtmn = 0
+            soil.wtmx = 0
+            soil.wtbl = 0
             #subarea.idr = params[:field][:depth]
             subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
             subarea.drt = 0
