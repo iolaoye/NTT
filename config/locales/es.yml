@@ -2441,18 +2441,17 @@ es:
             body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el parcela.'
 
   watershedpage_html:
-    <strong>Field Routing (Watershed)</strong><br></br>
-    The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
-    <strong>Creating a Field Routing Scenario</strong><br>
-    <strong>Naming Your Watershed</strong><br>
-    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
-    <strong>Selecting Fields/Scenarios to Simulate</strong><br>
-    Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field/scenario combinations to the field routing, select the Field/scenario combinations, and click <strong>Add Fields / Scenario</strong>.
-    Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.<br></br>
-    <strong>Simulating/Viewing Results for Field Routing</strong><br>
-    Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.<br><br>
-    <strong>Actions</strong><br>
-    Once a field routing has been created, user can edit by clicking <img src="/serve_image/edit.png">. User can remove any scenario by clicking <img src="/serve_image/delete.png">.
+    <strong>Escenarios de enrutamiento de parcela (cuenca hidrográfica)</strong><br></br>
+    La página de cuenca le permite combinar varias pácelas y escenarios y simular como si fuera una sola parcela o granja.<br></br>
+    <strong>Crea / nombra tu cuenca hidrográfica</strong><br>
+    Para comenzar a crear un escenario de enrutamiento de parcela, haga clic en <strong>Agregar nuevo enrutamiento de parcela</strong>. Una vez que haga esto, aparecerá un cuadro de texto donde puede escribir el nombre del escenario. Una vez que ingrese el nombre, haga clic en <strong>Guardar</strong>.<br></br>
+    <strong>Adicionar Cuenca</strong><br>
+    Para adicionar combinaciones de parcel/escenario a un escenario de cuenca, seleccione la cuenca que desea accesar. La fila de la cuenca se expanderá.
+    Seleccione la parcela y el escenario que desee y presione Add para adicionar la selección. Repita el proceso para adicionar más parcelas/escenarios.<br><br>
+    <strong>Simulación / visualización de resultados para el enrutamiento de parcela</strong><br>
+    seleccione los nombres de la cuenca hidrográfica para estimular y haga clic en <b>Estimular el enrutamiento de parcela seleccionado (cuenca)</b>. Para ver los resultados de las rutas de parcela, seleccione los escenarios que desea ver y haga clic en Ver <b>Resultados</b>.<br><br>
+    <strong>Opciones</strong><br>
+    Una vez um enrugamento de parcela ha sido creada, puede elegir editar presionando  <img src="/serve_image/edit.png">, después de editar, presione el botón salvar para guardar los valores o presione regresar para retornar. El usuario puede remover cualquier escenario presionando <img src="/serve_image/delete.png">.
   watershed_scenarios_html:
     <strong>Adding Scenarios</strong><br></br>
     In this page, the user can add scenarios by clicking <strong>Add Field/scenario</strong> button. After clicking the button, user can select the field from <strong>Select Field</strong> dropdown menu and choose corresponding scenario by clicking <strong>Select Scenario</strong> dropdown menu. User can add or delete the selected scenarios by clicking <img src="/serve_image/delete.png"> in the <strong>Action</strong> column. After adding scenarios, user can then go back to begin simulation. The selected fields and scenarios are routed from one to the next one.
