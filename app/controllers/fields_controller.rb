@@ -180,7 +180,6 @@ class FieldsController < ApplicationController
         end
       end
     end
-
     if field.save
       # Save soil Tile Drain values into Bmp table
       values = {}
@@ -226,8 +225,15 @@ class FieldsController < ApplicationController
   					msg = "Error saving soil information"
   				end
   			end		# end soils.each
-  		end  # end if modified version
-  	end
+      end  # end if modified version
+
+      # get depth for each soil - Jennifer 9/15
+      for i in 0..(field.soils.count - 1)
+        soils = field.soils[i]
+        soils.tile_depth = params["tile_depth"][i]
+        soils.save
+      end
+    end
 
     respond_to do |format|
       if msg.eql?("OK") then
