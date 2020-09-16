@@ -166,9 +166,9 @@ class FieldsController < ApplicationController
     field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
     field.field_area = params[:field][:field_area]
-    field.depth = params[:field][:depth]
-    field.tile_bioreactors = params[:field][:tile_bioreactors]
-    field.drainage_water_management = params[:field][:drainage_water_management]
+    # field.depth = params[:field][:depth]
+    # field.tile_bioreactors = params[:field][:tile_bioreactors]
+    # field.drainage_water_management = params[:field][:drainage_water_management]
     field.soil_test = params[:field][:soil_test]
     field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
@@ -182,27 +182,27 @@ class FieldsController < ApplicationController
     end
     if field.save
       # Save soil Tile Drain values into Bmp table
-      values = {}
-      values[:action] = "save_bmps_from_load"
-      values[:project_id] = @project.id
-      values[:button] = t('submit.savecontinue')
-      values[:field_id] = field.id
-      # values[:scenario_id] = scenario_id ### one field has multiple scenarios
-      values[:bmp_td] = {}
-      values[:bmp_td][:depth] = params[:field][:depth]
-      # Add irrigation_id
-      params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = nil
-      # Add crop_id
-      params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1 : values[:bmp_td][:crop_id] = nil
-      bmp_controller = BmpsController.new
-      bmp_controller.request = request
-      bmp_controller.response = response
-      if field.scenarios.count >= 1
-        field.scenarios.each do |scenario|
-          values[:scenario_id] = scenario.id
-          bmp_controller.save_bmps_from_load(values)
-        end
-      end
+      # values = {}
+      # values[:action] = "save_bmps_from_load"
+      # values[:project_id] = @project.id
+      # values[:button] = t('submit.savecontinue')
+      # values[:field_id] = field.id
+      # # values[:scenario_id] = scenario_id ### one field has multiple scenarios
+      # values[:bmp_td] = {}
+      # values[:bmp_td][:depth] = params[:field][:depth]
+      # # Add irrigation_id
+      # params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = nil
+      # # Add crop_id
+      # params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1 : values[:bmp_td][:crop_id] = nil
+      # bmp_controller = BmpsController.new
+      # bmp_controller.request = request
+      # bmp_controller.response = response
+      # if field.scenarios.count >= 1
+      #   field.scenarios.each do |scenario|
+      #     values[:scenario_id] = scenario.id
+      #     bmp_controller.save_bmps_from_load(values)
+      #   end
+      # end
 
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
@@ -229,9 +229,21 @@ class FieldsController < ApplicationController
 
       # get depth for each soil - Jennifer 9/15
       for i in 0..(field.soils.count - 1)
-        soils = field.soils[i]
-        soils.tile_depth = params["tile_depth"][i]
-        soils.save
+        params["tile_depth"][i].to_i == 0 ? td = nil : td = params["tile_depth"][i]
+        soil = field.soils[i]
+        soil.tile_depth = td
+        soil.wtmn = 1
+        soil.wtmx = 5
+        soil.wtbl = 2
+        soil.save
+        Subarea.where(soil_id: soil.id).each do |subarea|
+          if td.nil?
+            subarea.idr = nil
+          else
+            subarea.idr = td.to_f * FT_TO_MM 
+          end
+          subarea.save
+        end
       end
     end
 
