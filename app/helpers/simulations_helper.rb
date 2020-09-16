@@ -1674,12 +1674,12 @@ def send_file_to_DNDC(apex_string, file, state)
           end
         end
         nh3 = 0
-        if oper != nil then
-          if oper.org_c != nil then
-            if oper.org_c > 0 then
-              org_c = oper.org_c
-            end
-          end
+        # if oper != nil then
+        #   if oper.org_c != nil then
+        #     if oper.org_c > 0 then
+        #       org_c = oper.org_c
+        #     end
+        #   end
           if oper.nh3 != nil && oper.nh3 > 0 then
             nh3 = oper.nh3
           else
