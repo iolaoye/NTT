@@ -229,9 +229,13 @@ class FieldsController < ApplicationController
 
       # get depth for each soil - Jennifer 9/15
       for i in 0..(field.soils.count - 1)
-        soils = field.soils[i]
-        soils.tile_depth = params["tile_depth"][i]
-        soils.save
+        soil = field.soils[i]
+        soil.tile_depth = params["tile_depth"][i]
+        soil.wtmn = 1
+        soil.wtmx = 5
+        soil.wtbl = 2
+        debugger
+        soil.save
       end
     end
 
