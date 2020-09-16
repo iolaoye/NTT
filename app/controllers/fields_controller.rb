@@ -229,13 +229,21 @@ class FieldsController < ApplicationController
 
       # get depth for each soil - Jennifer 9/15
       for i in 0..(field.soils.count - 1)
+        params["tile_depth"][i].to_i == 0 ? td = nil : td = params["tile_depth"][i]
         soil = field.soils[i]
-        soil.tile_depth = params["tile_depth"][i]
+        soil.tile_depth = td
         soil.wtmn = 1
         soil.wtmx = 5
         soil.wtbl = 2
-        debugger
         soil.save
+        Subarea.where(soil_id: soil.id).each do |subarea|
+          if td.nil?
+            subarea.idr = nil
+          else
+            subarea.idr = td.to_f * FT_TO_MM 
+          end
+          subarea.save
+        end
       end
     end
 
