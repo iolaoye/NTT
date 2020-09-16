@@ -183,11 +183,14 @@ class BmpsController < ApplicationController
     		end
       end
 
-      if !(@values[:bmp_td] == nil)
-  		  if !(@values[:bmp_td][:depth] == "") then
+      # if !(@values[:bmp_td] == nil)
+  		#   if !(@values[:bmp_td][:depth] == "") then
+  		# 	 create(3)
+  		#   end
+      # end
+      if @values[:crop_id] != nil || @values[:irrigation_id] != nil
   			 create(3)
-  		  end
-      end
+  		end
 
   	 	if !(@values[:bmp_ppnd] == nil)  # when this is hidden because it is not MO, MS states
     			if !(@values[:bmp_ppnd][:width] == "") then
@@ -517,7 +520,6 @@ class BmpsController < ApplicationController
     return climate_array
   end  # end method
 
-
   def update_hash(climate, climate_array)
     hash = Hash.new
     hash["max"] = climate.max_temp
@@ -526,7 +528,6 @@ class BmpsController < ApplicationController
     climate_array.push(hash)
     return climate_array
   end
-
 
   def populate_array(climates, climate_array)
     climate_array.clear
@@ -640,29 +641,31 @@ class BmpsController < ApplicationController
       if subarea != nil then
         case type
           when "create", "update"
-            subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
-            @bmp.depth = @values[:bmp_td][:depth]
+            #subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
+            @bmp.depth = soil[:tile_depth]
             @bmp.irrigation_id = 0
             subarea.tdms = 0
             @bmp.crop_id = 0
-            if !(@values[:irrigation_id] == nil) then
+            if @values[:irrigation_id] != nil then
               @bmp.irrigation_id = 1
               #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
             end
-            if !(@values[:crop_id] == nil) then
+            if @values[:crop_id] != nil then
               @bmp.crop_id = 1
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
+            @bmp.save
             subarea.drt = 2
-            soil.wtmn = 1
-            soil.wtmx = 5
-            soil.wtbl = 2
+            # soil.wtmn = 1
+            # soil.wtmx = 5
+            # soil.wtbl = 2
           when "delete"
             soil.wtmn = 0
             soil.wtmx = 0
             soil.wtbl = 0
             #subarea.idr = params[:field][:depth]
-            subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
+            #subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
+            subarea.idr = 0
             subarea.drt = 0
             subarea.tdms = 0
         end
