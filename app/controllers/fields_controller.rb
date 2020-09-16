@@ -232,9 +232,15 @@ class FieldsController < ApplicationController
         params["tile_depth"][i].to_i == 0 ? td = nil : td = params["tile_depth"][i]
         soil = field.soils[i]
         soil.tile_depth = td
-        soil.wtmn = 1
-        soil.wtmx = 5
-        soil.wtbl = 2
+        if td.nil?
+          soil.wtmn = 0
+          soil.wtmx = 0
+          soil.wtbl = 0
+        else
+          soil.wtmn = 1
+          soil.wtmx = 5
+          soil.wtbl = 2
+        end
         soil.save
         Subarea.where(soil_id: soil.id).each do |subarea|
           if td.nil?
