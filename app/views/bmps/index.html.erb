@@ -695,7 +695,7 @@
   <h6>
     This factor is used to trigger the automatic irrigation and fertigation based on the plant water stress level.
     For example, the irrigation application amount would be much higher at 90% stress level as compared to that of
-    20%. The value should be grater than 0.
+    20%. The value should be grater than or equal to 0.
   </h6>
 </div>
 
@@ -851,10 +851,10 @@
       validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
       validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
-      validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-      validateBmpAi.addValidation(ai_inputs[2].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
-      validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-      validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+      validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpAi.addValidation(ai_inputs[2].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+      validateBmpAi.addValidation(ai_inputs[3].name, "gte=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greaterequal") %>' + " 0");
+      validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
       validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       validateBmpAi.addValidation(ai_inputs[6].name, "gte=1", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("operation.application_rate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 1");
