@@ -226,7 +226,8 @@ class ProjectsController < ApplicationController
           redirect_to projects_upload_path(@upload_id)
           flash[:notice] = t('general.please') + " " + t('general.select') + " " + t('models.project') and return false
         end
-        @data = Nokogiri::XML(params[:project])
+        original_data = params[:project].read
+        @data = Nokogiri::XML(original_data.gsub("[","<").gsub("]",">"))        
         @upload_id = 2       
       end
       @data.root.elements.each do |node|
@@ -1006,7 +1007,7 @@ class ProjectsController < ApplicationController
           @project.description = project.name + " from Comet"
       end
     end
-    @project.version = "NTTG3"
+    @project.version = "Comet"
     if @project.save
       location = Location.new
       location.project_id = @project.id
@@ -1049,7 +1050,8 @@ class ProjectsController < ApplicationController
       when "Field_id"
         field.field_name = p.text
       when "Area"
-        field.field_area = p.text
+        field.field_area = p.text   # value es received in ac.
+        #field.field_area = field.field_area / HA_TO_AC   #convert to acres.
       when "field_average_slope"
         field.field_average_slope = p.text
       when "Type"
@@ -1065,16 +1067,18 @@ class ProjectsController < ApplicationController
         @location.coordinates = p.text
         @location.save
         field.coordinates = p.text
+        centroid = calculate_centroid(field.coordinates)
         #add weather
         @weather = Weather.new
-        @weather.way_id = 2
-        @weather.station_way ="Own"
-        @weather.weather_file = "No set Yet"
-        @weather.weather_initial_year = @initial_year
-        @weather.weather_final_year = @initial_year + @number_years
-        @weather.simulation_initial_year = @weather.weather_initial_year + 5
-        @weather.simulation_final_year = @weather.weather_final_year 
-        @weather.save
+        @weather.way_id = 1
+        @weather.station_way ="map"
+        msg = save_prism(field.coordinates)
+        #@weather.weather_file = "No set Yet"
+        #@weather.weather_initial_year = @initial_year
+        #@weather.weather_final_year = @initial_year + @number_years
+        #@weather.simulation_initial_year = @weather.weather_initial_year + 5
+        #@weather.simulation_final_year = @weather.weather_final_year 
+        #@weather.save
         field.weather_id = @weather.id
         if field.save! then
           #save weathr again to take field.id
@@ -1093,6 +1097,11 @@ class ProjectsController < ApplicationController
           #save parameters and controls
           load_parameters(0)
           load_controls
+          #update the initial year and years of simulation with the ones uploaded
+          @project.apex_controls[1].value = @initial_year
+          @project.apex_controls[1].save
+          @project.apex_controls[0].value = @number_years
+          @project.apex_controls[0].save
           #create site file
           site = Site.new
           site.field_id = field.id
@@ -1104,7 +1113,7 @@ class ProjectsController < ApplicationController
           site.rfnx = 0
           site.unr = 0
           site.upr = 0
-          centroid = calculate_centroid()
+          #centroid = calculate_centroid()
           site.ylat = centroid.cy
           site.xlog = centroid.cx
           site.save
@@ -1134,179 +1143,6 @@ class ProjectsController < ApplicationController
       end
     end
     return "OK"
-  end
-
-  def upload_operation_comet_version(scenario_id, new_operation)
-    operation = Operation.new
-    operation.scenario_id = scenario_id
-    operation.save
-    activity_id = 0
-    crop =  nil
-    for i in 0..(new_operation.length - 1)
-      p = new_operation[i]
-      #new_operation.elements.each do |p|
-      case p.name
-        when "Crop"
-          operation.crop_id = p.text
-          crop = Crop.find_by_number(operation.crop_id)
-          operation.crop_id = crop.id
-        when "Operation_Name"   #todo
-          case true
-            when p.text.include?("Tillage")
-              activity_id = 3
-            when  p.text.include?("Planting")
-              activity_id = 1
-            when  p.text.include?("Harvest")
-              activity_id = 4
-            when  p.text.include?("Kill")
-              activity_id = 5
-            when  p.text.include?("Irrigation")
-              activity_id = 6
-            when p.text.include?("Liming")
-              activity_id = 12
-            when p.text.include?("Manure")
-              activity_id = 2
-            else
-              activity_id = 2
-          end
-          operation.activity_id = activity_id
-        when "Day"
-          operation.day = p.text
-        when "Month"
-          operation.month_id = p.text
-        when "Year"
-          operation.year = p.text
-        when "Operation"
-          operation.type_id = p.text
-          if p.text == "580" then
-            operation.activity_id = 2
-            operation.subtype_id = 1
-          end
-        when "subtype_id"
-          operation.subtype_id = 0
-        when "Opv1"
-          operation.amount = p.text
-          if operation.amount == nil then operation.amount = 0 end
-          if operation.activity_id == 6 then operation.amount = operation.amount * MM_TO_IN end
-          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end
-        when "Opv2"
-          operation.depth = p.text
-        when "Opv3"
-          if operation.activity_id == 6 then
-            if ["1","2","3","7"].include? p.text then
-              operation.type_id = p.text 
-            else
-              case operation.type_id
-                when 500
-                  operation.type_id = 1
-                when 502
-                  operation.type_id = 2
-                when 530
-                  operation.type_id = 3
-              end
-            end
-          end
-          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end
-        when "Opv4"
-          #todo add opv4 for grazing 
-          if operation.activity_id == 2 then 
-            nutrients = p.text.split(",")
-            operation.no3_n = nutrients[0]
-            operation.po4_p = nutrients[1]
-            operation.org_n = nutrients[2]
-            operation.org_p = nutrients[3]
-            operation.nh3 = nutrients[4]
-            operation.type_id = 1
-            if nutrients.count >= 9 then
-              #nutrients[5] is not include because NTT do not ask fot it Org_c
-              operation.org_c = nutrients[6]
-              operation.nh4_n = nutrients[7]
-              operation.moisture = nutrients[8]
-              operation.type_id = nutrients[9].to_i + 1
-            end
-            if operation.no3_n != nil then operation.no3_n *= 100 end
-            #if operation.no3_n > 0 then operation.subtype_id = 1
-            if operation.po4_p != nil then operation.po4_p *= 100 end
-            #if operation.po4_p > 0 then operation.subtype_id = 2
-            if operation.org_n != nil then operation.org_n *= 100 end
-            if operation.org_p != nil then operation.org_p *= 100 end
-            case operation.type_id
-              when 1  
-                operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC
-              when 2
-                operation.no3_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.no3_n
-                operation.po4_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.po4_p
-                operation.org_n = (operation.org_c / 2000) / ((100 - operation.moisture) / 100) * operation.org_n
-                operation.org_p = (operation.nh4_n * 0.4364 / 2000) / ((100 - operation.moisture) / 100) * operation.org_p
-                operation.amount = operation.amount / (2247*(100-operation.moisture)/100)
-              when 3
-                operation.no3_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.no3_n
-                operation.po4_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.po4_p
-                operation.org_n = (operation.org_c * 0.011982) / (100 - operation.moisture) * operation.org_n
-                operation.org_p = (operation.nh4_n * 0.4364 * 0.011982) / (100 - operation.moisture) * operation.org_p
-                operation.amount = operation.amount / (9350*(100-operation.moisture)/100)
-             end            
-          end
-          if operation.activity_id == 6 then operation.depth = p.text.to_f * 100 end
-        when "Opv5"
-          if operation.activity_id == 1 then
-            operation.amount = p.text
-            operation.subtype_id = 0  #makes subtype different than 1 to avoid consufution with CC.
-            if operation.amount != nil then   #take plant population from crop if Opv5 is zero
-              if operation.amount <= 0 then operation.amount = crop.plant_population_mt * FT2_TO_M2 end
-            end
-          end
-      end
-    end
-    operation.rotation = 1
-    if operation.save then
-      add_soil_operation(operation)
-      return "OK"
-    else
-      return "operation could not be saved"
-    end
-  end
-
-  def upload_bmp_comet_version(scenario_id, new_bmps)
-    values = {}
-    values[:action] = "save_bmps_from_load"
-    values[:project_id] = @project.id
-    values[:button] = t('submit.savecontinue')
-    for i in 0..(new_bmps.length - 1)
-      #bmp = Bmp.new
-      #bmp.scenario_id = scenario_id
-      case new_bmps[i].name
-        when "TileDrain"
-          values[:field_id] = @field.id
-          values[:scenario_id] = scenario_id
-          values[:bmp_td] = {}
-          values[:bmp_td][:depth] = (new_bmps[0].elements[0].text.to_f / FT_TO_MM).round(1)
-          values[:bmpsublist_id] = 3
-          #bmp.depth = new_bmps[0].elements[0].text
-          #bmp.depth = (bmp.depth / FT_TO_MM).round(1)
-          #bmp.save
-          #update subarea file with the TD
-          #subareas = Subarea.where(:scenario_id => scenario_id)
-          #subareas.each do |subarea|
-            #subarea.idr = new_bmps[0].elements[0].text
-            #subarea.save
-          #end
-        when "AutoIrrigation"
-          #params[:scenario_id] = scenario_id
-          values[:bmpsublist_id] = 1
-          values[:irrigation_id] = new_bmps[0].elements["Code"].text
-          values[:days] = new_bmps[0].elements["Frequency"].text
-          values[:water_stress_factor] = new_bmps[0].elements["Stress"].text
-          values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
-          values[:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
-          values[:dry_manure] = new_bmps[0].elements["ApplicationRate"].text
-      end
-      #$params = params
-      bmp_controller = BmpsController.new
-      bmp_controller.request = request
-      bmp_controller.response = response
-      bmp_controller.save_bmps_from_load(values)
-    end
   end
 
   def upload_location_info(node)

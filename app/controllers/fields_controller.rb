@@ -91,6 +91,9 @@ class FieldsController < ApplicationController
 # GET /fields/1
 # GET /fields/1.json
   def show
+    if params[:format] == "json" then
+      coor = Field.find(params[:id]).coordinates
+    end
     session[:simulation] = "scenario"
     #session[:field_id] = params[:id]
     #@project = Project.find(params[:project_id])
@@ -102,7 +105,8 @@ class FieldsController < ApplicationController
       else
         format.html { redirect_to edit_project_field_weather_path(@project, @field, @field.weather.id) }
       end
-      format.json { render json: @field, status: :created, weather: @field.id }
+      #format.json { render json: @field, status: :created, weather: @field.id }
+      format.json { render json: coor }
     end
   end
 
@@ -159,11 +163,14 @@ class FieldsController < ApplicationController
 # PATCH/PUT /fields/1.json
   def update
   	msg = ""
-  	field = Field.find(params[:id])
+    field = Field.find(params[:id])
   	field.field_name = params[:field][:field_name]
     field.field_area = params[:field][:field_area]
+    field.depth = params[:field][:depth]
+    field.tile_bioreactors = params[:field][:tile_bioreactors]
+    field.drainage_water_management = params[:field][:drainage_water_management]
     field.soil_test = params[:field][:soil_test]
-  	field.soilp = params[:field][:soilp]
+    field.soilp = params[:field][:soilp]
     field.soil_aliminum = params[:field][:soil_aliminum]
     fields = @project.fields.pluck(:id, :field_name)
     fields.each do |key, value|
@@ -174,6 +181,29 @@ class FieldsController < ApplicationController
       end
     end
     if field.save
+      # Save soil Tile Drain values into Bmp table
+      values = {}
+      values[:action] = "save_bmps_from_load"
+      values[:project_id] = @project.id
+      values[:button] = t('submit.savecontinue')
+      values[:field_id] = field.id
+      # values[:scenario_id] = scenario_id ### one field has multiple scenarios
+      values[:bmp_td] = {}
+      values[:bmp_td][:depth] = params[:field][:depth]
+      # Add irrigation_id
+      params[:field][:tile_bioreactors] == "1" ||  params[:field][:tile_bioreactors] == true ? values[:bmp_td][:irrigation_id] = 1 : values[:bmp_td][:irrigation_id] = nil
+      # Add crop_id
+      params[:field][:drainage_water_management] == "1" || params[:field][:drainage_water_management] == true ? values[:bmp_td][:crop_id] = 1 : values[:bmp_td][:crop_id] = nil
+      bmp_controller = BmpsController.new
+      bmp_controller.request = request
+      bmp_controller.response = response
+      if field.scenarios.count >= 1
+        field.scenarios.each do |scenario|
+          values[:scenario_id] = scenario.id
+          bmp_controller.save_bmps_from_load(values)
+        end
+      end
+
   		msg = "OK"
   		if ENV["APP_VERSION"] == "modified" then
   			#save soils and layers information for modified version only.
@@ -208,7 +238,8 @@ class FieldsController < ApplicationController
     respond_to do |format|
       if msg.eql?("OK") then
   	    #get_field_list(@field.location_id)
-  	    format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
+        #format.html { redirect_to project_scenarios_path(@project) , notice: 'Field was successfully updated.' }
+        format.html { redirect_to project_field_scenarios_path(@project, field,@field,:caller_id => "NTT"), notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
         if msg.include?("duplicate")
@@ -361,7 +392,7 @@ class FieldsController < ApplicationController
 # params.require(:person).permit(:name, :age)
 # Also, you can specialize this method with per-user checking of permissible attributes.
   def field_params
-    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp, :soil_test)
+    params.require(:field).permit(:field_area, :field_average_slope, :field_name, :field_type, :location_id, :id, :created_at, :updated_at, :soilp, :soil_test, :depth, :tile_bioreactors, :drainage_water_management)
   end
 
   def update_field()

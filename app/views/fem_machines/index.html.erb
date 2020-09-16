@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="page-header"><h1><%=t("fem.equipment")%></h1></div>
-  <div class="table-responsive">
+<!-- <div class="table-responsive"> *Commented* to make horizontal scroll bar reappear on screen -->
     <div class="panel panel-default">
       <table class='table table-striped'>
         <thead>
@@ -32,7 +32,7 @@
         <tbody>
           <% @fem_machines.each do |fem_machine| %>
             <tr>
-              <td><%= fem_machine.name %></td>
+              <td><%= fem_machine.name.capitalize %></td>
               <td><%= fem_machine.codes %></td>
               <td><%= fem_machine.lease_rate %></td>
               <td><%= fem_machine.new_price %></td>
@@ -58,5 +58,5 @@
         </tbody>
       </table>
     </div>
-  </div>
+  <!-- </div> *Commented* to make horizontal scroll bar reappear on screen -->
 <br>

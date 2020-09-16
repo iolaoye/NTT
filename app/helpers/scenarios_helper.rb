@@ -114,7 +114,7 @@ module ScenariosHelper
  ###################################### create_subarea ###################################### 
  ## Create subareas from soils receiving from map for each field and for each scenario ###
 	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
-		subarea = Subarea.new
+		subarea = Subarea.new 
 		update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
 	end
 
@@ -206,8 +206,12 @@ module ScenariosHelper
         subarea.iri = 0
         subarea.ira = 0
         subarea.lm = 1
-        subarea.ifd = 0
-        subarea.idr = 0
+		subarea.ifd = 0
+		if bmp_id == 0 && bmpsublist_id == 0 && @field.depth != nil
+			subarea.idr =  @field.depth.to_f * FT_TO_MM 
+		else
+			subarea.idr = 0
+		end
         subarea.idf1 = 0
         subarea.idf2 = 69
         subarea.idf3 = 2
@@ -297,9 +301,8 @@ module ScenariosHelper
 			end #if operations no nill
 		end # end if scneario_id == 0
 		if subarea.save then
-			
+
 		else
-			
 		end
 	end
 
@@ -332,7 +335,7 @@ module ScenariosHelper
         			subarea.bft = 0.8
         		end
 			when 3  #tile drain
-				subarea.idr = @bmp.depth * FT_TO_MM  # update the tile drain depth in mm.
+				subarea.idr = @bmp.depth * FT_TO_MM
 				subarea.drt = 2
 			when 4   #PPDE, PPTW
 				if @bmp.depth == 6 || @bmp.depth == 7 then
@@ -627,11 +630,15 @@ module ScenariosHelper
 				#line 2
 				subarea.number = 104
 				subarea.iops = soil_id
-				#subarea.iow = 1
 				#line 5
 				subarea.rchl = (@bmp.width * FT_TO_KM).round(4)   #soil_area here is the reservior area
 				#line 4
-				subarea.wsa = temp_length * subarea.rchl * 100
+				if @bmp.grass_field_portion > 0 then
+					subarea.wsa = (@bmp.grass_field_portion * FT_TO_KM) * subarea.rchl * 100  #convert length to km and the area to ha.
+				else
+					subarea.wsa = temp_length * subarea.rchl * 100
+				end
+				
 				update_wsa("-", subarea.wsa)
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable
@@ -963,11 +970,11 @@ module ScenariosHelper
 	    return opv2
 	end #end set_opval2
 
-	def calculate_centroid()
+	def calculate_centroid(coordinates)
 	    #https://en.wikipedia.org/wiki/Centroid.
 	    centroid_structure = Struct.new(:cy, :cx)
 	    centroid = centroid_structure.new(0.0, 0.0)
-	    points = @field.coordinates.split(" ")
+	    points = coordinates.split(" ")
 	    i=0
 
 	    points.each do |point|
@@ -997,7 +1004,16 @@ module ScenariosHelper
 	    return msg
 	end
 
+
+
 	def request_soils()
+		#  def get_soils_nrcs
+		#	url_soils = "https://sdmdataaccess.sc.egov.usda.gov/Tabular/SDMTabularService.asmx?WSDL"
+		#	req = "SELECT hydgrp as horizdesc2,compname as seriesname,albedodry_r as albedo,comppct_r as compct,sandtotal_r as sand,silttotal_r as silt, 100-sandtotal_r-silttotal_r as clay, dbthirdbar_r as bd,om_r as om,texdesc as texture,ph1to1h2o_r as ph,hzdepb_r as ldep,drainagecl as horizgen,ecec_r as cec,muname, slope_r FROM sacatalog sac INNER JOIN legend l ON l.areasymbol = sac.areasymbol AND l.areatypename = 'Non-MLRA Soil Survey Area' INNER JOIN mapunit mu ON mu.lkey = l.lkey LEFT OUTER JOIN component c ON c.mukey = mu.mukey LEFT OUTER JOIN chorizon ch ON ch.cokey = c.cokey LEFT OUTER JOIN chtexturegrp chtgrp ON chtgrp.chkey = ch.chkey LEFT OUTER JOIN chtexture cht ON cht.chtgkey = chtgrp.chtgkey LEFT OUTER JOIN chtexturemod chtmod ON chtmod.chtkey = cht.chtkey WHERE l.areasymbol='TX143' AND mu.mukey='365419' AND musym='WoC' AND hydgrp<>'' AND hzdepb_r <> '' ORDER BY mu.mukey, compname, hzdepb_r"
+		#	client = Savon.client(wsdl: url_soils)
+		#	response = client.call(:run_query, message: {"Query" => req})
+		#	msg = response.body[:run_query_response][:run_query_result][:diffgram][:new_data_set][:table]
+		#  end
 	  	#soil1 = "AL001"
 	 	#soil2 = "328057"
 	 	#soil3 = "AaB"
@@ -1249,9 +1265,9 @@ module ScenariosHelper
 	################################  Save Prism data #################################
 	# GET /weathers/1
 	# GET /weathers/1.json
-  	def save_prism
+  	def save_prism(coordinates)
 	    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
-	    centroid = calculate_centroid()
+	    centroid = calculate_centroid(coordinates)
 	    @weather.latitude = centroid.cy
 	    @weather.longitude = centroid.cx
 	    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)

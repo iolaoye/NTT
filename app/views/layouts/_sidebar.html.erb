@@ -143,7 +143,9 @@
     <%# This is FEM submenu. It is inside Fields Under Management Scenarios.%>
     <% if ENV["APP_VERSION"] == "standard" && fem == 1 %>
       <li class="<%= request.url.include? "fem_results" || controller_name == "fem_generals" || controller_name == "fem_feeds" || controller_name == "fem_machines" || controller_name == "fem_facilities" || (controller_name == "scenarios" && request.parameters[:caller_id] == "FEM") ? "active" : "" %>">
-        <%= link_to t('menu.fem'), project_field_scenarios_path(@project, @field,:caller_id => "FEM"), :class=>"results-label-sub" %></li>
+        <%#= link_to t('menu.fem'), project_field_scenarios_path(@project, @field,:caller_id => "FEM"), :class=>"results-label-sub" %>
+        <%= link_to t("fem.eco_input"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %> 
+      </li>
       </li>
       <% if fem_submenu %>
         <ul class="nav nav-pills nav-stacked ">
@@ -155,7 +157,7 @@
                  </div>
                <% end %>
                <li>
-                <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM"), :class=>"results-label-sub" %></li>
+                <%#= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "FEM"), :class=>"results-label-sub" %></li>
                </li>
 
                <% if controller_name == "fem_feeds" %>

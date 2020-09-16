@@ -17,30 +17,37 @@
 <% end %>
 
 <div class="page-header"><h1><%= t("menu.soils") %></h1></div>
-
-<%# if @soils.count > 0 %>
 	<%= form_for [@project, @field] do |f| %>
 	    <div class="field" title="Name of Field">
-			<%= f.label t('field.field_name') %>
-			<%= f.text_field :field_name, :required => true %>
+	    	<td>
+				<%= f.label t('field.field_name'), :style => "font-weight:bold" %>
+				<%= f.text_field :field_name, :required => true %>
+			</td>
+			<td>
+				<%= f.label t('field.field_area'), :style => "font-weight:bold" %>
+				<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
+				<%= '(ac.)' %>
+			</td>
 	    </div>
 	    <div class="field" title="Field Area (Ac.). Must be greater than 0.">
-			<%= f.label t('field.field_area') %>
-			<%= f.number_field :field_area, :class => 'gvTitleStyleNumber', :step => "any", :required => true, :min => 0 %>
-			<%= '(ac.)' %>
+
 	    </div>
-		<% if ENV["APP_VERSION"] == "modified" %>
-			<div class="field">
-				<%= label :soil_test_laboratory, t('soil.test') %>
-				<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
-			</div>
-			<div class="field" title="" id="div_soil_al"<%= "style=display:none;" unless :soil_aliminum == 7 %>>
-				<%= t('soil.aluminum') %>
-				<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any" %>
-			</div>
-			<div class="field" title="">
-				<%= t('soil.soilp') %>
-				<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
+
+		<% if ENV["APP_VERSION"] == "modified"  %>
+			 <div id="fsetSimulation" class="panel panel-default">
+			 <div class="panel-heading"><%= t('soil.test') + " Information"%></div>
+				<td class="field">
+					<%= label :soil_test_laboratory, t('soil.test'), :style => "font-weight:bold" %>
+					<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
+				</td>
+				<td class="field" title="" id="div_soil_al"<%= "style=display:none;" unless :soil_aliminum == 7 %>>
+					<%= label :soil_aliminum_label, t('soil.aluminum'), :style => "font-weight:bold" %>
+					<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any" %>
+				</td>
+				<td class="field" title="">
+					<%= label :soilp_label, t('soil.soilp'), :style => "font-weight:bold" %>
+					<%= f.number_field :soilp, :class => 'gvTitleStyleNumber', :step => "0.01", :min => 0 %>
+				</td>
 			</div>
 		<% else %>
 			<div>
@@ -98,6 +105,22 @@
 				</tbody>
 			  </table>
 			</div>
+				    <div id="fsetSimulation" class="panel panel-default">
+    <div class="panel-heading"><%= t('pdf.tile_drain') + " Information" %></div>
+ 
+	    <td class="bold" title="Field Depth" >
+	      <%= f.label t('bmp.depth') + " (ft)", :style => "font-weight:bold"%>
+	       <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
+	    </td>
+	    <td class="field" title="Tile Bioreactors">
+	      <%= f.label t('bmp.tile_bioreactors'), :style => "font-weight:bold" %>
+	      <%= f.check_box :tile_bioreactors %>
+	    </td>
+	    <td class="field" title="Drainage Water Management">
+	      <%= f.label t('bmp.drainage_management'), :style => "font-weight:bold" %>
+	      <%= f.check_box :drainage_water_management %>
+	    </td>
+	</div>    
 			<div class="actions"><%= submit_tag t('submit.savecontinue'), :class => "btn btn-primary" %></div>
 					
 		</div>

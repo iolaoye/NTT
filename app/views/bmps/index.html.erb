@@ -1,4 +1,4 @@
-<% lines_dev = 0 %>
+<%# lines_dev = 0 %>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
   <head><%#= javascript_include_tag "gen_validatorv4" %></head>
@@ -36,10 +36,12 @@
         <% if (manure_operations == 0 && bmp.bmpsublist_id == 18) || (bmp.bmpsublist_id == 18 && county_id != 2939) %>
           <% next %>
         <% end %>
+        <% if (bmp.bmpsublist_id == 20 && ENV["APP_VERSION"] == "modified") %>
+          <% next %>
+        <% end %>
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
           <% if (bmp.bmpsublist_id == 10 && @scenario.operations.where("(activity_id = ? or activity_id = ?) and org_c = 1 and nh3 > 0", 7, 9).count == 0) %>
-          <%# if bmp.bmpsublist_id == 10 %> 
               <% next %>
           <% end %>
           <tr>
@@ -120,13 +122,6 @@
               </td>
             </tr>
             <tr>
-              <!--<td class="field indent2" id = "reservoir_area" style="display: none;" colspan="2">
-               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres') + ")"%>
-               <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
-              </td>-->
-            </tr>
-
-            <tr>
               <% if bmp.depth == 1 %>
                 <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
               <% else %>
@@ -137,7 +132,7 @@
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
-            <% if request.url.include?("localHost") || request.url.include?(".bk.") then %>     
+            <% if request.url.include?("localHost") || request.url.include?(".bk.") then %>
             <tr>
               <td class="indent2" colspan="2">
                 <table >
@@ -162,7 +157,7 @@
                         <td>
                        <%= hidden_field_tag "my_crop_id", cp[:id]%>
                         </td>
-         
+
                       </tr>
                     <% end  %>
                    </tr>
@@ -295,10 +290,6 @@
                   <%= label :width, t('bmp.distance') + "(" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_sf, :width, :value => bmp.width, :style=>"width:70px", :min => 0, :class => "gvTitleStyleNumber" %>
                   <%= label :width_zero, t('bmp.zero_fence'), class: "title_label"%>
-                  <!-- <div style='display:none'>
-                    <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
-                    <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
-                  </div> -->
                 </td>
             </tr>
             <tr>
@@ -428,6 +419,12 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
+                <%= t('bmp.length') + " (" + t('bmp.ft') + ")" %>
+                <%= number_field :bmp_ww, :length, :value => bmp.grass_field_portion, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
+              </td>
+            </tr>
+            <tr>
+              <td class="indent" colspan="2">
                 <%= t('bmp.ffpq') + " " + t('pdf.waterway') + t('bmp.zero_to_one') %>
                 <%= number_field :bmp_ww, :floodplain_flow, :value => bmp.slope_reduction, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
@@ -506,29 +503,28 @@
               </td>
             </tr> -->
             <% end %>
-
           <% when 20 %>  <%# Reservoir %>
             <tr>
               <td class="field indent" colspan="2" >
-                <%= "Elevation at Emercency Spillway(ft)"%> 
+                <%= "Elevation at Emercency Spillway(ft)"%>
                 <%= number_field :bmp_rs, :rsee, :value => bmp.water_stress_factor, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr >
               <td class="field indent" colspan="2" id = "rsae" colspan="2">
-                <%=  "Surface Area at Emergency Spillway(ac)"%>  
+                <%=  "Surface Area at Emergency Spillway(ac)"%>
                 <%= number_field :bmp_rs, :rsae, :value => bmp.irrigation_efficiency, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr >
               <td class="field indent" colspan="2" id = "rsve" colspan="2">
-                <%=  "Volume at Emergency Spillway(in)"%>  
+                <%=  "Volume at Emergency Spillway(in)"%>
                 <%= number_field :bmp_rs, :rsve, :value => bmp.maximum_single_application, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsep" colspan="2">
-                <%=  "Elevation at Principal Spillway(ft)"%>  
+                <%=  "Elevation at Principal Spillway(ft)"%>
                 <%= number_field :bmp_rs, :rsep, :value => bmp.safety_factor, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
@@ -540,54 +536,52 @@
             </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsvp" colspan="2">
-                <%=  "Volume at Principal Spillway(in)"%>  
+                <%=  "Volume at Principal Spillway(in)"%>
                 <%= number_field :bmp_rs, :rsvp, :value => bmp.maximum_single_application, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsv" colspan="2">
-                <%=  "Initial Volume(in)"%>  
+                <%=  "Initial Volume(in)"%>
                 <%= number_field :bmp_rs, :rsv, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsrr" colspan="2">
                 <%=  "Average Principal Spillway Release(days)"%>
                 <%= number_field :bmp_rs, :rsrr, :value => bmp.days, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsys" colspan="2">
-                <%=  "Initial Sediment Concentration (ppm)"%>  
+                <%=  "Initial Sediment Concentration (ppm)"%>
                 <%= number_field :bmp_rs, :rsys, :value => bmp.no3_n, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsyn" colspan="2">
-                <%=  "Normal Sediment Concentration (ppm)"%>  
+                <%=  "Normal Sediment Concentration (ppm)"%>
                 <%= number_field :bmp_rs, :rsyn, :value => bmp.po4_p, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rshc" colspan="2">
-                <%=  "Hydraulic conductivity of reservoir bottoms (m/h)"%>  
+                <%=  "Hydraulic conductivity of reservoir bottoms (mm/h)"%>
                 <%= number_field :bmp_rs, :rshc, :value => bmp.org_n, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsdp" colspan="2">
-                <%=  "Time Sediment to Return to Normal (hours)"%>  
+                <%=  "Time Sediment to Return to Normal (days)"%>
                 <%= number_field :bmp_rs, :rsdp, :value => bmp.hours, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsbd" colspan="2">
-                <%=  "Bulk Density of Sediment (t/m3)"%>  
+                <%=  "Bulk Density of Sediment (t/m3)"%>
                 <%= number_field :bmp_rs, :rsbd, :value => bmp.org_p, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
-
-
+            </tr>
           <% when 22 %>
             <tr>
               <td class="indent" colspan="2">
@@ -800,7 +794,7 @@
           } /*else if (elementIDNum == 19) {
               validationsBmpCc();
           }*/
-      } 
+      }
       /* validate concurrent BMPs not allow */
       if (elementIDNum == 13 || elementIDNum == 15) {
           if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_15').is(':checked'))) {
@@ -818,7 +812,7 @@
           }
       }
     });
-  
+
     function prompt_user() {
       var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
       if (r == true) {

@@ -18,7 +18,7 @@ Bmpsublist.create!({:id => 16,:name => "Land Leveling",:status => true,:bmplist_
 Bmpsublist.create!({:id => 17,:name => "Terrace System",:status => true,:bmplist_id => 6,:spanish_name => "Sistema de Terraza"}, :without_protection => true)
 Bmpsublist.create!({:id => 18,:name => "Manure Nutrient Change (Anaerobic Digester System)",:status => true,:bmplist_id => 6,:spanish_name => "Control de Estíercol"}, :without_protection => true)
 Bmpsublist.create!({:id => 19,:name => "Cover Crop 1",:status => false,:bmplist_id => 9,:spanish_name => "Cultivo de Protección"}, :without_protection => true)
-Bmpsublist.create!({:id => 20,:name => "Cover Crop 2",:status => true,:bmplist_id => 9,:spanish_name => "Cultivo de Protección"}, :without_protection => true)
+Bmpsublist.create!({:id => 20,:name => "Reservoir",:status => true,:bmplist_id => 9,:spanish_name => "Represa"}, :without_protection => true)
 Bmpsublist.create!({:id => 21,:name => "Rotational Grazing",:status => false,:bmplist_id => 9,:spanish_name => "Pastoreo Rotacional"}, :without_protection => true)
 Bmpsublist.create!({:id => 22,:name => "Monthly Temperature and Precipitation Changes",:status => false,:bmplist_id => 7,:spanish_name => "Cambios de Temperatura y Precipitación"}, :without_protection => true)
 Bmpsublist.create!({:id => 23,:name => "Asphalt or Concrete",:status => false,:bmplist_id => 8,:spanish_name => "Asfalto o Concreto"}, :without_protection => true)

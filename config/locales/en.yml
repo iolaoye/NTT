@@ -44,7 +44,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
-        fem_results: "FEM Results"
+        fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
@@ -450,6 +450,7 @@ en:
     related_tools: Related Tools
     updates: "UPDATES"
     close: Close
+    table: Table
   welcome_note:
     header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
@@ -465,7 +466,7 @@ en:
     ceeot2: 'for more information.'
     ntt: Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants.
   menu:
-    fem: FEM
+    fem: Economic Evaluation
     welcome: Welcome
     projects: Projects
     location: Location
@@ -783,10 +784,12 @@ en:
     normal_scenario: Normal Scenario
     worst_scenario: Worst Scenario
   fem:
+    eco_input: Economic Input Information
+    economic: Economic
     general: General Inputs
     equipment: Equipment
     facility: Facilities
-    feed: Feeds
+    feed: Commodity Prices
   months:
     january: January
     february: February
@@ -943,6 +946,7 @@ en:
     author: Author
     ago: ago
   about:
+    header: 'Nutrient Tracking Tool (NTT) Overview'
     overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
     overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
     overview3: 'Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given field or small watershed.'
@@ -1015,6 +1019,8 @@ en:
     email: '<a href="mailto:gallego@tarleton.edu?Subject=Hello%20again" target="_top">gallego@tarleton.edu</a>'
   help:
     header: NTT Table of Contents
+    next: Next >
+    previous: < Previous
     return_to_table: 'Return to Table of Contents'
     overview: Overview
     overview1: About NTT
@@ -1439,8 +1445,10 @@ en:
       aws: Animal weights
       dmi: Dry matter intake
       gei: Gross energy intake
-      wi: Water intake
-      sme: Solid manure excretion
+      wi: Water intake         # AKA Drinking water intake
+      wif: Water intake with feed   #jennifer 8/14/20
+      qme: Quantity of solid manure excreted  #jennifer 8/26/20
+      sme: Nitrogen present in solid manure  # AKA Nitrogen present in manure
       ni: Nitrogen intake
       tne: Total nitrogen excretion
       tnr: Total nitrogen retained
@@ -1638,6 +1646,8 @@ en:
   documents_basic_html:
     <a href="/basic_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
     <br>
+    <a href="/NTT- technical documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
+    <br>
     <br><strong>NTT References</strong>
     <br>
     <br>
@@ -1687,7 +1697,9 @@ en:
 
   documents_re_html:
     <a href="/re_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
-       <br>
+    <br><br>
+    <a href="/NTT- technical documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
+    <br>
     <br><strong>NTT References</strong>
     <br>
     <br>
@@ -1738,6 +1750,7 @@ en:
     projects: "To select an existing project, click on the project name"
     fields: "Click on the field name for model simulation"
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
+    aplcat_notice: "The following list only include scenarios with grazing operations"
     scenarios: "To select a scenario click on the scenario name, to simulate scenarios click on the check box"
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
@@ -2134,6 +2147,9 @@ en:
         header: Copy Scenario from other Field
         body1: 'The user can copy scenarios from other fields and use it in the existing field. To copy scenarios click <strong>Copy Scenario from other Field</strong> at the top of the page, then select the field and scenario that you wish to copy. Click the <strong>Copy</strong> button when done. The scenario will be copied and will appear in the list of management scenarios for that field. In Addition, a scenario could be duplicated and renamed and modified for different management scenario within a field by using the copy key under the action options.'
         body2: 'The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions described below.'
+    upload_scenarios:
+        header: Upload your own scenarios
+        body1: 'The user can upload their own scenarios from their local computer. To upload scenarios, click <strong>Upload your own scenarios</strong> and select the type of file you would like to upload and select <strong>Choose File</strong>.'
     operation:
         header: Manage Field Scenarios
         body: 'The Management Scenarios page includes a list of the scenarios created for the field. The list includes the scenario name, fields for weather, soils and operations, simulation date, and an actions column.'
@@ -2314,6 +2330,7 @@ en:
       <strong>Scenarios</strong><br></br>
       The user can create a scenario by clicking on the <b>Add New Scenario</b> button. This will open a new page where the user needs to give a name to the scenario. After giving a name to the scenario the user needs to click the <strong>Save</strong> button which will create the scenario and advances the user to the operation page.<br><br>
       The user can copy scenarios from other projects and use it in the existing project. to copy scenarios click <strong>Copy Scenario from other field</strong> which will create a copy of the selected scenario.<br><br>
+      The user can also upload their own scenarios and use it in the existing project. In order to upload, click <strong>Upload your own scenarios</strong> and select the type of file you want to upload. Click on <strong>Choose File</strong> which will then upload your scenarios.<br><br>
       You can add as many scenarios as necessary. To simulate scenario(s), user needs to select which scenario to simulate and click <strong>Simulate Selected Scenario</strong>.<br><br>
       To view results of the simulated scenario(s), click on <strong>View Results</strong>.<br><br>
       <strong>Actions</strong><br>
@@ -2436,11 +2453,11 @@ en:
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
-    <strong>Creating a Field Routing Scenario</strong><br>
-    <strong>Naming Your Watershed</strong><br>
-    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
-    <strong>Selecting Fields/Scenarios to Simulate</strong><br>
-    Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field or scenario, click on the given name of the field routing.<br><br>
+    <strong>Creating/Naming your Field Routing Scenario</strong><br>
+    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will appear where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
+    <strong>Adding Watershed</strong><br>
+    To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.
+    Once you have finished selecting, The selected field/scenario table will appear under the wateshed.<br><br>
     <strong>Simulating/Viewing Results for Field Routing</strong><br>
     Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.<br><br>
     <strong>Actions</strong><br>
@@ -2664,8 +2681,11 @@ en:
     build:
         header: Build Watershed Scenario
         body1: 'Once you have created and named your field routing/watershed scenario, it will appear in the list of watershed scenarios. Click the watershed scenario <strong>name</strong> to begin defining your watershed scenario.'
-        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route the flow between fields. You may not add a field more than once to the same watershed scenario (the idea is combining fields to simulate as one field). To add field/scenario combinations to the watershed scenario, select the field and scenario from the drop down lists and click <strong>Add Fields / Scenario</strong>. Continue to add fields/scenarios until your watershed scenario is complete.'
-        body3: 'Once you have finished selecting, click <strong>Back</strong> to go back to the watershed page.'
+        body2: 'When building your watershed scenario, you will begin adding fields/scenarios in the order that you wish to route the flow between fields. You may not add a field more than once to the same watershed scenario (the idea is combining fields to simulate as one field).'
+    add_watershed:
+        header: Adding Watershed
+        body1: 'To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.'
+        body2: 'Once you have finished selecting, The selected field/scenario table will appear under the wateshed.'
     manage:
         header: Manage Watershed Scenarios
         body1: 'The list of watershed scenarios that you have created will appear on the Field Routing (Watershed) page.'
