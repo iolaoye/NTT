@@ -633,18 +633,58 @@ class BmpsController < ApplicationController
     return "OK"
   end  # end method
 
+# ### ID: 3
+#   # Get depth, irrigation_id and crop_id from subarea to save into bmp
+#   def tile_drain(type)
+#     @soils = Soil.where(:field_id => @values[:field_id])
+#     # loop through soil to get subarea
+#     @soils.each do |soil|
+#       subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
+#       if subarea != nil then
+#         case type
+#           when "create", "update"
+#             #subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
+#             @bmp.depth = soil[:tile_depth]
+#             @bmp.irrigation_id = 0
+#             subarea.tdms = 0
+#             @bmp.crop_id = 0
+#             if @values[:irrigation_id] != nil then
+#               @bmp.irrigation_id = 1
+#               #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
+#             end
+#             if @values[:crop_id] != nil then
+#               @bmp.crop_id = 1
+#               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
+#             end
+#             @bmp.save
+#             subarea.drt = 2
+#             # soil.wtmn = 1
+#             # soil.wtmx = 5
+#             # soil.wtbl = 2
+#           when "delete"
+#             soil.wtmn = 0
+#             soil.wtmx = 0
+#             soil.wtbl = 0
+#             #subarea.idr = params[:field][:depth]
+#             #subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
+#             subarea.idr = 0
+#             subarea.drt = 0
+#             subarea.tdms = 0
+#         end
+#         soil.save
+#         if !subarea.save then return "Unable to save value in the subarea file" end
+#       end #end if subarea !nil
+#     end # end soils.each
+#     return "OK"
+#   end # end method
+
 ### ID: 3
+  # Get irrigation_id and crop_id to save into bmp. Does not need soil or subarea.
   def tile_drain(type)
-    @soils = Soil.where(:field_id => @values[:field_id])
-    @soils.each do |soil|
-      subarea = Subarea.where(:soil_id => soil.id, :scenario_id => @values[:scenario_id]).first
-      if subarea != nil then
         case type
           when "create", "update"
-            #subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
-            @bmp.depth = soil[:tile_depth]
+            @bmp.depth = 999 # Need any value > 0 here or else irrigation_id and crop_id checkbox values are not saved
             @bmp.irrigation_id = 0
-            subarea.tdms = 0
             @bmp.crop_id = 0
             if @values[:irrigation_id] != nil then
               @bmp.irrigation_id = 1
@@ -655,24 +695,8 @@ class BmpsController < ApplicationController
               #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
             end
             @bmp.save
-            subarea.drt = 2
-            # soil.wtmn = 1
-            # soil.wtmx = 5
-            # soil.wtbl = 2
           when "delete"
-            soil.wtmn = 0
-            soil.wtmx = 0
-            soil.wtbl = 0
-            #subarea.idr = params[:field][:depth]
-            #subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
-            subarea.idr = 0
-            subarea.drt = 0
-            subarea.tdms = 0
         end
-        soil.save
-        if !subarea.save then return "Unable to save value in the subarea file" end
-      end #end if subarea !nil
-    end # end soils.each
     return "OK"
   end # end method
 
