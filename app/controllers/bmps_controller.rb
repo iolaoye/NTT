@@ -683,7 +683,6 @@ class BmpsController < ApplicationController
   def tile_drain(type)
         case type
           when "create", "update"
-            @bmp.depth = 999 # Need any value > 0 here or else irrigation_id and crop_id checkbox values are not saved
             @bmp.irrigation_id = 0
             @bmp.crop_id = 0
             if @values[:irrigation_id] != nil then
