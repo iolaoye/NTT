@@ -182,10 +182,11 @@
                  <% end %>
 
                 <% if bmp.crop_id == 1 %>
-                  <%= check_box_tag :crop_id, bmp.irrigation_id, true %><%="  " + t('bmp.drainage_management')%>
+                  <%= check_box_tag :crop_id, bmp.crop_id, true %><%="  " + t('bmp.drainage_management')%>
                 <% else %>
-                  <%= check_box_tag :crop_id, bmp.irrigation_id, false %><%="  " + t('bmp.drainage_management')%>
+                  <%= check_box_tag :crop_id, bmp.crop_id, false %><%="  " + t('bmp.drainage_management')%>
                  <% end %>
+
               </td>
             </tr>
           <% when 4 %>
