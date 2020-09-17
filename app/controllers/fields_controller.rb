@@ -243,10 +243,12 @@ class FieldsController < ApplicationController
         end
         soil.save
         Subarea.where(soil_id: soil.id).each do |subarea|
-          if td.nil?
-            subarea.idr = nil
+          if td == 0
+            subarea.idr = 0
+            subarea.drt = 0
           else
             subarea.idr = td.to_f * FT_TO_MM 
+            subarea.drt = 2
           end
           subarea.save
         end
