@@ -207,11 +207,12 @@ module ScenariosHelper
         subarea.ira = 0
         subarea.lm = 1
 		subarea.ifd = 0
-		if bmp_id == 0 && bmpsublist_id == 0 && @field.depth != nil
-			subarea.idr =  @field.depth.to_f * FT_TO_MM 
-		else
-			subarea.idr = 0
-		end
+		# if bmp_id == 0 && bmpsublist_id == 0 && @field.depth != nil
+		# 	subarea.idr =  @field.depth.to_f * FT_TO_MM
+		# else
+		# 	subarea.idr = 0
+		# end
+		subarea.idr = 0
         subarea.idf1 = 0
         subarea.idf2 = 69
         subarea.idf3 = 2
