@@ -2686,9 +2686,9 @@ def send_file_to_DNDC(apex_string, file, state)
   end
 
   def load_monthly_values(apex_start_year)
-    data = get_file_from_APEX("MSW") #this operation will ask for MSW file
+    data = get_file_from_APEX("MSW") #this operation will ask for MSW file.
     #todo validate that the file was uploaded correctly
-
+    #will take flow, sediment, and nutrients
     annual_flow = fixed_array(12, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     annual_sediment = fixed_array(12, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     annual_orgn = fixed_array(12, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
@@ -2723,6 +2723,7 @@ def send_file_to_DNDC(apex_string, file, state)
 
     data = get_file_from_APEX("MWS") #this operation will ask for MWS file
     #todo validate that the file was uploaded correctly
+    #will take precipitation
     i=1
     data.each_line do |tempa|
       if i > 9 then

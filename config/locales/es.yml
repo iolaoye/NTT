@@ -550,7 +550,7 @@ es:
     slope: Inclinación
     percentage: Porcentaje
     drainage: Drenaje
-    depth: 'Profundidad (in.)'
+    depth: 'Profundidad (ft)'
     soilp: 'P en el Suelo (ppm)'
     bulk_density: 'Densidad de la masa (Mg/m3)'
     sand: 'Arena (%)'
