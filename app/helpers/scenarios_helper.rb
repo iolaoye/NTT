@@ -212,7 +212,7 @@ module ScenariosHelper
 		# else
 		# 	subarea.idr = 0
 		# end
-		subarea.idr = 0
+		subarea.idr = Subarea.where(soil_id:soil_id).last.idr
         subarea.idf1 = 0
         subarea.idf2 = 69
         subarea.idf3 = 2
