@@ -1829,6 +1829,25 @@ es:
     Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
     Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
     Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
+
+  aplcat_parameters_html: <strong>Parámetros Tabulares</strong><br><br>
+    Here, you can make changes on APLCAT. Please open the dropdown menu to navigate through the APLCAT. Click <strong>Save</strong> if you are done making changes.<br><br>
+    If you would like to make changes in Animal Feed, click on <strong>Alimentación Animal</strong> button.<br><br>
+    If you would like to make changes in Animal Transport, click on <strong>Animal Transport</strong> button.
+  grazing_parameters_html: <strong>Alimentación Animal</strong><br><br>
+    Here, you can see the organized collection of data in an Animal Feed table after you make some changes to the Animal Feed. In order to make changes, click <strong>New Animal Feed</strong> button.<br><br>
+    If you would like to go to Tabular parameters, click <strong>Parámetros Tabulares</strong> button.<br><br>
+    If you would like to go to Animal Transport, click <strong>Animal Transport</strong> button.<br><br>
+    After making changes to the <strong>animal feed</strong> click <strong>Save</strong> to go back to the Animal Feed table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a animal feed has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal feed, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+  animal_transports_html: <strong>Animal Transport</strong><br><br>
+    Here, you can see an organized collection of data in an Animal Transport table after you make some changes to the Animal Transport. In order to make changes, click <strong>New Animal Transport</strong> button.<br><br>
+    If you would like to go to Tabular parameters, click <strong>Parámetros Tabulares</strong> button.<br><br>
+    If you would like to go to Animal Feed, click <strong>Alimentación Animal</strong> button.<br><br>
+    After making changes to the Animal Transport click <strong>Save</strong> to go back to the Animal Transport table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
   projpage:
     header: Iniciar un Proyecto
     statement: 'La pestaña de Proyecto en el menú es la segunda opción (después de la pestaña de Bienvenida) en la página web de NTT. Esta opción le permite al usuario crear nuevos proyectos o cargar proyectos existentes que han sido salvados en sesiones previas. Los usuarios pueden también cargar proyectos de ejemplo que viene con el programa NTT. Para activar todas las características disponibles por el usuario defina su proyecto, presione en esta pestaña para activar el módulo de Proyecto.'

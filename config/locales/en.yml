@@ -1874,11 +1874,16 @@ en:
     Here, you can see the organized collection of data in an Animal Feed table after you make some changes to the Animal Feed. In order to make changes, click <strong>New Animal Feed</strong> button.<br><br>
     If you would like to go to Tabular parameters, click <strong>Tabular Parameters</strong> button.<br><br>
     If you would like to go to Animal Transport, click <strong>Animal Transport</strong> button.<br><br>
-  animal_transports_html: <strong>Animal Transports</strong><br><br>
-    Here, you can see the organized collection of data in an Animal Transport table after you make some changes to the Animal Transport. In order to make changes, click <strong>New Animal Transport</strong> button.<br><br>
+    After making changes to the <strong>animal feed</strong> click <strong>Save</strong> to go back to the Animal Feed table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a animal feed has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal feed, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+  animal_transports_html: <strong>Animal Transport</strong><br><br>
+    Here, you can see an organized collection of data in an Animal Transport table after you make some changes to the Animal Transport. In order to make changes, click <strong>New Animal Transport</strong> button.<br><br>
     If you would like to go to Tabular parameters, click <strong>Tabular Parameters</strong> button.<br><br>
     If you would like to go to Animal Feed, click <strong>Animal Feed</strong> button.<br><br>
-
+    After making changes to the Animal Transport click <strong>Save</strong> to go back to the Animal Transport table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.    
   projpage:
     header: Projects Page
     statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine), upload an example project.
