@@ -211,6 +211,6 @@ Tillage.create!({:id => 169,:code => 424, :fem => 0, :dndc => 0,:name => 'PUDDLE
 Tillage.create!({:id => 170,:code => 422, :fem => 0, :dndc => 0,:name => 'PADDYBD',:operation => 0,:eqp => 'PADDY BUILDER',:status => false,:abbreviation => 'TILL',:spanish_name =>  'Construir Puddle',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 212,:code => 611, :fem => 0, :dndc => 0,:name => 'WEED',:operation => 0,:eqp => 'WED',:status => true,:abbreviation => 'TILL',:spanish_name =>  'Wed',:activity_id => 3}, :without_protection => true)
 Tillage.create!({:id => 213,:code => 425, :fem => 0, :dndc => 0,:name => 'XPUDDLE',:operation => 0,:eqp =>'DESTROY PUDDLE',:status => true,:abbreviation => 'TILL',:spanish_name =>  'Destrosar el Charco',:activity_id => 3}, :without_protection => true)
-Tillage.Create!({:id => 214,:code => 410, :fem => 0, :dndc => 0,:name => 'VEGHARV',:operation => 2,:eqp => 'VEGETABLE HARVESTER',:status => true,:abbreviation => 'HARV',:spanish_name =>  'Cosecha de Vegetales',:activity_id => 4}, :without_protection => true)
+Tillage.create!({:id => 214,:code => 410, :fem => 0, :dndc => 0,:name => 'VEGHARV',:operation => 2,:eqp => 'VEGETABLE HARVESTER',:status => true,:abbreviation => 'HARV',:spanish_name =>  'Cosecha de Vegetales',:activity_id => 4}, :without_protection => true)
 #LAST id = 214 tillage code = 410 harvest.
 #Note: Remember to add any additonal operation in the D:\NTT_Common\NTT_Common\App_Data\till.txt file.
