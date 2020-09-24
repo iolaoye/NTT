@@ -3,11 +3,11 @@
 #######
 # encoding: utf-8
 
-	file = "db/seeds/crop_schedules.rb"
-	load file
+	# file = "db/seeds/crops.rb"
+	# load file
 
-	file = "db/seeds/schedules.rb"
-	load file
+	#file = "db/seeds/tillages.rb"
+	#load file
 
 cont = false
 	
@@ -56,8 +56,9 @@ if cont then
 	file = "db/seeds/events.rb"
 	load file
 
-	file = "db/seeds/feeds_augmenteds.rb"
-	load file
+	# do not populate this file. It will populated when FEM tables is ran and the file is empty.
+	# file = "db/seeds/feeds_augmenteds.rb"
+	# load file
 
 	file = "db/seeds/fertilizers.rb"
 	load file
@@ -124,8 +125,9 @@ if cont then
 
 	file = "db/seeds/ways.rb"
 	load file
-
-	file = "db/seeds/farm_general.rb"
-	load file
+	
+	# do not populate this file. It will populated when FEM tables is ran and the file is empty.
+	# file = "db/seeds/farm_general.rb"
+	# load file
 
 end

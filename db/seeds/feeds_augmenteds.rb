@@ -22,7 +22,7 @@ csv.each do |row|
          :pasture => row[9],
          :silage => row[10],
          :supplement => row[11],
-         :project_id => 0 #@project.id
+         :project_id => @project.id
         }, 
         #:without_protection => true
     )
