@@ -231,7 +231,7 @@ class FieldsController < ApplicationController
       for i in 0..(field.soils.count - 1)
         if params["tile_depth"][i].empty?
           td = nil
-        elsif params["tile_depth"][i].to_i == 0
+        elsif params["tile_depth"][i].to_f == 0
           td = 0
         else
           td = params["tile_depth"][i]
