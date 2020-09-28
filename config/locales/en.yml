@@ -1883,7 +1883,16 @@ en:
     If you would like to go to Animal Feed, click <strong>Animal Feed</strong> button.<br><br>
     After making changes to the Animal Transport click <strong>Save</strong> to go back to the Animal Transport table to review the changes.<br><br>
     <strong>Actions</strong><br><br>
-    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.    
+    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+  fem_feeds_html: <strong>Commodity Prices</strong>
+  #work in progress..
+  fem_machines_html: <strong>Equipment</strong>
+  #work in progress..
+  fem_facilities_html: <strong>Facilities</strong>
+  #work in progress..
+  fem_generals_html: <strong>General Inputs</strong>
+  #work in progress..
+  
   projpage:
     header: Projects Page
     statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine), upload an example project.
