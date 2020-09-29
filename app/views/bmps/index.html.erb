@@ -145,7 +145,7 @@
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
-            <% if request.url.include?("localHost") || request.url.include?(".bk.") then %>
+            <% if request.url.include?("localHost") || request.url.include?(".bk.") || request.url.include?("localhost") then %>
             <tr>
               <td class="indent2" colspan="2">
                 <table >
