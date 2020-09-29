@@ -68,7 +68,9 @@
 					<% else%>
 						<th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
 					<%end%>
-					<th class="gvCellStyleTitle"><%= t('soil.depth') %></th>
+					<% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
+						<th class="gvCellStyleTitle"><%= t('soil.depth') %></th>
+					<% end %>
 					<th class="gvTitleStyleNumber"><%= t('soil.percentage') %></th>
 					<% if ENV["APP_VERSION"] == "standard" %>
 						<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
@@ -91,7 +93,10 @@
 							<% else %>
 								<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 							<% end %>
-							<td class="gvCellStyleNumber"><%= number_field_tag "tile_depth[]", soil.tile_depth, :value=>soil.tile_depth, :min => 0, :class => 'numbers', :step => "any" %></td>							<td class="gvCellStyleNumber"><%= soil.percentage %></td>
+							<% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
+								<td class="gvCellStyleNumber"><%= number_field_tag "tile_depth[]", soil.tile_depth, :value=>soil.tile_depth, :min => 0, :class => 'numbers', :step => "any" %></td>
+							<% end %>						
+								<td class="gvCellStyleNumber"><%= soil.percentage %></td>
 							<% if ENV["APP_VERSION"] == "standard" %>
 								<td>
 									<%= link_to image_tag("layers.png"), project_field_soil_layers_path(@project, @field, soil), title: t('soil.layers') %>  <%#http://www.veryicon.com/search/soil+layers/%>
