@@ -62,7 +62,7 @@ class BmpsController < ApplicationController
   			bmp.bmpsublist_id = bmpsublist.id
   			case bmp.bmpsublist_id
   			  when 1  #autoirrigation/autofertigation - defaults
-    				bmp.water_stress_factor = 0.2
+    				bmp.water_stress_factor = 0.20
     				bmp.days = 14
     				bmp.irrigation_efficiency = 0
             bmp.maximum_single_application = 3
@@ -89,10 +89,10 @@ class BmpsController < ApplicationController
             temp_hash = {
               "id":c.id,
               "name": Crop.find_by(id:c.id).name,
-              "start_month": "0",
-              "start_day": "0",
-              "end_month": "0",
-              "end_day": "0"
+              "start_month": "1",
+              "start_day": "1",
+              "end_month": "12",
+              "end_day": "31"
             }
           end
           @crop_arr << temp_hash
@@ -1634,6 +1634,6 @@ end
   def bmp_params
     params.require(:bmp).permit(:scenario_id, :bmp_id, :crop_id, :irrigation_id, :water_stress_factor, :irrigation_efficiency, :maximum_single_application, :safety_factor, :depth,
                                 :area, :number_of_animals, :days, :hours, :animal_id, :dry_manure, :no3_n, :po4_p, :org_n, :org_p, :width, :grass_field_portion, :buffer_slope_upland, :crop_width,
-                                :slope_reduction, :sides, :bmpsublist_id)
+                                :slope_reduction, :sides, :bmpsublist_id, :start_month, :start_day, :end_month, :end_day)
   end
 end # end class
