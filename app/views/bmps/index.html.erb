@@ -124,7 +124,7 @@
             <tr>
               <td class="indent2" colspan="2">
                 <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_hundred') %>
-                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => '0.01', :min => 0.00, :max => 0.95, :class => "gvTitleStyleNumber" %>
                 <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
               </td>
             </tr>
