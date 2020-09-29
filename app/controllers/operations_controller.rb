@@ -134,6 +134,12 @@ def index
         end
       end
       operation = Operation.new(operation_params)
+        if params[:operation][:activity_id] == "6" then  # the subarea nirr is set to 1 + operation type.
+          @scenario.subareas.each do |suba|
+            suba.nirr = 10 + params[:operation][:type_id].to_i
+            suba.save
+          end
+        end
       #calculate the days animals in field
       if operation.activity_id == 7 or operation.activity_id == 9 then
         operation.subtype_id = (Date.new(params[:year1].to_i,params[:month_id1].to_i,params[:day1].to_i) - Date.new(params[:operation][:year].to_i,params[:operation][:month_id].to_i,params[:operation][:day].to_i)).to_i + 1
@@ -258,6 +264,12 @@ def index
     @fertilizers = Fertilizer.where(:fertilizer_type_id => @operation.type_id, :status => true).order("name")
     respond_to do |format|
       if @operation.update_attributes(operation_params)
+        if params[:operation][:activity_id] == "6" then  # the subarea nirr is set to 1 + operation type.
+          @scenario.subareas.each do |suba|
+            suba.nirr = 10 + params[:operation][:type_id].to_i
+            suba.save
+          end
+        end
         if params[:operation][:activity_id] == "7" || params[:operation][:activity_id] == "9" 
           if params[:access] != nil
             @operation.org_c = 1

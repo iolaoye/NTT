@@ -313,14 +313,14 @@ module ScenariosHelper
 			when 1,2 #autoirrigation / autofertigation
 	            case @bmp.irrigation_id
 	            when 1
-	            	subarea.nirr = 1.0
+	            	subarea.nirr = 11.0
 	            when 2, 7, 8
-	                subarea.nirr = 2.0
+	                subarea.nirr = 12.0
 	            when 3
-	                subarea.nirr = 5.0
+	                subarea.nirr = 15.0
 	            end
 	            subarea.vimx = 5000
-	            subarea.bir = 0.8
+	            subarea.bir = 0.0
 	            subarea.iri = @bmp.days
 	            subarea.bir = 1-@bmp.water_stress_factor
 	            subarea.efi = @bmp.irrigation_efficiency
