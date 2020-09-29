@@ -1232,18 +1232,23 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%8.2f", 0.00)
     @subarea_file.push(sLine + "\n")
       #/line 8
-    sLine = "  0"
-    if _subarea_info.nirr > 0 then
-      sLine += sprintf("%1d", _subarea_info.nirr)
-    else
-      #if not check if there is manual irrigaiton in the operations.
-      irrigation_op = _subarea_info.scenario.operations.find_by_activity_id(6)
-      if irrigation_op != nil then
-        sLine += sprintf("%1d", irrigation_op.type_id.to_s)
-      else
-        sLine += sprintf("%1d", _subarea_info.nirr)
-      end
+    #sLine = "  0"
+    
+    # if _subarea_info.nirr > 0 then
+    #   sLine += sprintf("%1d", _subarea_info.nirr)
+    # else
+    #   #if not check if there is manual irrigaiton in the operations.
+    #   irrigation_op = _subarea_info.scenario.operations.find_by_activity_id(6)
+    #   if irrigation_op != nil then
+    #     sLine += sprintf("%1d", irrigation_op.type_id.to_s)
+    #   else
+    #     sLine += sprintf("%1d", _subarea_info.nirr)
+    #   end
+    # end
+    if _subarea_info.nirr > 0 and _subarea_info.nirr < 10 then
+      _subarea_info.nirr += 10
     end
+    sLine = sprintf("%4d", _subarea_info.nirr)
     sLine += sprintf("%4d", _subarea_info.iri)
     sLine += sprintf("%4d", _subarea_info.ira)
     sLine += sprintf("%4d", _subarea_info.lm)
