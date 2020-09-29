@@ -1384,21 +1384,30 @@ def send_file_to_DNDC(apex_string, file, state)
             cc_hash[cc_number] = so_new
             current_year += 1
           end
-
           if bmp1.bmpsublist_id = 1 and current_year == so.year
+            sm = 1
+            sd = 1
+            em = 12
+            ed = 31
             ts = Timespan.find_by_bmp_id_and_crop_id(bmp1.id, Crop.find_by_number(so.apex_crop))
-            if ts != nil 
+            if ts != nil
+              sm = ts.start_month unless ts.start_month == nil 
+              sd = ts.start_day unless ts.start_day == nil
+              em = ts.end_month unless ts.end_month == nil
+              ed = ts.end_day unless ts.end_day == nil
+            end
+
               so_new = SoilOperation.new
               so_new.year  = current_year
-              so_new.month = ts.start_month
-              so_new.day = ts.start_day
+              so_new.month = sm
+              so_new.day = sd
               so_new.apex_operation = irrigation_type #this is the irrigation type (500, 502, or 530)   ###
               so_new.activity_id = 6
               so_new.apex_crop = so.apex_crop #with ts.crop id find the crop number in crop table
               so_new.type_id = 0
               so_new.opv1 = 0
               so_new.opv2 = 0
-              so_new.opv3 =  bmp1.water_stress_factor   #This is stress factor from bmp1  
+              so_new.opv3 =  1-bmp1.water_stress_factor   #This is stress factor from bmp1  
               so_new.opv4 =  bmp1.irrigation_efficiency #This efficiency from bmp1
               so_new.opv5 = 0
               so_new.opv6 = 0
@@ -1408,11 +1417,11 @@ def send_file_to_DNDC(apex_string, file, state)
 
               so_new = SoilOperation.new
               so_new.year  = current_year
-              so_new.month = ts.end_month
-              so_new.day = ts.end_day
+              so_new.month = em
+              so_new.day = ed
               so_new.apex_operation = irrigation_type
               so_new.activity_id = 6
-              so_new.apex_crop = Crop.find_by(id:ts.crop_id).number  #with ts.crop id find the crop number in crop table
+              so_new.apex_crop = so.apex_crop  #with ts.crop id find the crop number in crop table
               so_new.type_id = 0
               so_new.opv1 = 0
               so_new.opv2 = 0
@@ -1426,7 +1435,7 @@ def send_file_to_DNDC(apex_string, file, state)
               current_year += 1
 
 
-            end
+
           end
         end
         cc_hash[so.id] = so
