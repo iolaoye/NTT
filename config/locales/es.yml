@@ -497,6 +497,8 @@ es:
     utility_file: Mantenimiento de archivos
     aplcat: APLCAT
     download_aplcat: Download APLCAT Files
+    animal_transport: Transporte de animales
+    new_animal_transport: Nuevo Transporte de animales
   project:
     project: Proyecto
     new_project: 'Proyecto Nuevo'
@@ -1833,21 +1835,21 @@ es:
 
   aplcat_parameters_html: <strong>Parámetros Tabulares</strong><br><br>
     Here, you can make changes on APLCAT. Please open the dropdown menu to navigate through the APLCAT. Click <strong>Save</strong> if you are done making changes.<br><br>
-    If you would like to make changes in Animal Feed, click on <strong>Alimentación Animal</strong> button.<br><br>
-    If you would like to make changes in Animal Transport, click on <strong>Animal Transport</strong> button.
+    Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
+    Si desea ir a Transporte de animales, haga clic en el botón <strong>Transporte de animales</strong>.
   grazing_parameters_html: <strong>Alimentación Animal</strong><br><br>
-    Here, you can see the organized collection of data in an Animal Feed table after you make some changes to the Animal Feed. In order to make changes, click <strong>New Animal Feed</strong> button.<br><br>
-    If you would like to go to Tabular parameters, click <strong>Parámetros Tabulares</strong> button.<br><br>
-    If you would like to go to Animal Transport, click <strong>Animal Transport</strong> button.<br><br>
-    After making changes to the <strong>animal feed</strong> click <strong>Save</strong> to go back to the Animal Feed table to review the changes.<br><br>
-    <strong>Actions</strong><br><br>
+    Aquí, puede ver una colección organizada de datos de Alimentación Animal después de realizar algunos cambios. Para realizar cambios, haga clic en el botón <strong>Nuevo Alimentación Animal</strong>.<br><br>
+    Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
+    Si desea ir a Transporte de animales, haga clic en el botón <strong>Transporte de animales</strong>.
+    Después de realizar cambios en el Alimentación Animal, haga clic en <strong>Guardar</strong> para volver a la tabla Alimentación Animal y revisar los cambios.<br><br>
+    <strong>Opciones</strong><br><br>
     Once a animal feed has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal feed, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
-  animal_transports_html: <strong>Animal Transport</strong><br><br>
-    Here, you can see an organized collection of data in an Animal Transport table after you make some changes to the Animal Transport. In order to make changes, click <strong>New Animal Transport</strong> button.<br><br>
-    If you would like to go to Tabular parameters, click <strong>Parámetros Tabulares</strong> button.<br><br>
-    If you would like to go to Animal Feed, click <strong>Alimentación Animal</strong> button.<br><br>
-    After making changes to the Animal Transport click <strong>Save</strong> to go back to the Animal Transport table to review the changes.<br><br>
-    <strong>Actions</strong><br><br>
+  animal_transports_html: <strong>Transporte de animales</strong><br><br>
+    Aquí, puede ver una colección organizada de datos de Transporte de animales después de realizar algunos cambios. Para realizar cambios, haga clic en el botón <strong>Nuevo transporte de animales</strong>.<br><br>
+    Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
+    Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
+    Después de realizar cambios en el Transporte de animales, haga clic en <strong>Guardar</strong> para volver a la tabla Transporte de animales y revisar los cambios.<br><br>
+    <strong>Opciones</strong><br><br>
     Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
   fem_feeds_html: <strong>Commodity Prices</strong>
   #work in progress..
