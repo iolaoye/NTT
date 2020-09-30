@@ -690,6 +690,7 @@ es:
     bmp_group: Grupo de BPG
     select_bmp:  Seleccione Grupo de BPG
     create_bmp: Crear BPG
+    ten_to_95: "(10.0 - 95.00%)"
     zero_to_one: "(0.00 - 1.00)"
     zero_to_hundred: "(0.00 - 100.00)"
     zero_to_max: "(0.00 – 99999.00)"

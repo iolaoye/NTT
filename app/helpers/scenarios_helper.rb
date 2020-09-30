@@ -212,7 +212,11 @@ module ScenariosHelper
 		# else
 		# 	subarea.idr = 0
 		# end
-        subarea.idr = Soil.find(soil_id)[:tile_depth] != nil ? (Soil.find(soil_id)[:tile_depth] * FT_TO_MM).to_i : 0
+		if subarea.soil_id != 0 then
+        	subarea.idr = Soil.find(soil_id)[:tile_depth] != nil ? (Soil.find(soil_id)[:tile_depth] * FT_TO_MM).to_i : 0
+        else
+        	subarea.idr = 0
+        end
         subarea.idf1 = 0
         subarea.idf2 = 69
         subarea.idf3 = 2
