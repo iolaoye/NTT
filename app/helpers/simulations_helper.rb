@@ -1384,7 +1384,7 @@ def send_file_to_DNDC(apex_string, file, state)
             cc_hash[cc_number] = so_new
             current_year += 1
           end
-          if bmp1.bmpsublist_id = 1 and current_year == so.year
+          if bmp1.bmpsublist_id == 1 and current_year == so.year
             sm = 1
             sd = 1
             em = 12
