@@ -993,7 +993,9 @@ end
 		    @bmp.width = @values[:bmp_ww][:width]
 		    @bmp.crop_id = @values[:bmp_ww][:crop_id]
         @bmp.grass_field_portion = @values[:bmp_ww][:length]
+        if @bmp.grass_field_portion == nil then @bmp.grass_field_portion = 0 end
         @bmp.slope_reduction = @values[:bmp_ww][:floodplain_flow]
+        if @bmp.slope_reduction == nil then @bmp.slope_reduction = 0.8 end
         @bmp.area = 0
   		  if @bmp.save then
 	        return create_new_subarea("WW", 14)

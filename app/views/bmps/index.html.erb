@@ -103,8 +103,10 @@
             </tr>
             <tr>
               <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
-                <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
-                <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.ten_to_95') %>
+                <% efi = (1 - bmp.irrigation_efficiency) * 100 %>
+                <% efi = 95 unless efi < 95 %>
+                <%= number_field :bmp_ai, :irrigation_efficiency, :value => efi, :step => 'any', :min => 10, :max => 95, :class => "gvTitleStyleNumber" %>
                 <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
                   <% elsif bmp.irrigation_id == 2 %> <% range = "50-70%" %>
                   <% elsif bmp.irrigation_id == 3 %> <% range = "80-95%" %>
@@ -123,8 +125,8 @@
             </tr>
             <tr>
               <td class="indent2" colspan="2">
-                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_hundred') %>
-                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => '0.01', :min => 0.00, :max => 0.95, :class => "gvTitleStyleNumber" %>
+                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.ten_to_95') %>
+                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => '0.01', :min => 10.00, :max => 95.0, :class => "gvTitleStyleNumber" %>
                 <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
               </td>
             </tr>
@@ -431,12 +433,14 @@
                 <%= number_field :bmp_ww, :width, :value => bmp.width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
+            <% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.length') + " (" + t('bmp.ft') + ")" %>
                 <%= number_field :bmp_ww, :length, :value => bmp.grass_field_portion, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
+            <% end %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.ffpq') + " " + t('pdf.waterway') + t('bmp.zero_to_one') %>
