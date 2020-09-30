@@ -500,6 +500,8 @@ en:
     utility_file: Utility Files
     aplcat: APLCAT
     download_aplcat: Download APLCAT Files
+    animal_transport: Animal Transport
+    new_animal_transport: New Animal Transport
   project:
     project: Project
     new_project: 'Create New Project'
@@ -1893,7 +1895,7 @@ en:
   #work in progress..
   fem_generals_html: <strong>General Inputs</strong>
   #work in progress..
-  
+
   projpage:
     header: Projects Page
     statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine), upload an example project.
