@@ -356,11 +356,13 @@ class ScenariosController < ApplicationController
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
         end
-        if @scenario.crop_results.count <=0 then
+        #if @scenario.crop_results.count <=0 then
           msg = run_scenario()
-          if msg != "OK" then @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") end
-          return
-        end
+          if msg != "OK" then 
+            @errors.push("Error simulating NTT " + @scenario.name)
+            return
+          end
+        #end
         msg = run_fem
         unless msg.eql?("OK")
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
