@@ -1834,7 +1834,7 @@ es:
     Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
 
   aplcat_parameters_html: <strong>Parámetros Tabulares</strong><br><br>
-    Here, you can make changes on APLCAT. Please open the dropdown menu to navigate through the APLCAT. Click <strong>Save</strong> if you are done making changes.<br><br>
+    Aquí, puede realizar cambios en APLCAT. Abra el menú desplegable para navegar por APLCAT. Haga clic en <strong>Guardar</strong> si ha terminado de realizar cambios.<br><br>
     Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
     Si desea ir a Transporte de animales, haga clic en el botón <strong>Transporte de animales</strong>.
   grazing_parameters_html: <strong>Alimentación Animal</strong><br><br>
@@ -1843,14 +1843,14 @@ es:
     Si desea ir a Transporte de animales, haga clic en el botón <strong>Transporte de animales</strong>.
     Después de realizar cambios en el Alimentación Animal, haga clic en <strong>Guardar</strong> para volver a la tabla Alimentación Animal y revisar los cambios.<br><br>
     <strong>Opciones</strong><br><br>
-    Once a animal feed has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal feed, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+    Una vez que se ha creado un pienso para animales, puede editarlo haciendo clic en <img src="/serve_image/edit.png">. Para eliminar cualquier alimento para animales, simplemente haga clic en <img src="/serve_image/delete.png"> que borrará la fila.
   animal_transports_html: <strong>Transporte de animales</strong><br><br>
     Aquí, puede ver una colección organizada de datos de Transporte de animales después de realizar algunos cambios. Para realizar cambios, haga clic en el botón <strong>Nuevo transporte de animales</strong>.<br><br>
     Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
     Si desea ir a Alimentación animal, haga clic en el botón <strong>Alimentación Animal</strong>.<br><br>
     Después de realizar cambios en el Transporte de animales, haga clic en <strong>Guardar</strong> para volver a la tabla Transporte de animales y revisar los cambios.<br><br>
     <strong>Opciones</strong><br><br>
-    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+    Una vez que se ha creado un transporte de animales, puede editarlo haciendo clic en <img src="/serve_image/edit.png">. Para eliminar cualquier alimento para animales, simplemente haga clic en <img src="/serve_image/delete.png"> que borrará la fila.
   fem_feeds_html: <strong>Commodity Prices</strong>
   #work in progress..
   fem_machines_html: <strong>Equipment</strong>
