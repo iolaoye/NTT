@@ -229,38 +229,38 @@ class FieldsController < ApplicationController
 
       # get depth for each soil - Jennifer 9/15
       td = 0
-      for i in 0..(field.soils.count - 1)
-        if params["tile_depth"]
-          if params["tile_depth"][i].empty?
-            td = 0
-          elsif params["tile_depth"][i].to_f == 0
-            td = 0
-          else
-            td = params["tile_depth"][i]
-          end
-        end
-        soil = field.soils[i]
-        soil.tile_depth = td
-        if td == 0
-          soil.wtmn = 0
-          soil.wtmx = 0
-          soil.wtbl = 0
-        else
-          soil.wtmn = 1
-          soil.wtmx = 5
-          soil.wtbl = 2
-        end
-        soil.save
-        Subarea.where(soil_id: soil.id).each do |subarea|
-          if td == 0
-            subarea.idr = 0
-            subarea.drt = 0
-          else
-            subarea.idr = td.to_f * FT_TO_MM 
-            subarea.drt = 2
-          end
-          subarea.save
-        end
+      # for i in 0..(field.soils.count - 1)
+      #   if params["tile_depth"]
+      #     if params["tile_depth"][i].empty?
+      #       td = 0
+      #     elsif params["tile_depth"][i].to_f == 0
+      #       td = 0
+      #     else
+      #       td = params["tile_depth"][i]
+      #     end
+      #   end
+      #   soil = field.soils[i]
+      #   soil.tile_depth = td
+      #   if td == 0
+      #     soil.wtmn = 0
+      #     soil.wtmx = 0
+      #     soil.wtbl = 0
+      #   else
+      #     soil.wtmn = 1
+      #     soil.wtmx = 5
+      #     soil.wtbl = 2
+      #   end
+      #   soil.save
+      #   Subarea.where(soil_id: soil.id).each do |subarea|
+      #     if td == 0
+      #         subarea.idr = 0
+      #       subarea.drt = 0
+      #     else
+      #       subarea.idr = td.to_f * FT_TO_MM 
+      #       subarea.drt = 2
+      #     end
+      #     subarea.save
+      #   end
       end
     end
 
