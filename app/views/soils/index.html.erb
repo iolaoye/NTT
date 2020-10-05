@@ -93,9 +93,7 @@
 							<% else %>
 								<td class="gvCellStyleText"><%= Drainage.find(soil.drainage_id).name %></td>
 							<% end %>
-							<% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
-								<td class="gvCellStyleNumber"><%= number_field_tag "tile_depth[]", soil.tile_depth, :value=>soil.tile_depth, :min => 0, :class => 'numbers', :step => "any" %></td>
-							<% end %>						
+								<td class="gvCellStyleNumber"><%= number_field_tag "tile_depth[]", soil.tile_depth, :value=>soil.tile_depth, :min => 0, :class => 'numbers', :step => "any" %></td>				
 								<td class="gvCellStyleNumber"><%= soil.percentage %></td>
 							<% if ENV["APP_VERSION"] == "standard" %>
 								<td>
