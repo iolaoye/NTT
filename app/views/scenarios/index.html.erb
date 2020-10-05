@@ -139,8 +139,9 @@
 				<tr>
 				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
 				  <th>Environment</th>
-				  <th><%=t('fem.economic')%></th>
+				  
 				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+				  <th><%=t('fem.economic')%></th>
 				  	<th>1501</th>
 				  <%end %>
 				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
@@ -230,8 +231,9 @@
 					<%else%>
 					<!-- For FEM and NTT. Jennifer 8/24/2020 -->
 						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
-						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
+						
  						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+ 						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
 							<td id="<%= scenario.name %>" class="gvCellStyleText">
 							  <%= check_box_tag "select_1501[]", scenario.id %>
 							</td>
