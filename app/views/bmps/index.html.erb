@@ -54,7 +54,7 @@
           <% end %>
 
           <% if (bmp.bmpsublist_id == 3 && has_depth != true) %>
-            <% next %>
+            <%# next todo activate when td in solis%>
           <% end %>
 
           <tr>
@@ -181,12 +181,12 @@
             </tr>
             <% end %>
           <% when 3 %>
-            <!-- <tr>
+            <tr>
               <td class="field indent" id = "depth" colspan="2" >
                 <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
                 <%=  number_field :bmp_td, :depth, :value => bmp.depth, :step => 'any', :class => "gvTitleStyleNumber", :min => 0 %>
               </td>
-            </tr> %> -->
+            </tr> %>
             <%# <tr><td class="field indent" colspan="3"><%= t("bmp.drainage_management_quiestion") %><%#</td></tr> %>
             <tr>
               <td class="field indent" colspan="3">
