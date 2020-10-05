@@ -228,7 +228,7 @@ class FieldsController < ApplicationController
       end  # end if modified version
 
       # get depth for each soil - Jennifer 9/15
-      td = 0
+      #td = 0
       # for i in 0..(field.soils.count - 1)
       #   if params["tile_depth"]
       #     if params["tile_depth"][i].empty?
@@ -261,7 +261,7 @@ class FieldsController < ApplicationController
       #     end
       #     subarea.save
       #   end
-      end
+      #end
     end
 
     respond_to do |format|
