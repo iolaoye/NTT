@@ -416,7 +416,7 @@
                 <%#= check_box :bmp_fs, :buffer_land, {checked: checked} %>
               </td>
             </tr>
-          <% when 14 %>
+          <% when 14 %>  
             <tr>
               <td class="indent" colspan="2">
                 <%= label :crop_id, t('operation.crop') %>
@@ -433,14 +433,13 @@
                 <%= number_field :bmp_ww, :width, :value => bmp.width, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
-            <% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.length') + " (" + t('bmp.ft') + ")" %>
                 <%= number_field :bmp_ww, :length, :value => bmp.grass_field_portion, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
+                <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
               </td>
             </tr>
-            <% end %>
             <tr>
               <td class="indent" colspan="2">
                 <%= t('bmp.ffpq') + " " + t('pdf.waterway') + t('bmp.zero_to_one') %>
