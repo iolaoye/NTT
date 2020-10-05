@@ -68,9 +68,7 @@
 					<% else%>
 						<th class="gvCellStyleTitle"><%= t('soil.drainage') %></th>
 					<%end%>
-					<% if request.url.include? "ntt.bk" or request.url.include? "localhost" then %>
-						<th class="gvCellStyleTitle"><%= t('soil.depth') %></th>
-					<% end %>
+					<th class="gvCellStyleTitle"><%= t('soil.depth') %></th>
 					<th class="gvTitleStyleNumber"><%= t('soil.percentage') %></th>
 					<% if ENV["APP_VERSION"] == "standard" %>
 						<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
