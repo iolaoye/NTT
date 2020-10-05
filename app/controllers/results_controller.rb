@@ -45,7 +45,7 @@ class ResultsController < ApplicationController
     if params[:simulation] != nil then
         session[:simulation] = params[:simulation]
     end
-    if params[:field_id] == 0 then session[:simulated] = "watershed"
+    if params[:field_id] == 0 then session[:simulated] = "watershed" end
     if session[:simulated] == nil then session[:simulation] = "scenario" end
     if params[:language] != nil then
       if params[:language][:language].eql?("es")
