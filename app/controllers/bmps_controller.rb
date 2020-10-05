@@ -183,11 +183,12 @@ class BmpsController < ApplicationController
     		end
       end
 
-      # if !(@values[:bmp_td] == nil)
-  		#   if !(@values[:bmp_td][:depth] == "") then
-  		# 	 create(3)
-  		#   end
-      # end
+      if !(@values[:bmp_td] == nil)
+  		  if !(@values[:bmp_td][:depth] == "") then
+  			 create(3)
+  		  end
+      end
+
       if @values[:crop_id] != nil || @values[:irrigation_id] != nil
   			 create(3)
   		end
