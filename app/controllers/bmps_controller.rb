@@ -666,9 +666,9 @@ class BmpsController < ApplicationController
             soil.wtmn = 0
             soil.wtmx = 0
             soil.wtbl = 0
-            subarea.idr = soil.tile_depth / FT_TO_MM unless soil.tile_depth == nil
-            #subarea.idr = Field.where(:id => @values[:field_id]).first[:depth].to_f * FT_TO_MM
-            #subarea.idr = 0
+            #todo this is if the tile drain is set in the soil page.
+            #subarea.idr = soil.tile_depth / FT_TO_MM unless soil.tile_depth == nil
+            subarea.idr = 0
             subarea.drt = 0
             subarea.tdms = 0
         end
