@@ -57,6 +57,11 @@ class FemFacilitiesController < ApplicationController
     redirect_to fem_facilities_url, notice: 'Fem facility was successfully destroyed.'
   end
 
+  def reset
+    FemFacility.where(:project_id => @project.id).delete_all
+    redirect_to project_fem_facilities_path(@project, :button => t('fem.facility')), notice: t("models.apex_control") + " " + t("general.reset")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fem_facility

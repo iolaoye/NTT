@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
-
 <div class="page-header"><h1><%=t("fem.feed")%></h1></div>
+<%= link_to t("general.reset_to"), reset_project_fem_feed_path(@project, 0), :class => 'btn btn-primary' %>
 <!-- <div class="table-responsive"> *Commented* to make horizontal scroll bar reappear on screen -->
     <div class="panel panel-default">
       <table class='table table-striped'>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Code</th>
+            <!-- <th>Code</th> -->
             <th>Selling price</th>
             <th>Purchase price</th>
             <th>Concentrate</th>
@@ -25,7 +25,7 @@
           <% @fem_feeds.each do |fem_feed| %>
             <tr>
               <td><%= fem_feed.name.capitalize %></td>
-              <td><%= fem_feed.codes %></td>
+              <!-- <td><%= fem_feed.codes %></td> -->
               <td><%= fem_feed.selling_price %></td>
               <td><%= fem_feed.purchase_price %></td>
               <td><%= fem_feed.concentrate %></td>

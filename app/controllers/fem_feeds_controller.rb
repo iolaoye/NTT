@@ -58,6 +58,11 @@ class FemFeedsController < ApplicationController
     redirect_to fem_feeds_url, notice: 'Fem feed was successfully destroyed.'
   end
 
+  def reset
+    FemFeed.where(:project_id => @project.id).delete_all
+    redirect_to project_fem_feeds_path(@project, :button => t('fem.feed')), notice: t("models.apex_control") + " " + t("general.reset")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fem_feed
