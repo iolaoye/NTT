@@ -163,11 +163,11 @@
                         <td style="height:0px"><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
                         <td ><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber"%></td>
                         <td>
-                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 31, :class => "gvTitleStyleNumber" %>
                         </td>
                         <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber" %></td>
                         <td>
-                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day], :step => 'any', :min => 0, :max => 31, :class => "gvTitleStyleNumber" %>
                         </td>
                         <td>
                        <%= hidden_field_tag "my_crop_id", cp[:id]%>
@@ -416,7 +416,7 @@
                 <%#= check_box :bmp_fs, :buffer_land, {checked: checked} %>
               </td>
             </tr>
-          <% when 14 %>  
+          <% when 14 %>
             <tr>
               <td class="indent" colspan="2">
                 <%= label :crop_id, t('operation.crop') %>
