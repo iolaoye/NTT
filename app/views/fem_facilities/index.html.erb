@@ -39,7 +39,7 @@
               <td><%= fem_facility.interest_rate_equity %></td>
               <td><%= fem_facility.proportion_debt %></td>
               <td><%= fem_facility.year %></td>
-              <td><%= link_to image_tag("edit.png"), edit_project_fem_facility_path(@project, fem_facility) %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_facility_path(@project, fem_facility,:field_id => @field.id,:caller_id => "FEM") %></td>
             </tr>
           <% end %>
         </tbody>

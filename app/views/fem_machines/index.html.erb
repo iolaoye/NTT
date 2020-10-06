@@ -53,7 +53,7 @@
               <td><%= fem_machine.year %></td>
               <td><%= fem_machine.rv1 %></td>
               <td><%= fem_machine.rv2 %></td>
-              <td><%= link_to image_tag("edit.png"), edit_project_fem_machine_path(@project, fem_machine) %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_machine_path(@project, fem_machine,:field_id => @field.id,:caller_id => "FEM") %></td>
             </tr>
           <% end %>
         </tbody>

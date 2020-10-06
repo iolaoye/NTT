@@ -43,7 +43,7 @@ class FemMachinesController < ApplicationController
     @fem_machine.updated = true
     respond_to do |format|
       if @fem_machine.update_attributes(fem_machine_params)
-        format.html { redirect_to project_fem_machines_path(@project), notice: 'General Input was successfully updated.' }
+        format.html { redirect_to project_fem_machines_path(@project, :field_id => params[:fem_machine][:field_id], :caller_id => "FEM"), notice: 'General Input was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
