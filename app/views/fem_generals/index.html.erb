@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Codes</th>
+            <!-- <th>Codes</th> -->
             <th>Value</th>
             <th><%=t('general.actions')%></th>
             <th colspan="3"></th>
@@ -18,7 +18,7 @@
           <% @fem_generals.each do |fem_general| %>
             <tr>
               <td><%= fem_general.name.capitalize %></td>
-              <td><%= fem_general.codes %></td>
+             <!--  <td><%= fem_general.codes %></td> -->
               <td><%= fem_general.value %></td>
               <td><%#= link_to 'Show', project_fem_general_path(fem_general) %></td>
               <td><%= link_to image_tag("edit.png"), edit_project_fem_general_path(@project, fem_general) %></td>
