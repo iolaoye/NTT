@@ -17,6 +17,8 @@
     <%= f.label :value %><br>
     <%= f.text_field :value %>
   </div>
+    <%= f.hidden_field :field_id, :value => @field.id %>
+    <%= f.hidden_field :caller_id, :value => "FEM" %>  
     <%= f.submit :class => "btn btn-primary" %>
-    <%= link_to 'Back', project_fem_generals_path(@project), :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_generals_path(@project,:field_id => @field.id,:caller_id => "FEM"), :class => "btn btn-primary" %>
 <% end %>

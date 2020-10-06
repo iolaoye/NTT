@@ -35,7 +35,7 @@
               <td><%= fem_feed.pasture %></td>
               <td><%= fem_feed.silage %></td>
               <td><%= fem_feed.supplement %></td>
-              <td><%= link_to image_tag("edit.png"), edit_project_fem_feed_path(@project, fem_feed) %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_feed_path(@project, fem_feed,:field_id => @field.id,:caller_id => "FEM") %></td>
             </tr>
           <% end %>
         </tbody>
