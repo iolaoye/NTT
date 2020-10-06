@@ -30,7 +30,7 @@
 	      	</tr>
 	      	<tr>
 	      		<% if @type.include?(t('result.annual')) then %>
-			      		<% @years = (@project.apex_controls[1].value.to_i...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
+			      		<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
 		      		<td>
 		      			<select name="sim_initial_year">
 		      				<option value="default" selected="selected">Initial Year</option>
@@ -41,6 +41,7 @@
 		      		</td>
 		      		<td>
 		      			<select name="sim_final_year">
+		      				<% debugger %>
 		      				<option value="" selected="selected">Final Year</option>
 		      				<% @years.each do |y| %>
 		      					<option value="<%= y %>"><%= y %></option>
