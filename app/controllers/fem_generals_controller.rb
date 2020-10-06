@@ -58,6 +58,12 @@ class FemGeneralsController < ApplicationController
     redirect_to fem_generals_url, notice: 'Fem general was successfully destroyed.'
   end
 
+  def reset
+    debugger
+    FemGeneral.where(:project_id => @project.id).delete_all
+    redirect_to project_fem_generals_path(@project, :button => t('fem.general')), notice: t("models.apex_control") + " " + t("general.reset")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fem_general

@@ -416,7 +416,7 @@ en:
     created: was successfully created.
     updated: was successfully updated.
     reset: reset to default was successful.
-    reset_to: reset to default
+    reset_to: Reset to default
     uploading: uploading
     continue: Continue
     confirm: Are you sure?

@@ -84,10 +84,18 @@ NTTG3::Application.routes.draw do
   resources :projects do
     post 'locations/upload_shapefile'
     post 'fields/upload_scenarios'
-    resources :fem_generals
-    resources :fem_facilities
-    resources :fem_machines
-    resources :fem_feeds
+    resources :fem_facilities do
+      get 'reset', on: :member
+    end
+    resources :fem_generals do
+      get 'reset', on: :member
+    end    
+    resources :fem_machines do
+      get 'reset', on: :member
+    end
+    resources :fem_feeds do
+      get 'reset', on: :member
+    end
     resources :watersheds do
   		post :simulate, on: :collection
   		get :list, on: :member

@@ -58,6 +58,11 @@ class FemMachinesController < ApplicationController
     redirect_to fem_machines_url, notice: 'Fem machine was successfully destroyed.'
   end
 
+  def reset
+    FemMachine.where(:project_id => @project.id).delete_all
+    redirect_to project_fem_machines_path(@project, :button => t('fem.machine')), notice: t("models.apex_control") + " " + t("general.reset")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fem_machine
