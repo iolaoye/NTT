@@ -1078,7 +1078,6 @@ def send_file_to_DNDC(apex_string, file, state)
       field_area = subarea_area - subarea_area / total_area_ha * (filter_area * pnd_sides)
   end
 
-
   #This add single subarea information for regular simulation
   def add_subarea_file(_subarea_info, operation_number, last_owner1, i, nirr, buffer, total_soils)
     j = i + 1
@@ -1397,45 +1396,42 @@ def send_file_to_DNDC(apex_string, file, state)
               ed = ts.end_day unless ts.end_day == nil
             end
 
-              so_new = SoilOperation.new
-              so_new.year  = current_year
-              so_new.month = sm
-              so_new.day = sd
-              so_new.apex_operation = irrigation_type #this is the irrigation type (500, 502, or 530)   ###
-              so_new.activity_id = 6
-              so_new.apex_crop = so.apex_crop #with ts.crop id find the crop number in crop table
-              so_new.type_id = 0
-              so_new.opv1 = 0
-              so_new.opv2 = 0
-              so_new.opv3 =  1-bmp1.water_stress_factor   #This is stress factor from bmp1  
-              so_new.opv4 =  bmp1.irrigation_efficiency #This efficiency from bmp1
-              so_new.opv5 = 0
-              so_new.opv6 = 0
-              so_new.opv7 = 0
-              cc_number += 1
-              cc_hash[cc_number] = so_new
+            so_new = SoilOperation.new
+            so_new.year  = current_year
+            so_new.month = sm
+            so_new.day = sd
+            so_new.apex_operation = irrigation_type #this is the irrigation type (500, 502, or 530)   ###
+            so_new.activity_id = 6
+            so_new.apex_crop = so.apex_crop #with ts.crop id find the crop number in crop table
+            so_new.type_id = 0
+            so_new.opv1 = 0
+            so_new.opv2 = 0
+            so_new.opv3 =  1-bmp1.water_stress_factor   #This is stress factor from bmp1  
+            so_new.opv4 =  bmp1.irrigation_efficiency #This efficiency from bmp1
+            so_new.opv5 = 0
+            so_new.opv6 = 0
+            so_new.opv7 = 0
+            cc_number += 1
+            cc_hash[cc_number] = so_new
 
-              so_new = SoilOperation.new
-              so_new.year  = current_year
-              so_new.month = em
-              so_new.day = ed
-              so_new.apex_operation = irrigation_type
-              so_new.activity_id = 6
-              so_new.apex_crop = so.apex_crop  #with ts.crop id find the crop number in crop table
-              so_new.type_id = 0
-              so_new.opv1 = 0
-              so_new.opv2 = 0
-              so_new.opv3 = -1000 
-              so_new.opv4 = 0 
-              so_new.opv5 = 0
-              so_new.opv6 = 0
-              so_new.opv7 = 0
-              cc_number += 1
-              cc_hash[cc_number] = so_new
-              current_year += 1
-
-
-
+            so_new = SoilOperation.new
+            so_new.year  = current_year
+            so_new.month = em
+            so_new.day = ed
+            so_new.apex_operation = irrigation_type
+            so_new.activity_id = 6
+            so_new.apex_crop = so.apex_crop  #with ts.crop id find the crop number in crop table
+            so_new.type_id = 0
+            so_new.opv1 = 0
+            so_new.opv2 = 0
+            so_new.opv3 = -1000 
+            so_new.opv4 = 0 
+            so_new.opv5 = 0
+            so_new.opv6 = 0
+            so_new.opv7 = 0
+            cc_number += 1
+            cc_hash[cc_number] = so_new
+            current_year += 1
           end
         end
         cc_hash[so.id] = so
@@ -1552,7 +1548,11 @@ def send_file_to_DNDC(apex_string, file, state)
         for j in i..@soil_operations.count - 1
           @soil_operations[j].year = "1"
         end
-        @soil_operations = @soil_operations.reorder("year, month, day, activity_id, type_id")  #reorder
+        if @project.version == "Comet" then
+          @soil_operations = @soil_operations.reorder("year, month, day")  #reorder
+        else
+          @soil_operations = @soil_operations.reorder("year, month, day, activity_id, type_id")  #reorder
+        end
       end
     end
   end
@@ -1929,9 +1929,9 @@ def send_file_to_DNDC(apex_string, file, state)
     newLine = newLine + " " + sprintf("%7.4f", org_n)
     if org_p == nil then org_p = 0 end
     newLine = newLine + " " + sprintf("%7.4f", org_p)
-  if nh3 == nil then
-    nh3 = 0.350
-  end
+    if nh3 == nil then
+      nh3 = 0.350
+    end
     newLine = newLine + " " + sprintf("%7.4f", nh3)
     newLine = newLine + "   0.350   0.000   0.000"
     @change_fert_for_grazing_line.push(newLine)
@@ -2067,6 +2067,7 @@ def send_file_to_DNDC(apex_string, file, state)
     dprk_sum = 0
     prkn_sum = 0
     n2o_sum = 0
+    sub_surface_n_sum = 0
     pcp = 0
     biom = 0
     total_subs = 0
@@ -2128,6 +2129,8 @@ def send_file_to_DNDC(apex_string, file, state)
             one_result["qdr"] = qdr_sum / total_subs
             one_result["qdrn"] = qdrn_sum / total_subs
             one_result["qdrp"] = qdrp_sum / total_subs
+            #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
+            sub_surface_n_sum = sub_surface_n_sum / total_subs
           end
           one_result["dprk"] = dprk_sum / total_subs
           one_result["irri"] = irri_sum / total_subs
@@ -2150,6 +2153,8 @@ def send_file_to_DNDC(apex_string, file, state)
             qdr_sum += one_result["qdr"]
             qdrn_sum += one_result["qdrn"]
             qdrp_sum += one_result["qdrp"]
+
+            sub_surface_n_sum += (tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC)
           end
           irri_sum += one_result["irri"]
           dprk_sum += one_result["dprk"]
@@ -2159,6 +2164,7 @@ def send_file_to_DNDC(apex_string, file, state)
           biom += one_result["biom"]
         end  # end if sub == 0
         if subs == 0 then
+          one_result["no3"] += sub_surface_n_sum
           results_data.push(one_result)
         end
       else
@@ -2619,48 +2625,48 @@ def send_file_to_DNDC(apex_string, file, state)
 
   def add_summary_to_results_table(values, description_id, cis)
     for i in 0..values.count-1
-  # todo. this is not taken the buffer subareas such as FS, WL, etc.
-    if values[i][0] <= @soils.count then
-      values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
-      if session[:simulation].eql?('scenario') then
-      add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
-      case description_id #Total area for summary report is beeing calculated
-        when 4 #calculate total area
-        #todo
-        when 24 #calculate total N
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-        when 33 #calculate total P
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-        when 43 #calculate total flow
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-        when 52 #calculate total other water info
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-        when 62 #calculate total sediment
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        when 92 # calculate total other N
-        add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
-      end #end case when
-      else
-      if values[i][0] > 0 then next end
-      add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
-      case description_id #Total area for summary report is beeing calculated
-        when 4 #calculate total area
-        #todo
-        when 24 #calculate total N
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
-        when 33 #calculate total P
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
-        when 43 #calculate total flow
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
-        when 52 #calculate total other water info
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
-        when 62 #calculate total sediment
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
-        when 91  # calculate total other N
-        add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
-      end #end case when
-      end # end if simulation == scenario
-    end  # end if <= @soils
+        # todo. this is not taken the buffer subareas such as FS, WL, etc.
+      if values[i][0] <= @soils.count then
+        values[i][0] == 0 ? soil_id = 0 : soil_id = @soils[values[i][0]-1].id
+        if session[:simulation].eql?('scenario') then
+          add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
+          case description_id #Total area for summary report is beeing calculated
+            when 4 #calculate total area
+            #todo
+            when 24 #calculate total N
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+            when 33 #calculate total P
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+            when 43 #calculate total flow
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+            when 52 #calculate total other water info
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+            when 62 #calculate total sediment
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+            when 92 # calculate total other N
+            add_totals(Result.where("soil_id = " + soil_id.to_s + " AND field_id = " + @scenario.field_id.to_s + " AND scenario_id = " + @scenario.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
+          end #end case when
+        else
+          if values[i][0] > 0 then next end
+          add_summary(values[i][1], description_id, soil_id, cis[i][1], 0)
+          case description_id #Total area for summary report is beeing calculated
+            when 4 #calculate total area
+            #todo
+            when 24 #calculate total N
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 20"), 20, soil_id)
+            when 33 #calculate total P
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 30"), 30, soil_id)
+            when 43 #calculate total flow
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 40"), 40, soil_id)
+            when 52 #calculate total other water info
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 50"), 50, soil_id)
+            when 62 #calculate total sediment
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 60"), 60, soil_id)
+            when 91  # calculate total other N
+            add_totals(Result.where("watershed_id = " + @watershed.id.to_s + " AND description_id <= " + description_id.to_s + " AND description_id > 90"), 90, soil_id)
+          end #end case when
+        end # end if simulation == scenario
+      end  # end if <= @soils
     end #end for i
     return "OK"
   end
@@ -2882,123 +2888,123 @@ def send_file_to_DNDC(apex_string, file, state)
   def create_herd_file(animals, hours, animal_code, soil_percentage)
     #calculate number of animals.
     case animal_code
-        when 43   #"Dairy"    '1
-            manureProduced = 4.5
-            bioConsumed = 9.1
-            urineProduced = 8.2
-            manureId = 43
-        when 44   #"Beef"    '5
-            manureProduced = 4.5
-            bioConsumed = 9.1
-            urineProduced = 8.2
-            manureId = 44
-        when 47   #"Sheep"    '9
-            manureProduced = 5
-            bioConsumed = 9.0
-            urineProduced = 6.8
-            manureId = 47
-        when 49   #"Horse"   '10
-            manureProduced = 6.8
-            bioConsumed = 9.1
-            urineProduced = 4.5
-            manureId = 49
-        when 46   #"Swine"    '16
-            manureProduced = 5
-            bioConsumed = 9.1
-            urineProduced = 17.7
-            manureId = 46
-        when 52   #"Broiler"    '17
-            manureProduced = 10.4
-            bioConsumed = 10
-            urineProduced = 6.8
-            manureId = 52
-        else
-            manureProduced = 12
-            bioConsumed = 9.08
-            urineProduced = 6.8
-            manureId = 56
-      end   # end case
-
-      if animals < 1 then
-          animals = 1
-      end
-      conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
-      @last_herd += 1
-      #commented because in grazing just one soil is used. 
-      herdFile = sprintf("%4d", @last_herd) #For different owners
-      herdFile += sprintf("%8.1f", (animals * conversion_unit).round(0))
-      herdFile += sprintf("%8.1f", animal_code)
-      herdFile += sprintf("%8.2f",(24 - hours) / 24)
-      herdFile += sprintf("%8.2f",bioConsumed)
-      herdFile += sprintf("%8.2f",manureProduced)
-      herdFile += sprintf("%8.2f",urineProduced)
-      @herd_list.push(herdFile + "\n")
-
-      herdFile += ""
-      msg = send_file_to_APEX(@herd_list, "HERD.dat")
-      return bioConsumed
-    end #end create_herd_file
-
-    ################################  run_scenario - run simulation called from show or index  #################################
-    def run_scenario()
-      @last_herd = 0
-      @herd_list = Array.new
-      msg = "OK"
-      dir_name = APEX + "/APEX" + session[:session_id]
-      if !File.exists?(dir_name)
-        FileUtils.mkdir_p(dir_name)
-      end
-      #CREATE structure for nutrients that go with fert file
-      @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
-      @current_nutrients = Array.new
-      @new_fert_line = Array.new
-      @change_fert_for_grazing_line = Array.new
-      @fem_list = Array.new
-      @dtNow1  = Time.now.to_s
-      @opcs_list_file = Array.new
-      @depth_ant = Array.new
-      @opers = Array.new
-      @change_till_depth = Array.new
-      @last_soil_sub = 0
-      @last_subarea = 0
-      @last_herd = 0
-      @fert_code = 79
-      state_id = @project.location.state_id
-      @state_abbreviation = "**"
-      if state_id != 0 and state_id != nil then
-        @state_abbreviation = State.find(state_id).state_abbreviation
-      end
-      if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
-      if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
-      if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
-      #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
-      if @project.location.state_id == 0 then 
-        if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+      when 43   #"Dairy"    '1
+          manureProduced = 4.5
+          bioConsumed = 9.1
+          urineProduced = 8.2
+          manureId = 43
+      when 44   #"Beef"    '5
+          manureProduced = 4.5
+          bioConsumed = 9.1
+          urineProduced = 8.2
+          manureId = 44
+      when 47   #"Sheep"    '9
+          manureProduced = 5
+          bioConsumed = 9.0
+          urineProduced = 6.8
+          manureId = 47
+      when 49   #"Horse"   '10
+          manureProduced = 6.8
+          bioConsumed = 9.1
+          urineProduced = 4.5
+          manureId = 49
+      when 46   #"Swine"    '16
+          manureProduced = 5
+          bioConsumed = 9.1
+          urineProduced = 17.7
+          manureId = 46
+      when 52   #"Broiler"    '17
+          manureProduced = 10.4
+          bioConsumed = 10
+          urineProduced = 6.8
+          manureId = 52
       else
-        if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
-      end
-      if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
-      @last_soil = 0
-      @grazing = @scenario.operations.find_by_activity_id([7, 9])
-      if @grazing == nil then
-        @soils = @field.soils
-      else
-        @soils = @field.soils.limit(1)
-      end
-      @soil_list = Array.new      
-      if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
-      @subarea_file = Array.new
-      @soil_number = 0
-      if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
-      if @apex_version == 1501 then
-        if msg.eql?("OK") then msg = send_files1_to_APEX("RUN1501") else return msg  end  #this operation will run a simulation and return ntt file.
-      else
-        if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
-      end
-      if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
-      #@scenario.last_simulation = Time.now
-      if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-      return msg
-    end # end show method
+          manureProduced = 12
+          bioConsumed = 9.08
+          urineProduced = 6.8
+          manureId = 56
+    end   # end case
+
+    if animals < 1 then
+        animals = 1
+    end
+    conversion_unit = Fertilizer.find_by_code(manureId).convertion_unit
+    @last_herd += 1
+    #commented because in grazing just one soil is used. 
+    herdFile = sprintf("%4d", @last_herd) #For different owners
+    herdFile += sprintf("%8.1f", (animals * conversion_unit).round(0))
+    herdFile += sprintf("%8.1f", animal_code)
+    herdFile += sprintf("%8.2f",(24 - hours) / 24)
+    herdFile += sprintf("%8.2f",bioConsumed)
+    herdFile += sprintf("%8.2f",manureProduced)
+    herdFile += sprintf("%8.2f",urineProduced)
+    @herd_list.push(herdFile + "\n")
+
+    herdFile += ""
+    msg = send_file_to_APEX(@herd_list, "HERD.dat")
+    return bioConsumed
+  end #end create_herd_file
+
+  ################################  run_scenario - run simulation called from show or index  #################################
+  def run_scenario()
+    @last_herd = 0
+    @herd_list = Array.new
+    msg = "OK"
+    dir_name = APEX + "/APEX" + session[:session_id]
+    if !File.exists?(dir_name)
+      FileUtils.mkdir_p(dir_name)
+    end
+    #CREATE structure for nutrients that go with fert file
+    @nutrients_structure = Struct.new(:code, :no3, :po4, :orgn, :orgp)
+    @current_nutrients = Array.new
+    @new_fert_line = Array.new
+    @change_fert_for_grazing_line = Array.new
+    @fem_list = Array.new
+    @dtNow1  = Time.now.to_s
+    @opcs_list_file = Array.new
+    @depth_ant = Array.new
+    @opers = Array.new
+    @change_till_depth = Array.new
+    @last_soil_sub = 0
+    @last_subarea = 0
+    @last_herd = 0
+    @fert_code = 79
+    state_id = @project.location.state_id
+    @state_abbreviation = "**"
+    if state_id != 0 and state_id != nil then
+      @state_abbreviation = State.find(state_id).state_abbreviation
+    end
+    if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
+    if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
+    if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
+    #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
+    if @project.location.state_id == 0 then 
+      if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+    else
+      if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + State.find(@project.location.state_id).state_abbreviation) end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
+    end
+    if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
+    @last_soil = 0
+    @grazing = @scenario.operations.find_by_activity_id([7, 9])
+    if @grazing == nil then
+      @soils = @field.soils
+    else
+      @soils = @field.soils.limit(1)
+    end
+    @soil_list = Array.new      
+    if msg.eql?("OK") then msg = create_apex_soils() else return msg  end
+    @subarea_file = Array.new
+    @soil_number = 0
+    if msg.eql?("OK") then msg = create_subareas(1) else return msg  end
+    if @apex_version == 1501 then
+      if msg.eql?("OK") then msg = send_files1_to_APEX("RUN1501") else return msg  end  #this operation will run a simulation and return ntt file.
+    else
+      if msg.eql?("OK") then msg = send_files1_to_APEX("RUN") else return msg  end  #this operation will run a simulation and return ntt file.
+    end
+    if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
+    #@scenario.last_simulation = Time.now
+    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
+    return msg
+  end # end show method
 
 end
