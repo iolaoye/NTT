@@ -21,7 +21,7 @@
     <div id="fsetSimulation" class="panel panel-default">
       <div class="panel-heading"><%= t('pdf.tile_drain') + " Information" %></div>
       <div class="panel-body">
-    <div class="field" title="Field Depth">
+    <div class="field" title="Field Depth" style="display:none">
       <%= f.label t('bmp.depth') + " (ft)"%>
        <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
