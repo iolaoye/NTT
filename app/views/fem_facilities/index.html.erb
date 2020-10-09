@@ -1,13 +1,14 @@
 <p id="notice"><%= notice %></p>
 
 <div class="page-header"><h1><%=t("fem.facility")%></h1></div>
-  <div class="table-responsive">
+<%= link_to t("general.reset_to"), reset_project_fem_facility_path(@project, 0), :class => 'btn btn-primary' %>
+<!-- <div class="table-responsive"> *Commented* to make horizontal scroll bar reappear on screen -->
     <div class="panel panel-default">
       <table class='table table-striped'>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Code</th>
+            <!-- <th>Code</th> -->
             <th>Lease Rate</th>
             <th>New Price</th>
             <th>New Life</th>
@@ -25,8 +26,8 @@
         <tbody>
           <% @fem_facilities.each do |fem_facility| %>
             <tr>
-              <td><%= fem_facility.name %></td>
-              <td><%= fem_facility.codes %></td>
+              <td><%= fem_facility.name.capitalize %></td>
+              <!-- <td><%= fem_facility.codes %></td> -->
               <td><%= fem_facility.lease_rate %></td>
               <td><%= fem_facility.new_price %></td>
               <td><%= fem_facility.new_life %></td>
@@ -38,11 +39,11 @@
               <td><%= fem_facility.interest_rate_equity %></td>
               <td><%= fem_facility.proportion_debt %></td>
               <td><%= fem_facility.year %></td>
-              <td><%= link_to image_tag("edit.png"), edit_project_fem_facility_path(@project, fem_facility) %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_facility_path(@project, fem_facility,:field_id => @field.id,:caller_id => "FEM") %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-  </div>
+    <!-- </div> *Commented* to make horizontal scroll bar reappear on screen -->
 <br>

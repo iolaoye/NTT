@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
-
 <div class="page-header"><h1><%=t("fem.feed")%></h1></div>
-  <div class="table-responsive">
+<%= link_to t("general.reset_to"), reset_project_fem_feed_path(@project, 0), :class => 'btn btn-primary' %>
+<!-- <div class="table-responsive"> *Commented* to make horizontal scroll bar reappear on screen -->
     <div class="panel panel-default">
       <table class='table table-striped'>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Code</th>
+            <!-- <th>Code</th> -->
             <th>Selling price</th>
             <th>Purchase price</th>
             <th>Concentrate</th>
@@ -17,15 +17,15 @@
             <th>Pasture</th>
             <th>Silage</th>
             <th>Supplement</th>
-            <th><%=t('general.actions')%></th>  
+            <th><%=t('general.actions')%></th>
           </tr>
         </thead>
 
         <tbody>
           <% @fem_feeds.each do |fem_feed| %>
             <tr>
-              <td><%= fem_feed.name %></td>
-              <td><%= fem_feed.codes %></td>
+              <td><%= fem_feed.name.capitalize %></td>
+              <!-- <td><%= fem_feed.codes %></td> -->
               <td><%= fem_feed.selling_price %></td>
               <td><%= fem_feed.purchase_price %></td>
               <td><%= fem_feed.concentrate %></td>
@@ -35,13 +35,13 @@
               <td><%= fem_feed.pasture %></td>
               <td><%= fem_feed.silage %></td>
               <td><%= fem_feed.supplement %></td>
-              <td><%= link_to image_tag("edit.png"), edit_project_fem_feed_path(@project, fem_feed) %></td>
+              <td><%= link_to image_tag("edit.png"), edit_project_fem_feed_path(@project, fem_feed,:field_id => @field.id,:caller_id => "FEM") %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
     </div>
-  </div>
+    <!-- </div> *Commented* to make horizontal scroll bar reappear on screen -->
 </div>
 
 <br>

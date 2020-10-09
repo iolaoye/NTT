@@ -43,7 +43,7 @@ class FemFeedsController < ApplicationController
 
     respond_to do |format|
       if @fem_feed.update_attributes(fem_feed_params)
-        format.html { redirect_to project_fem_feeds_path(@project), notice: 'General Input was successfully updated.' }
+        format.html { redirect_to project_fem_feeds_path(@project, :field_id => params[:fem_feed][:field_id], :caller_id => "FEM"), notice: 'General Input was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -56,6 +56,11 @@ class FemFeedsController < ApplicationController
   def destroy
     @fem_feed.destroy
     redirect_to fem_feeds_url, notice: 'Fem feed was successfully destroyed.'
+  end
+
+  def reset
+    FemFeed.where(:project_id => @project.id).delete_all
+    redirect_to project_fem_feeds_path(@project, :button => t('fem.feed')), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   private

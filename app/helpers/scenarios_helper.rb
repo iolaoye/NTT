@@ -114,7 +114,7 @@ module ScenariosHelper
  ###################################### create_subarea ###################################### 
  ## Create subareas from soils receiving from map for each field and for each scenario ###
 	def create_subarea(sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
-		subarea = Subarea.new
+		subarea = Subarea.new 
 		update_subarea(subarea, sub_type, i, soil_area, slope, forestry, total_selected, field_name, scenario_id, soil_id, soil_percentage, total_percentage, field_area, bmp_id, bmpsublist_id, checker, type, soil_resubmit)
 	end
 
@@ -206,8 +206,17 @@ module ScenariosHelper
         subarea.iri = 0
         subarea.ira = 0
         subarea.lm = 1
-        subarea.ifd = 0
-        subarea.idr = 0
+		subarea.ifd = 0
+		# if bmp_id == 0 && bmpsublist_id == 0 && @field.depth != nil
+		# 	subarea.idr =  @field.depth.to_f * FT_TO_MM
+		# else
+		# 	subarea.idr = 0
+		# end
+		if subarea.soil_id != 0 then
+        	subarea.idr = Soil.find(soil_id)[:tile_depth] != nil ? (Soil.find(soil_id)[:tile_depth] * FT_TO_MM).to_i : 0
+        else
+        	subarea.idr = 0
+        end
         subarea.idf1 = 0
         subarea.idf2 = 69
         subarea.idf3 = 2
@@ -297,9 +306,8 @@ module ScenariosHelper
 			end #if operations no nill
 		end # end if scneario_id == 0
 		if subarea.save then
-			
+
 		else
-			
 		end
 	end
 
@@ -309,14 +317,14 @@ module ScenariosHelper
 			when 1,2 #autoirrigation / autofertigation
 	            case @bmp.irrigation_id
 	            when 1
-	            	subarea.nirr = 1.0
+	            	subarea.nirr = 11.0
 	            when 2, 7, 8
-	                subarea.nirr = 2.0
+	                subarea.nirr = 12.0
 	            when 3
-	                subarea.nirr = 5.0
+	                subarea.nirr = 15.0
 	            end
 	            subarea.vimx = 5000
-	            subarea.bir = 0.8
+	            subarea.bir = 0.0
 	            subarea.iri = @bmp.days
 	            subarea.bir = 1-@bmp.water_stress_factor
 	            subarea.efi = @bmp.irrigation_efficiency
@@ -332,7 +340,7 @@ module ScenariosHelper
         			subarea.bft = 0.8
         		end
 			when 3  #tile drain
-				subarea.idr = @bmp.depth * FT_TO_MM  # update the tile drain depth in mm.
+				subarea.idr = @bmp.depth * FT_TO_MM
 				subarea.drt = 2
 			when 4   #PPDE, PPTW
 				if @bmp.depth == 6 || @bmp.depth == 7 then
@@ -627,11 +635,15 @@ module ScenariosHelper
 				#line 2
 				subarea.number = 104
 				subarea.iops = soil_id
-				#subarea.iow = 1
 				#line 5
 				subarea.rchl = (@bmp.width * FT_TO_KM).round(4)   #soil_area here is the reservior area
 				#line 4
-				subarea.wsa = temp_length * subarea.rchl * 100
+				if @bmp.grass_field_portion > 0 then
+					subarea.wsa = (@bmp.grass_field_portion * FT_TO_KM) * subarea.rchl * 100  #convert length to km and the area to ha.
+				else
+					subarea.wsa = temp_length * subarea.rchl * 100
+				end
+				
 				update_wsa("-", subarea.wsa)
 				subarea.chl = Math.sqrt((subarea.rchl**2) + ((temp_length/2) ** 2))
 				## slope is going to be the lowest slope in the selected soils and need to be passed as a param in slope variable

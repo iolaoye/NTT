@@ -93,10 +93,30 @@ class ScenariosController < ApplicationController
     @watershed.save
     respond_to do |format|
       if @scenario.save
+        add_scenario_to_soils(@scenario, false)
+        # Check if tiledrain exists in field
+        if @field.depth != nil && @field.depth > 0
+          # Save soil Tile Drain values into Bmp table
+          values = {}
+          values[:action] = "save_bmps_from_load"
+          values[:project_id] = @project.id
+          values[:button] = t('submit.savecontinue')
+          values[:field_id] =  params[:field_id]
+          values[:bmp_td] = {}
+          values[:bmp_td][:depth] = @field.depth
+          values[:scenario_id] = @scenario.id
+          # Add irrigation_id
+          @field.tile_bioreactors == "1" || @field.tile_bioreactors == true ? values[:irrigation_id] = 1 : values[:irrigation_id] = nil
+          # Add crop_id
+          @field.drainage_water_management == "1" || @field.drainage_water_management == true ? values[:crop_id] = 1 : values[:crop_id] = nil
+          bmp_controller = BmpsController.new
+          bmp_controller.request = request
+          bmp_controller.response = response
+          bmp_controller.save_bmps_from_load(values)
+        end
         @scenarios = Scenario.where(:field_id => params[:field_id])
         #add new scenario to soils
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
-        add_scenario_to_soils(@scenario, false)
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
       flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
@@ -166,18 +186,22 @@ class ScenariosController < ApplicationController
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
-  	case true
-  		when params[:commit].include?('NTT')
+  	#case true
+  		#when params[:commit].include?('NTT')
+      if params[:select_ntt] != nil
   			msg = simulate_ntt
-  		when params[:commit].include?("APLCAT")
-  			msg = simulate_aplcat
-
-      when params[:commit].include?("FEM")
-        msg = simulate_fem
-
-      when params[:commit].include?("DNDC")
-        msg = simulate_dndc
-  	end
+      end 
+      if params[:select_fem] != nil and msg == "OK"
+  		#when params[:commit].include?("APLCAT")
+  			msg = simulate_fem
+      end
+      if params[:select_aplcat] != nil and msg == "OK"
+      #when params[:commit].include?("FEM")
+        msg = simulate_aplcat
+      end
+      #when params[:commit].include?("DNDC")
+        #msg = simulate_dndc
+  	#end
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
@@ -215,16 +239,16 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     @apex_version = 806
-    if params[:select_scenario] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
+    if params[:select_ntt] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
   	if msg != "OK" then
   		@errors.push(msg)
   		return msg
   	end
-    if params[:select_scenario] == nil then
+    if params[:select_ntt] == nil then
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
     else
-      @scenarios_selected = params[:select_scenario]
+      @scenarios_selected = params[:select_ntt]
       @apex_version = 806
     end
     ActiveRecord::Base.transaction do
@@ -252,12 +276,12 @@ class ScenariosController < ApplicationController
   def simulate_dndc
     msg = "OK"
     @errors = Array.new
-    if params[:select_scenario] == nil then msg = "Select at least one scenario to simulate " end
+    if params[:select_dndc] == nil then msg = "Select at least one scenario to simulate " end
     if msg != "OK" then
       @errors.push(msg)
       return msg
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_dndc]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
@@ -279,11 +303,11 @@ class ScenariosController < ApplicationController
   def simulate_aplcat
     msg = "OK"
     @errors = Array.new
-    if params[:select_scenario] == nil then
+    if params[:select_aplcat] == nil then
       @errors.push("Select at least one Aplcat to simulate ")
       return "Select at least one Aplcat to simulate "
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_aplcat]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
@@ -320,11 +344,11 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     msg = fem_tables()
-    if params[:select_scenario] == nil then
+    if params[:select_fem] == nil then
       @errors.push("Select at least one scenario to simulate ")
       return "Select at least one scenario to simulate "
     end
-    @scenarios_selected = params[:select_scenario]
+    @scenarios_selected = params[:select_fem]
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
@@ -332,11 +356,13 @@ class ScenariosController < ApplicationController
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
         end
-        if @scenario.crop_results.count <=0 then
+        #if @scenario.crop_results.count <=0 then
           msg = run_scenario()
-          if msg != "OK" then @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating FEM )") end
-          return
-        end
+          if msg != "OK" then 
+            @errors.push("Error simulating NTT " + @scenario.name)
+            return
+          end
+        #end
         msg = run_fem
         unless msg.eql?("OK")
           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
@@ -564,6 +590,7 @@ class ScenariosController < ApplicationController
       crop_yield = (crop.conversion_factor * AC_TO_HA) / (crop.dry_matter/100) * c[1]
       ntt_fem_Options +=  "CROP|" + c[0] + "|" + crop_yield.round(2).to_s + "|" + crop.yield_unit + "|" + @field.field_area.round(2).to_s + "|" + (@field.field_area-bmps_area).round(2).to_s + "\n"
     end
+    ntt_fem_Options += "APEXFolder|" + drive + "\\NTTHTML5Files\\APEX" + session[:session_id] + "\n"
     #send the file to server
     msg = send_file_to_APEX(ntt_fem_Options, "NTT_FEMOptions.txt")
     #create fembat01.bat file

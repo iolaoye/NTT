@@ -27,6 +27,14 @@
     <% else %>
       <% county_id = County.find(@project.location.county_id).id %>
     <% end %>
+    <!-- Check if any soil has depth -->
+    <% has_depth = false %>
+    <% for i in 0..(@scenario.field.soils.count - 1) %>
+      <% if @scenario.field.soils[i].tile_depth.to_f > 0 %>
+          <% has_depth = true %>
+      <% end %>
+    <% end %>
+
     <% @bmps.each do |bmp| %>
       <% if bmp == nil then %><% next %><% end %>
       <tbody>
@@ -42,9 +50,13 @@
 
         <% if bmp.bmpsublist_id != 2 && bmp.bmpsublist_id != 11 && bmp.bmpsublist_id != 5 && bmp.bmpsublist_id != 6 && bmp.bmpsublist_id != 7 && bmp.bmpsublist_id != 12 %>
           <% if (bmp.bmpsublist_id == 10 && @scenario.operations.where("(activity_id = ? or activity_id = ?) and org_c = 1 and nh3 > 0", 7, 9).count == 0) %>
-          <%# if bmp.bmpsublist_id == 10 %> 
-              <% next %>
+            <% next %>
           <% end %>
+
+          <% if (bmp.bmpsublist_id == 3 && has_depth != true) %>
+            <%# next todo activate when td in solis%>
+          <% end %>
+
           <tr>
             <% if bmp.bmpsublist_id <= 18 || bmp.bmpsublist_id > 19 %>
               <% if bmp.id != nil %>
@@ -91,8 +103,10 @@
             </tr>
             <tr>
               <td class="field indent2" id = "irrigation_efficiency" colspan="2" >
-                <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.percentage_range') %>
-                <%= number_field :bmp_ai, :irrigation_efficiency, :value => (1 - bmp.irrigation_efficiency) * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= label :irrigation_efficiency, t('bmp.irrigation_efficiency') + " " + t('bmp.ten_to_95') %>
+                <% efi = (1 - bmp.irrigation_efficiency) * 100 %>
+                <% efi = 95 unless efi < 95 %>
+                <%= number_field :bmp_ai, :irrigation_efficiency, :value => efi, :step => 'any', :min => 10, :max => 95, :class => "gvTitleStyleNumber" %>
                 <% if bmp.irrigation_id == 1 %> <% range = "70-80%" %>
                   <% elsif bmp.irrigation_id == 2 %> <% range = "50-70%" %>
                   <% elsif bmp.irrigation_id == 3 %> <% range = "80-95%" %>
@@ -111,8 +125,8 @@
             </tr>
             <tr>
               <td class="indent2" colspan="2">
-                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.zero_to_hundred') %>
-                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => 'any', :min => 0, :max => 100, :class => "gvTitleStyleNumber" %>
+                <%= label :water_stress_factor, t('bmp.water_stress_factor') + " " + t('bmp.ten_to_95') %>
+                <%= number_field :bmp_ai, :water_stress_factor, :value => bmp.water_stress_factor * 100, :step => '0.01', :min => 10.00, :max => 95.0, :class => "gvTitleStyleNumber" %>
                 <strong><a href="#" id="trigger" style="color:blue;">(?)</a></strong>
               </td>
             </tr>
@@ -122,13 +136,6 @@
                <%= number_field :bmp_ai, :maximum_single_application, :value => bmp.maximum_single_application, :step => 'any', :min => 1, :max => 15, :class => "gvTitleStyleNumber" %>
               </td>
             </tr>
-            <tr>
-              <!--<td class="field indent2" id = "reservoir_area" style="display: none;" colspan="2">
-               <%= label :days, t('bmp.reservoir_area') + " (" + t('bmp.acres') + ")"%>
-               <%= number_field :bmp_ai, :area, :value => bmp.area, :class => "gvTitleStyleNumber" %>
-              </td>-->
-            </tr>
-
             <tr>
               <% if bmp.depth == 1 %>
                 <td class="field indent2" id = "td_n_rate" colspan="2" style="display: none">
@@ -140,7 +147,7 @@
                <%#= label_tag :application_rate, t('bmp.application_rate_html'), :style => "color:blue" %>
               </td>
             </tr>
-            <% if request.url.include?("localHost") || request.url.include?(".bk.") then %>     
+            <% if request.url.include?("localHost") || request.url.include?(".bk.") || request.url.include?("localhost") then %>
             <tr>
               <td class="indent2" colspan="2">
                 <table >
@@ -156,16 +163,16 @@
                         <td style="height:0px"><%= check_box_tag  "mycrop[#{cp[:id]}]", true, value="Hello"%> <%= cp[:name] %></td>
                         <td ><%= number_field :bmp_ai,"sm[#{cp[:id]}", :value => cp[:start_month],  :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber"%></td>
                         <td>
-                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                        <%= number_field :bmp_ai,"sd[#{cp[:id]}", :value => cp[:start_day], :step => 'any', :min => 0, :max => 31, :class => "gvTitleStyleNumber" %>
                         </td>
                         <td><%= number_field :bmp_ai,"em[#{cp[:id]}", :value => cp[:end_month], :step => 'any', :min => 0, :max => 12, :class => "gvTitleStyleNumber" %></td>
                         <td>
-                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day], :step => 'any', :min => 0, :max => 365, :class => "gvTitleStyleNumber" %>
+                        <%= number_field :bmp_ai,"ed[#{cp[:id]}", :value => cp[:end_day], :step => 'any', :min => 0, :max => 31, :class => "gvTitleStyleNumber" %>
                         </td>
                         <td>
                        <%= hidden_field_tag "my_crop_id", cp[:id]%>
                         </td>
-         
+
                       </tr>
                     <% end  %>
                    </tr>
@@ -177,12 +184,10 @@
             <tr>
               <td class="field indent" id = "depth" colspan="2" >
                 <%= label :depth, t('bmp.depth') + " (" + t('bmp.ft')  + ")"%>
-                <%= number_field :bmp_td, :depth, :value => bmp.depth, :step => 'any', :class => "gvTitleStyleNumber", :min => 0 %>
+                <%=  number_field :bmp_td, :depth, :value => bmp.depth, :step => 'any', :class => "gvTitleStyleNumber", :min => 0 %>
               </td>
-            </tr>
-            <tr>
-              <td class="field indent" colspan="3"><%= t("bmp.drainage_management_quiestion") %></td>
-            </tr>
+            </tr> %>
+            <%# <tr><td class="field indent" colspan="3"><%= t("bmp.drainage_management_quiestion") %><%#</td></tr> %>
             <tr>
               <td class="field indent" colspan="3">
                 <% if bmp.irrigation_id == 1 %>
@@ -192,10 +197,11 @@
                  <% end %>
 
                 <% if bmp.crop_id == 1 %>
-                  <%= check_box_tag :crop_id, bmp.irrigation_id, true %><%="  " + t('bmp.drainage_management')%>
+                  <%= check_box_tag :crop_id, bmp.crop_id, true %><%="  " + t('bmp.drainage_management')%>
                 <% else %>
-                  <%= check_box_tag :crop_id, bmp.irrigation_id, false %><%="  " + t('bmp.drainage_management')%>
+                  <%= check_box_tag :crop_id, bmp.crop_id, false %><%="  " + t('bmp.drainage_management')%>
                  <% end %>
+
               </td>
             </tr>
           <% when 4 %>
@@ -300,10 +306,6 @@
                   <%= label :width, t('bmp.distance') + "(" + t('bmp.ft') + ")" %>
                   <%= number_field :bmp_sf, :width, :value => bmp.width, :style=>"width:70px", :min => 0, :class => "gvTitleStyleNumber" %>
                   <%= label :width_zero, t('bmp.zero_fence'), class: "title_label"%>
-                  <!-- <div style='display:none'>
-                    <%= label :length, t('bmp.length') + "(" + t('bmp.ft') + ")" %>
-                    <%= number_field :bmp_sf, :depth, :value => bmp.depth, :style=>"width:70px", :step => '0.1', :min => 0, :class => "gvTitleStyleNumber" %>
-                  </div> -->
                 </td>
             </tr>
             <tr>
@@ -433,6 +435,13 @@
             </tr>
             <tr>
               <td class="indent" colspan="2">
+                <%= t('bmp.length') + " (" + t('bmp.ft') + ")" %>
+                <%= number_field :bmp_ww, :length, :value => bmp.grass_field_portion, :step => 'any', :min => 0, :class => "gvTitleStyleNumber" %>
+                <%= label :area, " (" + t('general.optional') + ")", :style => "color:blue" %>
+              </td>
+            </tr>
+            <tr>
+              <td class="indent" colspan="2">
                 <%= t('bmp.ffpq') + " " + t('pdf.waterway') + t('bmp.zero_to_one') %>
                 <%= number_field :bmp_ww, :floodplain_flow, :value => bmp.slope_reduction, :step => '0.01', :min => 0.00, :max => 1.00, :class => "gvTitleStyleNumber" %>
               </td>
@@ -511,29 +520,28 @@
               </td>
             </tr> -->
             <% end %>
-
           <% when 20 %>  <%# Reservoir %>
             <tr>
               <td class="field indent" colspan="2" >
-                <%= "Elevation at Emercency Spillway(ft)"%> 
+                <%= "Elevation at Emercency Spillway(ft)"%>
                 <%= number_field :bmp_rs, :rsee, :value => bmp.water_stress_factor, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr >
               <td class="field indent" colspan="2" id = "rsae" colspan="2">
-                <%=  "Surface Area at Emergency Spillway(ac)"%>  
+                <%=  "Surface Area at Emergency Spillway(ac)"%>
                 <%= number_field :bmp_rs, :rsae, :value => bmp.irrigation_efficiency, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr >
               <td class="field indent" colspan="2" id = "rsve" colspan="2">
-                <%=  "Volume at Emergency Spillway(in)"%>  
+                <%=  "Volume at Emergency Spillway(in)"%>
                 <%= number_field :bmp_rs, :rsve, :value => bmp.maximum_single_application, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsep" colspan="2">
-                <%=  "Elevation at Principal Spillway(ft)"%>  
+                <%=  "Elevation at Principal Spillway(ft)"%>
                 <%= number_field :bmp_rs, :rsep, :value => bmp.safety_factor, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
             </tr>
@@ -545,54 +553,52 @@
             </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsvp" colspan="2">
-                <%=  "Volume at Principal Spillway(in)"%>  
+                <%=  "Volume at Principal Spillway(in)"%>
                 <%= number_field :bmp_rs, :rsvp, :value => bmp.maximum_single_application, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsv" colspan="2">
-                <%=  "Initial Volume(in)"%>  
+                <%=  "Initial Volume(in)"%>
                 <%= number_field :bmp_rs, :rsv, :value => bmp.dry_manure, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsrr" colspan="2">
                 <%=  "Average Principal Spillway Release(days)"%>
                 <%= number_field :bmp_rs, :rsrr, :value => bmp.days, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsys" colspan="2">
-                <%=  "Initial Sediment Concentration (ppm)"%>  
+                <%=  "Initial Sediment Concentration (ppm)"%>
                 <%= number_field :bmp_rs, :rsys, :value => bmp.no3_n, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsyn" colspan="2">
-                <%=  "Normal Sediment Concentration (ppm)"%>  
+                <%=  "Normal Sediment Concentration (ppm)"%>
                 <%= number_field :bmp_rs, :rsyn, :value => bmp.po4_p, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rshc" colspan="2">
-                <%=  "Hydraulic conductivity of reservoir bottoms (m/h)"%>  
+                <%=  "Hydraulic conductivity of reservoir bottoms (mm/h)"%>
                 <%= number_field :bmp_rs, :rshc, :value => bmp.org_n, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsdp" colspan="2">
-                <%=  "Time Sediment to Return to Normal (hours)"%>  
+                <%=  "Time Sediment to Return to Normal (days)"%>
                 <%= number_field :bmp_rs, :rsdp, :value => bmp.hours, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
+            </tr>
             <tr>
               <td class="field indent" colspan="2" id = "rsbd" colspan="2">
-                <%=  "Bulk Density of Sediment (t/m3)"%>  
+                <%=  "Bulk Density of Sediment (t/m3)"%>
                 <%= number_field :bmp_rs, :rsbd, :value => bmp.org_p, :step => 'any', :min => 0, :class => "gvTitleStyleNumber"%>
               </td>
-            </tr>  
-
-
+            </tr>
           <% when 22 %>
             <tr>
               <td class="indent" colspan="2">
@@ -706,7 +712,7 @@
   <h6>
     This factor is used to trigger the automatic irrigation and fertigation based on the plant water stress level.
     For example, the irrigation application amount would be much higher at 90% stress level as compared to that of
-    20%. The value should be grater than 0.
+    20%. The value should be grater than or equal to 0.
   </h6>
 </div>
 
@@ -805,7 +811,7 @@
           } /*else if (elementIDNum == 19) {
               validationsBmpCc();
           }*/
-      } 
+      }
       /* validate concurrent BMPs not allow */
       if (elementIDNum == 13 || elementIDNum == 15) {
           if (elementIDNum == 13 && ($('#select_12').is(':checked') || $('#select_15').is(':checked'))) {
@@ -823,7 +829,7 @@
           }
       }
     });
-  
+
     function prompt_user() {
       var r = confirm("It appears you have a similar BMP already checked. Continuing will clear any input you may have had for the other BMP.");
       if (r == true) {
@@ -862,10 +868,10 @@
       validateBmpAi.addValidation("bmp_cb1", "selone", "A selection is required.");
       validateBmpAi.addValidation(ai_inputs[1].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       validateBmpAi.addValidation(ai_inputs[1].name, "lte=365", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_frequency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 365");
-      validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-      validateBmpAi.addValidation(ai_inputs[2].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
-      validateBmpAi.addValidation(ai_inputs[3].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
-      validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+      validateBmpAi.addValidation(ai_inputs[2].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
+      validateBmpAi.addValidation(ai_inputs[2].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.irrigation_efficiency") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
+      validateBmpAi.addValidation(ai_inputs[3].name, "gte=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_greaterequal") %>' + " 0");
+      validateBmpAi.addValidation(ai_inputs[3].name, "lte=100", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.water_stress_factor") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 100");
       validateBmpAi.addValidation(ai_inputs[4].name, "gt=0", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_greater") %>' + " 0");
       validateBmpAi.addValidation(ai_inputs[4].name, "lte=99999.00", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("pdf.max_single_application") %>' + ": " + '<%= t("validate.input_lessequal") %>' + " 99999.00");
       validateBmpAi.addValidation(ai_inputs[6].name, "gte=1", '<%= t("managepage.bmpdesc.auto.header") %>' + " " + '<%= t("operation.application_rate") %>' + ": " + '<%= t("validate.input_greater") %>' + " 1");

@@ -177,6 +177,8 @@ $(document).ready ->
     turn_on_off_s(220)
   $("#srow230").click () ->
     turn_on_off_s(230)
+  $("#srow300").click () ->
+    turn_on_off_s(300)
 
   $("#trow10").click () ->
     turn_on_off_t(10)
@@ -202,6 +204,8 @@ $(document).ready ->
     turn_on_off_t(220)
   $("#trow230").click () ->
     turn_on_off_t(230)
+  $("#trow300").click () ->
+    turn_on_off_t(300)
 
   $("#result_type_acre").click ->
     turn_on_off_s(0)

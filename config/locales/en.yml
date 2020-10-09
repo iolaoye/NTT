@@ -44,7 +44,7 @@ en:
         by_soil: "By Soil"
         annual_charts: "Annual Charts"
         monthly_charts: "Monthly Charts"
-        fem_results: "FEM Results"
+        fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
@@ -416,7 +416,7 @@ en:
     created: was successfully created.
     updated: was successfully updated.
     reset: reset to default was successful.
-    reset_to: reset to default
+    reset_to: Reset to default
     uploading: uploading
     continue: Continue
     confirm: Are you sure?
@@ -450,6 +450,7 @@ en:
     related_tools: Related Tools
     updates: "UPDATES"
     close: Close
+    table: Table
   welcome_note:
     header: '<center>WELCOME</center>'
     body1: 'I would like to thank and welcome you for using the <strong>Nutrient Tracking Tool (NTT)</strong> Program. This program was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Offices including office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, National Institute of Food and Agriculture (NIFA), and various state agencies.'
@@ -465,7 +466,7 @@ en:
     ceeot2: 'for more information.'
     ntt: Nutrient Tracking Tool (NTT) is the basic version and is designed for common users including the producers and Nutrient Market Trading program participants.
   menu:
-    fem: FEM
+    fem: Economic Evaluation
     welcome: Welcome
     projects: Projects
     location: Location
@@ -499,6 +500,8 @@ en:
     utility_file: Utility Files
     aplcat: APLCAT
     download_aplcat: Download APLCAT Files
+    animal_transport: Animal Transport
+    new_animal_transport: New Animal Transport
   project:
     project: Project
     new_project: 'Create New Project'
@@ -552,7 +555,7 @@ en:
     slope: Slope
     percentage: Percentage
     drainage: Drainage
-    depth: 'Depth (in)'
+    depth: 'Tile Drain Depth (ft)'
     soilp: 'Soil P (ppm)'
     bulk_density: 'Bulk Density (Mg/m3)'
     sand: 'Sand (%)'
@@ -695,6 +698,7 @@ en:
     bmp_group: "BMP Group"
     select_bmp: Select BMP Group
     create_bmp: Create BMP
+    ten_to_95: "(10.0 - 95.00%)"
     zero_to_one: "(0.00 - 1.00)"
     zero_to_hundred: "(0.00 - 100.00)"
     zero_to_max: "(0.00 – 99999.00)"
@@ -783,10 +787,12 @@ en:
     normal_scenario: Normal Scenario
     worst_scenario: Worst Scenario
   fem:
+    eco_input: Economic Input Information
+    economic: Economic
     general: General Inputs
     equipment: Equipment
     facility: Facilities
-    feed: Feeds
+    feed: Commodity Prices
   months:
     january: January
     february: February
@@ -943,6 +949,7 @@ en:
     author: Author
     ago: ago
   about:
+    header: 'Nutrient Tracking Tool (NTT) Overview'
     overview1: 'The <strong>Nutrient Tracking Tool (NTT)</strong> was designed and developed by the Texas Institute for Applied Environmental Research (TIAER), Tarleton State University with funding from USDA Office of Environmental Markets, USDA-NRCS Conservation Innovation Grants program, and various state agencies.'
     overview2: 'NTT is a web-based, site-specific application that estimates nutrient and sediment losses at the field scale or at the small watershed scale.'
     overview3: 'Agricultural producers and land managers can define a number of management scenarios and generate a report showing the expected nutrient loss differences between any selected scenarios for a given field or small watershed.'
@@ -1642,7 +1649,7 @@ en:
   documents_basic_html:
     <a href="/basic_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
     <br>
-    <a href="/NTT- technical documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
+    <a href="/NTT_technical_documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
     <br>
     <br><strong>NTT References</strong>
     <br>
@@ -1694,7 +1701,7 @@ en:
   documents_re_html:
     <a href="/re_help_04062019.pdf" download="User_Manual.pdf"><u>Download User Manual</u></a>
     <br><br>
-    <a href="/NTT- technical documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
+    <a href="/NTT_technical_documentation_20-2.pdf" download="NTT_Technical_Documentation.pdf"><u>Download NTT Technical Documentation</u></a>
     <br>
     <br><strong>NTT References</strong>
     <br>
@@ -1861,6 +1868,34 @@ en:
     Click <strong>< Prev</strong> to go to the previous page.<br>
     Click <strong>Next ></strong> to go to the next page.<br>
     Click <strong>Return to Table of Contents</strong> to go to the NTT Table of Contents.<br>
+
+  aplcat_parameters_html: <strong>Tabular Parameter</strong><br><br>
+    Here, you can make changes on APLCAT. Please open the dropdown menu to navigate through the APLCAT. Click <strong>Save</strong> if you are done making changes.<br><br>
+    If you would like to make changes in Animal Feed, click on <strong>Animal Feed</strong> button.<br><br>
+    If you would like to make changes in Animal Transport, click on <strong>Animal Transport</strong> button.
+  grazing_parameters_html: <strong>Animal Feed</strong><br><br>
+    Here, you can see the organized collection of data in an Animal Feed table after you make some changes to the Animal Feed. In order to make changes, click <strong>New Animal Feed</strong> button.<br><br>
+    If you would like to go to Tabular parameters, click <strong>Tabular Parameters</strong> button.<br><br>
+    If you would like to go to Animal Transport, click <strong>Animal Transport</strong> button.<br><br>
+    After making changes to the <strong>animal feed</strong> click <strong>Save</strong> to go back to the Animal Feed table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a animal feed has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal feed, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+  animal_transports_html: <strong>Animal Transport</strong><br><br>
+    Here, you can see an organized collection of data in an Animal Transport table after you make some changes to the Animal Transport. In order to make changes, click <strong>New Animal Transport</strong> button.<br><br>
+    If you would like to go to Tabular parameters, click <strong>Tabular Parameters</strong> button.<br><br>
+    If you would like to go to Animal Feed, click <strong>Animal Feed</strong> button.<br><br>
+    After making changes to the Animal Transport click <strong>Save</strong> to go back to the Animal Transport table to review the changes.<br><br>
+    <strong>Actions</strong><br><br>
+    Once a Animal Transport has been created, you can edit by clicking <img src="/serve_image/edit.png">. To remove any animal transport, you can simply click <img src="/serve_image/delete.png"> which will delete the row.
+  fem_feeds_html: <strong>Commodity Prices</strong>
+  #work in progress..
+  fem_machines_html: <strong>Equipment</strong>
+  #work in progress..
+  fem_facilities_html: <strong>Facilities</strong>
+  #work in progress..
+  fem_generals_html: <strong>General Inputs</strong>
+  #work in progress..
+
   projpage:
     header: Projects Page
     statement: After creating an account in NTT and logging in, you will be directed to the Projects page. Projects displays all projects that the user has previously created. On this page, users can create a new project, (open a saved projects, or upload a project stored on their local machine), upload an example project.
@@ -2449,11 +2484,11 @@ en:
   watershedpage_html:
     <strong>Field Routing (Watershed)</strong><br></br>
     The watershed page allows you to combine multiple fields and scenarios and simulate them as a single field.<br></br>
-    <strong>Creating a Field Routing Scenario</strong><br>
-    <strong>Naming Your Watershed</strong><br>
-    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will pop up where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
-    <strong>Selecting Fields/Scenarios to Simulate</strong><br>
-    Once you have named your field routing, you can add the fields and scenarios that you would like to simulate. You may not add one field more than once to the same field routing (the idea is combining fields to simulate as one field). To add field or scenario, click on the given name of the field routing.<br><br>
+    <strong>Creating/Naming your Field Routing Scenario</strong><br>
+    To begin creating a field routing scenario, click <strong>Add New Field Routing</strong>. Once you do this, a text box will appear where you can type in the name of the scenario. Once you enter the name, click <strong>Save</strong>.<br></br>
+    <strong>Adding Watershed</strong><br>
+    To add field/scenario combinations to the watershed scenario, click on the watershed scenario you just created. The table will expand to let you choose your desired field and scenario from the dropdown lists. Continue to add fields/scenarios until your watershed scenario is complete.
+    Once you have finished selecting, The selected field/scenario table will appear under the wateshed.<br><br>
     <strong>Simulating/Viewing Results for Field Routing</strong><br>
     Select the name(s) of the watershed to stimulate and click <b>Stimulate selected Field Routing (Watershed)</b>. To view results for field routings, select the field(s) and click <b>View Results</b>.<br><br>
     <strong>Actions</strong><br>

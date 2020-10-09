@@ -57,6 +57,8 @@
     <%= f.label :year %><br>
     <%= f.text_field :year %>
   </div>
+    <%= f.hidden_field :field_id, :value => @field.id %>
+    <%= f.hidden_field :caller_id, :value => "FEM" %>  
     <%= f.submit :class => "btn btn-primary" %>
-    <%= link_to 'Back', project_fem_facilities_path(@project), :class => "btn btn-primary" %>
+    <%= link_to 'Back', project_fem_facilities_path(@project,:field_id => @field.id,:caller_id => "FEM"), :class => "btn btn-primary" %>
 <% end %>

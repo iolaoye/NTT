@@ -30,12 +30,7 @@
 	      	</tr>
 	      	<tr>
 	      		<% if @type.include?(t('result.annual')) then %>
-	      			<%# if session[:simulation] == 'scenario' %>
-			      		<%# @years = (Field.find(params[:field_id]).weather.simulation_initial_year-4...Field.find(params[:field_id]).weather.simulation_final_year+1).entries %>
-			      		<% @years = (@project.apex_controls[1].value.to_i...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
-			      	<%# else %>
-			      		<%# @years = (@project.location.watersheds[0].watershed_scenarios[0].field.weather.simulation_initial_year-4...@project.location.watersheds[0].watershed_scenarios[0].field.weather.simulation_final_year+1).entries %>
-			      	<%# end %>
+			      		<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
 		      		<td>
 		      			<select name="sim_initial_year">
 		      				<option value="default" selected="selected">Initial Year</option>
@@ -342,7 +337,9 @@
  <div id="pop-up-25" class="description_pop-up">
    <p>Average Annual Carbon. Note: If this is an old scenario you need to simulate it again in order to get this value. Otherwise zero (0) will be shown </p>
  </div>
-
+<div id="pop-up-26" class="description_pop-up">
+   <p>Total Revenue, Total Cost, and Net Return</p>
+ </div>
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
 <script>
