@@ -2109,7 +2109,7 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result["orgp"] = tempa[58, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result["po4"] = tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result["orgn"] = tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["no3"] = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        #one_result["no3"] = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
         one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
@@ -2162,19 +2162,20 @@ def send_file_to_DNDC(apex_string, file, state)
           pcp = 0
           biom = 0
           total_subs = 0
+          sub_surface_n_sum = 0
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1] / 100
-            qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1] / 100
-            qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1] / 100
-            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1] / 100
-            irri_sum += one_result["irri"] * @scenario.field.soils[subs-1] / 100
-            dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1] / 100
-            prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1] / 100
-            n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1] / 100
-            pcp += one_result["pcp"] * @scenario.field.soils[subs-1] / 100
-            biom += one_result["biom"] * @scenario.field.soils[subs-1] / 100
+            qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1].percentage / 100
+            qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1].percentage / 100
+            qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1].percentage / 100
+            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1].percentage / 100
+            irri_sum += one_result["irri"] * @scenario.field.soils[subs-1].percentage / 100
+            dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1].percentage / 100
+            prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1].percentage / 100
+            n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1].percentage / 100
+            pcp += one_result["pcp"] * @scenario.field.soils[subs-1].percentage / 100
+            biom += one_result["biom"] * @scenario.field.soils[subs-1].percentage / 100
           else
             qdr_sum += one_result["qdr"]
             qdrn_sum += one_result["qdrn"]
@@ -2191,7 +2192,7 @@ def send_file_to_DNDC(apex_string, file, state)
 
         end  # end if sub == 0
         if subs == 0 then
-          one_result["no3"] += sub_surface_n_sum
+          one_result["no3"] = one_result["qn"] + sub_surface_n_sum
           results_data.push(one_result)
         end
       else

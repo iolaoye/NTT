@@ -25,11 +25,11 @@
       <%= f.label t('bmp.depth') + " (ft)"%>
        <%= f.number_field :depth, :min => 0.001, :class => 'gvTitleStyleNumber', :step => "any" %>
     </div>
-        <div class="field" title="Tile Bioreactors">
+        <div class="field" title="Tile Bioreactors" style="display:none">
       <%= f.label t('bmp.tile_bioreactors') %>
       <%= f.check_box :tile_bioreactors %>
     </div>
-    <div class="field" title="Drainage Water Management">
+    <div class="field" title="Drainage Water Management" style="display:none">
       <%= f.label t('bmp.drainage_management') %>
       <%= f.check_box :drainage_water_management %>
     </div>    
