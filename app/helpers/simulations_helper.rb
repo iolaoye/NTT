@@ -2162,7 +2162,6 @@ def send_file_to_DNDC(apex_string, file, state)
           pcp = 0
           biom = 0
           total_subs = 0
-          sub_surface_n_sum = 0
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
@@ -2193,6 +2192,7 @@ def send_file_to_DNDC(apex_string, file, state)
         end  # end if sub == 0
         if subs == 0 then
           one_result["no3"] = one_result["qn"] + sub_surface_n_sum
+          sub_surface_n_sum = 0
           results_data.push(one_result)
         end
       else
