@@ -2088,7 +2088,7 @@ def send_file_to_DNDC(apex_string, file, state)
         end
       end
     end
-    bmp = @scenario.bmps.find_by_bmpsublist_id(3)  # find out if there is reseervoir BMP
+    bmp = @scenario.bmps.find_by_bmpsublist_id([8,20])  # find out if there is reseervoir or Wetland BMP
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i
