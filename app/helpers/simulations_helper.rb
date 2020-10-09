@@ -2132,14 +2132,14 @@ def send_file_to_DNDC(apex_string, file, state)
               one_result["qdrp"] = qdrp_sum / total_subs
               #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
               sub_surface_n_sum = sub_surface_n_sum / total_subs
+              one_result["dprk"] = dprk_sum / total_subs
+              one_result["irri"] = irri_sum / total_subs
+              one_result["prkn"] = prkn_sum / total_subs
+              one_result["n2o"] = n2o_sum / total_subs
+              one_result["pcp"] = pcp / total_subs
+              one_result["biom"] = biom / total_subs
             end
           end
-          one_result["dprk"] = dprk_sum / total_subs
-          one_result["irri"] = irri_sum / total_subs
-          one_result["prkn"] = prkn_sum / total_subs
-          one_result["n2o"] = n2o_sum / total_subs
-          one_result["pcp"] = pcp / total_subs
-          one_result["biom"] = biom / total_subs
           qdr_sum = 0
           qdrn_sum = 0
           qdrp_sum = 0
@@ -2157,19 +2157,26 @@ def send_file_to_DNDC(apex_string, file, state)
               qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1] / 100
               qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1] / 100
               sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1] / 100
+              irri_sum += one_result["irri"] * @scenario.field.soils[subs-1] / 100
+              dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1] / 100
+              prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1] / 100
+              n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1] / 100
+              pcp += one_result["pcp"] * @scenario.field.soils[subs-1] / 100
+              biom += one_result["biom"] * @scenario.field.soils[subs-1] / 100
             else
               qdr_sum += one_result["qdr"]
               qdrn_sum += one_result["qdrn"]
               qdrp_sum += one_result["qdrp"]
               sub_surface_n_sum += (tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC)
+              irri_sum += one_result["irri"]
+              dprk_sum += one_result["dprk"]
+              prkn_sum += one_result["prkn"]
+              n2o_sum += one_result["n2o"]
+              pcp += one_result["pcp"]
+              biom += one_result["biom"]
             end
           end
-          irri_sum += one_result["irri"]
-          dprk_sum += one_result["dprk"]
-          prkn_sum += one_result["prkn"]
-          n2o_sum += one_result["n2o"]
-          pcp += one_result["pcp"]
-          biom += one_result["biom"]
+
         end  # end if sub == 0
         if subs == 0 then
           one_result["no3"] += sub_surface_n_sum
