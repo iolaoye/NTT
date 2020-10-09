@@ -446,7 +446,7 @@ pt:
     no_additional_needed: Nenhuma informação adicional é necessária
     unit_acre: "unidade / ac"
     continues_grazing: Pastoreio contínuo
-    rotational_grazing: Pastoreo Rotativo
+    rotational_grazing: Pastoreio Rotativo
     whats_new: O Novo
     presentations: Apresentações
     related_tools: Ferramentas Relacionadas
@@ -577,7 +577,7 @@ pt:
     add_crop_rotation: necesita una rotación de cultivo para ejecutar una simulación.
     cover_crop_info: Mas de um cultivo de proteccion han sido adicionados. Por favor modifique la tasa de plantas adecuadamente.
     cover_crop_added: cultivo de protección adicionado satisfactoriamente
-    operation: Operación
+    operation: Operação
     create_scenario: Crear Cenário
     select_scenario: Selecione Cenário
     load_scenario: Cargar Cenário
@@ -613,9 +613,9 @@ pt:
     howtodrawnote3: "Para borrar um polígono, Selecione polígono de interese en el mapa, y luego precione el botón 'Borrar AOI'"
     howtodrawnote4: "When finished, click the 'Submit' button to proceed."
   operation:
-    new_operation: Adicionar Nueva Operación
-    edit: Revisión de Operación
-    create_operation: Crear Operación
+    new_operation: Adicionar Nueva Operação
+    edit: Revisión de Operação
+    create_operation: Criar Operação
     upload: 'Cargar'
     replace: Reemplazar todas las operaciones actuales
     cropping_system: 'Sistema de Cultivo'
@@ -630,7 +630,7 @@ pt:
     irrigation: Irrigación
     plant_population: 'Población de Planta (semillas/sq ft)(*opcional)'
     plant_population_trees: 'Población de Planta  (árboles/ac)(*optional)'
-    load_operation: Cargar Operación
+    load_operation: Cargar Operação
     sum: 'El total de los nutrientes deben ser menor o igual a 1'
     save: Salvar
     open: 'Abrir Sistema de Cultivo guardado'
@@ -663,16 +663,16 @@ pt:
     seed: 'Siembra (semillas/ft2 o árboles/ac)(*opcional)'
     seed_trees: 'Siembre (árboles/ac)(*optional)'
     amount_applied: 'Cantidad Aplicada'
-    add_planting: 'Añadir operación de Plantar'
-    add_fertilizer: 'Añadir operación de Fertilizante'
-    add_tillage: 'Añadir operación de Arar'
-    add_harvest: 'Añadir operación de Cosechar'
+    add_planting: 'Añadir Operação de Plantar'
+    add_fertilizer: 'Añadir Operação de Fertilizante'
+    add_tillage: 'Añadir Operação de Arar'
+    add_harvest: 'Añadir Operação de Cosechar'
     add_kill: 'Añadir Terminar crop'
-    add_irrigation: 'Añadir operación de Irrigación'
-    add_burn: 'Añadir operación de Quema'
-    add_liming: 'Añadir operación de Encalado'
-    add_start_grazing: 'Añadir operación de Pasteo'
-    add_stop_grazing: 'Añadir operación de Terminar Pasteo'
+    add_irrigation: 'Añadir Operação de Irrigación'
+    add_burn: 'Añadir Operação de Quema'
+    add_liming: 'Añadir Operação de Encalado'
+    add_start_grazing: 'Añadir Operação de Pasteo'
+    add_stop_grazing: 'Añadir Operação de Terminar Pasteo'
     add_cover_crop: "Añadir Cultivo de Proteccion"
     po4_note: Si P2O5 multiplique por 0.4364 para convertir a element-P
     planting_method: Metodo de sembrado
@@ -838,7 +838,7 @@ pt:
     subarea_file: Subárea
     soil_file: Suelos
     layer_file: Camadas
-    operation_file: Operación
+    operation_file: Operação
   navbar:
     by_soil: Por Suelo
   result:
@@ -1069,7 +1069,7 @@ pt:
     year: Año
     month: mês
     day: Día
-    operation_method: Método de Operación
+    operation_method: Método de Operação
     val_one: Val One
     val_two: Val Two
     bmp_info: Prácticas Estructurales y de Conservación
@@ -1765,7 +1765,7 @@ pt:
         fields: 'En la pantalla de <a href=/help/page_6?locale=en>Parcelas</a> , los usuarios crean Novos parcelas o verifican los parcelas dibujados en la página ubicación.'
         soils: 'En la pantalla de <a href=/help/page_7?locale=en>Suelos</a> , los usuarios verifican/agregan/eliminan los suelos y las camadas correspondientes a esos suelos para el Projeto, o pueden entrar la información completa del suelo si el Projeto se basa en la entrada de datos manual.'
         management: 'En la pantalla de <a href=/help/page_8?locale=en>Operaciones</a> , los usuarios introducen la información de manejo y la información de los cenários.'
-        subproject: 'En la pantalla de <a href=/help/page_9?locale=en>SubProjeto</a> , los usuarios pueden seleccionar otras combinaciones de parcelas/cenário no seleccionados en la página de Operación (estos se llaman subProjetos).'
+        subproject: 'En la pantalla de <a href=/help/page_9?locale=en>SubProjeto</a> , los usuarios pueden seleccionar otras combinaciones de parcelas/cenário no seleccionados en la página de Operação (estos se llaman subProjetos).'
         simulation: 'On the <a href=/help/page_10?locale=en>Simulation</a> , los usuarios pueden revisar toda la información ingresada y hacer la simulación de los Projetos/subProjetos creados.'
         results: 'En la pantalla de <a href=/help/page_11?locale=en>Resultados</a> , usted puede ver los resultados de la simulación.'
         modifications: 'En la pantalla de <a href=/help/page_12?locale=en>Modificaciones</a> , los usuarios pueden manualmente cambiar el archivo de APEX para realizar cambios específicos en la simulación.<b>Estos cambios no se reflejan en las pantallas anteriores.</b>'
@@ -2120,9 +2120,9 @@ pt:
             header: <b>Agregar cultivo a rotacion:</b>
             body1: 'Al usar esta opción, se abre una nueva página que permite al usuario seleccionar desde sistemas de cultivo comunes. El usuario puede manipular estos sistemas de cultivo preexistentes una vez que se agregan.'
         item2:
-            header: <b>Agregar nueva operación (Crear operaciones desde cero):</b>
-            body1: 'El usuario también puede crear um Novo sistema de cultivo desde cero. Para hacer esto, el usuario debe hacer clic en el botón <strong> <em> Agregar nueva operación </em> </strong>. Esto llevará al usuario a una nueva página, allí el usuario debe seleccionar el cultivo, la operación y el tipo en el año (esto es importante si la rotación de cultivos involucra cultivos múltiples durante varios anos - MAZORCA el año 1 y SOJA el año 2) , mês y día Dependiendo de la Operación que se Selecione, es posible que el usuario deba ingresar o seleccionar más opciones (por ejemplo, plantar requiere una población de plantas y um método de plantación). Si es necesario, el usuario también puede cambiar la composición de nutrientes.'
-            body2: 'Si el usuario decide cambiar los valores o cualquier otra inforamción de una operación, el usuario puede cambiar los valores de la operación haciendo clic en el icono <b> <em> Editar </em> </b> en el <b> <em> Acciones </em> </b> columna. Esto llevará al usuario a una nueva página donde pueden realizar los cambios necesarios en la operación.'
+            header: <b>Agregar nueva Operação (Crear operaciones desde cero):</b>
+            body1: 'El usuario también puede crear um Novo sistema de cultivo desde cero. Para hacer esto, el usuario debe hacer clic en el botón <strong> <em> Agregar nueva Operação </em> </strong>. Esto llevará al usuario a una nueva página, allí el usuario debe seleccionar el cultivo, la Operação y el tipo en el año (esto es importante si la rotación de cultivos involucra cultivos múltiples durante varios anos - MAZORCA el año 1 y SOJA el año 2) , mês y día Dependiendo de la Operação que se Selecione, es posible que el usuario deba ingresar o seleccionar más opciones (por ejemplo, plantar requiere una población de plantas y um método de plantación). Si es necesario, el usuario también puede cambiar la composición de nutrientes.'
+            body2: 'Si el usuario decide cambiar los valores o cualquier otra inforamción de una Operação, el usuario puede cambiar los valores de la Operação haciendo clic en el icono <b> <em> Editar </em> </b> en el <b> <em> Acciones </em> </b> columna. Esto llevará al usuario a una nueva página donde pueden realizar los cambios necesarios en la Operação.'
             body3: 'If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b><em>Actions</em></b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.'
     simulation:
         header: Simular cenários de parcela
@@ -2341,9 +2341,9 @@ pt:
             header: Resultados de la simulación y visualización para cuencas
             body1: 'Para simular o ver resultados de subProjetos, donde el título <strong><em>Selecione Clase</em></strong> está presente (como es en la página de simulación y resultados), simplemente Selecione el subProjeto, como se muestra a continuación:'
   operation_page:
-    header: Página de operación
+    header: Página de Operação
     body1: 'Una vez que se ha creado um cenário en la página <strong> Gestión </strong>, el usuario pasa a la página <strong> Operaciones </strong> para comenzar a ingresar las características de gestión, como el programa de cultivo, la labranza, el fertilizante y la cosecha. y operaciones de pastoreo.'
-    body2: 'um sistema de recorte es <strong> OBLIGATORIO </strong> para que el usuario pueda avanzar y simular el NTT. El usuario puede agregar rotaciones que duran um año o mucho más. um parcela puede tener múltiples cultivos o um solo cultivo. Hay diferentes opciones disponibles en <strong> Página de operación </strong> para manipular um sistema de cultivo de la siguiente manera:'
+    body2: 'um sistema de recorte es <strong> OBLIGATORIO </strong> para que el usuario pueda avanzar y simular el NTT. El usuario puede agregar rotaciones que duran um año o mucho más. um parcela puede tener múltiples cultivos o um solo cultivo. Hay diferentes opciones disponibles en <strong> Página de Operação </strong> para manipular um sistema de cultivo de la siguiente manera:'
     rotation:
         header: Añadir cultivo a la rotación
         name:
@@ -2352,9 +2352,9 @@ pt:
             body2: 'Una vez que se agrega um cultivo al cronograma del cultivo, se observará que incluye varias características de manejo por defecto, que incluyen una fecha de siembra, aplicaciones de fertilizantes, cronograma de labranza y cosecha. Estas operaciones se pueden modificar o eliminar según sea necesario y se pueden agregar nuevas operaciones.'
             body3: 'La lista de operaciones para cada cultivo se puede desplegar o expandir haciendo clic en los botones [-] o [+] al lado del Nome del cultivo, respectivamente.'
         select:
-            header: Agregar nueva operación
-            body1: 'Los usuarios pueden agregar operaciones a sus rotaciones o crear um sistema de cultivo desde cero utilizando el botón <strong> Agregar nueva operación </strong> en la parte superior de la página. Se le pedirá que Selecione el cultivo, el tipo de operación, el año y la fecha. El año indica la posición del cultivo en el programa de cultivo, por ejemplo, MAIZ año 1 y SOYBEAN año 2.'
-            body2: 'Dependiendo del tipo de operación, habrá parcelas adicionales para ingresar. A continuación se incluyen descripciones de los diferentes tipos de operaciones y los parcelas adicionales requeridos para cada uno.'
+            header: Agregar nueva Operação
+            body1: 'Los usuarios pueden agregar operaciones a sus rotaciones o crear um sistema de cultivo desde cero utilizando el botón <strong> Agregar nueva Operação </strong> en la parte superior de la página. Se le pedirá que Selecione el cultivo, el tipo de Operação, el año y la fecha. El año indica la posición del cultivo en el programa de cultivo, por ejemplo, MAIZ año 1 y SOYBEAN año 2.'
+            body2: 'Dependiendo del tipo de Operação, habrá parcelas adicionales para ingresar. A continuación se incluyen descripciones de los diferentes tipos de operaciones y los parcelas adicionales requeridos para cada uno.'
         item1:
             header: Plantando
             body1: 'Método de planta: el usuario debe indicar el método de siembra utilizando la lista de selección del equipo de siembra provisto.'
@@ -2378,7 +2378,7 @@ pt:
         item5:
             header: Final de temporada
             body1: 'El final de la temporada solo requiere la información del cultivo, año y fecha del usuario.'
-            body2: 'Nota: El final de la temporada indica al modelo que la cosecha se retira del parcela. Si una operación de fin de temporada no está presente, entonces el modelo asume que la cosecha se deja crecer. El final de la temporada debe usarse para todos los cultivos anuales. Para ciertos cultivos perennes como el heno y el pasto, las operaciones de fin de temporada pueden estar ausentes del programa de cultivo.'
+            body2: 'Nota: El final de la temporada indica al modelo que la cosecha se retira del parcela. Si una Operação de fin de temporada no está presente, entonces el modelo asume que la cosecha se deja crecer. El final de la temporada debe usarse para todos los cultivos anuales. Para ciertos cultivos perennes como el heno y el pasto, las operaciones de fin de temporada pueden estar ausentes del programa de cultivo.'
         item6:
             header: Irrigación manual
             body1: 'Método de riego: el usuario indica el tipo de sistema de riego que se está utilizando.'
@@ -2394,7 +2394,7 @@ pt:
             body5: 'Composición del estiércol: estos parcelas se rellenan previamente con composiciones típicas de estiércol para el tipo de animal seleccionado. Estos parcelas pueden ser modificados por el usuario si es necesario.'
         item8:
             header: Pastoreo rotacional
-            body1: 'La operación de pastoreo rotacional, a diferencia del pastoreo continuo, supone que el pasto se divide en potreros y que el ganado se mueve a través de los potreros, según sea necesario. Por lo tanto, cada cuartón recibe um período de recuperación entre los eventos de pastoreo, lo que mejora la cobertura vegetal.'
+            body1: 'La Operação de pastoreo rotacional, a diferencia del pastoreo continuo, supone que el pasto se divide en potreros y que el ganado se mueve a través de los potreros, según sea necesario. Por lo tanto, cada cuartón recibe um período de recuperación entre los eventos de pastoreo, lo que mejora la cobertura vegetal.'
             body2: 'Inicio / finalización Fechas de pastoreo: el usuario indica las fechas de inicio y finalización del pastoreo en el parcela.'
             body3: 'Tipo de animal: el usuario indica el tipo de animales que se pastan en el parcela'
             body4: 'Unidades de animales: el usuario indica el total de unidades de animales que se pastan en el parcela. Las unidades de animales representan 1,000 libras de peso vivo.'
@@ -2414,14 +2414,14 @@ pt:
             body1: 'Para agregar um recorte de cobertura, haga clic en el botón <strong> Añadir cubierta de cobertura </strong> en la parte superior de la página. Los usuarios indicarán el tipo de cultivo de cobertura, año de cultivo de cobertura, fecha de siembra y método de siembra. El año de cobertura del cultivo debe indicar el año dentro de la rotación en que se planta el cultivo de cobertura. NTT agregará automáticamente la fecha de cosecha para el cultivo de cobertura basado en el próximo cultivo en la rotación. Los cultivos de cobertura no se fertilizan y no se cosechan, sino que se cortan antes de plantar la próxima cosecha en la rotación.'
             body2: 'Nota: Si desea agregar um cultivo de cobertura comercial, hágalo de la misma forma que agregaría otro cultivo a su programa de cosecha. Por ejemplo, agregue "Trigo de invierno" a su cronograma de cosecha haciendo clic en <strong> Agregar cosecha a rotación </strong> y seleccionando en la lista de selección de cosecha (NO utilizando el botón Agregar cubierta). Agregar una cosecha de esta manera permitirá a los usuarios aplicar fertilizantes, labranza y operaciones de cosecha (etc.).'
         edit:
-            header: Editar operación
-            body1: Los usuarios pueden cambiar los valores o cualquier otra información en una operación haciendo clic en el ícono <strong> Editar </strong> <img src = "/ serve_image / edit.png"> en la columna <strong> Acciones </strong> siguiente a la operación. Una vez que se haya editado la operación, haga clic en <strong> Finalizar </strong> para guardar y volver a la página Operaciones. Al hacer clic en <strong> Atrás </strong>, el usuario regresará a la página Operaciones sin guardar los cambios en la operación. Al hacer clic en <strong> Agregar más </strong> se guardará el cambio en la operación actual y se permitirá que el usuario continúe agregando operaciones adicionales sin volver a la página Operaciones.
+            header: Editar Operação
+            body1: Los usuarios pueden cambiar los valores o cualquier otra información en una Operação haciendo clic en el ícono <strong> Editar </strong> <img src = "/ serve_image / edit.png"> en la columna <strong> Acciones </strong> siguiente a la Operação. Una vez que se haya editado la Operação, haga clic en <strong> Finalizar </strong> para guardar y volver a la página Operaciones. Al hacer clic en <strong> Atrás </strong>, el usuario regresará a la página Operaciones sin guardar los cambios en la Operação. Al hacer clic en <strong> Agregar más </strong> se guardará el cambio en la Operação actual y se permitirá que el usuario continúe agregando operaciones adicionales sin volver a la página Operaciones.
         delete:
-            header: Eliminar una operación
-            body1: Para eliminar una operación, haga clic en el icono Eliminar <img src = "/serve_image/delete.png"> en la columna Acciones de la operación que desea eliminar.
+            header: Eliminar una Operação
+            body1: Para eliminar una Operação, haga clic en el icono Eliminar <img src = "/serve_image/delete.png"> en la columna Acciones de la Operação que desea eliminar.
         switch:
             header: Cambiar vista
-            body1: 'Al hacer clic en Cambiar vista en la parte superior de la página, puede cambiar su vista de una organizada por cultivo y tipo de operación a una que esté organizada por fecha.'
+            body1: 'Al hacer clic en Cambiar vista en la parte superior de la página, puede cambiar su vista de una organizada por cultivo y tipo de Operação a una que esté organizada por fecha.'
             body2: 'Una vez que esté satisfecho con su programa de recorte, haga clic en Continuar en la parte superior de la página. Pasará a la página de Prácticas de Conservación donde puede indicar cualquier práctica de conservación que esté presente en el parcela.'
 
   watershedpage_html:
@@ -2874,11 +2874,11 @@ pt:
     operations: >
                 Usted tiene um par de opciones diferentes aquí.
                 <ol>
-                    <li>Selecione <strong>Nueva Operación</strong> para crear una nueva operación</li>
-                    <li>Selecione <strong>Cargar Sistema de Cultivo</strong> para crear una nueva operación de um sistema de cultivo</li>
+                    <li>Selecione <strong>Nueva Operação</strong> para crear una nueva Operação</li>
+                    <li>Selecione <strong>Cargar Sistema de Cultivo</strong> para crear una nueva Operação de um sistema de cultivo</li>
                 </ol>
-                Para <strong>Editar</strong> una operación, Selecione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
-                Para <strong>Borrar</strong> una operación, Selecione el icono de la "x" roja debajo de <strong>Opciones</strong>.
+                Para <strong>Editar</strong> una Operação, Selecione el icono del lapiz debajo de <strong>Opciones</strong>.<br>
+                Para <strong>Borrar</strong> una Operação, Selecione el icono de la "x" roja debajo de <strong>Opciones</strong>.
     bmps: >
                 Aquí podrás ver todas las Buenas Prácticas de Gestión (BPG) para el cenário seleccionado si se las ha creado o si no lo ha hecho, usted tiene la opción de crear nuevas BPGs.
                 <p>Para crear um Novo Bmp Selecione <strong>New Bmp</strong>. Aquí verás dos cuadros desplegables:<p>
@@ -2893,7 +2893,7 @@ pt:
     watersheds: >
                 Aquí podrás ver todas las cuencas que usted ha creado o si no lo ha hecho, usted tiene la opción de crear una nueva bacia.
                 <ol>
-                    <li>Selecione <strong>Nueva Bacia</strong> para crear una nueva operación</li>
+                    <li>Selecione <strong>Nueva Bacia</strong> para crear una nueva Operação</li>
                 </ol>
                 <p>Después de crear una bacia, puede hacer clic en el Nome de la cunca para ver y editar los detalles de la bacia.</p>
                 <p>Puede utilizar los menús desplegables en la parte superior para añadir um parcela y cenário (cenário de cuencas), o Selecione el icono de la "x" roja debajo de <strong>Opciones</strong> para borrar um cenário de bacia.</p>
@@ -2929,7 +2929,7 @@ pt:
                 Para <strong>Editar</strong> una camada, Selecione el icono del lapiz debajo de <strong>Opciones</strong>.
     soil_operations: >
                 Aquí podrás ver todas las operaciones de la combinación de suelo/cenário que está actualmente cargada.
-                <p>Se puede cargar una combinación de suelo/cenário diferente cambiando el <strong>Suelo</strong> seleccionado en la lista desplegable <strong><em>Suelo</em></strong>, cambiando el <strong>Cenário</strong> seleccionado en la lista desplegable <strong><em>Cenário</em></strong>, y despues seleccionado <strong><em>Cargar Operación</em></strong>.</p>
+                <p>Se puede cargar una combinación de suelo/cenário diferente cambiando el <strong>Suelo</strong> seleccionado en la lista desplegable <strong><em>Suelo</em></strong>, cambiando el <strong>Cenário</strong> seleccionado en la lista desplegable <strong><em>Cenário</em></strong>, y despues seleccionado <strong><em>Cargar Operação</em></strong>.</p>
                 Para <strong>Editar</strong> una peración, Selecione el icono del lapiz debajo de <strong>Opciones</strong>.
                 <p><strong>Nota:</strong> Por defecto, el primer suelo y el primer cenário se cargan automáticamente</p>
     sites: >

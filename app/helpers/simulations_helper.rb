@@ -2126,11 +2126,13 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result["biom"] = tempa[324, 9].to_f * (KG_TO_LBS / HA_TO_AC)
         if subs == 0 then
           if bmp != nil then    #if reservoir exists take the td from soils instead of from edgo of the field (sub == 0)
-            one_result["qdr"] = qdr_sum / total_subs
-            one_result["qdrn"] = qdrn_sum / total_subs
-            one_result["qdrp"] = qdrp_sum / total_subs
-            #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
-            sub_surface_n_sum = sub_surface_n_sum / total_subs
+            if session[:simulation] != "scenario" then
+              one_result["qdr"] = qdr_sum / total_subs
+              one_result["qdrn"] = qdrn_sum / total_subs
+              one_result["qdrp"] = qdrp_sum / total_subs
+              #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
+              sub_surface_n_sum = sub_surface_n_sum / total_subs
+            end
           end
           one_result["dprk"] = dprk_sum / total_subs
           one_result["irri"] = irri_sum / total_subs
@@ -2149,12 +2151,18 @@ def send_file_to_DNDC(apex_string, file, state)
           biom = 0
           total_subs = 0
         else
-          if bmp != nil then    #if reservoir exists take the td from soils instead of from edgo of the field (sub == 0)
-            qdr_sum += one_result["qdr"]
-            qdrn_sum += one_result["qdrn"]
-            qdrp_sum += one_result["qdrp"]
-
-            sub_surface_n_sum += (tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC)
+          if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
+            if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
+              qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1] / 100
+              qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1] / 100
+              qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1] / 100
+              sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1] / 100
+            else
+              qdr_sum += one_result["qdr"]
+              qdrn_sum += one_result["qdrn"]
+              qdrp_sum += one_result["qdrp"]
+              sub_surface_n_sum += (tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC)
+            end
           end
           irri_sum += one_result["irri"]
           dprk_sum += one_result["dprk"]
