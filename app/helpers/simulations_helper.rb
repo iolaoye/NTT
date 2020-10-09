@@ -2165,16 +2165,16 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1] / 100
-            qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1] / 100
-            qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1] / 100
-            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1] / 100
-            irri_sum += one_result["irri"] * @scenario.field.soils[subs-1] / 100
-            dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1] / 100
-            prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1] / 100
-            n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1] / 100
-            pcp += one_result["pcp"] * @scenario.field.soils[subs-1] / 100
-            biom += one_result["biom"] * @scenario.field.soils[subs-1] / 100
+            qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1].percentage / 100
+            qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1].percentage / 100
+            qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1].percentage / 100
+            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1].percentage / 100
+            irri_sum += one_result["irri"] * @scenario.field.soils[subs-1].percentage / 100
+            dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1].percentage / 100
+            prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1].percentage / 100
+            n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1].percentage / 100
+            pcp += one_result["pcp"] * @scenario.field.soils[subs-1].percentage / 100
+            biom += one_result["biom"] * @scenario.field.soils[subs-1].percentage / 100
           else
             qdr_sum += one_result["qdr"]
             qdrn_sum += one_result["qdrn"]
