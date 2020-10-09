@@ -555,7 +555,7 @@ en:
     slope: Slope
     percentage: Percentage
     drainage: Drainage
-    depth: 'Tile Drain Depth (ft)'
+    depth: 'Depth (in)'
     soilp: 'Soil P (ppm)'
     bulk_density: 'Bulk Density (Mg/m3)'
     sand: 'Sand (%)'
