@@ -40,8 +40,9 @@
 					<%= label :soil_test_laboratory, t('soil.test'), :style => "font-weight:bold" %>
 					<td><%= collection_select :field, :soil_test, SoilTest.where("id != 0"), :id, :name, {:prompt => 'Select One', :selected => @field.soil_test}, {:required => true} %></td>
 				</td>
-				<td class="field" title="" id="div_soil_al"<%= "style=display:none;" unless :soil_aliminum == 7 %>>
-					<%= label :soil_aliminum_label, t('soil.aluminum'), :style => "font-weight:bold" %>
+
+				<td class="field" title="" id="div_soil_al">
+					<%= label :soil_aliminum_label, t('soil.aluminum'), :style => "font-weight:bold", :id => "soil_al_label" %>
 					<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any" %>
 				</td>
 				<td class="field" title="">
@@ -143,7 +144,6 @@
 
 <%#else%><%#
 
-
 	<div class="flash_alert">
 		<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 		<%= t('notices.no_soils') %> <%#
@@ -152,3 +152,27 @@
 		<%= link_to t('general.new') + ' ' + t('models.soil'), new_project_field_soil_path, :class => 'btn btn-primary' %>
 	<%#</div><%#
 <% end %>
+
+
+<script>
+  $(document).ready(function(){
+     if($('#field_soil_test').val() != "7"){
+        $("#field_soil_aliminum").hide();
+				$("#soil_al_label").hide();
+     }
+     else{
+        $("#field_soil_aliminum").show();
+     }
+
+     $('#field_soil_test').change(function(){
+        if($(this).val() != "7"){
+          $("#field_soil_aliminum").hide();
+					$("#soil_al_label").hide();
+        }
+        else{
+          $("#field_soil_aliminum").show();
+        }
+     })
+  });
+
+</script>
