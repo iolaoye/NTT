@@ -29,7 +29,7 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
-	      		<% if @type.include?(t('result.annual')) then %>
+	      		<% if @type.include?(t('result.annual')) or @type.include?(t('result.all_years')) then %>
 			      		<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
 		      		<td>
 		      			<select name="sim_initial_year">
@@ -46,23 +46,23 @@
 		      					<option value="<%= y %>"><%= y %></option>
 		      				<% end %>
 		      			</select>
-		      		</td> 
+		      		</td>
 		      	<% end %>
 			    <% field_id = 0 %>
 		        <% if session[:simulation] == 'scenario' %>
 				  <% field_id = @field.id %>
-		          <td><%= collection_select :result1, :scenario_id, @field.scenarios.where("last_simulation > ?", 0), 
+		          <td><%= collection_select :result1, :scenario_id, @field.scenarios.where("last_simulation > ?", 0),
 		          	:id, :name, {:include_blank => t('result.select_scenario1'), :selected => @scenario1}, {:required => true, :style =>"width:150px"} %></td>
-		          <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("last_simulation > ?",0), :id, :name, 
+		          <td><%= collection_select :result2, :scenario_id, @field.scenarios.where("last_simulation > ?",0), :id, :name,
 		          	{:include_blank => t('result.select_scenario2'), :selected => @scenario2}, {:required => false, :style =>"width:150px"}  %></td>
-		          <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("last_simulation > ?", 0), :id, :name, 
+		          <td><%= collection_select :result3, :scenario_id, @field.scenarios.where("last_simulation > ?", 0), :id, :name,
 		          	{:include_blank => t('result.select_scenario3'), :selected => @scenario3}, {:required => false, :style =>"width:150px"} %></td>
 		        <% else %>
-		          <td><%= collection_select :result1, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed1'), 
+		          <td><%= collection_select :result1, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed1'),
 		          	:selected => @scenario1}, {:required => true, :style => "width:160px"} %></td>
-		          <td><%= collection_select :result2, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed2'), 
+		          <td><%= collection_select :result2, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed2'),
 		          	:selected => @scenario2}, {:required => false, :style =>"width:160px"} %></td>
-		          <td><%= collection_select :result3, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed3'), 
+		          <td><%= collection_select :result3, :scenario_id, @project.location.watersheds, :id, :name, {:include_blank => t('result.select_watershed3'),
 		          	:selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
@@ -78,8 +78,8 @@
 								<%= link_to t('result.download_pdf'), { :format => :pdf }, :id => "pdf_download", name: "button", :class => "btn btn-primary" %>
 							<% end %>
 						    <!-- Download CSV/Excel button -->
-						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1}, 
-						    :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id, 
+						    <%= link_to t('result.download_excel'), results_path(:format => :xlsx, :result1 => {:scenario_id => @scenario1},
+						    :result2 => {:scenario_id => @scenario2}, :result3 => {:scenario_id => @scenario3}, :project_id => @project.id,
 						    :field_id => field_id), :id => "excel_download", name: "button", :class => "btn btn-primary" %>
 						<% end %>
 					</td>
@@ -91,7 +91,7 @@
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
 	    		        <%= radio_button_tag :result_type, "total"%> <%= t('result.total_units') %>
 	    	        </td>
-	                <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name, 
+	                <td><%= collection_select :result4, :soil_id, Soil.where(:field_id => @field.id, :selected => true), :id, :name,
 	                	{:prompt => t('soil.select_soil'), :selected => @soil }, { :required => true }%></td>
 			            <td><%= submit_tag t("general.view") + " " + t("result.by_soil"), name: "button", :class => "btn btn-primary" %>
 						</tr>
@@ -99,24 +99,24 @@
 	          	<% when t('result.annual')  + "-" + t('result.charts'), t("general.view") + " " + t('result.annual')  + "-" + t('result.charts')%>
                     <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
-		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name, 
+		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :group_name,
                         {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
-		              <td><%= collection_select :result5, :description_id, @descriptions.where(:group_id => @group), :id, :description, {:prompt => t('result.select_category'), 
+		              <td><%= collection_select :result5, :description_id, @descriptions.where(:group_id => @group), :id, :description, {:prompt => t('result.select_category'),
 		              	:selected => @description}, {:required => true} %></td>
 					  <td><%#= select :result5, :description_id, options_for_select(@des.map { |obj| [obj['description'], obj['id']] }) %>
 		            <% else %>
-		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name, 
+		              <td><%= collection_select :result5_category, :group_id, Group.all, :id, :spanish_group_name,
                         {:prompt => t('result.select_category'), :selected => @group}, {:required => true} %></td>
-		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_category'), 
+		              <td><%= collection_select :result5, :description_id, @descriptions.where("id != 52"), :id, :spanish_description, {:prompt => t('result.select_category'),
 		              	:selected => @description}, {:required => true} %></td>
 		            <% end %>
 					<% if I18n.locale.eql?(:en) %>
-						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name, 
+						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :name,
                             {:prompt => t('result.select_crop'), :selected => @crop} %>
                         </td>
 					<% else %>
 						<td id="td_crops" style="display:none"><%= collection_select :result7, :crop_id, @crops, :crop_id, :spanish_name,
-                            {:prompt => t('result.select_crop'), :selected => @crop} %>    
+                            {:prompt => t('result.select_crop'), :selected => @crop} %>
                         </td>
 					<% end %>
 			            <td>
@@ -126,10 +126,10 @@
 	        	<% when t('result.monthly') + "-" + t('result.charts'), t("general.view") + " " + t('result.monthly') + "-" + t('result.charts') %>
                     <%= hidden_field(:year_type, :year_type, :value => @type) %>
 		            <% if I18n.locale.eql?(:en) %>
-		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"), 
+		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"),
 		              	:id, :description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
 		            <% else %>
-		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"), 
+		              <td><%= collection_select :result6, :description_id, Description.where("period = 1"),
 		              	:id, :spanish_description, {:prompt => t('result.select_chart'), :selected => @description}, {:required => true} %></td>
 		            <% end %>
 		            <td><%= submit_tag t("general.view"), name: "button_monthly", :class => "btn btn-primary" %></td>
@@ -345,7 +345,7 @@
 <script>
   var initial_year = 0
   var final_year = 0
-  
+
   $(document).ready(function(event) {
   	$("[name='sim_initial_year']").change(() => {
         initial_year = $("[name='sim_initial_year'] option:selected").val();
@@ -388,7 +388,7 @@ $("[name='sim_final_year']").change(function(){
         $("[name='sim_initial_year']").html(localStorage.getItem("select-initial"));
         $("[name='sim_initial_year']").val(localStorage.getItem("selected-initial"));                 //to get previously selected value
     }
-	
+
 	if(localStorage.getItem("select-final")!="" && localStorage.getItem("select-final")!=undefined)
     {
         $("[name='sim_final_year']").html(localStorage.getItem("select-final"));
@@ -397,7 +397,7 @@ $("[name='sim_final_year']").change(function(){
 }
 
   function validateForm() {
-	
+
 	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
 		alert("Initial year cannot be greater than or equal to final year");
 		//return false;

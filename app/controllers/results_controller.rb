@@ -151,8 +151,11 @@ class ResultsController < ApplicationController
       @errors = Array.new
     end # end if
     if params[:button] != nil
+        # all years menu item was clicked
+        if (params[:button] == t('result.all_years'))
+            @type = t("result.all_years")
         # dry years menu item was clicked
-        if (params[:button] == t('result.dry_years'))
+        elsif (params[:button] == t('result.dry_years'))
             @type = t("result.dry_years")
         # wet years menu item was clicked
         elsif params[:button] == t('result.wet_years')
@@ -175,6 +178,8 @@ class ResultsController < ApplicationController
 
     if params[:year_type] != nil
         case params[:year_type][:year_type]
+            when t('result.all_years')
+                @type = t('result.all_years')
             when t('result.dry_years')
                 @type = t('result.dry_years')
             when t('result.wet_years')
