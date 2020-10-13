@@ -8,7 +8,7 @@
         <% county = County.find(@project.location.county_id).county_name %>
         <% county += ", " + State.find(@project.location.state_id).state_name %>
       <% end %>
-    <% end %> 
+    <% end %>
     <%= link_to t('menu.location') + " (" + county + ")", edit_project_location_path(@project, @project.location) %>
   </li>
   <%#= controller_name %>
@@ -101,7 +101,7 @@
           <!-- Sub menu for all, dry and wet years under tabular menu -->
           <ul class="nav nav-pills nav-stacked nav-sidebar-sub-sub-sub">
             <li> <!-- All Years -->
-                <%= link_to t('result.all_years'), project_field_results_path(@project, @field, :button => t('result.summary'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
+                <%= link_to t('result.all_years'), project_field_results_path(@project, @field, :button => t('result.all_years'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub" %>
             </li>
             <li> <!-- Dry Years -->
                 <%= link_to t("result.dry_years"), project_field_results_path(@project, @field, :button => t('result.dry_years'), :simulation => 'scenario', :locale=>I18n.locale), :class=>"results-label-sub"%>
@@ -144,7 +144,7 @@
     <% if ENV["APP_VERSION"] == "standard" && fem == 1 %>
       <li class="<%= request.url.include? "fem_results" || controller_name == "fem_generals" || controller_name == "fem_feeds" || controller_name == "fem_machines" || controller_name == "fem_facilities" || (controller_name == "scenarios" && request.parameters[:caller_id] == "FEM") ? "active" : "" %>">
         <%#= link_to t('menu.fem'), project_field_scenarios_path(@project, @field,:caller_id => "FEM"), :class=>"results-label-sub" %>
-        <%= link_to t("fem.eco_input"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %> 
+        <%= link_to t("fem.eco_input"), project_fem_feeds_path(@project, :button => t('fem.feed'), :locale=>I18n.locale, :caller_id => "FEM", :field_id => @field.id), :class=>"results-label-sub" %>
       </li>
       </li>
       <% if fem_submenu %>
@@ -225,7 +225,7 @@
         <%# end %>
       -->
     <% end %>
-    <%# ******************  UTILITY MENU TO FIELD LEVEL ********************************* %>    
+    <%# ******************  UTILITY MENU TO FIELD LEVEL ********************************* %>
     <% unless ENV["APP_VERSION"] == "modified" %>
 		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) ? "active" : "" %>">
   			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) %>
