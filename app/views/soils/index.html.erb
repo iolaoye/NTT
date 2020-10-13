@@ -41,7 +41,7 @@
 				</td>
 				<td class="field" title="" id="div_soil_al">
 					<%= label :soil_aliminum_label, t('soil.aluminum'), :style => "font-weight:bold", :id => "soil_al_label" %>
-					<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any", :min => 0.001, :required => true %>
+					<%= f.number_field :soil_aliminum, :class => 'gvTitleStyleNumber', :step => "any" %>
 				</td>
 				<td class="field" title="">
 					<%= label :soilp_label, t('soil.soilp'), :style => "font-weight:bold" %>
@@ -149,7 +149,6 @@
 	<%#</div><%#
 <% end %>
 
-
 <script>
   $(document).ready(function(){
      if($('#field_soil_test').val() != "7"){
@@ -172,5 +171,4 @@
         }
      })
   });
-
 </script>
