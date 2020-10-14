@@ -10,9 +10,23 @@ csv.each do |row|
     FarmGeneral.create!(
         {:id => row[0],
          :name => row[1].capitalize,
-         :value => row[2],
+         :unit => row[2],
+         :value => row[3],
          :project_id => @project.id
         }, 
         #:without_protection => true
     )
 end
+
+# ORIG
+# csv.each do |row| 
+#     puts row.to_hash
+#     FarmGeneral.create!(
+#         {:id => row[0],
+#          :name => row[1].capitalize,
+#          :value => row[2],
+#          :project_id => @project.id
+#         }, 
+#         #:without_protection => true
+#     )
+# end

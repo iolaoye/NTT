@@ -12,7 +12,7 @@ csv.each do |row|
     FemFeed.create!(
         {:id => row[0],
          :name => row[1].capitalize,
-         :codes => row[2],
+         :unit => row[2],
          :selling_price => row[3],
          :purchase_price => row[4],
          :concentrate => row[5],
@@ -27,3 +27,26 @@ csv.each do |row|
         #:without_protection => true
     )
 end
+
+
+# csv.each do |row| 
+#     #debugger
+#     puts row.to_hash
+#     FemFeed.create!(
+#         {:id => row[0],
+#          :name => row[1].capitalize,
+#          :codes => row[2],
+#          :selling_price => row[3],
+#          :purchase_price => row[4],
+#          :concentrate => row[5],
+#          :forage => row[6],
+#          :grain => row[7],
+#          :hay => row[8],
+#          :pasture => row[9],
+#          :silage => row[10],
+#          :supplement => row[11],
+#          :project_id => @project.id
+#         }, 
+#         #:without_protection => true
+#     )
+# end
