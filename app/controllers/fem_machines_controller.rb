@@ -73,6 +73,7 @@ class FemMachinesController < ApplicationController
     def fem_machine_params
       params.require(:fem_machine).permit(
               :name,
+              :unit,
               :lease_rate,
               :new_price,
               :new_hours,
