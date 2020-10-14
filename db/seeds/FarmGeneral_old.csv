@@ -1,0 +1,16 @@
+ID,Name,Value
+1,Haul To Spread Distance,5
+2,Haul To Compost Distance,20
+3,Gas Price,3.39
+4,Diesel Price,3.11
+5,Default Land Value,2000
+6,Default Land Rental Rate,30
+7,Average Labor Wage,12
+8,Time Horizon,2
+9,Override Time Horizon,0
+10,AgRate,1
+11,Override AgRate,0
+12,Override Electricity Price,0
+13,Electricity Price,0.15
+14,Electricity Sale Price,0
+15,Electricity Purchase Price,0
