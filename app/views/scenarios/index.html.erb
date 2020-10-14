@@ -139,10 +139,10 @@
 				<tr>
 				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
 				  <th>Environment</th>
-				  
+          
 				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 				  <th><%=t('fem.economic')%></th>
-				  	<th>1501</th>
+				  <th>1501</th>
 				  <%end %>
 				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
@@ -172,7 +172,7 @@
 							<%end%>
 						<%end%>
 						<%  if flag == true%>
-							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_scenario[]", scenario.id %></td>
+							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_aplcat[]", scenario.id %></td>
 							<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 								<td id="<%= scenario.name %>" class="gvCellStyleText">
 									<%= check_box_tag "select_1501[]", scenario.id %>
@@ -224,14 +224,14 @@
 								<% end %>
 							</td>
 							<td class="gvCellStyleText">
-							<%= scenario.aplcat_last_simulation %> 
+							<%= scenario.aplcat_last_simulation %>
 							</td>
 							</tr>
 						<%end%>
 					<%else%>
 					<!-- For FEM and NTT. Jennifer 8/24/2020 -->
 						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
-						
+
  						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
  						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
 							<td id="<%= scenario.name %>" class="gvCellStyleText">
@@ -293,7 +293,7 @@
 							  	<% when "NTT" %>
 							  		<%= scenario.last_simulation %>
 							  	<% when "FEM" %>
-							  		<%= scenario.fem_last_simulation %>  
+							  		<%= scenario.fem_last_simulation %>
 						  	<% end %>
 						</td>
 				  		<% if req_parm == "NTT" then %>
