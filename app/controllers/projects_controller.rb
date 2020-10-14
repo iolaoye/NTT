@@ -2533,7 +2533,7 @@ class ProjectsController < ApplicationController
           operation.type_id = p.text
         when "subtype_id"
           operation.subtype_id = p.text
-        when "amount"
+        when "amount", "amout"
           operation.amount = p.text
         when "depth"
           operation.depth = p.text
