@@ -9,6 +9,7 @@
           <tr>
             <th>Name</th>
             <!-- <th>Codes</th> -->
+            <th>Unit</th>
             <th>Value</th>
             <th><%=t('general.actions')%></th>
             <th colspan="3"></th>
@@ -20,6 +21,7 @@
             <tr>
               <td><%= fem_general.name.capitalize %></td>
              <!--  <td><%= fem_general.codes %></td> -->
+              <td><%= fem_general.unit %></td>
               <td><%= fem_general.value %></td>
               <td><%#= link_to 'Show', project_fem_general_path(fem_general) %></td>
               <td><%= link_to image_tag("edit.png"), edit_project_fem_general_path(@project, fem_general,:field_id => @field.id,:caller_id => "FEM") %></td>

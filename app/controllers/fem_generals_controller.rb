@@ -71,6 +71,6 @@ class FemGeneralsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fem_general_params
-      params.require(:fem_general).permit(:name, :value, :updated)
+      params.require(:fem_general).permit(:name, :unit, :value, :updated)
     end
 end
