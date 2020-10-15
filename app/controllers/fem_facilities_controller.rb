@@ -23,7 +23,7 @@ class FemFacilitiesController < ApplicationController
 
   # GET /fem_facilities/1/edit
   def edit
-    @fem_facilitiy = FemFacility.find(params[:id])
+    @fem_facility = FemFacility.find(params[:id])
   end
 
   # POST /fem_facilities
