@@ -188,7 +188,7 @@ function validate_soil_alum() {
   }
 	else{
 			x = document.getElementById("field_soil_aliminum").value;
-			if (isNaN(x) || x < 0.001 ) {
+			if (isNaN(x) === false || x < 0.001 ) {
 			document.getElementById("al_warning").innerHTML = "Invalid value for Aluminum";
 			return false;
 		}
