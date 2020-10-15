@@ -1,5 +1,5 @@
 class FemFacilitiesController < ApplicationController
-  before_action :set_fem_facility, only: [:show, :edit, :update, :destroy]
+  #before_action :set_fem_facility, only: [:show, :edit, :update, :destroy]
   include FemHelper
   # GET /fem_facilities
   def index
@@ -9,6 +9,7 @@ class FemFacilitiesController < ApplicationController
       load_facilities
       @fem_facilities = FemFacility.where(:project_id => @project.id).order(:name)    
     end
+    if params[:field_id] != nil then @field = Field.find(params[:field_id]) end
   end
 
   # GET /fem_facilities/1
@@ -58,8 +59,9 @@ class FemFacilitiesController < ApplicationController
   end
 
   def reset
+    @field = Field.find(params[:id])
     FemFacility.where(:project_id => @project.id).delete_all
-    redirect_to project_fem_facilities_path(@project, :button => t('fem.facility')), notice: t("models.apex_control") + " " + t("general.reset")
+    redirect_to project_fem_facilities_path(@project, :field_id => @field.id, :button => t('fem.facility')), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   private

@@ -11,6 +11,6 @@ Name,Unit,Value
 10,Haul to compost distance,mile,20
 11,Haul to spread distance,mile,5
 12,Override agrate,,0
-13,Override electricity price,Cents/khr,0
+13,Override electricity price,cents/khr,0
 14,Override time horizon,yrs,0
 15,Time horizon,yrs,2

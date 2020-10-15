@@ -13,6 +13,7 @@ module FemHelper
           FemFeed.create!(
               {
                :name => row[1].capitalize,
+               :unit => row[2],
                :selling_price => row[3],
                :purchase_price => row[4],
                :concentrate => row[5],
@@ -43,20 +44,21 @@ module FemHelper
           FemFacility.create!(
               {
                :name => row[1].capitalize,
-               :lease_rate => row[4],
-               :new_price => row[5],
-               :new_life => row[6],
-               :current_price => row[7],
-               :life_remaining => row[8],
-               :maintenance_coeff => row[9],
-               :loan_interest_rate => row[10],
-               :length_loan => row[11],
-               :interest_rate_equity => row[12],
-               :proportion_debt => row[13],
-               :year => row[14],
+               :unit => row[2],
+               :lease_rate => row[3],
+               :new_price => row[4],
+               :new_life => row[5],
+               :current_price => row[6],
+               :life_remaining => row[7],
+               :maintenance_coeff => row[8],
+               :loan_interest_rate => row[9],
+               :length_loan => row[10],
+               :interest_rate_equity => row[11],
+               :proportion_debt => row[12],
+               :year => row[13],
                :project_id => @project.id,
-               :codes => row[2],
-               :ownership => row[3]
+               #:codes => row[2],
+               #:ownership => row[3]
           }, 
               #:without_protection => true
           )
@@ -77,9 +79,9 @@ module FemHelper
 	        FemGeneral.create!(
 	            {
 	             :name => row[1].capitalize,
-	             :value => row[2],
-	             :project_id => @project.id,
-	             
+               :unit => row[2],
+	             :value => row[3],
+	             :project_id => @project.id,	             
 	            }, 
 	            #:without_protection => true
 	        )
@@ -100,27 +102,28 @@ module FemHelper
           FemMachine.create!(
               {
                :name => row[1].capitalize,
-               :lease_rate => row[4],
-               :new_price => row[5],
-               :new_hours => row[6],
-               :current_price => row[7],
-               :hours_remaining => row[8],
-               :width => row[9],
-               :speed => row[10],
-               :field_efficiency => row[11],
-               :horse_power => row[12],
-               :rf1 => row[13],
-               :rf2 => row[14],
-               :ir_loan => row[15],
-               :l_loan => row[16],
-               :ir_equity => row[17],
-               :p_debt => row[18],
-               :year => row[19],
-               :rv1 => row[20],
-               :rv2 => row[21],
+               :unit => row[2],
+               :lease_rate => row[3],
+               :new_price => row[4],
+               :new_hours => row[5],
+               :current_price => row[6],
+               :hours_remaining => row[7],
+               :width => row[8],
+               :speed => row[9],
+               :field_efficiency => row[10],
+               :horse_power => row[11],
+               :rf1 => row[12],
+               :rf2 => row[13],
+               :ir_loan => row[14],
+               :l_loan => row[15],
+               :ir_equity => row[16],
+               :p_debt => row[17],
+               :year => row[18],
+               :rv1 => row[19],
+               :rv2 => row[20],
                :project_id => @project.id,
-               :codes => row[2],
-               :ownership => row[3]
+               #:codes => row[2],
+               #:ownership => row[3]
            }, 
               #:without_protection => true
           )
