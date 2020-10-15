@@ -9,6 +9,7 @@ class FemGeneralsController < ApplicationController
       load_generals
       @fem_generals = FemGeneral.where(:project_id => @project.id).order(:name)    
     end
+    if params[:field_id] != nil then @field = Field.find(params[:field_id]) end
   end
 
   # GET /fem_generals/1
@@ -59,8 +60,9 @@ class FemGeneralsController < ApplicationController
   end
 
   def reset
+    @field = Field.find(params[:id])
     FemGeneral.where(:project_id => @project.id).delete_all
-    redirect_to project_fem_generals_path(@project, :button => t('fem.general')), notice: t("models.apex_control") + " " + t("general.reset")
+    redirect_to project_fem_generals_path(@project, :field_id => @field.id, :button => t('fem.general')), notice: t("models.apex_control") + " " + t("general.reset")
   end
 
   private

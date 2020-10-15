@@ -3002,6 +3002,7 @@ def send_file_to_DNDC(apex_string, file, state)
     if state_id != 0 and state_id != nil then
       @state_abbreviation = State.find(state_id).state_abbreviation
     end
+    debugger
     if msg.eql?("OK") then msg = create_control_file() else return msg end                  #this prepares the apexcont.dat file
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file

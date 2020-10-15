@@ -13,6 +13,8 @@ module ApplicationHelper
 				true
 			elsif request.parameters[:caller_id] == "FEM" && request.parameters[:field_id] != nil
 				true
+			elsif request.url.include?(url_for("/fem_generals")) || request.url.include?(url_for("/fem_feeds")) || request.url.include?(url_for("/fem_machines")) || request.url.include?(url_for("/fem_facilities"))
+				true
 			elsif request.url.include?(url_for("/weathers"))
 				true
 			elsif current_page?(url_for(:controller => 'apex_controls', :action => 'index'))
