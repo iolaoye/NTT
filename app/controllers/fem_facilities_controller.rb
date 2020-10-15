@@ -70,7 +70,7 @@ class FemFacilitiesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fem_facility_params
-      params.require(:fem_facility).permit(:name, :lease_rate, :new_price, :new_life, :current_price, 
+      params.require(:fem_facility).permit(:name, :unit, :lease_rate, :new_price, :new_life, :current_price, 
         :life_remaining, :maintenance_coeff, :loan_interest_rate, :length_loan,:interest_rate_equity,
         :proportion_debt, :year, :updated)
     end

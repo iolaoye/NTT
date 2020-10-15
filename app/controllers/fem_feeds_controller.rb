@@ -71,6 +71,6 @@ class FemFeedsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def fem_feed_params
-      params.require(:fem_feed).permit(:name, :selling_price, :purchase_price, :concentrate, :forage, :grain, :hay, :pasture, :silage, :supplement, :updated)
+      params.require(:fem_feed).permit(:name, :unit, :selling_price, :purchase_price, :concentrate, :forage, :grain, :hay, :pasture, :silage, :supplement, :updated)
     end
 end
