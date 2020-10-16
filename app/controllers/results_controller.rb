@@ -161,6 +161,8 @@ class ResultsController < ApplicationController
         elsif params[:button] == t('result.wet_years')
             @type = t("result.wet_years")
         # default to tabular / all years
+        elsif params[:button] == t('result.summary')
+            @type = t("result.all_years")
         else
           #if !(@type == t('activerecord.models.result.fem_results')) then
             #@type = t("result.summary")
