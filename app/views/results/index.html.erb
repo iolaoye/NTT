@@ -29,8 +29,8 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
-	      		<% if (@type.include?(t('result.annual')) or @type.include?(t('result.all_years'))) and (request.url.include?(url_for('localhost')) or request.url.include?(url_for('bk'))) then %>
-			      		<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
+	      		<% if @type.include?(t('result.annual')) or (@type.include?(t('result.all_years'))  and (request.url.include?(url_for('localhost')) or request.url.include?(url_for('bk')))) then %>
+			      	<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
 		      		<td>
 		      			<select name="sim_initial_year">
 		      				<option value="default" selected="selected">Initial Year</option>
@@ -66,7 +66,7 @@
 		          	:selected => @scenario3}, {:required => false, :style =>"width:160px"} %></td>
 		        <% end %>
 		        <% case @type %>
-		        <% when t('general.view'), t('result.summary'), t('result.dry_years'), t('result.all_years'), t('result.wet_years'), "Tabular" %>
+		        <% when t('general.view'), t('result.summary'), t('result.dry_years'), t('result.all_years'), t('result.wet_years') %>
 		        	<%= hidden_field(:year_type, :year_type, :value => @type) %>
 		        	<td>
 	    		        <%= radio_button_tag :result_type, "acre", true  %> <%= t('result.units_ac') %>
