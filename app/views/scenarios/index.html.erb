@@ -138,12 +138,12 @@
 			  <thead>
 				<tr>
 				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-          <th class="gvCellStyleTitle"><%= t('general.select') %></th>
-
-				  <!-- <%# if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
-				  <th><%#=t('fem.economic')%></th>
-				  <th>1501</th>
-				  <%#end %> -->
+          <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
+ 				  <th>Environment</th>
+				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+				  	<th><%=t('fem.economic')%></th>
+				  	<th>1501</th>
+				  <%end %>
 				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
