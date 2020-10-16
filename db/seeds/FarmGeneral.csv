@@ -1,5 +1,4 @@
 Name,Unit,Value
-1,Agrate,,1
 2,Average labor wage,$/hr,12
 3,Default land rental rate,$/acre,30
 4,Default land value,$/acre,2000
@@ -10,7 +9,4 @@ Name,Unit,Value
 9,Gas price,$/gallon,3.39
 10,Haul to compost distance,mile,20
 11,Haul to spread distance,mile,5
-12,Override agrate,,0
-13,Override electricity price,cents/khr,0
-14,Override time horizon,yrs,0
 15,Time horizon,yrs,2
