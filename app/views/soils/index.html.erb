@@ -112,7 +112,7 @@
 			  </table>
 			</div>
 			</div>
-			<div class="actions"><%= submit_tag t('submit.savecontinue'), :class => "btn btn-primary", :onclick => "return validate_soil_alum();" %></div>
+			<div class="actions"><%= submit_tag t('submit.savecontinue'), :class => "btn btn-primary"%></div>
 	<% end %>
 
 
@@ -156,42 +156,52 @@
   $(document).ready(function(){
      if($('#field_soil_test').val() != "7"){
         $("#field_soil_aliminum").hide();
-				$("#soil_al_label").hide();
-				document.getElementById("field_soil_aliminum").value = 0;
+		$("#soil_al_label").hide();
+		document.getElementById("field_soil_aliminum").value = 0;
+		document.getElementById("field_soil_aliminum").required = false;
+		document.getElementById("field_soil_aliminum").min = "0";
      }
      else{
         $("#field_soil_aliminum").show();
-				$("#soil_al_label").show();
+		$("#soil_al_label").show();
+		document.getElementById("field_soil_aliminum").required = true;
+		document.getElementById("field_soil_aliminum").min = "0.01";
      }
 
      $('#field_soil_test').change(function(){
         if($(this).val() != "7"){
           $("#field_soil_aliminum").hide();
-					$("#soil_al_label").hide();
-					document.getElementById("field_soil_aliminum").value = 0;
+		  $("#soil_al_label").hide();
+		  document.getElementById("field_soil_aliminum").value = 0;
+		  document.getElementById("field_soil_aliminum").required = false;
+		  document.getElementById("field_soil_aliminum").min = "0";
         }
         else{
           $("#field_soil_aliminum").show();
-					$("#soil_al_label").show();
+		  $("#soil_al_label").show();
+		  document.getElementById("field_soil_aliminum").required = true;
+		  document.getElementById("field_soil_aliminum").min = "0.01";
         }
      })
   });
 </script>
 
 <script>
-function validate_soil_alum() {
+function validate_soil_alum() 
+{
 	var x
   var labelVisibility = document.getElementById("soil_al_label");
-  if (window.getComputedStyle(labelVisibility).display === "none") {
+  if (window.getComputedStyle(labelVisibility).display === "none") 
+  {
     // Set soil aluminum to 0 for soils other than "Modified Morgan"
     document.getElementById("field_soil_aliminum").value = 0;
   }
 	else{
 			x = document.getElementById("field_soil_aliminum").value;
 			if (isNaN(x) === false || x < 0.001 ) {
-			document.getElementById("al_warning").innerHTML = "Invalid value for Aluminum";
-			return false;
+				document.getElementById("al_warning").innerHTML = "Invalid value for Aluminum";
+				return false;
+			}
 		}
-	}
 }
 </script>
