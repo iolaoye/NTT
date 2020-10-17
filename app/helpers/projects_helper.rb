@@ -369,20 +369,30 @@ module ProjectsHelper
 	    operation.save
 	    activity_id = 0
 	    crop =  nil
+	    crops = 1
 	    for i in 0..(new_operation.length - 1)
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
 	      case p.name
 	        when "Crop"
 	          operation.crop_id = p.text
+	          if operation.crop_id == 600 then
+	          	crops = 3
+	          	operation.crop_id = 41
+	          elsif operation.crop_id == 601 then
+	          	crops = 2
+	          	operation.crop_id = 41
+	          end
 	          crop = Crop.find_by_number(operation.crop_id)
 	          if crop == nil then 
 	          	operation.crop_id = 0
 	          else
 	          	operation.crop_id = crop.id
 	          end
-	          
 	        when "Operation_Name"   #todo
+	          # if p.text == "2020 Harvest Corn" then
+	          # 	debugger
+	          # end
 	          case true
 	            when p.text.include?("Tillage")
 	              activity_id = 3
@@ -511,7 +521,29 @@ module ProjectsHelper
 	      if operation.activity_id == 7 then #means this is a Grazing Start operations. We need to save the id to add into the type_id for Grazing End operation 
 	      	@graz_oper_id = operation.id
 	      end
-	      add_soil_operation(operation)
+		  add_soil_operation(operation)
+		  if crops == 2
+		  	  operation = Operation.new
+	      	  operation.crop_id = 33
+		      crop = Crop.find_by_number(operation.crop_id)
+	          if crop == nil then 
+	          	operation.crop_id = 0
+	          else
+	          	operation.crop_id = crop.id
+	          end
+	          operation.save
+	      end
+		  if crops == 3
+		  	  operation = Operation.new
+	      	  operation.crop_id = 150
+		      crop = Crop.find_by_number(operation.crop_id)
+	          if crop == nil then 
+	          	operation.crop_id = 0
+	          else
+	          	operation.crop_id = crop.id
+	          end
+	          operation.save
+	      end
 	      return "OK"
 	    else
 	      return "operation could not be saved"
