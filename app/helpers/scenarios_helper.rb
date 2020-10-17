@@ -840,7 +840,11 @@ module ScenariosHelper
 		    soil_operation.apex_operation = Activity.find(operation.activity_id).apex_code
 		    soil_operation.type_id = operation.subtype_id
 		  when 4 #Harvest. Take harvest operation from crop table
-		    soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+		  	if @project.version == "Comet" then
+		  		soil_operation.apex_operation = operation.type_id
+		  	else
+		    	soil_operation.apex_operation = Crop.find(operation.crop_id).harvest_code
+		    end
 		    soil_operation.type_id = operation.subtype_id
 		  when 6 #irrigation
 		  	soil_operation.apex_operation = Irrigation.find(operation.type_id).code
@@ -927,6 +931,10 @@ module ScenariosHelper
 	        	end
 	          	opv1 = (operation.amount * 9350 * (100-operation.moisture)/100).round(2) #Ali's equation on e-mail 11-07-2017
 	        end
+	    when 3  #tillage. be sure opv is zero. Oscar Gallego. 10/16/2020. The opv1 for tillage operation shoudl be zero insted of 1.0
+	    	opv1 = 0
+	    when 4  #harvest. be sure opv is zero.  Oscar Gallego. 10/16/2020. The opv1 for harvest operation shoudl be zero insted of 1.0
+	    	opv1 = 0
 	    when 6 #irrigation
 	        opv1 = operation.amount * IN_TO_MM #irrigation volume from inches to mm.
 	    when 7, 9 #grazing
