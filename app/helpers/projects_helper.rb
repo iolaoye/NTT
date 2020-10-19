@@ -539,9 +539,9 @@ module ProjectsHelper
 		oper_new.crop_id = crop_id
 		crop = Crop.find_by_number(oper_new.crop_id)
 		if crop == nil then 
-			operation.crop_id = 0
+			oper_new.crop_id = 0
 		else
-			operation.crop_id = crop.id
+			oper_new.crop_id = crop.id
 		end
 		oper_new.activity_id = oper_old.activity_id
 		oper_new.day = oper_old.day
