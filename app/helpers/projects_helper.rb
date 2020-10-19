@@ -523,7 +523,6 @@ module ProjectsHelper
 	      end
 		  add_soil_operation(operation)
 		  if crops == 2
-		  	  operation = Operation.new
 	      	  operation.crop_id = 33
 		      crop = Crop.find_by_number(operation.crop_id)
 	          if crop == nil then 
@@ -531,10 +530,11 @@ module ProjectsHelper
 	          else
 	          	operation.crop_id = crop.id
 	          end
+	          operation.id = nil
 	          operation.save
+	          add_soil_operation(operation)
 	      end
 		  if crops == 3
-		  	  operation = Operation.new
 	      	  operation.crop_id = 150
 		      crop = Crop.find_by_number(operation.crop_id)
 	          if crop == nil then 
@@ -542,7 +542,9 @@ module ProjectsHelper
 	          else
 	          	operation.crop_id = crop.id
 	          end
+	          operation.id = nil
 	          operation.save
+	          add_soil_operation(operation)
 	      end
 	      return "OK"
 	    else
