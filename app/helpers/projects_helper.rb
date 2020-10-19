@@ -523,7 +523,6 @@ module ProjectsHelper
 	      end
 		  add_soil_operation(operation)
 		  if crops == 2
-		  	debugger
 		  	  set_new_operation(operation, 33)
 	      end
 		  if crops == 3
