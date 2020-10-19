@@ -523,33 +523,46 @@ module ProjectsHelper
 	      end
 		  add_soil_operation(operation)
 		  if crops == 2
-	      	  operation.crop_id = 33
-		      crop = Crop.find_by_number(operation.crop_id)
-	          if crop == nil then 
-	          	operation.crop_id = 0
-	          else
-	          	operation.crop_id = crop.id
-	          end
-	          operation.id = nil
-	          operation.save
-	          add_soil_operation(operation)
+		  	  set_new_operation(operation, 33)
 	      end
 		  if crops == 3
-	      	  operation.crop_id = 150
-		      crop = Crop.find_by_number(operation.crop_id)
-	          if crop == nil then 
-	          	operation.crop_id = 0
-	          else
-	          	operation.crop_id = crop.id
-	          end
-	          operation.id = nil
-	          operation.save
-	          add_soil_operation(operation)
+	          set_new_operation(operation, 150)
 	      end
 	      return "OK"
 	    else
 	      return "operation could not be saved"
 	    end
+	end
+
+	def set_new_opeeration(oper_old, crop_id)
+		oper_new = Operation.new
+		oper_new.crop_id = crop_id
+		crop = Crop.find_by_number(oper_new.crop_id)
+		if crop == nil then 
+			operation.crop_id = 0
+		else
+			operation.crop_id = crop.id
+		end
+		oper_new.activity_id = oper_old.activity_id
+		oper_new.day = oper_old.day
+		oper_new.month_id = oper_old.month_id
+		oper_new.year = oper_old.year
+		oper_new.type_id = oper_old.type_id
+		oper_new.amount = oper_old.amount
+		oper_new.depth = oper_old.depth
+		oper_new.no3_n = oper_old.no3_n
+		oper_new.po4_p = oper_old.po4_p
+		oper_new.org_n = oper_old.org_n
+		oper_new.org_p = oper_old.org_p
+		oper_new.nh3 = oper_old.nh3
+		oper_new.scenario_id = oper_old.scenario_id
+		oper_new.subtype_id = oper_old.subtype_id
+		oper_new.moisture = oper_old.moisture
+		oper_new.org_c = oper_old.org_c
+		oper_new.nh4_n = oper_old.nh4_n
+		oper_new.rotation = oper_old.rotation
+		oper_new.save
+		add_soil_operation(oper_new)
 	end
 
     ######################## Upload BMPs from Comet ################################################
