@@ -610,8 +610,8 @@ class ResultsController < ApplicationController
             else
                 crop = Crop.find(params[:result7][:crop_id])
                 conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
-                chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year)
-                #chart_values = CropResult.select("year AS month_year", "yldg+yldf as value").where(:scenario_id => 736).group(:name, :year).pluck("yldg+yldf as value").last(12)
+                #chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year)
+                chart_values = CropResult.where(:"#{id}" => scenario_id, :name => crop.code).group(:year).pluck("year", "avg(yldg+yldf) * " + conversion_factor.to_s)
             end
         else  #get results for monthly sub1 > 0
             chart_description = get_description_monthly()
@@ -647,15 +647,7 @@ class ResultsController < ApplicationController
             end
             avg = 0
             chart_values.each do |c|
-                #
-                # while current_year < c.month_year
-                #     chart = Array.new
-                #     chart.push(current_year)
-                #     chart.push(0)
-                #     charts[i] = chart
-                #     current_year +=1
-                #     i += 1
-                # end
+              if chart_values.class != Array then
                 if c.month_year >= first_year and c.month_year <= last_year then
                     chart = Array.new
                     chart.push(c.month_year)
@@ -667,6 +659,20 @@ class ResultsController < ApplicationController
                     if i > last_year then break end
                     #if i > 11 then break end
                 end
+              else
+                #Oscar Gallego - 10192020 - When crops are not consecutive duringthe same year the CropResult contains several records for the same crop year. This will make sure the average is done.
+                if c[0] >= first_year and c[0] <= last_year then
+                    chart = Array.new
+                    chart.push(c[0])
+                    chart.push(c[1])
+                    avg = avg + c[1]
+                    charts[i] = chart
+                    current_year +=1
+                    i += 1
+                    if i > last_year then break end
+                    #if i > 11 then break end
+                end
+              end
             end
             if i > 0 then
               avg = avg / i

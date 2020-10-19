@@ -2275,7 +2275,7 @@ def send_file_to_DNDC(apex_string, file, state)
       end # end if j>=10
       j+=1
     end #end data.each
-    #this includes the last year fo simulation
+    #this includes the last year of simulation
     add_crop.call
 
     if session[:simulation] == "scenario" then
