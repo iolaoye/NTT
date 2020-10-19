@@ -523,6 +523,7 @@ module ProjectsHelper
 	      end
 		  add_soil_operation(operation)
 		  if crops == 2
+		  	debugger
 		  	  set_new_operation(operation, 33)
 	      end
 		  if crops == 3
@@ -534,7 +535,7 @@ module ProjectsHelper
 	    end
 	end
 
-	def set_new_opeeration(oper_old, crop_id)
+	def set_new_operation(oper_old, crop_id)
 		oper_new = Operation.new
 		oper_new.crop_id = crop_id
 		crop = Crop.find_by_number(oper_new.crop_id)
