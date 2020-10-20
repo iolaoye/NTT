@@ -1010,7 +1010,7 @@ class ProjectsController < ApplicationController
       end
     end
     @project.version = "Comet"
-    @project.description = project.name + " from Comet"
+    @project.description = @project.name + " from Comet"
     if @project.save
       location = Location.new
       location.project_id = @project.id
