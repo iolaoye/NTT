@@ -1006,7 +1006,7 @@ class ProjectsController < ApplicationController
         when "ProjectName" #if project name exists, save fails
           @project.name = p.text
         when "project_description"
-          @project.description = project.name + " from Comet"
+          @project.description = @project.name + " from Comet"
       end
     end
     @project.version = "Comet"
