@@ -139,11 +139,16 @@
 				<tr>
 				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
           <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
+        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
+          <th><%=t('general.select')%></th>
+          <% end %>
+        <% unless req_parm == "APLCAT"%>
  				  <th>Environment</th>
 				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 				  	<th><%=t('fem.economic')%></th>
 				  	<th>1501</th>
 				  <%end %>
+          <% end %>
 				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
