@@ -1700,13 +1700,13 @@ def send_file_to_DNDC(apex_string, file, state)
             nh3 = Fertilizer.find(oper.subtype_id).nh3
           end
           if oper.activity_id == 2 && oper.type_id != 1 && Fertilizer.find(oper.subtype_id).animal && !(bmp == nil) then
-             add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, nh3, oper.subtype_id, org_c)
+             add_fert(oper.no3_n/100 * bmp.no3_n, oper.po4_p/100 * bmp.po4_p, oper.org_n/100 * bmp.org_n, oper.org_p/100 * bmp.org_p, oper.type_id, nh3, oper.subtype_id, org_c, operation.opv6)
           else
-             add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, nh3, oper.subtype_id, org_c)
+             add_fert(oper.no3_n/100, oper.po4_p/100, oper.org_n/100, oper.org_p/100, oper.type_id, nh3, oper.subtype_id, org_c, operation.opv6)
           end
         else
           if operation.activity_id == 2 && operation.type_id == 1 && operation.apex_operation = 580 then
-            add_fert(1.00, 0.00, 0.00, 0.00, 1, 0, operation.type_id, org_c)
+            add_fert(1.00, 0.00, 0.00, 0.00, 1, 0, operation.type_id, org_c,0)
           end
         end
         apex_string += sprintf("%5d", @fert_code) #Fertilizer Code       #APEX0604
@@ -1849,7 +1849,7 @@ def send_file_to_DNDC(apex_string, file, state)
     #todo chcek how this will work with fert changing for grazing and fert appliction at the same time. Suggestion. firs get the changes for both and then change the fert file.
   end
 
-  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype, orgC)
+  def add_fert(no3n, po4p, orgN, orgP, type, nh3, subtype, orgC, opv6)
     k = 0
     exist = false
     count = 0
@@ -1891,17 +1891,24 @@ def send_file_to_DNDC(apex_string, file, state)
         newLine += sprintf("%8.4f", 0)
       else
         newLine += sprintf("%8.4f", orgP)
-      end
-  
+      end  
       if nh3 == nil then
         newLine = newLine + " " + sprintf("%7.4f", 0)
       else
         newLine = newLine + " " + sprintf("%7.4f", nh3)
       end
-      if orgC == nil then
-        newLine = newLine + " " + sprintf("%7.4f", 0)
+      if @project.version != "Comet" then
+        if orgC == nil then
+          newLine = newLine + " " + sprintf("%7.4f", 0)
+        else
+          newLine = newLine + " " + sprintf("%7.4f", orgC)
+        end
       else
-        newLine = newLine + " " + sprintf("%7.4f", orgC)
+        if opv6 == nil then
+          newLine = newLine + " " + sprintf("%7.4f", 0)
+        else
+          newLine = newLine + " " + sprintf("%7.4f", opv6)
+        end
       end
       newLine = newLine + "   0.000   0.000\n"
       @new_fert_line.push(newLine)

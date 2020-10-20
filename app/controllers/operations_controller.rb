@@ -44,7 +44,7 @@ def index
     operation.rotation = params[:bmp_ccr][:year]
     operation.amount = Crop.find_by_id(params[:bmp_ccr][:crop_id]).plant_population_ft
     if operation.save
-      add_soil_operation(operation)
+      add_soil_operation(operation,0)
       if @scenario.operations.where("subtype_id = 1 and activity_id = 1").count > 1 then
         #means there are more than one crop rotation. Advice user to average seeding
         flash[:alert] = t('scenario.cover_crop_info')
@@ -166,7 +166,7 @@ def index
       if operation.save
         #saves start grazing operation in SoilOperation table
         if operation.activity_id != 9 && operation.activity_id != 10 then
-          msg = add_soil_operation(operation)
+          msg = add_soil_operation(operation,0)
         end
         saved = true
         #operations should be created in soils too. but not for rotational grazing
@@ -207,7 +207,7 @@ def index
           operation1.rotation = params[:operation][:rotation]
           operation1.save
           if operation1.activity_id == 8 || operation1.activity_id == 5 then
-            msg = add_soil_operation(operation1)
+            msg = add_soil_operation(operation1,0)
             if msg.eql?("OK")
               soil_op_saved = true
             else
@@ -281,7 +281,7 @@ def index
           @operation.save
         end
         SoilOperation.where("operation_id = ? OR (type_id = ? AND apex_operation = ?)", @operation.id, @operation.id, 427).delete_all  #delete updated soilOperation and create the new ones.
-        if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation) end
+        if @operation.activity_id != 9 && @operation.activity_id != 10 then add_soil_operation(@operation,0) end
         if @operation.activity_id == 7 || @operation.activity_id == 9 || harvest_and_kill == true then
           if (Operation.find_by_type_id(@operation.id) != nil) then
             @operation1 = Operation.find_by_type_id(@operation.id)
@@ -316,7 +316,7 @@ def index
             @operation1.day = h_k_date.day
           end
           @operation1.save
-          if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1) end
+          if @operation1.activity_id != 9 && @operation1.activity_id != 10 then add_soil_operation(@operation1,0) end
         end
         if params[:add_more] == t('submit.add_more') && params[:finish] == nil
           format.html { redirect_to new_project_field_scenario_operation_path(@project, @field, @scenario), notice: t('scenario.operation') + " " + t('general.created') }
@@ -449,7 +449,7 @@ def index
             operation.depth = event.apex_opv2
             operation.scenario_id = params[:scenario_id]
             if operation.save
-              msg = add_soil_operation(operation)
+              msg = add_soil_operation(operation,0)
               notice = t('scenario.operation') + " " + t('general.created')
               unless msg.eql?("OK")
                 raise ActiveRecord::Rollback
@@ -573,7 +573,7 @@ def index
       operation.scenario_id = @scenario.id
       operation.rotation = operation.year
       if operation.save
-        msg = add_soil_operation(operation)
+        msg = add_soil_operation(operation,0)
         notice = t('scenario.operation') + " " + t('general.created')
         unless msg.eql?("OK")
         raise ActiveRecord::Rollback
@@ -665,12 +665,12 @@ def index
     params.require(:operation).permit(:amount, :crop_id, :day, :depth, :month_id, :nh3, :no3_n, :activity_id, :org_n, :org_p, :po4_p, :type_id, :year, :subtype_id, :moisture, :org_c, :nh4_n, :rotation)
   end
 
-  def add_soil_operation(operation)
+  def add_soil_operation(operation,carbon)
     soils = @field.soils
     msg = "OK"
     soils.each do |soil|
       if msg.eql?("OK")
-        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+        msg = update_soil_operation(SoilOperation.new, soil.id, operation,carbon)
       else
         break
       end
@@ -719,7 +719,7 @@ def index
     if @operation.save then
       soils = Soil.where(:field_id => field_id)
       soils.each do |soil|
-        update_soil_operation(SoilOperation.new, soil.id, @operation)
+        update_soil_operation(SoilOperation.new, soil.id, @operation,0)
       end # end soils.each
       return "OK"
     else
