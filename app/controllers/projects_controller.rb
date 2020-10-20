@@ -135,7 +135,9 @@ class ProjectsController < ApplicationController
   def update
     @user = User.find(params[:user_id])
     @project = Project.find(params[:id])
-    @project.version = "NTTG3"
+    if @project.version != "Comet" then
+      @project.version = "NTTG3"
+    end
     respond_to do |format|
       if @project.update_attributes(project_params)
         format.html { redirect_to user_projects_path(params[:user_id]), info: t('models.project') + "" + t('notices.updated') }
@@ -1008,6 +1010,7 @@ class ProjectsController < ApplicationController
       end
     end
     @project.version = "Comet"
+    @project.description = project.name + " from Comet"
     if @project.save
       location = Location.new
       location.project_id = @project.id
