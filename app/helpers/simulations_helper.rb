@@ -156,7 +156,13 @@ module SimulationsHelper
             if @field.weather.weather_final_year >= 2017 then
               apex_string = PRISM2018 + "/" + @field.weather.weather_file.gsub("Weather_file\r\n","")
             else
-              apex_string = PRISM1 + "/" + @field.weather.weather_file.gsub("Weather_file\r\n","")
+              if @field.weather.weather_file.include? ".wth"
+                apex_string = PRISM1 + "/" + @field.weather.weather_file.gsub("Weather_file\r\n","")
+              else
+                @weather = @field.weather
+                save_prism("")
+                apex_string = PRISM2018 + "/" + @field.weather.weather_file
+              end
             end
           end
         end    

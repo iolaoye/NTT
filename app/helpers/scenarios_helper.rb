@@ -1279,10 +1279,12 @@ module ScenariosHelper
 	# GET /weathers/1
 	# GET /weathers/1.json
   	def save_prism(coordinates)
-	    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
-	    centroid = calculate_centroid(coordinates)
-	    @weather.latitude = centroid.cy
-	    @weather.longitude = centroid.cx
+  		if coordinates != "" then
+		    #calcualte centroid to be able to find out the weather information. Field coordinates will be needed, so it will be using field.coordinates
+		    centroid = calculate_centroid(coordinates)
+		    @weather.latitude = centroid.cy
+		    @weather.longitude = centroid.cx
+		end
 	    weather_data = get_weather_file_name(@weather.latitude, @weather.longitude)
 	    if !(weather_data.include? "Error")
 		    data = weather_data.split(",")
