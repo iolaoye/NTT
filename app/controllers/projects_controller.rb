@@ -2572,12 +2572,12 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def add_soil_operation(operation)
+  def add_soil_operation(operation,carbon)
       soils = @field.soils
       msg = "OK"
       soils.each do |soil|
         if msg.eql?("OK")
-          msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+          msg = update_soil_operation(SoilOperation.new, soil.id, operation,carbon)
         else
           break
         end

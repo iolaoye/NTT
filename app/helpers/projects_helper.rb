@@ -370,6 +370,7 @@ module ProjectsHelper
 	    activity_id = 0
 	    crop =  nil
 	    crops = 1
+	    carbon = 0.0
 	    for i in 0..(new_operation.length - 1)
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
@@ -471,6 +472,7 @@ module ProjectsHelper
 	            operation.nh3 = nutrients[4]
 	            operation.type_id = 1
 	            if nutrients.count >= 9 then
+	              carbon = nutrients[5]
 	              operation.org_c = nutrients[6] #total N
 	              #total_n = nutrients[6].to_f
 	              operation.nh4_n = nutrients[7]   #total p
@@ -521,7 +523,7 @@ module ProjectsHelper
 	      if operation.activity_id == 7 then #means this is a Grazing Start operations. We need to save the id to add into the type_id for Grazing End operation 
 	      	@graz_oper_id = operation.id
 	      end
-		  add_soil_operation(operation)
+		  add_soil_operation(operation, carbon)
 		  if crops == 2
 		  	  set_new_operation(operation, 33)
 	      end
@@ -562,7 +564,7 @@ module ProjectsHelper
 		oper_new.nh4_n = oper_old.nh4_n
 		oper_new.rotation = oper_old.rotation
 		oper_new.save
-		add_soil_operation(oper_new)
+		add_soil_operation(oper_new,0)
 	end
 
     ######################## Upload BMPs from Comet ################################################

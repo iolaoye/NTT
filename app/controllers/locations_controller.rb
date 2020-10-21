@@ -514,7 +514,7 @@ class LocationsController < ApplicationController
 	    operations = Operation.where(:scenario_id => scenario.id)
 	    operations.each do |operation|
 		  soils.each do |soil|
-			   update_soil_operation(SoilOperation.new, soil.id, operation)
+			   update_soil_operation(SoilOperation.new, soil.id, operation,0)
 		  end # end soils each
 	  end # end operations.each
     end #end Scenario each do

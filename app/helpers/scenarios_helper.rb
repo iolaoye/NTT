@@ -87,7 +87,7 @@ module ScenariosHelper
 		  operation.depth = event.apex_opv2
 		  operation.scenario_id = scenario_id
 		  if operation.save
-		    msg = add_soil_operation(operation)
+		    msg = add_soil_operation(operation,0)
 		    notice = t('scenario.operation') + " " + t('general.created')
 		    unless msg.eql?("OK")
 		      raise ActiveRecord::Rollback
@@ -824,7 +824,7 @@ module ScenariosHelper
 		#TODO oper.LuNumber = lunum <- visual basic code
 	end
 
-	def update_soil_operation(soil_operation, soil_id, operation)
+	def update_soil_operation(soil_operation, soil_id, operation,carbon)
 		soil_operation.activity_id = operation.activity_id
 		soil_operation.scenario_id = operation.scenario_id
 		soil_operation.operation_id = operation.id
@@ -864,7 +864,7 @@ module ScenariosHelper
 		soil_operation.opv3 = 0
 		soil_operation.opv4 = set_opval4(operation)
 		soil_operation.opv5 = set_opval5(operation)
-		soil_operation.opv6 = 0
+		soil_operation.opv6 = carbon
 		soil_operation.opv7 = 0
 		if soil_operation.save
 		  return "OK"
@@ -1000,7 +1000,7 @@ module ScenariosHelper
 	    return centroid
 	end
 
-	def add_soil_operation(operation)
+	def add_soil_operation(operation,carbon)
 	    #@project = Project.find(params[:project_id])
 	    #@field = Field.find(params[:field_id])
 	    #@scenario = Scenario.find(params[:scenario_id])
@@ -1009,7 +1009,7 @@ module ScenariosHelper
 	    msg = "OK"
 	    soils.each do |soil|
 	      if msg.eql?("OK")
-	        msg = update_soil_operation(SoilOperation.new, soil.id, operation)
+	        msg = update_soil_operation(SoilOperation.new, soil.id, operation,carbon)
 	      else
 	        break
 	      end
@@ -1137,7 +1137,7 @@ module ScenariosHelper
 	      operations = Operation.where(:scenario_id => scenario.id)
 	      operations.each do |operation|
 	        soils.each do |soil|
-	          update_soil_operation(SoilOperation.new, soil.id, operation)
+	          update_soil_operation(SoilOperation.new, soil.id, operation,0)
 	        end # end soils each
 	      end # end operations.each
 	      ### if there is contour buffer BMP the subareas need to be added. for each scenario
