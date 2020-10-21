@@ -460,7 +460,10 @@ module ProjectsHelper
 	            end
 	            scenario = Scenario.find(scenario_id)
 	            scenario.subarea.each do |suba|
-	            	suba.nirr = operation.type_id
+	            	if suba.nirr <= 0 then
+	            		suba.nirr = operation.type_id
+	            		suba.save
+	            	end
 	            end
 	          end
 	          if operation.activity_id == 2 then operation.depth = operation.depth / IN_TO_MM end

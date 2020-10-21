@@ -138,7 +138,7 @@ module SimulationsHelper
       when 4
         #apex_string = @apex_wth   
         if !(bmp == nil) then
-          centroid = calculate_centroid(@field.coo)
+          centroid = calculate_centroid(@field.cooordinates)
           #get file name for the future
           client = Savon.client(wsdl: URL_SoilsInfo)
           ###### cget weather file name ########
