@@ -372,7 +372,6 @@ module ProjectsHelper
 	    crops = 1
 	    carbon = 0.0
 	    for i in 0..(new_operation.length - 1)
-	    	debugger
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
 	      case p.name
