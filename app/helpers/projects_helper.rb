@@ -462,6 +462,9 @@ module ProjectsHelper
 	            scenario.subareas.each do |suba|
 	            	if suba.nirr <= 0 then
 	            		suba.nirr = operation.type_id
+	            		suba.iri = 1
+	            		suba.vimx = 5000
+	            		suba.armx = 75
 	            		suba.save
 	            	end
 	            end
