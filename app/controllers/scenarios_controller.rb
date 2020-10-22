@@ -1338,7 +1338,7 @@ class ScenariosController < ApplicationController
               if operation.save
                 #saves start grazing operation in SoilOperation table
                 if operation.activity_id != 9 && operation.activity_id != 10 then
-                  msg = add_soil_operation(operation)
+                  msg = add_soil_operation(operation,0)
                 end
                 saved = true
                 #operations should be created in soils too. but not for rotational grazing
@@ -1375,7 +1375,7 @@ class ScenariosController < ApplicationController
                   operation1.rotation = operation.rotation
                   operation1.save
                   if operation1.activity_id == 8 then
-                    msg = add_soil_operation(operation1)
+                    msg = add_soil_operation(operation1,0)
                     if msg.eql?("OK")
                       soil_op_saved = true
                     else
