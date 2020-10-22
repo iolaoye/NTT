@@ -1258,6 +1258,9 @@ def send_file_to_DNDC(apex_string, file, state)
     sLine += sprintf("%4d", _subarea_info.ira)
     sLine += sprintf("%4d", _subarea_info.lm)
     sLine += sprintf("%4d", _subarea_info.ifd)
+    if _subarea_info.idr == nil then
+      _subarea_info.idr = 0
+    end
     sLine += sprintf("%4d", _subarea_info.idr)
     sLine += sprintf("%4d", _subarea_info.idf1)
     sLine += sprintf("%4d", _subarea_info.idf2)
