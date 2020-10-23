@@ -407,6 +407,7 @@ module ProjectsHelper
 	              activity_id = 5
 	            when  p.text.include?("Auto Irrigation START")
 	              activity_id = 6
+	              auto_irr_end = true
 	            when  p.text.include?("Auto Irrigation END")
 	              activity_id = 6
 	              auto_irr_end = true
