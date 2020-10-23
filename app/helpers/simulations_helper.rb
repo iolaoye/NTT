@@ -615,7 +615,6 @@ def send_file_to_DNDC(apex_string, file, state)
     #check to see if there are soils selected
     selected = false
     @soils.each do |soil|
-      debugger
       if soil.selected == true
         selected = true
         break
@@ -624,7 +623,6 @@ def send_file_to_DNDC(apex_string, file, state)
     #if no soils selected the soils are sorted by area and  selects up to the three most dominant soils.
     if selected == false
       @soils.each do |soil|
-        debugger
         if i > 2
           break
         else
@@ -636,7 +634,6 @@ def send_file_to_DNDC(apex_string, file, state)
     apex_scenarios = 0
     i = 0
     @soils.each do |soil|
-      debugger
       soil_info.clear
       #if soil.selected == false
         #next
