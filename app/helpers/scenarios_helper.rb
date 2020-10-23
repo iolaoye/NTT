@@ -861,7 +861,7 @@ module ScenariosHelper
 		end
 		soil_operation.opv1 = set_opval1(operation)
 		soil_operation.opv2 = set_opval2(soil_operation.soil_id, operation)
-		soil_operation.opv3 = 0
+		soil_operation.opv3 = set_opval3(operation)
 		soil_operation.opv4 = set_opval4(operation)
 		soil_operation.opv5 = set_opval5(operation)
 		soil_operation.opv6 = carbon
@@ -982,6 +982,19 @@ module ScenariosHelper
 	    end #end case operation
 	    return opv2
 	end #end set_opval2
+
+	def set_opval3(operation)
+		if operation.moisture == nil then operation.moisture = 0 end
+		opv3 = 0
+		if operation.amount == 0 then
+			opv3 = operation.moisture
+			if opv3 >= 0.00 then 
+				opv3 = 1 - opv3
+			end
+			if opv3 == 1 then opv3 = 0.95 end
+		end
+		return opv3
+	end
 
 	def calculate_centroid(coordinates)
 	    #https://en.wikipedia.org/wiki/Centroid.

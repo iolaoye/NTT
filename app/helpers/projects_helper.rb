@@ -371,6 +371,8 @@ module ProjectsHelper
 	    crop =  nil
 	    crops = 1
 	    carbon = 0.0
+	    auto_irr_start = false
+	    auto_irr_end = false
 	    for i in 0..(new_operation.length - 1)
 	      p = new_operation[i]
 	      #new_operation.elements.each do |p|
@@ -403,6 +405,12 @@ module ProjectsHelper
 	              activity_id = 4
 	            when  p.text.include?("Kill")
 	              activity_id = 5
+	            when  p.text.include?("Auto Irrigation START")
+	              activity_id = 6
+	              auto_irr_start = true
+	            when  p.text.include?("Auto Irrigation END")
+	              activity_id = 6
+	              auto_irr_end = true
 	            when  p.text.include?("Irrigation")
 	              activity_id = 6
 	            when p.text.include?("Liming")
@@ -443,6 +451,8 @@ module ProjectsHelper
 	          if operation.activity_id == 12 then operation.amount = operation.amount * KG_TO_LBS / HA_TO_AC end #liming application
 	          #if operation.activity_id == 7 then operation.amount = operation.amount end # Number of animal units
 	        when "Opv2"
+	          if auto_irr_start then operation.moisture = p.text end
+	          if auto_irr_end then operation.moisture = p.text end
 	          operation.depth = p.text
 	        when "Opv3"
 	          if operation.activity_id == 6 then

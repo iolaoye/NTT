@@ -35,15 +35,15 @@ module SimulationsHelper
           when 1..19 #line 1
             if c.control_description_id == 1
               # Find highest multiple of largest year. Jennifer 8/13/20
-              @largest_year = @scenario.operations.reorder("year")[-1]["year"]
-              initial = c.value
-              final = initial
-              while final % @largest_year != 0
-                final -= 1
-              end
+              # @largest_year = @scenario.operations.reorder("year")[-1]["year"]
+              # initial = c.value
+              # final = initial
+              # while final % @largest_year != 0
+              #   final -= 1
+              # end
               # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
               #c.value = final
-              @diff = initial - final   
+              #@diff = initial - final   
             end
             if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
             if c.control_description_id == 2
@@ -1033,7 +1033,7 @@ def send_file_to_DNDC(apex_string, file, state)
     last_owner1 = 0
     i=0
     nirr = 0
-    if @grazing == nil and @soils.count > 1 then
+    if (@grazing == nil and @soils.count > 1) or @project.version == "Comet" then
       subareas = @scenario.subareas.where("soil_id > 0 AND (bmp_id = 0 OR bmp_id is NULL)")
     else
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
@@ -3029,7 +3029,7 @@ def send_file_to_DNDC(apex_string, file, state)
     end
     if msg.eql?("OK") then msg = create_wind_wp1_files() else return msg  end
     @last_soil = 0
-    @grazing = @scenario.operations.find_by_activity_id([7, 9])
+    if @project.version != "Comet" then @grazing = @scenario.operations.find_by_activity_id([7, 9]) end
     if @grazing == nil then
       @soils = @field.soils
     else
