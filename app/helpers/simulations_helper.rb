@@ -2040,6 +2040,7 @@ def send_file_to_DNDC(apex_string, file, state)
   end
 
   def read_apex_results(msg)
+    
     ActiveRecord::Base.transaction do
       begin
         #clean all of the results exiting for this scenario.
@@ -2061,7 +2062,9 @@ def send_file_to_DNDC(apex_string, file, state)
         #apex_start_year = @field.weather.simulation_initial_year - 5 + 1
         #changed to take the year from apex_control because the rport are control in the same way. 10/6/20 Oscar Gallego.
         apex_start_year = @project.apex_controls[1].value + 1
+        
         msg = load_results_annual(apex_start_year, msg)
+        
         msg = load_crop_results(apex_start_year)
       rescue => e
         msg = "Failed, Error: " + e.inspect
@@ -2118,54 +2121,54 @@ def send_file_to_DNDC(apex_string, file, state)
         one_result = Hash.new
         one_result["sub1"] = subs
         one_result["year"] = year
-        one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
-        one_result["surface_flow"] = tempa[254, 9].to_f * MM_TO_IN
-        one_result["sed"] = tempa[40, 9].to_f * THA_TO_TAC
-        one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
-        one_result["orgp"] = tempa[58, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["po4"] = tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["orgn"] = tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["flow"] = (tempa[31, 9].to_f * MM_TO_IN).round(4)
+        one_result["surface_flow"] = (tempa[254, 9].to_f * MM_TO_IN).round(4)
+        one_result["sed"] = (tempa[40, 9].to_f * THA_TO_TAC).round(4)
+        one_result["ymnu"] = (tempa[180, 9].to_f * THA_TO_TAC).round(4)
+        one_result["orgp"] = (tempa[58, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+        one_result["po4"] = (tempa[76, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+        one_result["orgn"] = (tempa[49, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
         #one_result["no3"] = tempa[67, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["qn"] = tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["qn"] = (tempa[245, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
         #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
-        one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
-        one_result["qdrn"] = tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction
-        one_result["qdrp"] = tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["qdr"] = (tempa[126, 9].to_f * MM_TO_IN).round(4)
+        one_result["qdrn"] = (tempa[144, 9].to_f * (KG_TO_LBS / HA_TO_AC) * td_reduction).round(4)
+        one_result["qdrp"] = (tempa[263, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
         # <!--deep percolation hidden according to Dr. Saleh on 7/31/2017-->
-        one_result["dprk"] = tempa[135, 9].to_f * MM_TO_IN
+        one_result["dprk"] = (tempa[135, 9].to_f * MM_TO_IN).round(4)
         #one_result["dprk"] = 0 # Deep percolation hidden in results table. deep percolation shows again per Mindy's request. 10/13/2017
-        one_result["irri"] = tempa[237, 8].to_f * MM_TO_IN
-        one_result["pcp"] = tempa[229, 8].to_f * MM_TO_IN
-        one_result["prkn"] = tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["n2o"] = tempa[153, 9].to_f
-        one_result["co2"] = tempa[163, 9].to_f * (KG_TO_LBS / HA_TO_AC)
-        one_result["biom"] = tempa[324, 9].to_f * (KG_TO_LBS / HA_TO_AC)
+        one_result["irri"] = (tempa[237, 8].to_f * MM_TO_IN).round(4)
+        one_result["pcp"] = (tempa[229, 8].to_f * MM_TO_IN).round(4)
+        one_result["prkn"] = (tempa[13, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+        one_result["n2o"] = (tempa[153, 9].to_f).round(4)
+        one_result["co2"] = (tempa[163, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+        one_result["biom"] = (tempa[324, 9].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
         if subs == 0 then
           #if bmp != nil then    #if reservoir exists take the td from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then
-            one_result["qdr"] = qdr_sum
-            one_result["qdrn"] = qdrn_sum
-            one_result["qdrp"] = qdrp_sum 
+            one_result["qdr"] = qdr_sum.round(4)
+            one_result["qdrn"] = qdrn_sum.round(4)
+            one_result["qdrp"] = qdrp_sum.round(4)
             #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
             sub_surface_n_sum = sub_surface_n_sum
-            one_result["dprk"] = dprk_sum
-            one_result["irri"] = irri_sum
-            one_result["prkn"] = prkn_sum
-            one_result["n2o"] = n2o_sum
-            one_result["pcp"] = pcp
-            one_result["biom"] = biom
+            one_result["dprk"] = dprk_sum.round(4)
+            one_result["irri"] = irri_sum.round(4)
+            one_result["prkn"] = prkn_sum.round(4)
+            one_result["n2o"] = n2o_sum.round(4)
+            one_result["pcp"] = pcp.round(4)
+            one_result["biom"] = biom.round(4)
           else
-            one_result["qdr"] = qdr_sum / total_subs
-            one_result["qdrn"] = qdrn_sum / total_subs
-            one_result["qdrp"] = qdrp_sum / total_subs
+            one_result["qdr"] = (qdr_sum / total_subs).round(4)
+            one_result["qdrn"] = (qdrn_sum / total_subs).round(4)
+            one_result["qdrp"] = (qdrp_sum / total_subs).round(4)
             #add to total Subsurface N in order to have the substraction correctly when res and TF or wetland and TD
             sub_surface_n_sum = sub_surface_n_sum / total_subs
-            one_result["dprk"] = dprk_sum / total_subs
-            one_result["irri"] = irri_sum / total_subs
-            one_result["prkn"] = prkn_sum / total_subs
-            one_result["n2o"] = n2o_sum / total_subs
-            one_result["pcp"] = pcp / total_subs
-            one_result["biom"] = biom / total_subs
+            one_result["dprk"] = (dprk_sum / total_subs).round(4)
+            one_result["irri"] = (irri_sum / total_subs).round(4)
+            one_result["prkn"] = (prkn_sum / total_subs).round(4)
+            one_result["n2o"] = (n2o_sum / total_subs).round(4)
+            one_result["pcp"] = (pcp / total_subs).round(4)
+            one_result["biom"] = (biom / total_subs).round(4)
           end
           #end
           qdr_sum = 0
@@ -2204,7 +2207,6 @@ def send_file_to_DNDC(apex_string, file, state)
             biom += one_result["biom"]
           end
           #end
-
         end  # end if sub == 0
         if subs == 0 then
           one_result["no3"] = one_result["qn"] + sub_surface_n_sum
@@ -2293,7 +2295,6 @@ def send_file_to_DNDC(apex_string, file, state)
     end #end data.each
     #this includes the last year of simulation
     add_crop.call
-
     if session[:simulation] == "scenario" then
       @scenario.crop_results.create(crops_data)
     else
@@ -2339,13 +2340,13 @@ def send_file_to_DNDC(apex_string, file, state)
           one_result["sub1"] = month
           #one_result["year"] = year
           #one_result["flow"] = tempa[31, 9].to_f * MM_TO_IN
-          one_result["surface_flow"] = tempa[12, 10].to_f * MM_TO_IN
-          one_result["sed"] = tempa[23, 10].to_f * THA_TO_TAC
+          one_result["surface_flow"] = (tempa[12, 10].to_f * MM_TO_IN).round(4)
+          one_result["sed"] = (tempa[23, 10].to_f * THA_TO_TAC).round(4)
           #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
-          one_result["orgp"] = tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
-          one_result["po4"] = tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
-          one_result["orgn"] = tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
-          one_result["no3"] = tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          one_result["orgp"] = (tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)).round(4)       #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          one_result["po4"] = (tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+          one_result["orgn"] = (tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)).round(4)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          one_result["no3"] = (tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
           #one_result["qn"] = tempa[245, 10].to_f * (KG_TO_LBS / HA_TO_AC)
           #tile drain averaged from all of the subareas instead of sub = 0 because it is not right.
           #one_result["qdr"] = tempa[126, 9].to_f * MM_TO_IN
@@ -2361,13 +2362,13 @@ def send_file_to_DNDC(apex_string, file, state)
           results_data.push(one_result)
           if month == 12 then total_subs = 1 end
         else
-          results_data[month-1]["surface_flow"] += tempa[12, 10].to_f * MM_TO_IN
-          results_data[month-1]["sed"] += tempa[23, 10].to_f * THA_TO_TAC
+          results_data[month-1]["surface_flow"] += (tempa[12, 10].to_f * MM_TO_IN).round(4)
+          results_data[month-1]["sed"] += (tempa[23, 10].to_f * THA_TO_TAC).round(4)
           #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
-          results_data[month-1]["orgp"] += tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
-          results_data[month-1]["po4"] += tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)
-          results_data[month-1]["orgn"] += tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
-          results_data[month-1]["no3"] += tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)
+          results_data[month-1]["orgp"] += (tempa[45, 10].to_f * 20 * (KG_TO_LBS / HA_TO_AC)).round(4)        #this values is multiply by 20 because the MSW file does this total divided by 20 comparing withthe value in the output file.
+          results_data[month-1]["po4"] += (tempa[67, 10].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
+          results_data[month-1]["orgn"] += (tempa[34, 10].to_f * 10 * (KG_TO_LBS / HA_TO_AC)).round(4)   #this values is multiply by 10 because the MSW file does this total divided by 10 comparing withthe value in the output file.
+          results_data[month-1]["no3"] += (tempa[56, 10].to_f * (KG_TO_LBS / HA_TO_AC)).round(4)
         end
         if month == 12 then total_records += 1 end
       else
@@ -2376,10 +2377,10 @@ def send_file_to_DNDC(apex_string, file, state)
     end   #end data.each_line
     for i in 0..11
       results_data[i]["surface_flow"] /= total_records
-      results_data[i]["sed"] /= total_records
+      results_data[i]["sed"] = (results_data[i]["sed"] / total_records).round(4)
       #one_result["ymnu"] = tempa[180, 9].to_f * THA_TO_TAC
       results_data[i]["orgp"] /= total_records
-      results_data[i]["po4"] /= total_records
+      results_data[i]["po4"] = (results_data[i]["po4"] / total_records).round(4)
       results_data[i]["orgn"] /= total_records
       results_data[i]["no3"] /= total_records
     end
@@ -2571,6 +2572,7 @@ def send_file_to_DNDC(apex_string, file, state)
   end
 
   def update_results_table_with_fencing
+    
     no3 = 0
     po4 = 0
     org_n = 0
@@ -2580,6 +2582,7 @@ def send_file_to_DNDC(apex_string, file, state)
     if bmp != nil then return "OK" end
     ops = @scenario.operations.where("activity_id = ? or activity_id = ?", 7, 9)
     ops.each do |op|
+      
       if op.org_c == 1  then
         # total manure / day
         # Wet manure produced per animal / day - https://www.nrcs.usda.gov/wps/portal/nrcs/detail/null/?cid=nrcs143_014211
@@ -2587,10 +2590,10 @@ def send_file_to_DNDC(apex_string, file, state)
         total_manure_per_day = op.amount * op.nh3 / 24 * Animal.find(op.type_id).dry_manure * op.subtype_id
         # nutrients / month
         # depth=days animals in field, no3_n,po4_p,org_n,org_p=fraction of nutrients in manure.
-        no3 += total_manure_per_day * op.no3_n
-        po4 += total_manure_per_day * op.po4_p
-        org_n += total_manure_per_day * op.org_n
-        org_p += total_manure_per_day * op.org_p
+        no3 += total_manure_per_day * op.no3_n unless op.no3_n == nil
+        po4 += total_manure_per_day * op.po4_p unless op.po4_p == nil
+        org_n += total_manure_per_day * op.org_n unless op.org_n == nil
+        org_p += total_manure_per_day * op.org_p unless op.org_p == nil
         if session[:simulation] == 'scenario'
           results = @scenario.annual_results.where(:sub1 => 0)
         else
@@ -2598,6 +2601,7 @@ def send_file_to_DNDC(apex_string, file, state)
         end
         #Total nutrient results from NTT file per year. Needs to add record by record, which represent each year and divide by area to represent by acer. Results are already converted to lbs/acer.
         results.each do |result|
+          
           result.no3 += no3 / @field.field_area
           result.po4 += po4 / @field.field_area
           result.orgn += org_n / @field.field_area
