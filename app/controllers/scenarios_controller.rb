@@ -939,10 +939,11 @@ class ScenariosController < ApplicationController
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
     if check_dup_scenario(params[:field_id], scenario.name)
-      flash[:notice] = "ERROR: " + scenario.name + " copy already exists. Please delete or rename the existing " + scenario.name + " copy"
+      flash[:alert] = "ERROR: '" + scenario.name + " copy' already exists. Please delete or rename the existing '" + scenario.name + " copy'"
     else
       msg = duplicate_scenario(params[:id], " copy", params[:field_id])
-      if msg == "OK"
+      flash[:info] = nil
+      if msg == "OK" 
         flash[:notice] = scenario.name + " " + t('notices.copied')
       else
         flash[:notice] = msg
