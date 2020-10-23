@@ -987,7 +987,10 @@ module ScenariosHelper
 		opv3 = 0
 		if operation.amount == 0 then
 			opv3 = operation.moisture
-			if opv3 == 0 then opv3 = 0.05 end
+			if opv3 >= 0.00 then 
+				opv3 = 1 - opv3
+			end
+			if opv3 == 1 then opv3 = 0.95 end
 		end
 		return opv3
 	end
