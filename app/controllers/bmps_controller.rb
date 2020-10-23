@@ -85,6 +85,16 @@ class BmpsController < ApplicationController
               "end_month": ts.end_month,
               "end_day": ts.end_day
             }
+          elsif $dup_bmp_id != nil
+            dup = Timespan.find_by_bmp_id_and_crop_id($dup_bmp_id, c.id)
+            temp_hash = {
+              "id":c.id,
+              "name": Crop.find_by(id:c.id).name,
+              "start_month": dup.start_month,
+              "start_day": dup.start_day,
+              "end_month": dup.end_month,
+              "end_day": dup.end_day
+            }
           else
             temp_hash = {
               "id":c.id,
@@ -97,6 +107,7 @@ class BmpsController < ApplicationController
           end
           @crop_arr << temp_hash
         end
+        $dup_bmp_id = nil
       end
 
   		if bmp.bmpsublist_id == 21 then #climate change - create 12 rows to store pcp, min tepm, and max temp for changes during all years.
@@ -576,7 +587,7 @@ class BmpsController < ApplicationController
             subarea.efi = 1.0 - (@values[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = @values[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-  		      @bmp.maximum_single_application = @values[:bmp_ai][:maximum_single_application].to_f
+            @bmp.maximum_single_application = @values[:bmp_ai][:maximum_single_application].to_f
       		  subarea.fdsf = 0
       		  @bmp.depth = @values[:bmp_cb1]
         		if @values[:bmp_ai][:safety_factor] == nil then

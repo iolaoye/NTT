@@ -282,6 +282,7 @@ module ProjectsHelper
 
   ######################### Duplicate a Bmps #################################################
   def duplicate_bmp(bmp)
+	$dup_bmp_id = bmp.id
   	new = bmp.dup
 	new.scenario_id = @new_scenario_id
 	if !new.save
@@ -350,7 +351,7 @@ module ProjectsHelper
   end
 
     ######################## Duplicate Watershed ################################################
-    def duplicate_watershed(watershed_id, new_location_id)
+	def duplicate_watershed(watershed_id, new_location_id)
     watershed = Watershed.find(watershed_id)
     new_watershed = watershed.dup
     new_watershed.location_id = new_location_id
@@ -618,7 +619,7 @@ module ProjectsHelper
 	          values[:irrigation_id] = new_bmps[0].elements["Code"].text
 	          values[:days] = new_bmps[0].elements["Frequency"].text
 	          values[:water_stress_factor] = new_bmps[0].elements["Stress"].text
-	          values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
+			  values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
 	          values[:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
 	          values[:dry_manure] = new_bmps[0].elements["ApplicationRate"].text
 	      end
