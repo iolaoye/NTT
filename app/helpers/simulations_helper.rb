@@ -35,15 +35,15 @@ module SimulationsHelper
           when 1..19 #line 1
             if c.control_description_id == 1
               # Find highest multiple of largest year. Jennifer 8/13/20
-              @largest_year = @scenario.operations.reorder("year")[-1]["year"]
-              initial = c.value
-              final = initial
-              while final % @largest_year != 0
-                final -= 1
-              end
+              # @largest_year = @scenario.operations.reorder("year")[-1]["year"]
+              # initial = c.value
+              # final = initial
+              # while final % @largest_year != 0
+              #   final -= 1
+              # end
               # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
               #c.value = final
-              @diff = initial - final   
+              #@diff = initial - final   
             end
             if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
             if c.control_description_id == 2
