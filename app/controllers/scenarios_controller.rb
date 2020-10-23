@@ -933,15 +933,37 @@ class ScenariosController < ApplicationController
 
   ################################  copy scenario selected  #################################
   def copy_scenario
-  	@use_old_soil = false
-  	msg = duplicate_scenario(params[:id], " copy", params[:field_id])
+    @use_old_soil = false
+    @scenarios = Scenario.where(:field_id => @field.id)
+    scenario = Scenario.find(params[:id])
     #@project = Project.find(params[:project_id])
     #@field = Field.find(params[:field_id])
-    @scenarios = Scenario.where(:field_id => @field.id)
+    if check_dup_scenario(params[:field_id], scenario.name)
+      flash[:notice] = "ERROR: " + scenario.name + " copy already exists. Please delete or rename the existing " + scenario.name + " copy"
+    else
+      msg = duplicate_scenario(params[:id], " copy", params[:field_id])
+      if msg == "OK"
+        flash[:notice] = scenario.name + " " + t('notices.copied')
+      else
+        flash[:notice] = msg
+      end
+    end
     add_breadcrumb 'Scenarios'
     render "index"
   end
 
+  def check_dup_scenario(field_id, scen_name)
+    all_scen = Scenario.where(:field_id => @field.id)
+    existing_scenarios = Array.new
+	  all_scen.each do |s|
+	    existing_scenarios << s.name
+    end
+    if existing_scenarios.include? scen_name + " copy"
+      return true
+    else
+      return false
+    end
+  end
   ####### update subareas after they have been created in case BMPs have been applied ######
   def update_subareas(new_scenario, scenario)
     subarea = scenario.subareas[0]
@@ -1009,6 +1031,7 @@ class ScenariosController < ApplicationController
   end
 
   def copy_other_scenario
+    
     name = " copy"
     scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
     #2. copy scenario to new scenario

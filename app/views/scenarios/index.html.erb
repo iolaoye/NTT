@@ -23,6 +23,7 @@
 		</div>
 	<% end %>
 <% end %>
+<div class = "container horizontal-scrollable">
 <div class="overlay">
   <%= image_tag "loading.gif" %>
   <h2>We are simulating your results, this may take a while. Please do not close your browser window</h2>
@@ -40,7 +41,6 @@
 	  <%= flash[:info] %>
    </div>
 <% end %>
-
 <div class="page-header"><h1>
 	<% if request.parameters[:caller_id] == nil then %>
 		<% if request.parameters[:commit] != nil then %>
@@ -132,6 +132,7 @@
 				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
 		<%end%>
         <%= t('instructions.scenarios') %>
+
 		<div class="table-responsive">
 		  <div class="panel panel-default">
 			<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
@@ -318,3 +319,4 @@
 		</div>
     <% end %>
 <% end %>
+</div>
