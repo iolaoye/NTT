@@ -984,6 +984,7 @@ module ScenariosHelper
 	end #end set_opval2
 
 	def set_opval3(operation)
+		if operation.moisture == nil then operation.moisture = 0 end
 		opv3 = 0
 		if operation.amount == 0 then
 			opv3 = operation.moisture
