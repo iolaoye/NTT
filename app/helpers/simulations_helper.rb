@@ -149,6 +149,9 @@ module SimulationsHelper
             apex_string = response.body[:get_future_climate_response][:get_future_climate_result]
           end
         else
+          if @field.weather.weather_file == nil then
+            save_prism(@field.coordinates)
+          end
           #get file name for the current
           if @field.weather.weather_file.include? "Weather uploaded" then
             apex_string = @field.weather.weather_file.gsub("Weather_file\r\n","")
