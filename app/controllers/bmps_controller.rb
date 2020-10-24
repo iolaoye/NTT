@@ -85,7 +85,7 @@ class BmpsController < ApplicationController
               "end_month": ts.end_month,
               "end_day": ts.end_day
             }
-          elsif $dup_bmp_id != nil
+          elsif $dup_bmp_id != nil && Timespan.find_by_bmp_id_and_crop_id($dup_bmp_id, c.id) != nil
             dup = Timespan.find_by_bmp_id_and_crop_id($dup_bmp_id, c.id)
             temp_hash = {
               "id":c.id,
