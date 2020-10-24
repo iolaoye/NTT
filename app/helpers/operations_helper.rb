@@ -1,5 +1,17 @@
 module OperationsHelper
 	def listYears
+		#verify the NBYR and if zero set it to the whole weather period.
+		if @project.apex_controls[0].value == 0 then 
+          ac = @project.apex_controls[0] 
+          ac.value = @field.weather.weather_final_year - @field.weather.weather_initial_year + 1
+          ac.save
+        end
+		#verify the IYR and if less than initial year in weather set it to the initial year in weather.
+		if @project.apex_controls[1].value < @field.weather.weather_initial_year then 
+          ac = @project.apex_controls[1] 
+          ac.value = @field.weather.weather_initial_year
+          ac.save
+        end
 		years = @project.apex_controls[0].value
 		list_years = Array.new
 		for i in 0..years
