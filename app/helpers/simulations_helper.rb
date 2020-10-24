@@ -30,62 +30,70 @@ module SimulationsHelper
       ap.save
     end
     @apex_controls = ApexControl.where(:project_id => params[:project_id])
-      @apex_controls.each do |c|
-        case c.control_description_id
-          when 1..19 #line 1
-            if c.control_description_id == 1
-              # Find highest multiple of largest year. Jennifer 8/13/20
-              # @largest_year = @scenario.operations.reorder("year")[-1]["year"]
-              # initial = c.value
-              # final = initial
-              # while final % @largest_year != 0
-              #   final -= 1
-              # end
-              # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
-              #c.value = final
-              #@diff = initial - final   
+    @apex_controls.each do |c|
+      case c.control_description_id
+        when 1..19 #line 1
+          if c.control_description_id == 1
+            if c.value == 0 then 
+              c.value = @field.weather.weather_final_year - @field.weather.weather_initial_year + 1
+              c.save
             end
-            if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
-            if c.control_description_id == 2
-              # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
-              #c.value += @diff
-            end 
-            @apex_control += sprintf("%4d", c.value)
-          when 20
+            # Find highest multiple of largest year. Jennifer 8/13/20
+            # @largest_year = @scenario.operations.reorder("year")[-1]["year"]
+            # initial = c.value
+            # final = initial
+            # while final % @largest_year != 0
+            #   final -= 1
+            # end
+            # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
+            #c.value = final
+            #@diff = initial - final   
+          end
+          if c.control_description_id == 2 and @apex_version == 1501 then @apex_control += "" end
+          if c.control_description_id == 2
+            if c.value < @field.weather.weather_initial_year then 
+              c.value = @field.weather.weather_initial_year
+              c.save
+            end
+            # commented until hear back from Ali regarding the possible differences in year of simulations amoung scenarios - Oscar Gallego
+            #c.value += @diff
+          end 
+          @apex_control += sprintf("%4d", c.value)
+        when 20
+          @apex_control += sprintf("%4d", c.value) + "\n"
+        when 21..37 #line 2
+          @apex_control += sprintf("%4d", c.value)
+        when 38
+          if @apex_version == 1501 then
+            #add five additional columns
+            @apex_control += sprintf("%4d", c.value) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + "\n"
+          else
             @apex_control += sprintf("%4d", c.value) + "\n"
-          when 21..37 #line 2
-            @apex_control += sprintf("%4d", c.value)
-          when 38
-            if @apex_version == 1501 then
-              #add five additional columns
-              @apex_control += sprintf("%4d", c.value) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + sprintf("%4d", 0) + "\n"
-            else
-              @apex_control += sprintf("%4d", c.value) + "\n"
-            end            
-          when 39..47 #line 3
-            @apex_control += sprintf("%8.2f", c.value)
-          when 48
-            @apex_control += sprintf("%8.2f", c.value) + "\n"
-          when 49..57 #line 4
-            @apex_control += sprintf("%8.2f", c.value)
-          when 58
-            @apex_control += sprintf("%8.2f", c.value) + "\n"
-          when 59..67 #line 5
-            @apex_control += sprintf("%8.2f", c.value)
-          when 68
-            @apex_control += sprintf("%8.2f", c.value) + "\n"
-          when 69..77 #line 6
-            @apex_control += sprintf("%8.2f", c.value)
-          when 78
-            @apex_control += sprintf("%8.2f", c.value) + "\n"
-            #line 7
-            @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
-            @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
-            @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
-            @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
-        end
+          end            
+        when 39..47 #line 3
+          @apex_control += sprintf("%8.2f", c.value)
+        when 48
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
+        when 49..57 #line 4
+          @apex_control += sprintf("%8.2f", c.value)
+        when 58
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
+        when 59..67 #line 5
+          @apex_control += sprintf("%8.2f", c.value)
+        when 68
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
+        when 69..77 #line 6
+          @apex_control += sprintf("%8.2f", c.value)
+        when 78
+          @apex_control += sprintf("%8.2f", c.value) + "\n"
+          #line 7
+          @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BNO3  Line 7 col 1
+          @apex_control += sprintf("%8.2f", 60)  #todo. this is temporary adding BAP(1)  Line 7 col 2
+          @apex_control += sprintf("%8.2f", 120)  #todo. this is temporary adding BAP(2)  Line 7 col 3
+          @apex_control += sprintf("%8.2f", 200)  #todo. this is temporary adding BAP(3)  Line 7 col 4
       end
-      #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
+    end
+    #msg = send_file_to_APEX(apex_string, "Apexcont.dat")
     msg = "OK"
   end
 
@@ -150,6 +158,7 @@ module SimulationsHelper
           end
         else
           if @field.weather.weather_file == nil then
+            @weather = @field.weather
             save_prism(@field.coordinates)
           end
           #get file name for the current
@@ -176,7 +185,7 @@ module SimulationsHelper
           apex_string1 += as + "*"
         end
       else
-        apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "")
+        apex_string1 = apex_string.gsub("\n", "*").gsub("\r", "").gsub("b*","")
       end
       case i
       when 1
@@ -3029,6 +3038,7 @@ def send_file_to_DNDC(apex_string, file, state)
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
     #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
+
     if @project.location.state_id == 0 then 
       if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
     else
