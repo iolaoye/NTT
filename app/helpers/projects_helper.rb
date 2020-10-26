@@ -280,9 +280,20 @@ module ProjectsHelper
 	end
   end
 
+ ######################### Duplicate a Timespan by bmp #################################################
+  def duplicate_timespan_by_bmp(bmp_id, new_bmp_id)
+	timespans = Timespan.where(:bmp_id => bmp_id)
+	timespans.each do |timespan|
+		new = timespan.dup
+		new.bmp_id = new_bmp_id
+		if !new.save
+			return "Error Saving timespan by Bmp"
+		end
+	end
+  end
+
   ######################### Duplicate a Bmps #################################################
   def duplicate_bmp(bmp)
-	$dup_bmp_id = bmp.id
   	new = bmp.dup
 	new.scenario_id = @new_scenario_id
 	if !new.save
@@ -290,6 +301,7 @@ module ProjectsHelper
 	else
 		duplicate_soil_operation_by_bmp(bmp.id, new.id)
 		duplicate_subareas_by_bmp(bmp.id, new.id)
+		duplicate_timespan_by_bmp(bmp.id, new.id)
 	end
   end
 
