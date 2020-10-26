@@ -6,10 +6,10 @@
   <div class="page-header"><h1><%= t('menu.bmps') %></h1></div>
   <div id="flash_messages">
     <% flash.each do |key, value| %>
-      if value.class == String # regular flash notices, alerts, etc. will be strings
-        value = [value]
-      end
-       <%value.each do |value| %>
+      <% if value.class == String %> <%#regular flash notices, alerts, etc. will be strings %>
+        <% value = [value] %>
+      <% end %>
+      <% value.each do |value| %>
         <%= content_tag(:p, value, :class => "flash #{key}") unless value.empty? %>
       <% end %>
     <% end %>
@@ -150,6 +150,7 @@
             <% if request.url.include?("localHost") || request.url.include?(".bk.") || request.url.include?("localhost") then %>
             <tr>
               <td class="indent2" colspan="2">
+              <% if @crop_arr.length != 0 %>
                 <table >
                   <tr colspan="5">
                    <td>Crop</td>
@@ -172,11 +173,11 @@
                         <td>
                        <%= hidden_field_tag "my_crop_id", cp[:id]%>
                         </td>
-
                       </tr>
                     <% end  %>
                    </tr>
                 </table>
+               <% end %>
               </td>
             </tr>
             <% end %>
