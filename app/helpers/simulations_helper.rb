@@ -1051,7 +1051,14 @@ def send_file_to_DNDC(apex_string, file, state)
       subareas = @scenario.subareas.where("soil_id = " + @soils[0].id.to_s + " AND (bmp_id = 0 OR bmp_id is NULL)")
       subareas[0].wsa = @field.field_area * AC_TO_HA
     end
+    inps = 1
     subareas.each do |subarea|
+      if subarea.inps != inps then 
+        subarea.inps = inps
+        subarea.iops = inps
+        subarea.save
+      end
+      inps += 1
       #determine if the subarea has a reservoir added. In that case identify it in order to route through the last subarea in add_subarea_file method.
       if subarea.rsee > 0 then #this subarea has a reservoir
         @reservoir = true
