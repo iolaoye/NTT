@@ -576,7 +576,7 @@ class BmpsController < ApplicationController
             subarea.efi = 1.0 - (@values[:bmp_ai][:irrigation_efficiency].to_f / 100)
 			      @bmp.irrigation_efficiency = subarea.efi
             subarea.armx = @values[:bmp_ai][:maximum_single_application].to_f * IN_TO_MM
-  		      @bmp.maximum_single_application = @values[:bmp_ai][:maximum_single_application].to_f
+            @bmp.maximum_single_application = @values[:bmp_ai][:maximum_single_application].to_f
       		  subarea.fdsf = 0
       		  @bmp.depth = @values[:bmp_cb1]
         		if @values[:bmp_ai][:safety_factor] == nil then
