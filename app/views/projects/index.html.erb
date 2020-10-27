@@ -1,5 +1,4 @@
-<div class="scrolling-wrapper">
-	<% comet = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
+<% comet = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 	<% case %>
 	<% when flash[:notice] %>
 		<div class="success_alert">
@@ -12,7 +11,7 @@
 		<%= flash[:info] %>
 		</div>
 	<% end %>
-  <div class="container">
+  <div class="scrolling-wrapper">
     <div class="row">
       <div class="col-sm-10 col-md-10 main">
         <% if ENV["APP_VERSION"] == "modified" %>
@@ -72,4 +71,3 @@
       </div>
     </div>
   </div>
-</div>
