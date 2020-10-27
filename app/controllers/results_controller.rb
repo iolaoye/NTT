@@ -222,6 +222,11 @@ class ResultsController < ApplicationController
                     elsif @type.eql? t('result.wet_years') then
                         order = 'DESC'
                         count = results_data.size * 0.25
+                    elsif @type.eql? t('result.all_years') then
+                        first_year = params[:sim_initial_year].to_i
+                        last_year = params[:sim_final_year].to_i
+                        order = 'DESC'
+                        count = last_year - first_year #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
                     else
                         count = results_data.size
                     end
