@@ -45,6 +45,8 @@ class ResultsController < ApplicationController
     if params[:simulation] != nil then
         session[:simulation] = params[:simulation]
     end
+    if params[:sim_initial_year] == nil then params[:sim_initial_year] = @project.apex_controls[1].value + 1 end
+    if params[:sim_final_year] == nil then params[:sim_final_year] = @project.apex_controls[1].value + @project.apex_controls[0].value end
     if params[:field_id] == 0 then session[:simulation] = "watershed" end
     if session[:simulation] == nil then session[:simulation] = "scenario" end
     if params[:language] != nil then
