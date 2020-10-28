@@ -208,7 +208,7 @@ class ResultsController < ApplicationController
 
             get_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
-
+                    #Oscar Gallego - 10/28/2020 - Averaging to the initial and final years selected.
                     #results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
                     results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
                     results_data.each do |rs|
