@@ -4,11 +4,12 @@
       <%= notice %>
     </div>
 <% end %>
+<div class="scrolling-wrapper">
 <% field_simulation = 0 %>
 <div class="page-header"><h1><%= t('field.field_title') %></h1></div>
 <%#= button_to t('field.create_field'), new_field_path, :method => "get", :class => "btn btn-primary" %>
 <%#= button_to t('submit.continue'), field_scenarios_field_path, :method => "get", :class => "btn btn-success" %>
-<%= form_tag simulate_project_fields_path(@project), method: :post, multipart: true do |f| %>
+  <%= form_tag simulate_project_fields_path(@project), method: :post, multipart: true do |f| %>
 	<% if @fields.count > 0 and ENV["APP_VERSION"] == "standard" and field_simulation == 1 %>
  		<%= file_field_tag :file, :style => "display:none" %>
  		<input name="load_scenarios" type="button" id="load_scenarios" value="Upload Scenarios", class="btn btn-primary" onclick="document.getElementById('file').click();"  />
@@ -16,9 +17,9 @@
 		<%= submit_tag t('scenario.simulate') + ' ' + t('soil.selected') + ' ' + t('models.field'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %><br>
 	<% end %>
 	<%= t('instructions.fields') %><br>
-	<div class="table-responsive">
+	<div class="table">
 		<div class="panel panel-default">
-		  <table class="table table-striped", id="tbl_fields", name="tbl_fields", table style= "table-layout:fixed">
+		  <table class="table table-striped", id="tbl_fields", name="tbl_fields">
 			<thead>
 				<tr>
 					<%if ENV["APP_VERSION"] == "standard" and field_simulation == 1 then%>
@@ -53,4 +54,5 @@
 		  </table>
 		</div>
 	</div>
-<% end %>
+  <% end %>
+<div>
