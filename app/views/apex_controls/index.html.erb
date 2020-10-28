@@ -6,17 +6,16 @@
       <%= flash[:notice] %>
     </div>
 <% end %>
-
 <%= link_to t('menu.control_file'), project_field_apex_controls_path(@project, @field), :class => 'btn btn-primary' %>
 <%= link_to t('menu.parameters_file'), project_field_apex_parameters_path(@project, @field), :class => 'btn btn-default' %>
 <%= link_to t('menu.subarea_file'), project_field_subareas_path(@project, @field), :class => 'btn btn-default' %>
 <%= link_to t('menu.apex_soil'), project_field_apex_soils_path(@project, @field), :class => 'btn btn-default' %>
 <%= link_to t('menu.operation_file'), project_field_soil_operations_path(@project, @field), :class => 'btn btn-default' %>
-<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-default' %><br></br>
+<%= link_to t('menu.site'), project_field_sites_path(@project, @field), :class => 'btn btn-default' %><br>
 <br>
   <%= link_to t("general.reset_to"), reset_project_field_apex_control_path(@project, @field, 0), :class => 'btn btn-primary' %>
     <br><br>
-<div class="table-responsive">
+<div class="table">
     <div class="panel panel-default">
     <table class="table table-striped">
       <thead>
@@ -54,6 +53,5 @@
     </table>
   </div>
 </div>
-
-
+</div>
 <br>
