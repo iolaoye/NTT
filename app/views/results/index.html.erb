@@ -342,66 +342,68 @@
  </div>
 <%= hidden_field_tag "errors", @errors, { :id => "errors" } %>
 
+
+
 <script>
-  var initial_year = 0
-  var final_year = 0
+//   var initial_year = 0
+//   var final_year = 0
 
-  $(document).ready(function(event) {
-  	$("[name='sim_initial_year']").change(() => {
-        initial_year = $("[name='sim_initial_year'] option:selected").val();
-    });
-    $("[name='sim_final_year']").change(() => {
-        final_year = $("[name='sim_final_year'] option:selected").val();
-    });
-    var elementIDNum = 0;
-    $('[id^=show').hover(function() {
-      //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
-      elementIDNum = (this.id).replace(/[^0-9]+/g, "");
-      var check = $("#show"+elementIDNum);
-      var moveLeft = -300;
-      var moveDown = -80;
-      $('div#pop-up-'+elementIDNum).show();
-      $(this).mousemove(function(e) {
-        $("div#pop-up-"+elementIDNum).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
-      });
-    }, function() {
-        $('div#pop-up-'+elementIDNum).hide();
-    });
-  });
+//   $(document).ready(function(event) {
+//   	$("[name='sim_initial_year']").change(() => {
+//         initial_year = $("[name='sim_initial_year'] option:selected").val();
+//     });
+//     $("[name='sim_final_year']").change(() => {
+//         final_year = $("[name='sim_final_year'] option:selected").val();
+//     });
+//     var elementIDNum = 0;
+//     $('[id^=show').hover(function() {
+//       //extracts id # from id of element clicked (e.g. checkbox_3 = 3)
+//       elementIDNum = (this.id).replace(/[^0-9]+/g, "");
+//       var check = $("#show"+elementIDNum);
+//       var moveLeft = -300;
+//       var moveDown = -80;
+//       $('div#pop-up-'+elementIDNum).show();
+//       $(this).mousemove(function(e) {
+//         $("div#pop-up-"+elementIDNum).css('top', e.pageY + moveDown).css('left', e.pageX + moveLeft);
+//       });
+//     }, function() {
+//         $('div#pop-up-'+elementIDNum).hide();
+//     });
+//   });
 
-$("[name='sim_initial_year']").change(function(){
-      var html=$("[name='sim_initial_year']").html();
-      localStorage.setItem("select-initial",html);
-      localStorage.setItem("selected-initial",$("[name='sim_initial_year']").val());              //to retain selected value
-})
+// $("[name='sim_initial_year']").change(function(){
+//       var html=$("[name='sim_initial_year']").html();
+//       localStorage.setItem("select-initial",html);
+//       localStorage.setItem("selected-initial",$("[name='sim_initial_year']").val());              //to retain selected value
+// })
 
-$("[name='sim_final_year']").change(function(){
-      var html=$("[name='sim_final_year']").html();
-      localStorage.setItem("select-final",html);
-      localStorage.setItem("selected-final",$("[name='sim_final_year']").val());              //to retain selected value
-})
+// $("[name='sim_final_year']").change(function(){
+//       var html=$("[name='sim_final_year']").html();
+//       localStorage.setItem("select-final",html);
+//       localStorage.setItem("selected-final",$("[name='sim_final_year']").val());              //to retain selected value
+// })
 
-	window.onload=function()
-{
-    if(localStorage.getItem("select-initial")!="" && localStorage.getItem("select-initial")!=undefined)
-    {
-        $("[name='sim_initial_year']").html(localStorage.getItem("select-initial"));
-        $("[name='sim_initial_year']").val(localStorage.getItem("selected-initial"));                 //to get previously selected value
-    }
+// 	window.onload=function()
+// {
+//     if(localStorage.getItem("select-initial")!="" && localStorage.getItem("select-initial")!=undefined)
+//     {
+//         $("[name='sim_initial_year']").html(localStorage.getItem("select-initial"));
+//         $("[name='sim_initial_year']").val(localStorage.getItem("selected-initial"));                 //to get previously selected value
+//     }
 
-	if(localStorage.getItem("select-final")!="" && localStorage.getItem("select-final")!=undefined)
-    {
-        $("[name='sim_final_year']").html(localStorage.getItem("select-final"));
-        $("[name='sim_final_year']").val(localStorage.getItem("selected-final"));                 //to get previously selected value
-    }
-}
+// 	if(localStorage.getItem("select-final")!="" && localStorage.getItem("select-final")!=undefined)
+//     {
+//         $("[name='sim_final_year']").html(localStorage.getItem("select-final"));
+//         $("[name='sim_final_year']").val(localStorage.getItem("selected-final"));                 //to get previously selected value
+//     }
+// }
 
-  function validateForm() {
+//   function validateForm() {
 
-	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
-		alert("Initial year cannot be greater than or equal to final year");
-		//return false;
-	}
-	return true;
-  }
+// 	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
+// 		alert("Initial year cannot be greater than or equal to final year");
+// 		//return false;
+// 	}
+// 	return true;
+//   }
 </script>
