@@ -228,14 +228,8 @@ class ResultsController < ApplicationController
                     elsif @type.eql? t('result.all_years') then
                         first_year = params[:sim_initial_year].to_i
                         last_year = params[:sim_final_year].to_i
-                        if last_year == 0 #Setting the final year same as the first year if the final year is not selected. 10/29/2020 -Shikhar
-                          last_year = first_year
-                        end
                         order = 'DESC'
                         count = last_year - first_year #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
-                        if count == 0
-                          count = 1
-                        end
                     else
                         count = results_data.size
                     end
