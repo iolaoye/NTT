@@ -2,7 +2,7 @@
 <% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% dndc = 0 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% test = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
-<% if alert != nil %>
+ <% if alert != nil %>
     <div class="error_alert">
 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 	  <%= alert %>
@@ -28,7 +28,7 @@
 		</div>
 	<% end %>
 <% end %>
-<div class = "container horizontal-scrollable">
+<div class="scrolling-wrapper">
 <div class="overlay">
   <%= image_tag "loading.gif" %>
   <h2>We are simulating your results, this may take a while. Please do not close your browser window</h2>
@@ -134,7 +134,7 @@
 		<%end%>
         <%= t('instructions.scenarios') %>
 
-		<div class="table-responsive">
+		<div class="table">
 		  <div class="panel panel-default">
 			<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
 			  <thead>
