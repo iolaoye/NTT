@@ -618,8 +618,8 @@ class ResultsController < ApplicationController
             else
                 crop = Crop.find(params[:result7][:crop_id])
                 conversion_factor = crop.conversion_factor * AC_TO_HA / (crop.dry_matter/100)
-                #chart_values = CropResult.select("year as month_year", "(yldg+yldf) *" + conversion_factor.to_s + " as value").where(:"#{id}" => scenario_id, :name => crop.code).group(:year)
-                chart_values = CropResult.where(:"#{id}" => scenario_id, :name => crop.code).group(:year).pluck("year", "avg(yldg+yldf) * " + conversion_factor.to_s)
+                #chart_values = CropResult.where(:"#{id}" => scenario_id, :name => crop.code).group(:year).pluck("year", "avg(yldg+yldf) * " + conversion_factor.to_s)
+                chart_values = CropResult.where(id + " = ? and name = ? and yldg+yldf > ?", scenario_id, crop.code, 0).group(:year).pluck("year", "avg(yldg+yldf) * " + conversion_factor.to_s)
             end
         else  #get results for monthly sub1 > 0
             chart_description = get_description_monthly()
