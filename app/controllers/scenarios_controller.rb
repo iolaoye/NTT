@@ -1276,22 +1276,22 @@ class ScenariosController < ApplicationController
   def upload_scenarios_xml
     # validates the xml file
     case true
-    when @data.elements.length <= 0
-      msg = "XML files does not have nodes"
-      @errors.push msg
-      return msg
-    when @data.elements[0].name.downcase != "ntt" 
-      msg = "Element[0] is not NTT - Please fix the xml file and try again."
-      @errors.push msg
-      return msg
-    when @data.elements[0].elements.length <= 0
-      msg = "XML files does not have scenarios"
-      @errors.push msg
-      return msg
-    when @data.elements[0].elements[0].name != "scenario"
-      msg = "XML files does not have ScenarioInfo node"
-      @errors.push msg
-      return msg
+      when @data.elements.length <= 0
+        msg = "XML files does not have nodes"
+        @errors.push msg
+        return msg
+      when @data.elements[0].name.downcase != "ntt" 
+        msg = "Element[0] is not NTT - Please fix the xml file and try again."
+        @errors.push msg
+        return msg
+      when @data.elements[0].elements.length <= 0
+        msg = "XML files does not have scenarios"
+        @errors.push msg
+        return msg
+      when @data.elements[0].elements[0].name != "scenario"
+        msg = "XML files does not have ScenarioInfo node"
+        @errors.push msg
+        return msg
     end
     @data.xpath("//scenario").each do |scn|
       ActiveRecord::Base.transaction do
@@ -1302,7 +1302,12 @@ class ScenariosController < ApplicationController
           if scenario.save
             #Copy subareas info by scenario
             add_scenario_to_soils(scenario, false)
-            scn.xpath("operation").each do |opr|
+            if scn.xpath("operation").length == 0 then 
+              xscn = scn.xpath("operations")
+            else
+              xscn = scn
+            end
+            xscn.xpath("operation").each do |opr|
               operation = Operation.new
               operation.scenario_id = scenario.id
               operation.activity_id = opr.xpath("activity_id").text
