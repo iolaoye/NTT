@@ -729,9 +729,16 @@ iframe {
 .scrolling-wrapper-flexbox {
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  //overflow-x: auto;
+overflow-x: scroll;
 
   .card {
     flex: 0 0 auto;
   }
+}
+
+#instructions_table {
+  table-layout: fixed;
+  word-wrap: break-word;
+  white-space: normal;
 }

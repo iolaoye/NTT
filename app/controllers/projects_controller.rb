@@ -708,6 +708,12 @@ class ProjectsController < ApplicationController
           save_soil_operation_information(xml, so)
         end # end soil_operations.each
       } # end xml.soil_operations
+      timespans = Timespan.where(:bmp_id => bmp.id)
+      xml.timespans {
+        timespans.each do |timespan|
+          save_timespan_information(xml, timespan)
+        end # end subareas.each
+      } # end xml.subareas
     } # xml bmp end
   end   # end method
 
@@ -910,6 +916,17 @@ class ProjectsController < ApplicationController
     }
   end  # end method
 
+  def save_timespan_information(xml, timespan)
+    xml.timespan {
+      xml.crop_id timespan.crop_id
+      xml.bmp_id timespan.bmp_id
+      xml.start_month timespan.start_month
+      xml.start_day timespan.start_day
+      xml.end_month timespan.end_month
+      xml.end_day timespan.end_day
+    }
+  end
+
   private
   # Use this method to whitelist the permissible parameters. Example:
   # params.require(:person).permit(:name, :age)
@@ -968,7 +985,7 @@ class ProjectsController < ApplicationController
     #end
   end
 
-  def upload_project_new_version(node)    
+  def upload_project_new_version(node)
     #begin
       @project = Project.new
       @project.user_id = session[:user_id]
@@ -3208,12 +3225,43 @@ class ProjectsController < ApplicationController
               return msg
             end
           end
+        when "timespans"
+          p.elements.each do |timespan|
+            msg = upload_timespan_info(timespan, bmp.crop_id, bmp.id)
+            if msg != "OK"
+              return msg
+            end
+          end
       end
     end
     if bmp.save
       return "OK"
     else
       return "bmp could not be saved"
+    end
+  end
+
+  def upload_timespan_info(node, crop_id, bmp_id)
+    timespan = Timespan.new
+    timespan.bmp_id = bmp_id
+    node.elements.each do |p|
+      case p.name
+        when "crop_id"
+          timespan.crop_id = p.text
+        when "start_month"
+          timespan.start_month = p.text
+        when "start_day"
+          timespan.start_day = p.text
+        when "end_month"
+          timespan.end_month = p.text
+        when "end_day"
+          timespan.end_day = p.text
+      end
+    end
+    if timespan.save
+      return "OK"
+    else
+      return "timespan could not be saved"
     end
   end
 
