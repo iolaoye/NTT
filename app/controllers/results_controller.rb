@@ -230,6 +230,9 @@ class ResultsController < ApplicationController
                         last_year = params[:sim_final_year].to_i
                         order = 'DESC'
                         count = last_year - first_year #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
+                        if count = 0 #If the selected initial year and the final year are same. 11/02/2020 -Shikhar
+                          count = 1
+                        end
                     else
                         count = results_data.size
                     end
