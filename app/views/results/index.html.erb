@@ -398,10 +398,38 @@
 //     }
 // }
 
+$(function() { //To keep the selected value in the initial year and the final year dropdown. 11/02/2020 -Shikhar
+    var initialValue = localStorage.getItem("initialValue");
+    var finalValue = localStorage.getItem("finalValue");
+    if(initialValue != null) {
+        $("select[name=sim_initial_year]").val(initialValue);
+    }
+    $("select[name=sim_initial_year]").on("change", function() {
+        localStorage.setItem("initialValue", $(this).val());
+    });
+
+    if(finalValue != null) {
+        $("select[name=sim_final_year]").val(finalValue);
+    }
+    $("select[name=sim_final_year]").on("change", function() {
+        localStorage.setItem("finalValue", $(this).val());
+    });
+})
+
+/*$(document).ready(function () { //To hide all the final years that are before the selected initial year. 11/02/2020 -Shikhar
+  $("[name='sim_initial_year']").change(function () {
+    $("[name='sim_final_year']").children("option").hide();
+    $("[name='sim_final_year']")
+      .children("option:gt(" +  $(this).prop('selectedIndex') + ")")
+      .show();
+  });
+});*/
+
   function validateForm() {
 
-	if ($("[name='sim_initial_year']").val() >= $("[name='sim_final_year']").val()) {
- 		alert("Initial year cannot be greater than or equal to Final year");
+	if ($("[name='sim_initial_year']").val() > $("[name='sim_final_year']").val()) { //To have initial year always greater than the final year. 11/02/2020. -Shikhar
+ 		alert("Initial year cannot be greater than Final year");
+    location.reload(); //Reload the page to avoid the View button being un-clickable. 11/02/2020. -Shikhar
     return false;
     }
     return true;
