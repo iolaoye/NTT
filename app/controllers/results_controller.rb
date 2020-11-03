@@ -5,19 +5,16 @@ class ResultsController < ApplicationController
   def monthly_charts
     @type = t('general.view') + ' ' + t('result.monthly') + "-" + t('result.charts')
     index
-    #render "index"
   end
   ###############################  ANNUAL CHART  ###################################
   def annual_charts
     @type = t('general.view') + ' ' + t('result.annual') + "-" + t('result.charts')
     index
-    #render "index"
   end
   ###############################  BY SOIL  ###################################
   def by_soils
     @type = t("result.summary") + " " + t("result.by_soil")
     index
-    #render "index"
   end
 
   ###############################  SUMMARY ###################################
@@ -25,7 +22,6 @@ class ResultsController < ApplicationController
     @project = Project.find(params[:project_id])
     @type = t("general.view")
     index
-    #render "index"
   end
 
   def fem_results
@@ -46,7 +42,7 @@ class ResultsController < ApplicationController
         session[:simulation] = params[:simulation]
     end
     if params[:sim_initial_year] == nil then params[:sim_initial_year] = @project.apex_controls[1].value + 1 end
-    if params[:sim_final_year] == nil then params[:sim_final_year] = @project.apex_controls[1].value + @project.apex_controls[0].value end
+    if params[:sim_final_year] == nil then params[:sim_final_year] = @project.apex_controls[1].value + @project.apex_controls[0].value - 1 end
     if params[:field_id] == 0 then session[:simulation] = "watershed" end
     if session[:simulation] == nil then session[:simulation] = "scenario" end
     if params[:language] != nil then
@@ -229,8 +225,8 @@ class ResultsController < ApplicationController
                         first_year = params[:sim_initial_year].to_i
                         last_year = params[:sim_final_year].to_i
                         order = 'DESC'
-                        count = last_year - first_year #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
-                        if count = 0 #If the selected initial year and the final year are same. 11/02/2020 -Shikhar
+                        count = last_year - first_year + 1 #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
+                        if count == 0 #If the selected initial year and the final year are same. 11/02/2020 -Shikhar
                           count = 1
                         end
                     else
