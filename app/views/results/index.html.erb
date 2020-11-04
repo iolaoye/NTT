@@ -423,8 +423,12 @@ $(document).ready(function () { //To hide all the final years that are before th
       .children("option:gt(" +  $(this).prop('selectedIndex') + ")").prev()
       .show();
 
+    $("[name='sim_final_year']")
+      .children("option:last-child")
+      .show(); //To show the last year in the Final year dropdown. 11/04/2020 -Shikhar
+
       $("[name='sim_final_year']").val(
-          $("[name='sim_final_year']").find("option:visible:first").val()); //To deselect the final year when the initial year is changed. 11/03/2020 -Shikhar  
+          $("[name='sim_final_year']").find("option:visible:first").val()); //To deselect the final year when the initial year is changed. 11/03/2020 -Shikhar
   });
 });
 
