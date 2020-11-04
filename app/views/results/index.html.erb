@@ -29,7 +29,7 @@
 	        	<% end %>
 	      	</tr>
 	      	<tr>
-	      		<% if @type.include?(t('result.annual')) or (@type.include?(t('result.all_years'))  and (request.url.include?(url_for('localhost')) or request.url.include?(url_for('bk')))) then %>
+	      		<% if @type.include?(t('result.annual')) or @type.include?(t('result.all_years')) or @type.include?(t('general.view')) then %>
 			      	<% @years = (@project.apex_controls[1].value.to_i + 1...@project.apex_controls[1].value.to_i + @project.apex_controls[0].value.to_i).entries %>
 		      		<td>
 		      			<select name="sim_initial_year", required = "true">
