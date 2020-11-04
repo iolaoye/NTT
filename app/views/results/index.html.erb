@@ -416,14 +416,17 @@ $(function() { //To keep the selected value in the initial year and the final ye
     });
 })
 
-/*$(document).ready(function () { //To hide all the final years that are before the selected initial year. 11/02/2020 -Shikhar
+$(document).ready(function () { //To hide all the final years that are before the selected initial year. 11/03/2020 -Shikhar
   $("[name='sim_initial_year']").change(function () {
     $("[name='sim_final_year']").children("option").hide();
     $("[name='sim_final_year']")
-      .children("option:gt(" +  $(this).prop('selectedIndex') + ")")
+      .children("option:gt(" +  $(this).prop('selectedIndex') + ")").prev()
       .show();
+
+      $("[name='sim_final_year']").val(
+          $("[name='sim_final_year']").find("option:visible:first").val()); //To deselect the final year when the initial year is changed. 11/03/2020 -Shikhar  
   });
-});*/
+});
 
   function validateForm() {
 
