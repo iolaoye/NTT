@@ -38,7 +38,7 @@ get_bmp = ->
       items = []
       items.push "<option value>Select SCP option</option>"
       $.each options, (key, option) ->
-        items.push "<option value=\"" + option.id + "\">" + "Depth=" + option.depth + "(in)" + "</option>"
+        items.push "<option value=\"" + option.id + "\">" + "Depth=" + option.depth + "(ft)" + "</option>"
       $("#option_select").html items.join("")
       $("#option_select").removeAttr("disabled")    
       #$("#bmp").val("Depth = " + value.depth + " ft")
