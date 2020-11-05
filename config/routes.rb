@@ -193,7 +193,8 @@ NTTG3::Application.routes.draw do
 
   resources :states do
     resources :counties
-	post :show_counties, on: :collection
+	  post :show_counties, on: :collection
+    resources :crop_schedules
   end
 
   resources :activities do

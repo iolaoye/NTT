@@ -24,7 +24,11 @@
           <%#= button_tag t('project.new_project'), :class => "btn btn-primary", :id => 'new_project' %>
           <%= button_to t('project.new_project'), new_project_path, :method => "get", :class => "btn btn-primary" %>
           <%= link_to t('project.upload_project'), projects_upload_path(0), :method => "get", :class => "btn btn-primary" %>
-          <%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %><br><br>
+          <%= link_to t('project.upload_example'), projects_upload_path(1), :method => "get", :class => "btn btn-primary" %>
+          <% if comet == 1 then %>
+            <%= link_to "See Result Avg by county", projects_upload_path(3), :method => "get", :class => "btn btn-primary" %>
+          <% end %>
+          <br><br>
           <% if comet == 1 %>
             <%= link_to "Upload Comet Ptoject", projects_upload_path(2), :method => "get", :class => "btn btn-primary" %><br><br>
           <% end  %>

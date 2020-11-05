@@ -2,8 +2,13 @@ class CropSchedulesController < ApplicationController
   # GET /crop_schedules
   # GET /crop_schedules.json
   def index
-    @crop_schedules = CropSchedule.all
-
+    if params[:state_id] != nil then
+      #find the state code to get the rotations
+      #state_id = State.find(params[:state_id])
+      @crop_schedules = CropSchedule.where("state_id = '*' or state_id like '%" + params[:state_id] + "%'")
+    else
+      @crop_schedules = CropSchedule.all
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @crop_schedules }
