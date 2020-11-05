@@ -3,9 +3,14 @@ class CropSchedulesController < ApplicationController
   # GET /crop_schedules.json
   def index
     if params[:state_id] != nil then
-      #find the state code to get the rotations
-      #state_id = State.find(params[:state_id])
-      @crop_schedules = CropSchedule.where("state_id = '*' or state_id like '%" + params[:state_id] + "%'")
+      state_id = params[:state_id]
+      if state_id.to_i < 10 then
+        state_id_text = "0" + state_id.to_s
+      else
+        state_id_text = state_id.to_s
+      end
+      @crop_schedules = CropSchedule.where(:status => true, :class_id => 1).where("state_id LIKE ? OR state_id LIKE ?", "%#{state_id_text}%","*")
+      #@crop_schedules = CropSchedule.where("state_id = '*' or state_id like '%" + params[:state_id] + "%'")
     else
       @crop_schedules = CropSchedule.all
     end

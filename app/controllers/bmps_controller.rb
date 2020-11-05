@@ -3,11 +3,13 @@ class BmpsController < ApplicationController
   before_action :take_names
 
   def take_names
-    @project_name = Project.find(params[:project_id]).name
-	  @field = Field.find(params[:field_id])
-    @field_name = @field.field_name
-    @scenario_name = Scenario.find(params[:scenario_id]).name
-	  @field_type = @field.field_type
+    if params[:project_id] != nil then
+      @project_name = Project.find(params[:project_id]).name
+  	  @field = Field.find(params[:field_id])
+      @field_name = @field.field_name
+      @scenario_name = Scenario.find(params[:scenario_id]).name
+  	  @field_type = @field.field_type
+    end
   end
 
 ################################  BMPs list   #################################
@@ -311,7 +313,11 @@ class BmpsController < ApplicationController
 # GET /bmps/1
 # GET /bmps/1.json
   def show
-    @bmp = Bmp.find(params[:id])
+    if params[:county_id] != nil then
+      @bmp = Bmp.where(:bmp_id => params[:county_id], :name => params[:rotation_id], :bmpsublist_id => params[:id])
+    else
+      @bmp = Bmp.find(params[:id])
+    end    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @bmp }
