@@ -133,7 +133,11 @@
         <% when "layers" %>
               <tr><td><%= t('layers_html')%></td></tr>
         <% when "scenarios" %>
-              <tr><td><%= t('managepage_html')%></td></tr>
+              <% if ENV["APP_VERSION"] == "standard" %>
+              <tr><td><%= raw t('managepage_html')%></td></tr>
+              <% else %>
+              <tr><td><%= raw t('managepage_html_modified')%></td></tr>
+              <% end %>
         <% when "operations" %>
               <tr><td><%= t('operation_html')%></td></tr>
         <% when "bmps" %>
