@@ -2602,63 +2602,6 @@ class ProjectsController < ApplicationController
       return msg
   end
 
-  def upload_soil_operation_new(node, scenario_id, soil_id, operation_id, bmp_id)
-    soil_operation = SoilOperation.new
-    soil_operation.scenario_id = scenario_id
-    soil_operation.operation_id = operation_id
-    #soil_operation.soil_id = soil_id
-    soil_operation.bmp_id = bmp_id
-    node.elements.each do |p|
-      case p.name
-        when "apex_crop"
-          soil_operation.apex_crop = p.text
-        when "opv1"
-          soil_operation.opv1 = p.text
-        when "opv2"
-          soil_operation.opv2 = p.text
-        when "opv3"
-          soil_operation.opv3 = p.text
-        when "opv4"
-          soil_operation.opv4 = p.text
-        when "opv5"
-          soil_operation.opv5 = p.text
-        when "opv6"
-          soil_operation.opv6 = p.text
-        when "opv7"
-          soil_operation.opv7 = p.text
-        when "activity_id"
-          soil_operation.activity_id = p.text
-        when "tractor_id"
-          soil_operation.tractor_id = p.text
-        when "year"
-          soil_operation.year = p.text
-        when "month"
-          soil_operation.month = p.text
-        when "day"
-          soil_operation.day = p.text
-        when "type_id"
-          soil_operation.type_id = p.text
-        when "apex_operation"
-          soil_operation.apex_operation = p.text
-        when "soil_id"
-          if p.text == "0"
-            soil_operation.soil_id = 0
-          else
-            if Soil.find_by_soil_id_old(p.text) == nil then
-              return "OK"
-            else
-              soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
-            end
-          end
-      end  # end case
-    end  # node
-    if soil_operation.save
-      return "OK"
-    else
-      return "soil operation could not be saved"
-    end
-  end
-
   def upload_result_info(node, field_id, soil_id, scenario_id)
     node.elements.each do |p|
       case p.name
@@ -3238,52 +3181,6 @@ class ProjectsController < ApplicationController
       return "OK"
     else
       return "bmp could not be saved"
-    end
-  end
-
-  def upload_timespan_info(node, crop_id, bmp_id)
-    timespan = Timespan.new
-    timespan.bmp_id = bmp_id
-    node.elements.each do |p|
-      case p.name
-        when "crop_id"
-          timespan.crop_id = p.text
-        when "start_month"
-          timespan.start_month = p.text
-        when "start_day"
-          timespan.start_day = p.text
-        when "end_month"
-          timespan.end_month = p.text
-        when "end_day"
-          timespan.end_day = p.text
-      end
-    end
-    if timespan.save
-      return "OK"
-    else
-      return "timespan could not be saved"
-    end
-  end
-
-  def upload_climate_new_version(node, bmp_id)
-    climate = Climate.new
-    climate.bmp_id = bmp_id
-    node.elements.each do |p|
-      case p.name
-        when "max_temp"
-          climate.max_temp = p.text
-        when "min_temp"
-          climate.min_temp = p.text
-        when "month"
-          climate.month = p.text
-        when "precipitation"
-          climate.precipitation = p.text
-      end # case end
-    end # each end
-    if climate.save then
-      return "OK"
-    else
-      return "climate could not be saved"
     end
   end
 
