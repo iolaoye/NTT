@@ -1256,7 +1256,6 @@ class ProjectsController < ApplicationController
           if p.text == "True" then
             field.field_type = true
           else
-            field.field_type = false
           end
         when "Name"
           field.field_name = p.text
@@ -3082,105 +3081,6 @@ class ProjectsController < ApplicationController
             upload_bmp_sdg(node, scenario_id)
           end
       end
-    end
-  end
-
-  def upload_bmp_info_new_version(scenario_id, new_bmp)
-    bmp = Bmp.new
-    bmp.scenario_id = scenario_id
-    if !bmp.save then return "Error saving Bmp" end
-    new_bmp.elements.each do |p|
-      case p.name
-        when "bmp_id"
-          bmp.bmp_id = p.text
-        when "bmpsublist_id"
-          bmp.bmpsublist_id = p.text
-        when "crop_id"
-          bmp.crop_id = p.text
-        when "irrigation_id"
-          bmp.irrigation_id = p.text
-        when "water_stress_factor"
-          bmp.water_stress_factor = p.text
-        when "irrigation_efficiency"
-          bmp.irrigation_efficiency = p.text
-        when "maximum_single_application"
-          bmp.maximum_single_application = p.text
-        when "safety_factor"
-          bmp.safety_factor = p.text
-        when "depth"
-          bmp.depth = p.text
-        when "area"
-          bmp.area = p.text
-        when "number_of_animals"
-          bmp.number_of_animals = p.text
-        when "days"
-          bmp.days = p.text
-        when "hours"
-          bmp.hours = p.text
-        when "animal_id"
-          bmp.animal_id = p.text
-        when "dry_manure"
-          bmp.dry_manure = p.text
-        when "no3_n"
-          bmp.no3_n = p.text
-        when "po4_p"
-          bmp.po4_p = p.text
-        when "org_n"
-          bmp.org_n = p.text
-        when "width"
-          bmp.width = p.text
-        when "grass_field_portion"
-          bmp.grass_field_portion = p.text
-        when "buffer_slope_upland"
-          bmp.buffer_slope_upland = p.text
-        when "crop_width"
-          bmp.crop_width = p.text
-        when "slope_reduction"
-          bmp.slope_reduction = p.text
-        when "sides"
-          bmp.sides = p.text
-        when "name"
-          bmp.name = p.text
-        when "difference_max_temperature"
-          bmp.difference_max_temperature = p.text
-        when "difference_min_temperature"
-          bmp.difference_min_temperature = p.text
-        when "difference_precipitation"
-          bmp.difference_precipitation = p.text
-        when "climates"
-          p.elements.each do |climate|
-            msg = upload_climate_new_version(climate, bmp.id)
-            if msg != "OK"
-              return msg
-            end
-          end
-        when "subareas"
-          p.elements.each do |subarea|
-            msg = upload_subarea_new_version(bmp.id, scenario_id, subarea)
-            if msg != "OK"
-              return msg
-            end
-          end
-        when "soil_operations"
-          p.elements.each do |soil_op|
-            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.id)
-            if msg != "OK"
-              return msg
-            end
-          end
-        when "timespans"
-          p.elements.each do |timespan|
-            msg = upload_timespan_info(timespan, bmp.crop_id, bmp.id)
-            if msg != "OK"
-              return msg
-            end
-          end
-      end
-    end
-    if bmp.save
-      return "OK"
-    else
-      return "bmp could not be saved"
     end
   end
 

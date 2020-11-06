@@ -383,53 +383,53 @@ module ProjectsHelper
     #soil_operation.soil_id = soil_id
     soil_operation.bmp_id = bmp_id
     node.elements.each do |p|
-      case p.name
-        when "apex_crop"
-          soil_operation.apex_crop = p.text
-        when "opv1"
-          soil_operation.opv1 = p.text
-        when "opv2"
-          soil_operation.opv2 = p.text
-        when "opv3"
-          soil_operation.opv3 = p.text
-        when "opv4"
-          soil_operation.opv4 = p.text
-        when "opv5"
-          soil_operation.opv5 = p.text
-        when "opv6"
-          soil_operation.opv6 = p.text
-        when "opv7"
-          soil_operation.opv7 = p.text
-        when "activity_id"
-          soil_operation.activity_id = p.text
-        when "tractor_id"
-          soil_operation.tractor_id = p.text
-        when "year"
-          soil_operation.year = p.text
-        when "month"
-          soil_operation.month = p.text
-        when "day"
-          soil_operation.day = p.text
-        when "type_id"
-          soil_operation.type_id = p.text
-        when "apex_operation"
-          soil_operation.apex_operation = p.text
-        when "soil_id"
-          if p.text == "0"
-            soil_operation.soil_id = 0
-          else
-            if Soil.find_by_soil_id_old(p.text) == nil then
-              return "OK"
-            else
-              soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
-            end
-          end
-      end  # end case
+    case p.name
+      when "apex_crop"
+        soil_operation.apex_crop = p.text
+      when "opv1"
+      soil_operation.opv1 = p.text
+      when "opv2"
+      soil_operation.opv2 = p.text
+      when "opv3"
+      soil_operation.opv3 = p.text
+      when "opv4"
+      soil_operation.opv4 = p.text
+      when "opv5"
+      soil_operation.opv5 = p.text
+      when "opv6"
+      soil_operation.opv6 = p.text
+      when "opv7"
+      soil_operation.opv7 = p.text
+      when "activity_id"
+      soil_operation.activity_id = p.text
+      when "tractor_id"
+      soil_operation.tractor_id = p.text
+      when "year"
+      soil_operation.year = p.text
+      when "month"
+      soil_operation.month = p.text
+      when "day"
+      soil_operation.day = p.text
+      when "type_id"
+      soil_operation.type_id = p.text
+      when "apex_operation"
+      soil_operation.apex_operation = p.text
+      when "soil_id"
+      if p.text == "0"
+        soil_operation.soil_id = 0
+      else
+        if Soil.find_by_soil_id_old(p.text) == nil then
+        return "OK"
+        else
+        soil_operation.soil_id = Soil.find_by_soil_id_old(p.text).id
+        end
+      end
+    end  # end case
     end  # node
     if soil_operation.save
-      return "OK"
+    return "OK"
     else
-      return "soil operation could not be saved"
+    return "soil operation could not be saved"
     end
   end
 
@@ -438,23 +438,23 @@ module ProjectsHelper
     timespan = Timespan.new
     timespan.bmp_id = bmp_id
     node.elements.each do |p|
-      case p.name
-        when "crop_id"
-          timespan.crop_id = p.text
-        when "start_month"
-          timespan.start_month = p.text
-        when "start_day"
-          timespan.start_day = p.text
-        when "end_month"
-          timespan.end_month = p.text
-        when "end_day"
-          timespan.end_day = p.text
-      end
+    case p.name
+      when "crop_id"
+      timespan.crop_id = p.text
+      when "start_month"
+      timespan.start_month = p.text
+      when "start_day"
+      timespan.start_day = p.text
+      when "end_month"
+      timespan.end_month = p.text
+      when "end_day"
+      timespan.end_day = p.text
+    end
     end
     if timespan.save
-      return "OK"
+    return "OK"
     else
-      return "timespan could not be saved"
+    return "timespan could not be saved"
     end
   end
 
@@ -463,25 +463,125 @@ module ProjectsHelper
     climate = Climate.new
     climate.bmp_id = bmp_id
     node.elements.each do |p|
-      case p.name
-        when "max_temp"
-          climate.max_temp = p.text
-        when "min_temp"
-          climate.min_temp = p.text
-        when "month"
-          climate.month = p.text
-        when "precipitation"
-          climate.precipitation = p.text
-      end # case end
+    case p.name
+      when "max_temp"
+      climate.max_temp = p.text
+      when "min_temp"
+      climate.min_temp = p.text
+      when "month"
+      climate.month = p.text
+      when "precipitation"
+      climate.precipitation = p.text
+    end # case end
     end # each end
     if climate.save then
-      return "OK"
+    return "OK"
     else
-      return "climate could not be saved"
+    return "climate could not be saved"
     end
   end
 
-  ######################## Upload operations from Comet ################################################
+  ######################## Upload Bmp info ################################################
+  def upload_bmp_info_new_version(scenario_id, new_bmp)
+    bmp = Bmp.new
+    bmp.scenario_id = scenario_id
+    if !bmp.save then return "Error saving Bmp" end
+    new_bmp.elements.each do |p|
+      case p.name
+        when "bmp_id"
+          bmp.bmp_id = p.text
+        when "bmpsublist_id"
+          bmp.bmpsublist_id = p.text
+        when "crop_id"
+          bmp.crop_id = p.text
+        when "irrigation_id"
+          bmp.irrigation_id = p.text
+        when "water_stress_factor"
+          bmp.water_stress_factor = p.text
+        when "irrigation_efficiency"
+          bmp.irrigation_efficiency = p.text
+        when "maximum_single_application"
+          bmp.maximum_single_application = p.text
+        when "safety_factor"
+          bmp.safety_factor = p.text
+        when "depth"
+          bmp.depth = p.text
+        when "area"
+          bmp.area = p.text
+        when "number_of_animals"
+          bmp.number_of_animals = p.text
+        when "days"
+          bmp.days = p.text
+        when "hours"
+          bmp.hours = p.text
+        when "animal_id"
+          bmp.animal_id = p.text
+        when "dry_manure"
+          bmp.dry_manure = p.text
+        when "no3_n"
+          bmp.no3_n = p.text
+        when "po4_p"
+          bmp.po4_p = p.text
+        when "org_n"
+          bmp.org_n = p.text
+        when "width"
+          bmp.width = p.text
+        when "grass_field_portion"
+          bmp.grass_field_portion = p.text
+        when "buffer_slope_upland"
+          bmp.buffer_slope_upland = p.text
+        when "crop_width"
+          bmp.crop_width = p.text
+        when "slope_reduction"
+          bmp.slope_reduction = p.text
+        when "sides"
+          bmp.sides = p.text
+        when "name"
+          bmp.name = p.text
+        when "difference_max_temperature"
+          bmp.difference_max_temperature = p.text
+        when "difference_min_temperature"
+          bmp.difference_min_temperature = p.text
+        when "difference_precipitation"
+          bmp.difference_precipitation = p.text
+        when "climates"
+          p.elements.each do |climate|
+            msg = upload_climate_new_version(climate, bmp.id)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "subareas"
+          p.elements.each do |subarea|
+            msg = upload_subarea_new_version(bmp.id, scenario_id, subarea)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "soil_operations"
+          p.elements.each do |soil_op|
+            msg = upload_soil_operation_new(soil_op, 0, 0, 0, bmp.id)
+            if msg != "OK"
+              return msg
+            end
+          end
+        when "timespans"
+          p.elements.each do |timespan|
+            msg = upload_timespan_info(timespan, bmp.crop_id, bmp.id)
+            if msg != "OK"
+              return msg
+            end
+          end
+      end
+    end
+    if bmp.save
+      return "OK"
+    else
+      return "bmp could not be saved"
+    end
+  end
+
+    ######################## Upload operations from Comet ################################################
   def upload_operation_comet_version(scenario_id, new_operation)
       operation = Operation.new
       operation.scenario_id = scenario_id
@@ -748,4 +848,5 @@ module ProjectsHelper
         bmp_controller.save_bmps_from_load(values)
       end
   end
+
 end
