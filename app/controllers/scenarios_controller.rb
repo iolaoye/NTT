@@ -1412,6 +1412,7 @@ class ScenariosController < ApplicationController
                     end
                   end
                 end
+                @scen = scenario.id
               end
               msg = "Scenario " + scenario.name + " created succesfully"
             end   # end node cicle
@@ -1423,9 +1424,13 @@ class ScenariosController < ApplicationController
           next
         end   #end begin/rescue/ensure
       end  # end transaction
+      scn.xpath("bmps").xpath("bmp").each do |new_bmp|
+        upload_bmp_info_new_version(@scen, new_bmp)
+      end
     end  # end reading data elements.
     return "OK"
   end
+
 
   def download
     download_apex_files()
