@@ -2646,7 +2646,7 @@ en:
         manner:
             header: 'Tabular View'
             body1: 'To compare the results of up to three field scenarios in the tabular view, use the drop down to select any desired initial year, then select one final year, and finally each field scenario. Click View when you are finished.'
-            body2: 'HINT: el año inicial y el año final se pueden cambiar en cualquier momento para ver diferentes resultados de los años seleccionados, y if you only have one or two scenarios you wish to compare, select the same scenario multiple times so that there is a scenario selected for each column of the tabular display.'
+            body2: 'HINT: the Initial year and the Final year can be changed at anytime to view different results from the selected years, and if you only have one or two scenarios you wish to compare, select the same scenario multiple times so that there is a scenario selected for each column of the tabular display.'
             body3: 'The user may toggle between two different units in the tabular view. The user may view results in units/acre (e.g., lbs/acre) or as total units summed across the area of the field (e.g., lbs).'
             body4: 'After clicking View, the table will populate with the results of each scenario. Users have the option of downloading the results as a CSV file, or as a PDF file.'
 
