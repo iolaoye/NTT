@@ -1,0 +1,2 @@
+module CountyResultsHelper
+end

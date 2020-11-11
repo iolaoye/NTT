@@ -1,0 +1,17 @@
+<%= form_with(model: county_result, local: true) do |form| %>
+  <% if county_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(county_result.errors.count, "error") %> prohibited this county_result from being saved:</h2>
+
+      <ul>
+      <% county_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
