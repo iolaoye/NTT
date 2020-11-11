@@ -2663,7 +2663,7 @@ es:
         manner:
             header: 'Vista tabular'
             body1: 'Para comparar los resultados de hasta tres escenarios de parcela en la vista tabular, use el menú desplegable para seleccionar cualquier año inicial deseado, luego seleccione un año final y finalmente cada escenario de parcela. Haga clic en Ver cuando haya terminado.'
-            body2: 'SUGERENCIA: si solo tiene uno o dos escenarios que desea comparar, seleccione el mismo escenario varias veces para que haya un escenario seleccionado para cada columna de la pantalla tabular.'
+            body2: 'SUGERENCIA: el año inicial y el año final se pueden cambiar en cualquier momento para ver diferentes resultados de los años seleccionados, y si solo tiene uno o dos escenarios que desea comparar, seleccione el mismo escenario varias veces para que haya un escenario seleccionado para cada columna de la pantalla tabular.'
             body3: 'El usuario puede alternar entre dos unidades diferentes en la vista tabular. El usuario puede ver los resultados en unidades / acre (p. Ej., Lbs / acre) o como unidades totales sumadas en el área del parcela (p. Ej., Lbs).'
             body4: 'Después de hacer clic en Ver, la tabla se completará con los resultados de cada escenario. Los usuarios tienen la opción de descargar los resultados como un archivo CSV o como un archivo PDF.'
 
