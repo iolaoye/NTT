@@ -53,6 +53,7 @@ class CountyResultsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def county_result_params
-      params.fetch(:county_result, {})
+      # params.fetch(:county_result, {})
+      params.require(:county_result).permit(:state_id, :county_id, :year, :flow, :qdr, :surface_flow, :sed, :ymnu, :orgp, :po4, :orgn, :no3, :qdrn, :qdrp, :qn, :dprk, :irri, :pcp, :n2o, :prkn, :co2, :biom)
     end
 end

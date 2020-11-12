@@ -2,7 +2,7 @@ class AddColumnsToCountyResult < ActiveRecord::Migration[5.2]
   def change
     add_column :county_results, :state_id, :integer
     add_column :county_results, :county_id, :integer
-    add_column :county_results, :crop_id, :integer
+    add_column :county_results, :crop_ids, :string
     add_column :county_results, :bmp_id, :integer
     add_column :county_results, :year, :integer
     add_column :county_results, :flow, :float
