@@ -44,6 +44,7 @@ NTTG3::Application.routes.draw do
   resources :apex_parameters
   resources :apex_controls
   resources :results
+  resources :county_results
   resources :modifications
   resources :parameters
   resources :controls

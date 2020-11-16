@@ -24,7 +24,7 @@
         <%= select_tag :option_select%>
     <% end %>
   </div>
-  </br>
+  <br>
   <div class="actions">
     <% if @id == "0" %>
         <%= submit_tag(value = t('project.upload_project'), :class => "btn btn-primary", data: {disable_with: t('general.please') + " " + t('general.wait') + " " + t('general.uploading') + " " + t('models.project')}) %>
@@ -38,3 +38,5 @@
     <%= link_to t('general.back'), welcomes_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
+
+ <%#= link_to "Show " + t('menu.results'), county_results_path , :class => 'btn btn-success' %>
