@@ -216,7 +216,16 @@ class ProjectsController < ApplicationController
       if !(@project.save) then
         return false
       end
-      return create_field(field_name)
+      if create_location then
+        return create_field(field_name)
+      else
+        return false
+      end
+    end
+    if @project.location == nil then     #project exist but for some reason no location need to create
+      if !create_location() then
+        return false
+      end
     end
     @field = Field.find_by_field_name(field_name)
     if @field == nil
@@ -226,7 +235,19 @@ class ProjectsController < ApplicationController
     return true
   end
 
- ########################################### Create county field ##################
+  ########################################### Create county location ##################
+  def create_location()
+    @location = Location.new
+    @location.project_id = @project.id
+    @location.state_id = params[:state_select]
+    @location.county_id = params[:county_select]
+    if @location.save then
+      return true
+    end
+    return false
+  end
+
+  ########################################### Create county field ##################
   def create_field(field_name)
     @field = Field.new
     @field.field_name = field_name
@@ -234,6 +255,7 @@ class ProjectsController < ApplicationController
     @field.field_area = 100
     @field.weather_id = 0
     @field.soilp = 0
+    @field.location_id = @location.id
     if !(@field.save) then
       return false
     end

@@ -39,7 +39,7 @@
           <% end %>
           <%= link_to t('menu.soils'), project_field_soils_path(@project, @field, :locale=>I18n.locale) %>
         </li>
-        <% unless ENV["APP_VERSION"] == "modified" %>
+        <% unless ENV["APP_VERSION"] == "modified" or @project.version.include? "special" %>
           <li class="<%= controller_name == "weathers" ? "active" : "" %>">
             <% if controller_name == "weathers" %><div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
             <% end %>
@@ -216,7 +216,7 @@
                    </div>
                  <%# end %>
                  <li>
-                  <%= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "APLCAT"), :class=>"results-label-sub" %></li>
+                  <%#= link_to t('general.management') + " " + t('menu.scenarios') , project_field_scenarios_path(@project, session[:field_id],:caller_id => "APLCAT"), :class=>"results-label-sub" %></li>
                  </li>
              </ul>
             </li>
