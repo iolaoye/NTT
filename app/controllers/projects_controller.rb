@@ -181,14 +181,63 @@ class ProjectsController < ApplicationController
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
-  def upload_project    
-    saved = upload_prj()
+  def upload_project
+    if params[:commit] == "Continue" then   #check if project State_Project exist and field County_field exist
+      saved = process_county()
+      if saved then   #redirect to scenarios
+        redirect_to project_field_scenarios_path(@project, @field)
+        return
+      end
+    else
+      saved = upload_prj()
+    end
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
     end
+  end
+
+ ########################################### Create or update State/county project ##################
+  def process_county
+    state = State.find(params[:state_select])
+    county = County.find(params[:county_select])
+    project_name = state.state_name + "_Project"
+    field_name = county.county_name + "_Field"
+    @project = Project.find_by_name(project_name)
+    if @project == nil
+      #Project should be created as well as field
+      @project = Project.new
+      @project.name = project_name
+      @project.description = project_name
+      @project.version = "NTTG3_special"
+      @project.user_id = session[:user_id]
+      if !(@project.save) then
+        return false
+      end
+      return create_field(field_name)
+    end
+    @field = Field.find_by_field_name(field_name)
+    if @field == nil
+      #field is created
+      return create_field(field_name)
+    end
+    return true
+  end
+
+ ########################################### Create county field ##################
+  def create_field(field_name)
+    @field = Field.new
+    @field.field_name = field_name
+    @field.location_id = 0
+    @field.field_area = 100
+    @field.weather_id = 0
+    @field.soilp = 0
+    if !(@field.save) then
+      return false
+    end
+    return true
   end
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
