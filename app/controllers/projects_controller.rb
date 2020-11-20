@@ -226,6 +226,8 @@ class ProjectsController < ApplicationController
       if !create_location() then
         return false
       end
+    else
+      @location = @project.location
     end
     @field = Field.find_by_field_name(field_name)
     if @field == nil
@@ -249,6 +251,7 @@ class ProjectsController < ApplicationController
 
   ########################################### Create county field ##################
   def create_field(field_name)
+    debugger
     @field = Field.new
     @field.field_name = field_name
     @field.location_id = 0
@@ -258,8 +261,39 @@ class ProjectsController < ApplicationController
     @field.location_id = @location.id
     if !(@field.save) then
       return false
+    else
+      #crete weather and soil info
+      if !create_weather() then return false end
+      if !create_soil() then return false end
+      load_controls()
+      load_parameters(0)
     end
     return true
+  end
+
+  def create_weather
+    @weather = Weather.new
+    @weather.field_id = @field.id
+    @weather.simulation_initial_year = 1987
+    @weather.simulation_final_year = 2019
+    @weather.weather_initial_year = 1982
+    @weather.weather_final_year = 2019
+    if @weather.save then
+      return true
+    else
+      return false
+    end
+  end
+
+  def create_soil
+    soil = Soil.new
+    soil.field_id = @field.id
+    soil.key = @project.id    #just to identify it no used
+    if soil.save then
+      return true
+    else
+      return false
+    end
   end
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
