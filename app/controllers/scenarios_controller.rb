@@ -183,7 +183,7 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
-    debugger
+
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
