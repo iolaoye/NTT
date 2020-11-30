@@ -183,10 +183,19 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
+    debugger
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
   	#case true
+    if @project.version.include? "special"
+      fork do
+        run_special_simulation()
+      end
+      flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
+      redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
+      return
+    else
   		#when params[:commit].include?('NTT')
       if params[:select_ntt] != nil
   			msg = simulate_ntt
@@ -201,7 +210,7 @@ class ScenariosController < ApplicationController
       end
       #when params[:commit].include?("DNDC")
         #msg = simulate_dndc
-  	#end
+  	end
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
@@ -232,6 +241,65 @@ class ScenariosController < ApplicationController
       end
       render "index", :locals => { :caller_id => caller_id }, error: msg
     end # end if msg
+  end
+
+################################  Simulate NTT for selected scenarios  #################################
+  def run_special_simulation
+    debugger
+    require 'nokogiri'
+    #create xml file and send the simulation to ntt.tft.cbntt.org server
+    #read the coordinates for the county selected
+    seq_ant = 0
+    coordinates = ""
+    File.open("public/NTTFiles/48139.txt").each do |line|
+      line_splited = line.split(" ")
+      seq = line_splited[0]
+      lon = line_splited[1]
+      lat = line_splited[2]
+      if seq == seq_ant then
+        coordinates += lon + ", " + lat + " "
+      else
+        #create xml file and send it to run
+        builder = Nokogiri::XML::Builder.new do |xml|
+          xml.NTT {
+            xml.StartInfo {
+              #save start information
+              xml.StateId = "TX"    #todo find the state abreavation.
+              xml.CountyId = "103"    #todo find the county code.
+              xml.project_name @project.name
+            } # end xml.StartInfo
+            #save field information
+            xml.FieldInfo {
+              xml.Field_id = @field.id
+              xml.Area = 100
+              xml.SoilP = 0
+              xml.Coordinates = coordinates
+              #create scenario info
+              xml.ScenarioInfo {
+                xml.Name = @scenario.name
+                #create operations
+                xml.ManagementInfo {
+                  #todo need to find the operations.
+                  xml.Operation = "136"   #todo
+                  xml.Year = "1"
+                  xml.Month = "1"
+                  xml.Day = "1"
+                  xml.Crop = "2"
+                  xml.Opv1 = "1"
+                  xml.Opv2 = "1"
+                  xml.Opv3 = "1"
+                  xml.Opv4 = "1"
+                  xml.Opv5 = "1"
+                }  # end operations
+              } # end scenario
+            } # end field
+          } # end xml.start info
+        end #builder do end
+        #run simulation
+        debugger
+        coordinates = lon + ", " + lat + " "
+      end 
+    end
   end
 
 ################################  Simulate NTT for selected scenarios  #################################

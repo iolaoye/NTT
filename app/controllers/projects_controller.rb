@@ -230,7 +230,7 @@ class ProjectsController < ApplicationController
       @location = @project.location
     end
     @field = Field.find_by_field_name(field_name)
-    if @field == nil
+    if @field == nil  #fieldis check to see if it exist no matter if porject was created before or not as well as location
       #field is created
       return create_field(field_name)
     end
@@ -289,6 +289,11 @@ class ProjectsController < ApplicationController
     soil = Soil.new
     soil.field_id = @field.id
     soil.key = @project.id    #just to identify it no used
+    soil.group = "B"
+    soil.name = @field.field_name
+    soil.slope = 0.1
+    soil.albedo = 0.37
+    soil.percentage = 100
     if soil.save then
       return true
     else
