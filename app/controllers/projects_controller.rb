@@ -251,7 +251,6 @@ class ProjectsController < ApplicationController
 
   ########################################### Create county field ##################
   def create_field(field_name)
-    debugger
     @field = Field.new
     @field.field_name = field_name
     @field.location_id = 0
