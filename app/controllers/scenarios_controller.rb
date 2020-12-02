@@ -247,7 +247,7 @@ class ScenariosController < ApplicationController
     require 'nokogiri'
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
-    file_name = "MD_013"
+    file_name = "MD_013" ## Change to user selection from the “See Result Avg by county” option in project page
     full_name = "public/NTTFiles/" + file_name + ".txt"
     File.open(full_name).each do |line|
       line_splited = line.split("|")
@@ -266,22 +266,23 @@ class ScenariosController < ApplicationController
             xml.Area = 100
             xml.SoilP = 0
             xml.Coordinates = line_splited[3]
-            #create scenario info
             xml.ScenarioInfo {
-              xml.Name = @scenario.name
-                #create operations
-                xml.ManagementInfo {   #todo nedd tofind all of the operations.
-                  xml.Operation = "136"   #todo
-                  xml.Year = "1"
-                  xml.Month = "1"
-                  xml.Day = "1"
-                  xml.Crop = "2"
-                  xml.Opv1 = "1"
-                  xml.Opv2 = "1"
-                  xml.Opv3 = "1"
-                  xml.Opv4 = "1"
-                  xml.Opv5 = "1"
+              xml.Name = Scenario.find_by_id(params[:select_ntt][0]).name #@scenario.name
+              #create operations
+              SoilOperation.where(params[:select_ntt][0]).each do |soop|   # multiple soiloperations for each scenario_id
+                xml.ManagementInfo {
+                  xml.Operation = soop   #todo
+                  xml.Year = soop.year
+                  xml.Month = soop.month
+                  xml.Day = soop.day
+                  xml.Crop = soop.apex_crop
+                  xml.Opv1 = soop.opv1
+                  xml.Opv2 = soop.opv2
+                  xml.Opv3 = soop.opv3
+                  xml.Opv4 = soop.opv4
+                  xml.Opv5 = soop.opv5
                 }  # end operations
+              end
             } # end scenario
           } # end field                          
         } # end xml.start info
