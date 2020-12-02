@@ -270,6 +270,7 @@ class ProjectsController < ApplicationController
     return true
   end
 
+  ########################################### Create county weather ##################
   def create_weather
     @weather = Weather.new
     @weather.field_id = @field.id
@@ -284,6 +285,7 @@ class ProjectsController < ApplicationController
     end
   end
 
+  ########################################### Create county soil ##################
   def create_soil
     soil = Soil.new
     soil.field_id = @field.id

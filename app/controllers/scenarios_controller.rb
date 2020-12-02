@@ -183,15 +183,14 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
-
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
   	#case true
     if @project.version.include? "special"
-      fork do
+      #fork do   todo uncomment for production
         run_special_simulation()
-      end
+      #end    todo uncomment for production
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
@@ -245,41 +244,33 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation
-    debugger
     require 'nokogiri'
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
-    seq_ant = 0
-    coordinates = ""
-    File.open("public/NTTFiles/48139.txt").each do |line|
-      line_splited = line.split(" ")
-      seq = line_splited[0]
-      lon = line_splited[1]
-      lat = line_splited[2]
-      if seq == seq_ant then
-        coordinates += lon + ", " + lat + " "
-      else
-        #create xml file and send it to run
-        builder = Nokogiri::XML::Builder.new do |xml|
-          xml.NTT {
-            xml.StartInfo {
-              #save start information
-              xml.StateId = "TX"    #todo find the state abreavation.
-              xml.CountyId = "103"    #todo find the county code.
-              xml.project_name @project.name
-            } # end xml.StartInfo
-            #save field information
-            xml.FieldInfo {
-              xml.Field_id = @field.id
-              xml.Area = 100
-              xml.SoilP = 0
-              xml.Coordinates = coordinates
-              #create scenario info
-              xml.ScenarioInfo {
-                xml.Name = @scenario.name
+    file_name = "MD_013"
+    full_name = "public/NTTFiles/" + file_name + ".txt"
+    File.open(full_name).each do |line|
+      line_splited = line.split("|")
+      #create xml file and send it to run
+      builder = Nokogiri::XML::Builder.new do |xml|
+        xml.NTT {
+          xml.StartInfo {
+            #save start information
+            xml.StateId = line_splited[0]    #state abrevation.
+            xml.CountyId = file_name.split("_")[1]    #county code.
+            xml.project_name @project.name
+          } # end xml.StartInfo
+          #save field information
+          xml.FieldInfo {
+            xml.Field_id = @field.id
+            xml.Area = 100
+            xml.SoilP = 0
+            xml.Coordinates = line_splited[3]
+            #create scenario info
+            xml.ScenarioInfo {
+              xml.Name = @scenario.name
                 #create operations
-                xml.ManagementInfo {
-                  #todo need to find the operations.
+                xml.ManagementInfo {   #todo nedd tofind all of the operations.
                   xml.Operation = "136"   #todo
                   xml.Year = "1"
                   xml.Month = "1"
@@ -291,15 +282,12 @@ class ScenariosController < ApplicationController
                   xml.Opv4 = "1"
                   xml.Opv5 = "1"
                 }  # end operations
-              } # end scenario
-            } # end field
-          } # end xml.start info
-        end #builder do end
-        #run simulation
-        debugger
-        coordinates = lon + ", " + lat + " "
-      end 
-    end
+            } # end scenario
+          } # end field                          
+        } # end xml.start info
+      end #builder do end
+      #run simulation
+    end   # end File.opne
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
