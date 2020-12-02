@@ -41,7 +41,12 @@ get_bmp = ->
         items.push "<option value=\"" + option.id + "\">" + "Depth=" + option.depth + "(ft)" + "</option>"
       $("#option_select").html items.join("")
       $("#option_select").removeAttr("disabled")    
-      #$("#bmp").val("Depth = " + value.depth + " ft")
+      $("#bmp").val("Depth = " + value.depth + " ft")
+
+get_values = -> 
+  statess = $("#state_select")[0].value;
+  countiess = $("#county_select")[0].value;
+
 
 $(document).ready ->
   $("#new_project").click ->
@@ -50,6 +55,7 @@ $(document).ready ->
     get_counties()
   $("#county_select").change ->
     get_rotations() 
+    get_values()
   $("#rotation_select").change ->
     get_scp()
   $("#scp_select").change ->
