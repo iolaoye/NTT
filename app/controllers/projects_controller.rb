@@ -181,13 +181,124 @@ class ProjectsController < ApplicationController
   end
 
   ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
-  def upload_project    
-    saved = upload_prj()
+  def upload_project
+    if params[:commit] == "Continue" then   #check if project State_Project exist and field County_field exist
+      saved = process_county()
+      if saved then   #redirect to scenarios
+        redirect_to project_field_scenarios_path(@project, @field)
+        return
+      end
+    else
+      saved = upload_prj()
+    end
     if saved
       flash[:notice] = t('models.project') + " " + t('general.success')
       redirect_to user_projects_path(session[:user_id]), info: t('models.project') + " " + @project.name + t('notices.uploaded')
     else
       redirect_to projects_upload_path(@upload_id)
+    end
+  end
+
+ ########################################### Create or update State/county project ##################
+  def process_county
+    state = State.find(params[:state_select])
+    county = County.find(params[:county_select])
+    project_name = state.state_name + "_Project"
+    field_name = county.county_name + "_Field"
+    @project = Project.find_by_name(project_name)
+    if @project == nil
+      #Project should be created as well as field
+      @project = Project.new
+      @project.name = project_name
+      @project.description = project_name
+      @project.version = "NTTG3_special"
+      @project.user_id = session[:user_id]
+      if !(@project.save) then
+        return false
+      end
+      if create_location then
+        return create_field(field_name)
+      else
+        return false
+      end
+    end
+    if @project.location == nil then     #project exist but for some reason no location need to create
+      if !create_location() then
+        return false
+      end
+    else
+      @location = @project.location
+    end
+    @field = Field.find_by_field_name(field_name)
+    if @field == nil  #fieldis check to see if it exist no matter if porject was created before or not as well as location
+      #field is created
+      return create_field(field_name)
+    end
+    return true
+  end
+
+  ########################################### Create county location ##################
+  def create_location()
+    @location = Location.new
+    @location.project_id = @project.id
+    @location.state_id = params[:state_select]
+    @location.county_id = params[:county_select]
+    if @location.save then
+      return true
+    end
+    return false
+  end
+
+  ########################################### Create county field ##################
+  def create_field(field_name)
+    @field = Field.new
+    @field.field_name = field_name
+    @field.location_id = 0
+    @field.field_area = 100
+    @field.weather_id = 0
+    @field.soilp = 0
+    @field.location_id = @location.id
+    if !(@field.save) then
+      return false
+    else
+      #crete weather and soil info
+      if !create_weather() then return false end
+      if !create_soil() then return false end
+      load_controls()
+      load_parameters(0)
+    end
+    return true
+  end
+
+  ########################################### Create county weather ##################
+  def create_weather
+    @weather = Weather.new
+    @weather.field_id = @field.id
+    @weather.simulation_initial_year = 1987
+    @weather.simulation_final_year = 2019
+    @weather.weather_initial_year = 1982
+    @weather.weather_final_year = 2019
+    if @weather.save then
+      return true
+    else
+      return false
+    end
+  end
+
+  ########################################### Create county soil ##################
+  def create_soil
+    soil = Soil.new
+    soil.field_id = @field.id
+    soil.key = @project.id    #just to identify it no used
+    soil.group = "B"
+    soil.name = @field.field_name
+    soil.slope = 0.1
+    soil.albedo = 0.37
+    soil.percentage = 100
+    if soil.save then
+      return true
+    else
+      return false
     end
   end
 
