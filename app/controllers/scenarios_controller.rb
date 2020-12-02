@@ -249,21 +249,12 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-<<<<<<< HEAD
     #file_name = "MD_013"
     file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     File.open(full_name).each do |line|
       line_splited = line.split("|")
       next if line_splited.include? "State" 
-=======
-    file_name = "MD_013"
-    # file_name = c[0..1] + "_" + c[2..]
-    full_name = "public/NTTFiles/" + file_name + ".txt"
-    File.open(full_name).each do |line|
-      line_splited = line.split("|")
-      if line_splited.include? "State" then next end
->>>>>>> 1b034ccca656635e097d24b35f9fd43756074fc5
       #create xml file and send it to run
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.NTT {
