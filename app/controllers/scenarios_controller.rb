@@ -247,7 +247,9 @@ class ScenariosController < ApplicationController
     require 'nokogiri'
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
-    file_name = "MD_013" ## Change to user selection from the “See Result Avg by county” option in project page
+    # State.find_by_id(@project.location.state_id).state_abbreviation
+    c = County.find_by_id(@project.location.county_id).county_state_code
+    file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     File.open(full_name).each do |line|
       line_splited = line.split("|")
