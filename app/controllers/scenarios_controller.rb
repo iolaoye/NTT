@@ -183,15 +183,14 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
-
   	msg = "OK"
   	time_begin = Time.now
   	session[:simulation] = 'scenario'
   	#case true
     if @project.version.include? "special"
-      fork do
+      #fork do   todo uncomment for production
         run_special_simulation()
-      end
+      #end    todo uncomment for production
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
@@ -245,7 +244,6 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation
-    debugger
     require 'nokogiri'
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
