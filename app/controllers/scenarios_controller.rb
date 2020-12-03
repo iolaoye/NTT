@@ -39,17 +39,17 @@ class ScenariosController < ApplicationController
 # GET /scenarios.json
   def index
     @errors = Array.new
-  	msg = "OK"
+    msg = "OK"
     @scenarios = Scenario.where(:field_id => @field.id)
 
     if (params[:scenario] != nil)
-		msg = copy_other_scenario
-		if msg != "OK" then
-			@errors.push msg
-		else
-			flash[:notice] = "Scenario copied successfuly"
-		end
-	end
+    msg = copy_other_scenario
+    if msg != "OK" then
+      @errors.push msg
+    else
+      flash[:notice] = "Scenario copied successfuly"
+    end
+  end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
@@ -183,10 +183,10 @@ class ScenariosController < ApplicationController
 
 ################################  simualte either NTT or APLCAT or FEM #################################
   def simulate
-  	msg = "OK"
-  	time_begin = Time.now
-  	session[:simulation] = 'scenario'
-  	#case true
+    msg = "OK"
+    time_begin = Time.now
+    session[:simulation] = 'scenario'
+    #case true
     if @project.version.include? "special"
       #fork do   todo uncomment for production
         run_special_simulation()
@@ -195,13 +195,13 @@ class ScenariosController < ApplicationController
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
     else
-  		#when params[:commit].include?('NTT')
+      #when params[:commit].include?('NTT')
       if params[:select_ntt] != nil
-  			msg = simulate_ntt
+        msg = simulate_ntt
       end 
       if params[:select_fem] != nil and msg == "OK"
-  		#when params[:commit].include?("APLCAT")
-  			msg = simulate_fem
+      #when params[:commit].include?("APLCAT")
+        msg = simulate_fem
       end
       if params[:select_aplcat] != nil and msg == "OK"
       #when params[:commit].include?("FEM")
@@ -209,7 +209,7 @@ class ScenariosController < ApplicationController
       end
       #when params[:commit].include?("DNDC")
         #msg = simulate_dndc
-  	end
+    end
     if msg.eql?("OK") then
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
@@ -288,6 +288,42 @@ class ScenariosController < ApplicationController
                   xml.Opv5 soop.opv5
                 }  # end operations
               end
+                xml.BmpInfo {
+                  xml.Autoirrigation {
+                    xml.Code
+                    xml.Efficiency
+                    xml.Frequency
+                    xml.Stress
+                    xml.Volume
+                    xml.ApplicationRate
+                  }
+                  xml.TileDrain {
+                    xml.Depth
+                  }
+                  xml.Wetland {
+                    xml.Area
+                  }
+                  xml.Pond {
+                    xml.Fraction
+                  }
+                  xml.GrassBuffer {
+                    xml.CropCode
+                    xml.Area
+                    xml.GrassStripWidth
+                    xml.ForestStripWidth
+                    xml.Fraction
+                  }
+                  xml.GrassWaterway {
+                    xml.Width
+                    xml.Fraction
+                  }
+                  xml.LandLeveling {
+                    xml.SlopeReduction
+                  }
+                  xml.TerraceSystem {
+                    xml.Active
+                  }
+                } # end bmpinfo
             } # end scenario
           } # end field                          
         } # end xml.start info
@@ -309,10 +345,10 @@ class ScenariosController < ApplicationController
     msg = "OK"
     @apex_version = 806
     if params[:select_ntt] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
-  	if msg != "OK" then
-  		@errors.push(msg)
-  		return msg
-  	end
+    if msg != "OK" then
+      @errors.push(msg)
+      return msg
+    end
     if params[:select_ntt] == nil then
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
@@ -321,24 +357,24 @@ class ScenariosController < ApplicationController
       @apex_version = 806
     end
     ActiveRecord::Base.transaction do
-  	  @scenarios_selected.each do |scenario_id|
-  		  @scenario = Scenario.find(scenario_id)
-  		  if @scenario.operations.count <= 0 then
-  		  	@errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
-  		  	return
-  		  end
-  		  msg = run_scenario
-  		  unless msg.eql?("OK")
-  			   @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
-  			   raise ActiveRecord::Rollback
-  	    end # end unless msg
+      @scenarios_selected.each do |scenario_id|
+        @scenario = Scenario.find(scenario_id)
+        if @scenario.operations.count <= 0 then
+          @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
+          return
+        end
+        msg = run_scenario
+        unless msg.eql?("OK")
+           @errors.push("Error simulating scenario " + @scenario.name + " (" + msg + ")")
+           raise ActiveRecord::Rollback
+        end # end unless msg
         if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
          @scenario.last_simulation = Time.now
          @scenario.save!
         end
       end # end each do params loop
     end
-  	return msg
+    return msg
   end
 
 ################################  Simulate DNDC for selected scenarios  #################################
@@ -1024,8 +1060,8 @@ class ScenariosController < ApplicationController
   def check_dup_scenario(field_id, scen_name)
     all_scen = Scenario.where(:field_id => @field.id)
     existing_scenarios = Array.new
-	  all_scen.each do |s|
-	    existing_scenarios << s.name
+    all_scen.each do |s|
+      existing_scenarios << s.name
     end
     if existing_scenarios.include? scen_name + " copy"
       return true
@@ -1104,32 +1140,32 @@ class ScenariosController < ApplicationController
     name = " copy"
     scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
     #2. copy scenario to new scenario
-  	new_scenario = scenario.dup
+    new_scenario = scenario.dup
     new_scenario.name = scenario.name + name
     new_scenario.field_id = @field.id
     #new_scenario.last_simulation = ""
     if new_scenario.save
-  		#new_scenario_id = new_scenario.id
-  		#3. Copy subareas info by scenario
-  		add_scenario_to_soils(new_scenario, false)
+      #new_scenario_id = new_scenario.id
+      #3. Copy subareas info by scenario
+      add_scenario_to_soils(new_scenario, false)
       #3A. Update subarea with bmps informaiton
       update_subareas(new_scenario, scenario)
-  		#4. Copy operations info
-  		scenario.operations.each do |operation|
-    		new_op = operation.dup
-  			new_op.scenario_id = new_scenario.id
-  			new_op.save
-  			add_soil_operation(new_op,0)
-  		end   # end bmps.each
-  		#5. Copy bmps info
-  		@new_scenario_id = new_scenario.id
-  		scenario.bmps.each do |b|
-  			duplicate_bmp(b)
-  		end   # end bmps.each
+      #4. Copy operations info
+      scenario.operations.each do |operation|
+        new_op = operation.dup
+        new_op.scenario_id = new_scenario.id
+        new_op.save
+        add_soil_operation(new_op,0)
+      end   # end bmps.each
+      #5. Copy bmps info
+      @new_scenario_id = new_scenario.id
+      scenario.bmps.each do |b|
+        duplicate_bmp(b)
+      end   # end bmps.each
     else
-		  return "Error Saving scenario"
+      return "Error Saving scenario"
     end   # end if scenario saved
-  	return "OK"
+    return "OK"
   end
 
   def upload_scenarios
