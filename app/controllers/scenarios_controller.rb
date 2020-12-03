@@ -252,46 +252,54 @@ class ScenariosController < ApplicationController
     #file_name = "MD_013"
     file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
+    #xml = ""
     File.open(full_name).each do |line|
       line_splited = line.split("|")
-      next if line_splited.include? "State" 
+      next if line_splited[0].include? "State"
       #create xml file and send it to run
       builder = Nokogiri::XML::Builder.new do |xml|
         xml.NTT {
           xml.StartInfo {
             #save start information
-            xml.StateId = line_splited[0]    #state abrevation.
-            xml.CountyId = file_name.split("_")[1]    #county code.
-            xml.project_name @project.name
+            xml.StateId line_splited[0]    #state abrevation.
+            xml.CountyId file_name.split("_")[1]    #county code.
+            xml.ProjectName @project.name
           } # end xml.StartInfo
           #save field information
           xml.FieldInfo {
-            xml.Field_id = @field.id
-            xml.Area = 100
-            xml.SoilP = 0
-            xml.Coordinates = line_splited[3]
+            xml.Field_id @field.id
+            xml.Area 100
+            xml.SoilP 0
+            xml.Coordinates line_splited[3]
             xml.ScenarioInfo {
-              xml.Name = Scenario.find_by_id(params[:select_ntt][0]).name #@scenario.name
+              xml.Name Scenario.find_by_id(params[:select_ntt][0]).name #@scenario.name
               #create operations
-              SoilOperation.where(params[:select_ntt][0]).each do |soop|   # multiple soiloperations for each scenario_id
+              SoilOperation.where(:scenario_id => params[:select_ntt][0]).each do |soop|   # multiple soiloperations for each scenario_id
                 xml.ManagementInfo {
-                  xml.Operation = soop   #todo
-                  xml.Year = soop.year
-                  xml.Month = soop.month
-                  xml.Day = soop.day
-                  xml.Crop = soop.apex_crop
-                  xml.Opv1 = soop.opv1
-                  xml.Opv2 = soop.opv2
-                  xml.Opv3 = soop.opv3
-                  xml.Opv4 = soop.opv4
-                  xml.Opv5 = soop.opv5
+                  xml.Operation soop.apex_operation
+                  xml.Year soop.year
+                  xml.Month soop.month
+                  xml.Day soop.day
+                  xml.Crop soop.apex_crop
+                  xml.Opv1 soop.opv1
+                  xml.Opv2 soop.opv2
+                  xml.Opv3 soop.opv3
+                  xml.Opv4 soop.opv4
+                  xml.Opv5 soop.opv5
                 }  # end operations
               end
             } # end scenario
           } # end field                          
         } # end xml.start info
       end #builder do end
+      xmlString = builder.to_xml
+      xmlString.gsub! "<", "["
+      xmlString.gsub! ">", "]"
+      xmlString.gsub! "\n", ""
+      xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+      xmlString.gsub! "]    [", "] ["
       #run simulation
+      result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
     end   # end File.opne
   end
 
