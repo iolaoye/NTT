@@ -188,9 +188,7 @@ class ScenariosController < ApplicationController
     session[:simulation] = 'scenario'
     #case true
     if @project.version.include? "special"
-      #fork do   todo uncomment for production
         run_special_simulation()
-      #end    todo uncomment for production
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
@@ -249,7 +247,7 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013"
+    file_name = "MD_013_all"
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
@@ -302,36 +300,36 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    xml.ApplicationRate
+                    xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA
                   }
                 when 3
                   xml.TileDrain {
-                    xml.Depth bmp.depth
+                    xml.Depth bmp.depth*FT_TO_MM
                   }
                 when 8
                   xml.Wetland {
-                    xml.Area bmp.area
+                    xml.Area bmp.area*AC_TO_HA
                   }
                 when 9
                   xml.Pond {
-                    xml.Fraction
+                    xml.Fraction bmp.irrigation_efficiency
                   }
                 when 13
                   xml.GrassBuffer {
-                    xml.CropCode
-                    xml.Area
-                    xml.GrassStripWidth
-                    xml.ForestStripWidth
-                    xml.Fraction
+                    xml.CropCode bmp.crop_id
+                    xml.Area bmp.area
+                    xml.GrassStripWidth bmp.width * FT_TO_M
+                    xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M
+                    xml.Fraction * bmp.slope_reduction
                   }
                 when 14
                   xml.GrassWaterway {
-                    xml.Width
-                    xml.Fraction
+                    xml.Width bmp.width
+                    xml.Fraction bmp.slope_reduction
                   }
                 when 16
                   xml.LandLeveling {
-                    xml.SlopeReduction
+                    xml.SlopeReduction bmp.slope_reduction
                   }
                 when 17
                   xml.TerraceSystem {
