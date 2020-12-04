@@ -288,8 +288,11 @@ class ScenariosController < ApplicationController
                   xml.Opv5 soop.opv5
                 }  # end operations
               end
-              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp|
+              # Added by Jennifer 12/3/20
+              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp| 
                 xml.BmpInfo {
+                case bmp.bmpsublist_id
+                when 1
                   xml.Autoirrigation {
                     xml.Code
                     xml.Efficiency bmp.irrigation_efficiency
@@ -298,15 +301,19 @@ class ScenariosController < ApplicationController
                     xml.Volume
                     xml.ApplicationRate
                   }
+                when 3
                   xml.TileDrain {
                     xml.Depth bmp.depth
                   }
+                when 8
                   xml.Wetland {
                     xml.Area bmp.area
                   }
+                when 9
                   xml.Pond {
                     xml.Fraction
                   }
+                when 13
                   xml.GrassBuffer {
                     xml.CropCode
                     xml.Area
@@ -314,16 +321,20 @@ class ScenariosController < ApplicationController
                     xml.ForestStripWidth
                     xml.Fraction
                   }
+                when 14
                   xml.GrassWaterway {
                     xml.Width
                     xml.Fraction
                   }
+                when 16
                   xml.LandLeveling {
                     xml.SlopeReduction
                   }
+                when 17
                   xml.TerraceSystem {
                     xml.Active
                   }
+                end # end case statement
                 } # end bmpinfo
               end
             } # end scenario
