@@ -255,6 +255,8 @@ class ScenariosController < ApplicationController
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0}
     File.open(full_name).each do |line|
+      line.gsub! "\n",""
+      line.gsub! "\r",""
       line_splited = line.split("|")
       next if line_splited[0].include? "State"
       #create xml file and send it to run
@@ -361,6 +363,10 @@ class ScenariosController < ApplicationController
       #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
       #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
     end   # end File.open
+    debugger
+    File.open("public/NTTFiles/" + file_name + ".out". "w+") do |f|
+      f.write(total_xml)
+    end
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
   end
 
