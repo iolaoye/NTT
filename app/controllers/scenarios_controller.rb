@@ -188,7 +188,7 @@ class ScenariosController < ApplicationController
     session[:simulation] = 'scenario'
     #case true
     if @project.version.include? "special"
-      fork #comment when need to debugge.
+      fork do #comment when need to debugge.
         run_special_simulation()
       end
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
