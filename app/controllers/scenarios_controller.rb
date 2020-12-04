@@ -298,7 +298,6 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    debugger
                     xml.ApplicationRate dry_manure*LBS_AC_TO_T_HA
                   }
                 when 3
