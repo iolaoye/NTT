@@ -252,7 +252,7 @@ class ScenariosController < ApplicationController
     file_name = "MD_013"
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
-    #xml = ""
+    total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0}
     File.open(full_name).each do |line|
       line_splited = line.split("|")
       next if line_splited[0].include? "State"
@@ -267,7 +267,7 @@ class ScenariosController < ApplicationController
           } # end xml.StartInfo
           #save field information
           xml.FieldInfo {
-            xml.Field_id @field.id + "_" + line_splited[2]
+            xml.Field_id @field.id.to_s + "_" + line_splited[2]
             xml.Area 100
             xml.SoilP 0
             xml.Coordinates line_splited[3]
@@ -289,7 +289,7 @@ class ScenariosController < ApplicationController
                 }  # end operations
               end
               # Added by Jennifer 12/3/20
-              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp| 
+              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp|
                 xml.BmpInfo {
                 case bmp.bmpsublist_id
                 when 1
@@ -349,7 +349,18 @@ class ScenariosController < ApplicationController
       xmlString.gsub! "]    [", "] ["
       #run simulation
       result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
-    end   # end File.opne
+      xml = Hash.from_xml(result.gsub("\n","").downcase)
+      if xml["summary"]["results"]["errorcode"] == "0" then
+        #add all of the values because thereis not error
+        total_xml["organicn"] += xml["summary"]["results"]["organicn"].to_f
+        total_xml["total_runs"] += 1
+      else
+        total_xml["total_errors"] += 1
+      end
+      #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
+      #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
+    end   # end File.open
+    #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
