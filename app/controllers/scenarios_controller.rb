@@ -247,7 +247,7 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013_all"
+    file_name = "MD_013"
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
@@ -298,15 +298,15 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA
+                    xml.ApplicationRate bmp.dry_manure # *LBS_AC_TO_T_HA
                   }
                 when 3
                   xml.TileDrain {
-                    xml.Depth bmp.depth*FT_TO_MM
+                    xml.Depth bmp.depth # *FT_TO_MM
                   }
                 when 8
                   xml.Wetland {
-                    xml.Area bmp.area*AC_TO_HA
+                    xml.Area bmp.area # *AC_TO_HA
                   }
                 when 9
                   xml.Pond {
@@ -316,8 +316,8 @@ class ScenariosController < ApplicationController
                   xml.GrassBuffer {
                     xml.CropCode bmp.crop_id
                     xml.Area bmp.area
-                    xml.GrassStripWidth bmp.width * FT_TO_M
-                    xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M
+                    xml.GrassStripWidth bmp.width # * FT_TO_M
+                    xml.ForestStripWidth bmp.grass_field_portion # * FT_TO_M
                     xml.Fraction * bmp.slope_reduction
                   }
                 when 14
@@ -337,7 +337,7 @@ class ScenariosController < ApplicationController
                 } # end bmpinfo
               end
             } # end scenario
-          } # end field                          
+          } # end field
         } # end xml.start info
       end #builder do end
       xmlString = builder.to_xml
@@ -346,6 +346,8 @@ class ScenariosController < ApplicationController
       xmlString.gsub! "\n", ""
       xmlString.gsub! "[?xml version=\"1.0\"?]", ""
       xmlString.gsub! "]    [", "] ["
+      #
+      # xmlString.gsub(/\r\n/,'')
       #run simulation
       result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
       xml = Hash.from_xml(result.gsub("\n","").downcase)
