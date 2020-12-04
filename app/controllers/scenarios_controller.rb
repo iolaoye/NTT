@@ -252,6 +252,7 @@ class ScenariosController < ApplicationController
     file_name = "MD_013"
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
+    #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0}
     File.open(full_name).each do |line|
       line_splited = line.split("|")
