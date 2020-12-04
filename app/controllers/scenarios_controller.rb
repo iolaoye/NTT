@@ -267,7 +267,7 @@ class ScenariosController < ApplicationController
           } # end xml.StartInfo
           #save field information
           xml.FieldInfo {
-            xml.Field_id @field.id
+            xml.Field_id @field.id + "_" + line_splited[2]
             xml.Area 100
             xml.SoilP 0
             xml.Coordinates line_splited[3]
