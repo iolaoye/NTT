@@ -188,9 +188,7 @@ class ScenariosController < ApplicationController
     session[:simulation] = 'scenario'
     #case true
     if @project.version.include? "special"
-      #fork do   todo uncomment for production
         run_special_simulation()
-      #end    todo uncomment for production
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
@@ -300,7 +298,8 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    xml.ApplicationRate*LBS_AC_TO_T_HA
+                    debugger
+                    xml.ApplicationRate dry_manure*LBS_AC_TO_T_HA
                   }
                 when 3
                   xml.TileDrain {
