@@ -310,24 +310,24 @@ class ScenariosController < ApplicationController
                   }
                 when 9
                   xml.Pond {
-                    xml.Fraction # bmp.irrigation_efficiency
+                    xml.Fraction bmp.irrigation_efficiency
                   }
                 when 13
                   xml.GrassBuffer {
-                    xml.CropCode
-                    xml.Area
-                    xml.GrassStripWidth #FT_TO_M
-                    xml.ForestStripWidth #FT_TO_M
-                    xml.Fraction
+                    xml.CropCode bmp.crop_id
+                    xml.Area bmp.area
+                    xml.GrassStripWidth bmp.width * FT_TO_M
+                    xml.ForestStripWidth grass_field_portion * FT_TO_M
+                    xml.Fraction * slope_reduction
                   }
                 when 14
                   xml.GrassWaterway {
-                    xml.Width
-                    xml.Fraction
+                    xml.Width bmp.width
+                    xml.Fraction bmp.slope_reduction
                   }
                 when 16
                   xml.LandLeveling {
-                    xml.SlopeReduction
+                    xml.SlopeReduction bmp.slope_reduction
                   }
                 when 17
                   xml.TerraceSystem {
