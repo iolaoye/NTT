@@ -298,7 +298,7 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    xml.ApplicationRate dry_manure*LBS_AC_TO_T_HA
+                    xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA
                   }
                 when 3
                   xml.TileDrain {
@@ -310,7 +310,7 @@ class ScenariosController < ApplicationController
                   }
                 when 9
                   xml.Pond {
-                    xml.Fraction
+                    xml.Fraction # bmp.irrigation_efficiency
                   }
                 when 13
                   xml.GrassBuffer {
