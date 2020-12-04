@@ -363,8 +363,7 @@ class ScenariosController < ApplicationController
       #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
       #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
     end   # end File.open
-    debugger
-    File.open("public/NTTFiles/" + file_name + ".out". "w+") do |f|
+    File.open("public/NTTFiles/" + file_name + ".out", "w+") do |f|
       f.write(total_xml)
     end
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
