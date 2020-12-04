@@ -300,15 +300,15 @@ class ScenariosController < ApplicationController
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
                     xml.Volume
-                    xml.ApplicationRate
+                    xml.ApplicationRate*LBS_AC_TO_T_HA
                   }
                 when 3
                   xml.TileDrain {
-                    xml.Depth bmp.depth
+                    xml.Depth bmp.depth*FT_TO_MM
                   }
                 when 8
                   xml.Wetland {
-                    xml.Area bmp.area
+                    xml.Area bmp.area*AC_TO_HA
                   }
                 when 9
                   xml.Pond {
@@ -318,8 +318,8 @@ class ScenariosController < ApplicationController
                   xml.GrassBuffer {
                     xml.CropCode
                     xml.Area
-                    xml.GrassStripWidth
-                    xml.ForestStripWidth
+                    xml.GrassStripWidth #FT_TO_M
+                    xml.ForestStripWidth #FT_TO_M
                     xml.Fraction
                   }
                 when 14
