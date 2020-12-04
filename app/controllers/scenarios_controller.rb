@@ -247,7 +247,7 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013"
+    file_name = "MD_013_all"
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
@@ -317,8 +317,8 @@ class ScenariosController < ApplicationController
                     xml.CropCode bmp.crop_id
                     xml.Area bmp.area
                     xml.GrassStripWidth bmp.width * FT_TO_M
-                    xml.ForestStripWidth grass_field_portion * FT_TO_M
-                    xml.Fraction * slope_reduction
+                    xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M
+                    xml.Fraction * bmp.slope_reduction
                   }
                 when 14
                   xml.GrassWaterway {
