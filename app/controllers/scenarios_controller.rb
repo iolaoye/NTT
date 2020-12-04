@@ -249,8 +249,8 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    #file_name = "MD_013"
-    file_name = c[0..1] + "_" + c[2..]
+    file_name = "MD_013"
+    #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #xml = ""
     File.open(full_name).each do |line|
@@ -288,20 +288,21 @@ class ScenariosController < ApplicationController
                   xml.Opv5 soop.opv5
                 }  # end operations
               end
+              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp|
                 xml.BmpInfo {
                   xml.Autoirrigation {
                     xml.Code
-                    xml.Efficiency
-                    xml.Frequency
-                    xml.Stress
+                    xml.Efficiency bmp.irrigation_efficiency
+                    xml.Frequency bmp.maximum_single_application
+                    xml.Stress bmp.water_stress_factor
                     xml.Volume
                     xml.ApplicationRate
                   }
                   xml.TileDrain {
-                    xml.Depth
+                    xml.Depth bmp.depth
                   }
                   xml.Wetland {
-                    xml.Area
+                    xml.Area bmp.area
                   }
                   xml.Pond {
                     xml.Fraction
@@ -324,6 +325,7 @@ class ScenariosController < ApplicationController
                     xml.Active
                   }
                 } # end bmpinfo
+              end
             } # end scenario
           } # end field                          
         } # end xml.start info
