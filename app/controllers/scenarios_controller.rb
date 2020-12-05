@@ -249,8 +249,8 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013_all"
-    #file_name = c[0..1] + "_" + c[2..]
+    #file_name = "MD_013_all"
+    file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0}
