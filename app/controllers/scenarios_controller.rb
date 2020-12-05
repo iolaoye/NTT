@@ -301,16 +301,16 @@ class ScenariosController < ApplicationController
                     xml.Efficiency bmp.irrigation_efficiency
                     xml.Frequency bmp.maximum_single_application
                     xml.Stress bmp.water_stress_factor
-                    xml.Volume
-                    xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA
+                    xml.Volume # in mm
+                    xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA # convert pounds/acre to kg/ha
                   }
                 when 3
                   xml.TileDrain {
-                    xml.Depth bmp.depth*FT_TO_MM
+                    xml.Depth bmp.depth*FT_TO_MM # convert ft to mm
                   }
                 when 8
                   xml.Wetland {
-                    xml.Area bmp.area*AC_TO_HA
+                    xml.Area bmp.area*AC_TO_HA # convert ac to ha
                   }
                 when 9
                   xml.Pond {
@@ -319,9 +319,9 @@ class ScenariosController < ApplicationController
                 when 13
                   xml.GrassBuffer {
                     xml.CropCode bmp.crop_id
-                    xml.Area bmp.area
-                    xml.GrassStripWidth bmp.width * FT_TO_M
-                    xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M
+                    xml.Area bmp.area*AC_TO_HA # convert ac to ha
+                    xml.GrassStripWidth bmp.width * FT_TO_M # convert ft to m
+                    xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M # convert ft to m
                     xml.Fraction * bmp.slope_reduction
                   }
                 when 14
@@ -341,7 +341,7 @@ class ScenariosController < ApplicationController
                 } # end bmpinfo
               end
             } # end scenario
-          } # end field                          
+          } # end field
         } # end xml.start info
       end #builder do end
       xmlString = builder.to_xml
