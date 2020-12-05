@@ -188,7 +188,9 @@ class ScenariosController < ApplicationController
     session[:simulation] = 'scenario'
     #case true
     if @project.version.include? "special"
+      fork do #comment when need to debugge.
         run_special_simulation()
+      end
       flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
@@ -247,12 +249,14 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013"
-    #file_name = c[0..1] + "_" + c[2..]
+    #file_name = "MD_013_all"
+    file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0}
     File.open(full_name).each do |line|
+      line.gsub! "\n",""
+      line.gsub! "\r",""
       line_splited = line.split("|")
       next if line_splited[0].include? "State"
       #create xml file and send it to run
@@ -346,8 +350,6 @@ class ScenariosController < ApplicationController
       xmlString.gsub! "\n", ""
       xmlString.gsub! "[?xml version=\"1.0\"?]", ""
       xmlString.gsub! "]    [", "] ["
-      #
-      xmlString.gsub(/\r\n/,'')
       #run simulation
       result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
       xml = Hash.from_xml(result.gsub("\n","").downcase)
@@ -361,6 +363,9 @@ class ScenariosController < ApplicationController
       #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
       #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
     end   # end File.open
+    File.open("public/NTTFiles/" + file_name + ".out", "w+") do |f|
+      f.write(total_xml)
+    end
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
   end
 
