@@ -253,7 +253,8 @@ class ScenariosController < ApplicationController
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
-    total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0,"solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0}
+    total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0,"solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
+    crops_hash = nil
     File.open(full_name).each do |line|
       line.gsub! "\n",""
       line.gsub! "\r",""
@@ -387,9 +388,7 @@ class ScenariosController < ApplicationController
         total_xml["orgp_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
         total_xml["no3_ci"] += xml["summary"]["results"]["no3_ci"].to_f
         total_xml["po4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-        # total_xml["crops"] += xml["summary"]["results"]["crops"]["cropcode"].to_f
-        # total_xml["crop"] += xml["summary"]["results"]["crop"].to_f
-        # total_xml["yield"] += xml["summary"]["results"]["yield"].to_f
+        crops_hash = xml["summary"]["crops"] # May have more than one crop
         total_xml["total_runs"] += 1
       else
         total_xml["total_errors"] += 1
@@ -433,8 +432,17 @@ class ScenariosController < ApplicationController
      avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
      avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
      avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
+     crop_code = total_xml["cropcode"]
+     crop_name = total_xml["crop"]
+     crop_yield = total_xml["yield"]
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
-     AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], orgn: avg_orgn_ci, no3: avg_no3, flow:avg_flow)
+
+    AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_orgp_ci, orgn: avg_orgn_ci, po4:avg_po4_ci, no3:avg_no3_ci, qdrn:avg_quickreturnn)
+    # Note: Adding 'surface_flow: avg_surfaceflow' to hash produces SQL error
+
+     crops_hash.each do |c|
+       CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
+     end
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
