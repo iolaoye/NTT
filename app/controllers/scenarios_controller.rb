@@ -249,8 +249,8 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
     c = County.find_by_id(@project.location.county_id).county_state_code
-    file_name = "MD_013"
-    #file_name = c[0..1] + "_" + c[2..]
+    #file_name = "MD_013"
+    file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
@@ -440,13 +440,13 @@ class ScenariosController < ApplicationController
      # crop_name = total_xml["crop"]
      # crop_yield = total_xml["yield"]
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
-
-    AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_organicp, orgn: avg_organicn, po4:avg_po4_ci, no3:avg_no3_ci, qdrn:avg_quickreturnn)
+    annual_result = AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
+    annual_result.update(no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_organicp, orgn: avg_organicn, po4:avg_solublep, qdrn:avg_quickreturnn)
     # Note: Adding 'surface_flow: avg_surfaceflow' to hash produces SQL error
 
-     crops_hash.each do |c|
-       CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
-     end
+     # crops_hash.each do |c|
+     #   CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
+     # end
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
