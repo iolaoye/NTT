@@ -255,6 +255,8 @@ class ScenariosController < ApplicationController
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
     crops_hash = nil
+    #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
+    scenario = Scenario.find(params[:select_ntt][0])
     File.open(full_name).each do |line|
       line.gsub! "\n",""
       line.gsub! "\r",""
@@ -276,9 +278,9 @@ class ScenariosController < ApplicationController
             xml.SoilP 0
             xml.Coordinates line_splited[3]
             xml.ScenarioInfo {
-              xml.Name Scenario.find_by_id(params[:select_ntt][0]).name #@scenario.name
+              xml.Name scenario.name #@scenario.name
               #create operations
-              SoilOperation.where(:scenario_id => params[:select_ntt][0]).each do |soop|   # multiple soiloperations for each scenario_id
+              SoilOperation.where(:scenario_id => scenario.id).each do |soop|   # multiple soiloperations for each scenario_id
                 xml.ManagementInfo {
                   xml.Operation soop.apex_operation
                   xml.Year soop.year
@@ -293,7 +295,7 @@ class ScenariosController < ApplicationController
                 }  # end operations
               end
               # Added by Jennifer 12/3/20
-              Bmp.where(:scenario_id => params[:select_ntt][0]).each do |bmp|
+              Bmp.where(:scenario_id => scenario.id).each do |bmp|
                 xml.BmpInfo {
                 case bmp.bmpsublist_id
                 when 1
@@ -442,8 +444,9 @@ class ScenariosController < ApplicationController
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
     annual_result = AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
     annual_result.update(no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_organicp, orgn: avg_organicn, po4:avg_solublep, qdrn:avg_quickreturnn)
-    # Note: Adding 'surface_flow: avg_surfaceflow' to hash produces SQL error
-
+    #update simulation date
+    scenario.last_simulation = Time.now
+    scenario.save
      # crops_hash.each do |c|
      #   CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
      # end
