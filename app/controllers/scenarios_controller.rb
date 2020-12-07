@@ -253,7 +253,7 @@ class ScenariosController < ApplicationController
     #file_name = c[0..1] + "_" + c[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
-    total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0,"solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
+    total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
     crops_hash = nil
     File.open(full_name).each do |line|
       line.gsub! "\n",""
@@ -363,9 +363,11 @@ class ScenariosController < ApplicationController
         total_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
         total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
         total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
+        total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f
         total_xml["tiledrainn"] += xml["summary"]["results"]["tiledrainn"].to_f
         total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f
         total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
+        total_xml["organicp"] += xml["summary"]["results"]["organicp"].to_f
         total_xml["solublep"] += xml["summary"]["results"]["solublep"].to_f
         total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
         total_xml["tiledrainp"] += xml["summary"]["results"]["tiledrainp"].to_f
@@ -400,16 +402,18 @@ class ScenariosController < ApplicationController
       f.write(total_xml)
     end
     # average_all_xml = (total_xml["organicn"] + total_xml["no3"] + total_xml["surface_n"] + total_xml["subsurface_n"] + total_xml["lateralsubsurfacen"] + total_xml["quickreturnn"] + total_xml["returnsubsurfacen"] + total_xml["tiledrainn"] + total_xml["volatilizedn"] + total_xml["nitrousoxide"] + total_xml["solublep"] + total_xml["leachedp"] + total_xml["tiledrainp"] + total_xml["flow"] + total_xml["surfaceflow"] + total_xml["subsurfaceflow"] + total_xml["lateralsubsurfaceflow"] + total_xml["quickreturnflow"] + total_xml["returnsubsurfaceflow"] + total_xml["tiledrainflow"] + total_xml["deeppercolation"] + total_xml["irrigationapplied"] + total_xml["sediment"] + total_xml["sedimentsurface"] + total_xml["sedimentmanure"] + total_xml["carbon"] + total_xml["flow_ci"] + total_xml["sed_ci"] + total_xml["orgn_ci"] + total_xml["orgp_ci"] + total_xml["no3_ci"] + total_xml["po4_ci"])/32
-     avg_organic = total_xml["organicn"] / total_xml["total_runs"]
+     avg_organicn = total_xml["organicn"] / total_xml["total_runs"]
      avg_no3 = total_xml["no3"]/ total_xml["total_runs"]
      avg_surface_n = total_xml["surface_n"] / total_xml["total_runs"]
      avg_subsurface_n = total_xml["subsurface_n"] / total_xml["total_runs"]
      avg_lateralsubsurfacen = total_xml["lateralsubsurfacen"] / total_xml["total_runs"]
      avg_quickreturnn = total_xml["quickreturnn"] / total_xml["total_runs"]
      avg_returnsubsurfacen = total_xml["returnsubsurfacen"]/ total_xml["total_runs"]
+     avg_leachedn = total_xml["leachedn"] / total_xml["total_runs"]
      avg_tiledrainn = total_xml["tiledrainn"] / total_xml["total_runs"]
      avg_volatilizedn = total_xml["volatilizedn"] / total_xml["total_runs"]
      avg_nitrousoxide = total_xml["nitrousoxide"] / total_xml["total_runs"]
+     avg_organicp = total_xml["organicp"] / total_xml["total_runs"]
      avg_solublep = total_xml["solublep"] / total_xml["total_runs"]
      avg_leachedp = total_xml["leachedp"] / total_xml["total_runs"]
      avg_tiledrainp = total_xml["tiledrainp"]/ total_xml["total_runs"]
@@ -432,12 +436,12 @@ class ScenariosController < ApplicationController
      avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
      avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
      avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
-     crop_code = total_xml["cropcode"]
-     crop_name = total_xml["crop"]
-     crop_yield = total_xml["yield"]
+     # crop_code = total_xml["cropcode"]
+     # crop_name = total_xml["crop"]
+     # crop_yield = total_xml["yield"]
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
 
-    AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_orgp_ci, orgn: avg_orgn_ci, po4:avg_po4_ci, no3:avg_no3_ci, qdrn:avg_quickreturnn)
+    AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], no3: avg_no3, flow:avg_flow, sed: avg_sediment, irri: avg_irrigationapplied, n2o:avg_nitrousoxide, orgp:avg_organicp, orgn: avg_organicn, po4:avg_po4_ci, no3:avg_no3_ci, qdrn:avg_quickreturnn)
     # Note: Adding 'surface_flow: avg_surfaceflow' to hash produces SQL error
 
      crops_hash.each do |c|
