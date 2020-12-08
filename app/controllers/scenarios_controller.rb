@@ -444,12 +444,14 @@ class ScenariosController < ApplicationController
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
     annual_result = AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
     annual_result.update(sub1: 0, year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0)
-    #update simulation date
-    scenario.last_simulation = Time.now
-    scenario.save
      # crops_hash.each do |c|
      #   CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
      # end
+    #update simulation date
+    scenario.last_simulation = Time.now
+    scenario.save
+    @user = User.find(session[:user_id])
+    @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n")
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
