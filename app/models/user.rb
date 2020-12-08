@@ -22,34 +22,42 @@ class User < ActiveRecord::Base
      user = find_by_email(email)
      return user if user && user.authenticated?(password)
    end
+
    def authenticated?(password)
      self.hashed_password == encrypt(password)
    end
-	 def create_reset_digest
-		 self.reset_token = User.new_token
-		 update_attribute(:reset_digest, User.digest(reset_token))
-		 update_attribute(:reset_sent_at, Time.zone.now)
-	 end
-	 def send_password_reset_email
-		 UserMailer.password_reset(self).deliver
-	 end
+   def create_reset_digest
+	 self.reset_token = User.new_token
+	 update_attribute(:reset_digest, User.digest(reset_token))
+	 update_attribute(:reset_sent_at, Time.zone.now)
+   end
+   def send_password_reset_email
+	 UserMailer.password_reset(self).deliver
+   end
 
-	 def send_fields_simulated_email(msg)
-		 UserMailer.fields_simulated(self, msg).deliver_now
-	 end
-	 def self.new_token
-		 SecureRandom.urlsafe_base64
-	 end
-	 def self.digest(string)
-		 cost = BCrypt::Engine::MIN_COST
-		 BCrypt::Password.create(string, cost: cost)
-	 end
+   def send_fields_simulated_email(msg)
+	 UserMailer.fields_simulated(self, msg).deliver_now
+   end
+   def self.new_token
+	 SecureRandom.urlsafe_base64
+   end
+   def self.digest(string)
+	 cost = BCrypt::Engine::MIN_COST
+	 BCrypt::Password.create(string, cost: cost)
+   end
+   # Returns true if password_reset sent more than 2 hours earlier
+   def password_reset_expired?
+	 reset_sent_at < 2.hours.ago
+   end
 
-	 # Returns true if password_reset sent more than 2 hours earlier
-	 def password_reset_expired?
-		 reset_sent_at < 2.hours.ago
-	 end
-
+   def county_authorized_users
+ 	 if self.admin == true then return true end
+ 	 if self.email == "pokhrel@tiaer.tarleton.edu" or 
+ 	    self.email == "wen@tarleton.edu"
+ 	    return true
+     end
+     return false
+   end
  #protected functions
    protected
      def encrypt_new_password
