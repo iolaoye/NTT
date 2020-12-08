@@ -1,5 +1,7 @@
-<% aplcat = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost") %>
-<% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost") %>
+<% aplcat = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
+<% if @project != nil then aplcat = 0 if @project.version.include? "special" end %>
+<% fem = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
+<% if @project != nil then fem = 0 if @project.version.include? "special" end %>
 <% if !(@project == nil) %>
   <li class="<%= controller_name == "locations" ? "active" : "" %>">
     <% county = "" %>
@@ -226,7 +228,7 @@
       -->
     <% end %>
     <%# ******************  UTILITY MENU TO FIELD LEVEL ********************************* %>
-    <% unless ENV["APP_VERSION"] == "modified" %>
+    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
 		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) ? "active" : "" %>">
   			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) %>
   				<div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
@@ -238,7 +240,7 @@
     <% end %><!--field submenu-->
   <% end %>
 
-  <% if (!(@project.location == nil) && @project.fields.count > 0) %>
+  <% if (!(@project.location == nil) && @project.fields.count > 0 && !@project.version.include?("special")) %>
   	<ul class="nav nav-pills nav-stacked nav-sidebar">
   		<li class="<%= (controller_name == "watersheds" || controller_name == "watershed_scenarios" || (controller_name == "results" && request.url.include?(url_for("/fields/0/results?"))) || (controller_name == "results" && request.url.include?(url_for("simulation=Watershed"))))? "active" : "" %>"><%= link_to t('watershed.watershed'), project_watersheds_path(@project, :locale=>I18n.locale) %></li>
 

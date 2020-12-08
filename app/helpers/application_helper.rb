@@ -73,7 +73,9 @@ module ApplicationHelper
 		end
 
 		def result_submenu
-			if request.url.include?(url_for('by_soils'))
+			if @project.version.include?("special")
+				false
+			elsif request.url.include?(url_for('by_soils'))
 				true
 			elsif request.url.include?(url_for('annual_charts'))
 				true

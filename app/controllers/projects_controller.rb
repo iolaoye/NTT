@@ -295,6 +295,7 @@ class ProjectsController < ApplicationController
     soil.slope = 0.1
     soil.albedo = 0.37
     soil.percentage = 100
+    soil.drainage_id = 1
     if soil.save then
       return true
     else

@@ -61,7 +61,7 @@
 	<% end %>
 	<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
 </div>
-<% if req_parm == "FEM" || req_parm == "APLCAT" then %><% acitive_menu = "style=display:none" %><% end %>
+<% if req_parm == "FEM" || req_parm == "APLCAT" || (!User.find(session[:user_id]).county_authorized_users && @project.version.include?("special")) then %><% acitive_menu = "style=display:none" %><% end %>
 <div <%=acitive_menu%>>
 	<%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
 	<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
@@ -69,22 +69,21 @@
 		<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
 	<% end %>
 </div>
-
-<% @scenario = Scenario.new %>
-<div style="">
-	<br>
-	<div id="div_new" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
-		<h2><%= t('general.new') + " " + t('scenario.scenario') %></h2>
-		<%= render 'form' %>
+	<% @scenario = Scenario.new %>
+	<div style="">
+		<br>
+		<div id="div_new" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
+			<h2><%= t('general.new') + " " + t('scenario.scenario') %></h2>
+			<%= render 'form' %>
+		</div>
+		<div id="div_copy_other" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
+			<%= render 'other_field_scenario' %>
+		</div>
+		<div id="div_upload" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
+			<%= render 'upload_scenarios' %>
+		</div>
+		<br>
 	</div>
-	<div id="div_copy_other" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
-		<%= render 'other_field_scenario' %>
-	</div>
-	<div id="div_upload" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
-		<%= render 'upload_scenarios' %>
-	</div>
-	<br>
-</div>
 <%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
     <% if @scenarios.count > 0 %>
     	<% if req_parm == "NTT"%>
@@ -112,7 +111,7 @@
 	    		<%else %>
 		    		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 	    	<% end %>
-		    <% unless ENV["APP_VERSION"] == "modified" %>
+		    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
 		    	<% if req_parm == "NTT"%>
           			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
           		<% end %>

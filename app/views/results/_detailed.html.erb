@@ -594,7 +594,7 @@
 				</tr>
 				<% i += 1 %>
 			<% end %>
-			<% if ENV["APP_VERSION"] == "standard" %>
+			<% if ENV["APP_VERSION"] == "standard" and !@project.version.include?("special") %>
 				<% row_id = t + "row" + "200" %>
 				<tr class="gvRowStyleOdd", id = <%=row_id%>>
 					<th class="gvTotalText" style="border-right: thick double #ff0000; text-align:left">

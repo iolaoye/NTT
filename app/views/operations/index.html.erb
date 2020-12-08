@@ -13,11 +13,13 @@
 <% end %>
 
 <div class="page-header"><h1><%= t('menu.operations') %></h1></div>
+  <%if !@project.version.include?("special") || User.find(session[:user_id]).county_authorized_users%>
 	<%= button_tag t('result.add') + " " + t('operation.crop') + " " + t('general.to') + " " + t('operation.schedule'), :class => 'btn btn-primary', :id => 'new_crop' %>
 		<% if @rotations.blank? && ENV["APP_VERSION"] == "standard" %>
 			<%= link_to t('operation.new_operation'), new_project_field_scenario_operation_path(@project, @field, @scenario, :rotation => 1, :crop => 0), :class => 'btn btn-primary', :id => 'new_oper' %>
 	<% end %>
 	<%= button_tag t('operation.add_cover_crop'), :class => 'btn btn-primary', :id => 'new_ccr' %>
+  <%end%>
 	<%= button_tag t('general.switch') + " " + t('general.view'), { :id => "btn_views", :class => 'btn btn-primary', "onclick" => "saveView()" } %>
 	<%= link_to t('general.continue'), project_field_scenario_bmps_path(@project, @field, @scenario), :class => 'btn btn-success', :id => 'continue' %><br><br>
 	<div id="div_new" style="display:none">
