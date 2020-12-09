@@ -450,12 +450,12 @@ class ScenariosController < ApplicationController
         avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
         avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
 
-        annual_result = AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
+        annual_result = AnnualResult.find_or_initialize_by(scenario_id: scenario_id)
         annual_result.update(sub1: 0, year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide)
         crops.to_a
         crops.each do |crop|
-          crop_result = CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
-          crop_result.update(scenario_id: params[:select_ntt][0], name: crop["crop"], sub1: 0, year: 2018, yldg: crop["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
+          crop_result = CropResult.find_or_initialize_by(scenario_id: scenario_id)
+          crop_result.update(scenario_id: scenario_id, name: crop["crop"], sub1: 0, year: 2018, yldg: crop["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
         end
         #update simulation date
         scenario.last_simulation = Time.now
