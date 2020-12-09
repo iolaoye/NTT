@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
   end
   def fields_simulated(user, msg)
     @user = user
-    mail to: @user.email, subject: "Fields were simulated", body: msg
+    mail to: @user.email, subject: "NTT message", body: msg
   end
 
 end
