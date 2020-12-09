@@ -256,7 +256,7 @@ class ScenariosController < ApplicationController
     full_name = "public/NTTFiles/" + file_name + ".txt"
     #toto need to add all of the values in this inizialization in order to avoid nil errors.
     total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
-    crops_hash = nil
+    crops = nil
     #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
     scenario = Scenario.find(params[:select_ntt][0])
     File.open(full_name).each do |line|
@@ -394,7 +394,7 @@ class ScenariosController < ApplicationController
         total_xml["orgp_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
         total_xml["no3_ci"] += xml["summary"]["results"]["no3_ci"].to_f
         total_xml["po4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-        crops_hash = xml["summary"]["crops"] # May have more than one crop
+        crops = xml["summary"]["crops"] # May have more than one crop
         total_xml["total_runs"] += 1
       else
         total_xml["total_errors"] += 1
@@ -446,9 +446,13 @@ class ScenariosController < ApplicationController
     #todo need to average all of the values in the total_xml hash. The result should be added to a record in the annual results and crop results table. If the record exist need to be replace/updated otherwise need to be created.
     annual_result = AnnualResult.find_or_initialize_by(scenario_id: params[:select_ntt][0])
     annual_result.update(sub1: 0, year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide)
-     # crops_hash.each do |c|
-     #   CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: c["crop_name"], yldg: c["yield"])
-     # end
+    if crops.class == Hash
+      CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: crops["crop"], yldg: crops["yield"])
+    elsif crops.class == Array
+      crops.each do |crop|
+        CropResult.find_or_initialize_by(scenario_id: params[:select_ntt][0], name: crop["crop"], yldg: crop["yield"])
+      end
+    end
     #update simulation date
     scenario.last_simulation = Time.now
     scenario.save
