@@ -451,7 +451,6 @@ class ScenariosController < ApplicationController
       crop_result = crop_result.find_or_initialize_by(scenario_id: params[:select_ntt][0])
       crop_result.update(scenario_id: params[:select_ntt][0], name: crop["crop"], sub1: 0, year: 2018, yldg: crop["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
     end
-    end
     #update simulation date
     scenario.last_simulation = Time.now
     scenario.save
