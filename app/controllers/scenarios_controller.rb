@@ -191,7 +191,7 @@ class ScenariosController < ApplicationController
       fork do #comment when need to debugge.
         run_special_simulation()
       end
-      flash[:notice] = "County Scenarios have been sent to run on background" + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
+      flash[:notice] = "County Scenarios have been sent to run on background"
       redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
       return
     else
@@ -245,6 +245,8 @@ class ScenariosController < ApplicationController
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation
     require 'nokogiri'
+    #take initial time
+    time_begin = Time.now
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
     # State.find_by_id(@project.location.state_id).state_abbreviation
@@ -451,7 +453,8 @@ class ScenariosController < ApplicationController
     scenario.last_simulation = Time.now
     scenario.save
     @user = User.find(session[:user_id])
-    @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n")
+    @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n")
+      (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
