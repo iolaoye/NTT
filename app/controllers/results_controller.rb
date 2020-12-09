@@ -258,10 +258,9 @@ class ResultsController < ApplicationController
                     end
 
                     # determine which scenario this is.
-                    cis = results_data.order('pcp '+order)
-                                      .limit(count)
-                                      .group_by(&:sub1).map { |k, v|
-                        [k, v.map(&:orgn).confidence_interval,
+                    cis = results_data.order('pcp '+order).limit(count)
+                          .group_by(&:sub1).map { |k, v|
+                          [k, v.map(&:orgn).confidence_interval,
                                  v.map(&:qn).confidence_interval,
                                  v.map(&:no3).confidence_interval,
                                  v.map(&:qdrn).confidence_interval,
@@ -277,7 +276,7 @@ class ResultsController < ApplicationController
                                  v.map(&:ymnu).confidence_interval,
                                  v.map(&:co2).confidence_interval,
                                  v.map(&:n2o).confidence_interval
-                        ]}
+                          ]}
 
                     values = []
                     averages = []
@@ -289,25 +288,24 @@ class ResultsController < ApplicationController
 
                     averages.push(values)
 
-                    totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
-                                         .order('pcp ' + order)
-                                         .limit(count)
-                                         .pluck('avg(orgn)*' + total_area.to_s,
-                                                'avg(qn)*'  + total_area.to_s,
-                                                'avg(no3-qn)*' + total_area.to_s,
-                                                'avg(qdrn)*' + total_area.to_s,
-                                                'avg(orgp)*' + total_area.to_s,
-                                                'avg(po4)*' + total_area.to_s,
-                                                'avg(qdrp)*' + total_area.to_s,
-                                                'avg(surface_flow)*' + total_area.to_s,
-                                                'avg(flow-surface_flow)*' + total_area.to_s,
-                                                'avg(qdr)*' + total_area.to_s,
-                                                'avg(irri)*' + total_area.to_s,
-                                                'avg(dprk)*' + total_area.to_s,
-                                                'avg(sed)*' + total_area.to_s,
-                                                'avg(ymnu)*' + total_area.to_s,
-                                                'avg(co2)*' + total_area.to_s,
-                                                'avg(n2o)*' + total_area.to_s)
+                    #totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
+                    totals = results_data.order('pcp ' + order).limit(count)
+                              .pluck('avg(orgn)*' + total_area.to_s,
+                                  'avg(qn)*'  + total_area.to_s,
+                                  'avg(no3-qn)*' + total_area.to_s,
+                                  'avg(qdrn)*' + total_area.to_s,
+                                  'avg(orgp)*' + total_area.to_s,
+                                  'avg(po4)*' + total_area.to_s,
+                                  'avg(qdrp)*' + total_area.to_s,
+                                  'avg(surface_flow)*' + total_area.to_s,
+                                  'avg(flow-surface_flow)*' + total_area.to_s,
+                                  'avg(qdr)*' + total_area.to_s,
+                                  'avg(irri)*' + total_area.to_s,
+                                  'avg(dprk)*' + total_area.to_s,
+                                  'avg(sed)*' + total_area.to_s,
+                                  'avg(ymnu)*' + total_area.to_s,
+                                  'avg(co2)*' + total_area.to_s,
+                                  'avg(n2o)*' + total_area.to_s)
                     crops_data = CropResult.select('*', 'yldg+yldf AS yield')
                                       .where(simul + " = ? AND yldg+yldf > ?", scenario_id, 0)
 

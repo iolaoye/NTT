@@ -112,7 +112,6 @@ class AplcatParametersController < ApplicationController
 #       new()
 #     end
 #   rescue NoMethodError=> e
-#     debugger
 #     puts e.backtrace
 #   end
 # end
