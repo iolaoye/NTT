@@ -30,7 +30,6 @@ end
 
 
 # csv.each do |row| 
-#     #debugger
 #     puts row.to_hash
 #     FemFeed.create!(
 #         {:id => row[0],

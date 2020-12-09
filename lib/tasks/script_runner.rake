@@ -1,7 +1,6 @@
 #namespace :script_runner do
 #	desc "Runs hello worls R program"
 #	task :hello_world_r do
-#		debugger
 #	    puts "running R!"
 #	    filepath = Rails.root.join("lib", "external_scripts", "hello_world.R")
 #	    @output = `Rscript --vanilla #{filepath}`

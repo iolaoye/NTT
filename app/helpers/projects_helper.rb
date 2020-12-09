@@ -612,9 +612,6 @@ module ProjectsHelper
               operation.crop_id = crop.id
             end
           when "Operation_Name"   #todo
-            # if p.text == "2020 Harvest Corn" then
-            #   debugger
-            # end
             case true
               when p.text.include?("Tillage")
                 activity_id = 3
