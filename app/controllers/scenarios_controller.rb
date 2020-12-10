@@ -189,9 +189,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           run_special_simulation()
-        end
+        #end
         flash[:notice] = "The Selected Scenarios have been sent to run on background. An email will be sent for each scenario simulated"
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -449,13 +449,16 @@ class ScenariosController < ApplicationController
         avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
         avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
         avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
-
-        annual_result = AnnualResult.find_or_initialize_by(scenario_id: scenario_id)
+        annual_result = AnnualResult.find_or_initialize_by(scenario_id: scenario.id)
         annual_result.update(sub1: 0, year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide)
-        crops.to_a
-        crops.each do |crop|
-          crop_result = CropResult.find_or_initialize_by(scenario_id: scenario_id)
-          crop_result.update(scenario_id: scenario_id, name: crop["crop"], sub1: 0, year: 2018, yldg: crop["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
+        if crops.is_a? Hash then
+          crop_result = CropResult.find_or_initialize_by(scenario_id: scenario.id, name: crops["crop"])
+          crop_result.update(sub1: 0, year: 2018, yldg: crops["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
+        else
+          crops.each do |crop|
+            crop_result = CropResult.find_or_initialize_by(scenario_id: scenario.id, name: crop["crop"])
+            crop_result.update(sub1: 0, year: 2018, yldg: crop["yield"], yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
+          end
         end
         #update simulation date
         scenario.last_simulation = Time.now
