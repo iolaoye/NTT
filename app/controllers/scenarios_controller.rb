@@ -365,7 +365,7 @@ class ScenariosController < ApplicationController
           xmlString.gsub! "[?xml version=\"1.0\"?]", ""
           xmlString.gsub! "]    [", "] ["
           #run simulation
-          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
+          result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           if xml["summary"]["results"]["errorcode"] == "0" then
             #add all of the values because thereis not error
@@ -452,9 +452,9 @@ class ScenariosController < ApplicationController
         annual_result = AnnualResult.find_or_initialize_by(scenario_id: scenario.id)
         annual_result.update(sub1: 0, year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide)
         if crops.is_a? Hash then
-          crop = Crop.find(crops["cropcode"])
-          if crop != nil then
-            crop_yield = crops["yield"].to_f * (crop.dry_matter/100) / (crop.conversion_factor/HA_TO_AC)
+          cr = Crop.find(crops["cropcode"])
+          if cr != nil then
+            crop_yield = crops["yield"].to_f * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
           else
             crop_yield = crops["yield"].to_f
           end
@@ -462,11 +462,11 @@ class ScenariosController < ApplicationController
           crop_result.update(sub1: 0, year: 2018, yldg: crop_yield, yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
         else
           crops.each do |crop|
-          crop = Crop.find(crop["cropcode"])
+            cr = Crop.find(crop["cropcode"])
             if crop != nil then
-              crop_yield = crop["yield"].to_f * (crop.dry_matter/100) / (crop.conversion_factor/HA_TO_AC)
+              crop_yield = crop["yield"].to_f * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
             else
-              crop_yield = crops["yield"].to_f
+              crop_yield = crop["yield"].to_f
             end
             crop_result = CropResult.find_or_initialize_by(scenario_id: scenario.id, name: crop["crop"])
             crop_result.update(sub1: 0, year: 2018, yldg: crop_yield, yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
