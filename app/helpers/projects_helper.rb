@@ -803,47 +803,103 @@ module ProjectsHelper
     add_soil_operation(oper_new,0)
   end
 
-    ######################## Upload BMPs from Comet ################################################
-    def upload_bmp_comet_version(scenario_id, new_bmps)
-      values = {}
-      values[:action] = "save_bmps_from_load"
-      values[:project_id] = @project.id
-      values[:button] = t('submit.savecontinue')
-      for i in 0..(new_bmps.length - 1)
-        #bmp = Bmp.new
-        #bmp.scenario_id = scenario_id
-        case new_bmps[i].name
-          when "TileDrain"
-            values[:field_id] = @field.id
-            values[:scenario_id] = scenario_id
-            values[:bmp_td] = {}
-            values[:bmp_td][:depth] = (new_bmps[0].elements[0].text.to_f / FT_TO_MM).round(1)
-            values[:bmpsublist_id] = 3
-            #bmp.depth = new_bmps[0].elements[0].text
-            #bmp.depth = (bmp.depth / FT_TO_MM).round(1)
-            #bmp.save
-            #update subarea file with the TD
-            #subareas = Subarea.where(:scenario_id => scenario_id)
-            #subareas.each do |subarea|
-              #subarea.idr = new_bmps[0].elements[0].text
-              #subarea.save
-            #end
-          when "AutoIrrigation"
-            #params[:scenario_id] = scenario_id
-            values[:bmpsublist_id] = 1
-            values[:irrigation_id] = new_bmps[0].elements["Code"].text
-            values[:days] = new_bmps[0].elements["Frequency"].text
-            values[:water_stress_factor] = new_bmps[0].elements["Stress"].text
-        values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
-            values[:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
-            values[:dry_manure] = new_bmps[0].elements["ApplicationRate"].text
-        end
-        #$params = params
-        bmp_controller = BmpsController.new
-        bmp_controller.request = request
-        bmp_controller.response = response
-        bmp_controller.save_bmps_from_load(values)
+  ######################## Upload BMPs from Comet ################################################
+  def upload_bmp_comet_version(scenario_id, new_bmps)
+    values = {}
+    values[:action] = "save_bmps_from_load"
+    values[:project_id] = @project.id
+    values[:button] = t('submit.savecontinue')
+    for i in 0..(new_bmps.length - 1)
+      #bmp = Bmp.new
+      #bmp.scenario_id = scenario_id
+      case new_bmps[i].name
+        when "TileDrain"
+          values[:field_id] = @field.id
+          values[:scenario_id] = scenario_id
+          values[:bmp_td] = {}
+          values[:bmp_td][:depth] = (new_bmps[0].elements[0].text.to_f / FT_TO_MM).round(1)
+          values[:bmpsublist_id] = 3
+          #bmp.depth = new_bmps[0].elements[0].text
+          #bmp.depth = (bmp.depth / FT_TO_MM).round(1)
+          #bmp.save
+          #update subarea file with the TD
+          #subareas = Subarea.where(:scenario_id => scenario_id)
+          #subareas.each do |subarea|
+            #subarea.idr = new_bmps[0].elements[0].text
+            #subarea.save
+          #end
+        when "AutoIrrigation"
+          #params[:scenario_id] = scenario_id
+          values[:bmpsublist_id] = 1
+          values[:irrigation_id] = new_bmps[0].elements["Code"].text
+          values[:days] = new_bmps[0].elements["Frequency"].text
+          values[:water_stress_factor] = new_bmps[0].elements["Stress"].text
+      values[:irrigation_efficiency] = new_bmps[0].elements["Efficiency"].text
+          values[:maximum_single_application] = new_bmps[0].elements["Volume"].text * MM_TO_IN
+          values[:dry_manure] = new_bmps[0].elements["ApplicationRate"].text
       end
+      #$params = params
+      bmp_controller = BmpsController.new
+      bmp_controller.request = request
+      bmp_controller.response = response
+      bmp_controller.save_bmps_from_load(values)
+    end
+  end
+
+  ########################################### Create county field ##################
+  def create_field(field_name, county_select)
+    @field = Field.new
+    @field.field_name = field_name
+    @field.location_id = 0
+    @field.field_area = 100
+    @field.weather_id = 0
+    @field.soilp = 0
+    @field.location_id = @location.id
+    #save county id in here in order to have it available for other counties in the same state. And because there only one location for project. 
+    @field.field_average_slope = county_select
+    if !(@field.save) then
+      return false
+    else
+      #crete weather and soil info
+      if !create_weather() then return false end
+      if !create_soil() then return false end
+      load_controls()
+      load_parameters(0)
+    end
+    return true
+  end
+
+  ########################################### Create county weather ##################
+  def create_weather
+    @weather = Weather.new
+    @weather.field_id = @field.id
+    @weather.simulation_initial_year = 1987
+    @weather.simulation_final_year = 2019
+    @weather.weather_initial_year = 1982
+    @weather.weather_final_year = 2019
+    if @weather.save then
+      return true
+    else
+      return false
+    end
+  end
+
+  ########################################### Create county soil ##################
+  def create_soil
+    soil = Soil.new
+    soil.field_id = @field.id
+    soil.key = @project.id    #just to identify it no used
+    soil.group = "B"
+    soil.name = @field.field_name
+    soil.slope = 0.1
+    soil.albedo = 0.37
+    soil.percentage = 100
+    soil.drainage_id = 1
+    if soil.save then
+      return true
+    else
+      return false
+    end
   end
 
 end

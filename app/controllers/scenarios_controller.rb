@@ -190,7 +190,7 @@ class ScenariosController < ApplicationController
     if @project.version.include? "special"
       if params[:select_ntt] != nil
         fork do #comment when need to debugge.
-          run_special_simulation()
+          run_special_simulation(County.find_by_id(@project.location.county_id).county_state_code)
         end
         flash[:notice] = "The Selected Scenarios have been sent to run on background. An email will be sent for each scenario simulated"
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
@@ -250,15 +250,15 @@ class ScenariosController < ApplicationController
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
-  def run_special_simulation
+  def run_special_simulation(county_state_code)
     require 'nokogiri'
-    c = County.find_by_id(@project.location.county_id).county_state_code
+    #county = County.find_by_id(county_id).county_state_code
     #take initial time
     time_begin = Time.now
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
     file_name = "MD_013"
-    #file_name = c[0..1] + "_" + c[2..]
+    #file_name = county_state_code[0..1] + "_" + county_state_code[2..]
     full_name = "public/NTTFiles/" + file_name + ".txt"
     
     ActiveRecord::Base.transaction do
