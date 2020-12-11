@@ -307,38 +307,41 @@ module ProjectsHelper
 
   ######################### Duplicate a Scenario  #################################################
   def duplicate_scenario(scenario_id, name, new_field_id)
-  scenario = Scenario.find(scenario_id)   #1. find scenario to copy
-  #2. copy scenario to new scenario
+    scenario = Scenario.find(scenario_id)   #1. find scenario to copy
+    #2. copy scenario to new scenario
     scenario_id = Hash.new
     new_scenario = scenario.dup
-  new_scenario.name = scenario.name + name
-  new_scenario.field_id = new_field_id
-  #new_scenario.last_simulation = ""
+    new_scenario.name = scenario.name + name
+    new_scenario.field_id = new_field_id
+    #new_scenario.last_simulation = ""
     if new_scenario.save
       scenario_id = Hash.new
       scenario_id[scenario.id] = new_scenario.id
       if @scenario_ids != nil then @scenario_ids.push(scenario_id) end
       @new_scenario_id = new_scenario.id
       #3. Copy subareas info by scenario
-    duplicate_subareas_by_scenario(scenario.id)
-    #4. Copy operations info
-    duplicate_operations(scenario.id)
-    #5. Copy bmps info
-    scenario.bmps.each do |b|
-      duplicate_bmp(b)
-    end   # end bmps.each
-    # Duplicate annual results when soil_id > 0.
-    results = scenario.annual_results
-    results.each do |r|
-      duplicate_result(r)
-    end
-    # Duplicate crop results when soil_id > 0.
-    results = scenario.crop_results
-    results.each do |r|
-      duplicate_result(r)
-    end else
-    return "Error Saving scenario"
-  end   # end if scenario saved
+      duplicate_subareas_by_scenario(scenario.id) unless @project.version.include?("special")
+      #4. Copy operations info
+      duplicate_operations(scenario.id)
+      #5. Copy bmps info
+      scenario.bmps.each do |b|
+        duplicate_bmp(b)
+      end   # end bmps.each
+      if !@project.version.include?("special")
+      # Duplicate annual results when soil_id > 0.
+        results = scenario.annual_results
+        results.each do |r|
+          duplicate_result(r)
+        end
+        # Duplicate crop results when soil_id > 0.
+        results = scenario.crop_results
+        results.each do |r|
+          duplicate_result(r)
+        end
+      end
+    else
+      return "Error Saving scenario"
+    end   # end if scenario saved
     return "OK"
   end
 
