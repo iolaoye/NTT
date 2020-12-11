@@ -237,9 +237,6 @@ class ProjectsController < ApplicationController
     return true
   end
 
-  def validate_location_fields
-  end
-
   ########################################### Create county location ##################
   def create_location()
     @location = Location.new
