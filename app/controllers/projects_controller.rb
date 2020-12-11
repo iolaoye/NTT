@@ -230,11 +230,14 @@ class ProjectsController < ApplicationController
       @location = @project.location
     end
     @field = Field.find_by_field_name(field_name)
-    if @field == nil  #fieldis check to see if it exist no matter if porject was created before or not as well as location
+    if @field == nil  #field is checked to see if it exist no matter if porject was created before or not as well as location
       #field is created
-      return create_field(field_name)
+      return create_field(field_name, params[:county_select])
     end
     return true
+  end
+
+  def validate_location_fields
   end
 
   ########################################### Create county location ##################
@@ -247,60 +250,6 @@ class ProjectsController < ApplicationController
       return true
     end
     return false
-  end
-
-  ########################################### Create county field ##################
-  def create_field(field_name)
-    @field = Field.new
-    @field.field_name = field_name
-    @field.location_id = 0
-    @field.field_area = 100
-    @field.weather_id = 0
-    @field.soilp = 0
-    @field.location_id = @location.id
-    if !(@field.save) then
-      return false
-    else
-      #crete weather and soil info
-      if !create_weather() then return false end
-      if !create_soil() then return false end
-      load_controls()
-      load_parameters(0)
-    end
-    return true
-  end
-
-  ########################################### Create county weather ##################
-  def create_weather
-    @weather = Weather.new
-    @weather.field_id = @field.id
-    @weather.simulation_initial_year = 1987
-    @weather.simulation_final_year = 2019
-    @weather.weather_initial_year = 1982
-    @weather.weather_final_year = 2019
-    if @weather.save then
-      return true
-    else
-      return false
-    end
-  end
-
-  ########################################### Create county soil ##################
-  def create_soil
-    soil = Soil.new
-    soil.field_id = @field.id
-    soil.key = @project.id    #just to identify it no used
-    soil.group = "B"
-    soil.name = @field.field_name
-    soil.slope = 0.1
-    soil.albedo = 0.37
-    soil.percentage = 100
-    soil.drainage_id = 1
-    if soil.save then
-      return true
-    else
-      return false
-    end
   end
 
  ########################################### UPLOAD PROJECT FILE IN XML FORMAT ##################
