@@ -2067,14 +2067,12 @@ es:
         body: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, weathers, results, and apex page.'
         body_modified: 'The user can add or delete as many fields as needed. Simply follow the above instructions for each field. If just one field is needed, this is acceptable as well. After that, the user can click on the "Field Name" of a field from the list by which they can access the soils, scenarios, results, and apex page.'
   fieldpage_html:
-    <strong>Página de Parcelas</strong><br></br>
-    La página de parcelas permite borrar o verificar parcelas las cuales serán usadas para la información de suelos la página siguiente. En la mayoría de los casos, sin importar la selecciones anteriores, usted tendrá las mismas opciones en la página de parcelas. Borrando parcelas en esta página, también serán borradas en el sistema de mapa. Siempre el usuario puede regrasar al mapa y borrar/ adicionar parcelas.<br><br>
-    <strong>Cambiar las características de la parcela</strong><br>
-    Para cambiar las características de una parcela, presione en el icono <b>Pencil.</b><br></br>
-    <strong>Cambiar el nombre de la parcela</strong><br>
-    Para cambiar el nombre de la parcela, simplemente presione borre el nombre actual y escriba el nuevo nombre. Una vez todos los cambios han sido echos, presione el botón "Salvar" para salvar los cambios echos a la parcela.<br></br>
-    <strong>Cambiar el área de la parcela</strong><br>
-    El área de la parcela se representa en acres. Cualquier valor que este en rojo, significa que el valor es incorrecto, y solicitará al usuario entrar el valor correcto. Para cambiar el área de la parcela , simplemente entre el área correcta. Una vez los cambios hayan sido echos, presione el botón "Salvar" para salvar los cambios echos en la parcela.<br>
+    <strong>Página de campos</strong><br></br>
+    La página Campos permite al usuario ver el campo seleccionado en el mapa GIS que se utilizará para la información del suelo en la página siguiente. En su mayor parte, independientemente de sus selecciones anteriores, tendrá las mismas opciones en la página Campos. Sin embargo, existe una pequeña excepción. Si seleccionó Sistema de mapeo en la página Ubicación, puede agregar campos en esta página, pero los campos agregados no se muestran en el mapa. Puede eliminar campos haciendo clic en <img src = "/serve_image/delete.png"> (eliminar campos aquí también eliminará los campos que fueron dibujados o cargados en el Sistema de Mapeo), siempre puede volver al Mapa y agregar más campos.
+    Si seleccionó Sistema de mapas, los campos que dibujó o cargó ya estarán en la página Campos.<br></br>
+    <strong>Cambio de las características del campo</strong><br>
+    Para editar las características de un campo, haga clic en el campo para navegar a la página del suelo donde el usuario puede cambiar el nombre del campo y el área del campo. El área del campo está representada en acres. Cualquier valor que esté en rojo, como estará originalmente el área, significa que este valor es incorrecto y le pide al usuario que ingrese el valor correcto. Para cambiar el área del campo, simplemente haga clic en el área actual y escriba en el área correcta.<br></br>
+    Haga clic en el campo y continúe con la página Suelos.
   soilpage:
     header: Página de Suelos.
     overview:
@@ -2334,13 +2332,47 @@ es:
                 item4: '<strong>Buffer Slope Ration to Upland:</strong> This value is a fraction between 0.25 and 1.00 and indicates the slope towards the farmland (which is upland).'
   managepage_html:
       <strong>Escenarios</strong><br></br>
-      El usuario puede crear un escenario dando clic en el botón  <b>Agregar nuevo escenario</b>. Esto abrirá una nueva página donde el usuario debe dar un nombre al escenario, por ejemplo, "Baseline" o "Alternativa" o "Riego automático", etc. Después de dar un nombre al escenario, el usuario debe dar clic en el botón <strong>Guardar</strong>, que creará el escenario y lo llevará a la página de operaciones.<br><br>
-      El usuario puede copiar escenarios de otras parcelas y usarlos en el proyecto existente. para copiar escenarios, haga clic en el botón <strong>Copiar escenario de otra parcela</strong> que creará una copia del escenario seleccionado.<br><br>
-      El usuario puede cargar sus propios escenarios desde un computador local. Para cargar escenarios, presione <strong>Cargar sus propios escenarios</strong> y seleccione el tipo de archivo que quiere cargar y seleccione <strong>Choose File</strong>.<br><br>
-      Puede agregar tantos escenarios como sea necesario. Para simular escenarios, el usuario debe seleccionar los escenarios a simular y hacer clic en botón <strong>Simular NTT</strong>.<br><br>
-      Para ver los resultados de los escenarios simulados, de clic in el botón <strong>Ver Resultados</strong>.<br><br>
-      <strong>Opciones</strong><br>
-      Una vez que se ha creado un escenario, el usuario puede editar haciendo clic en el icono <img src="/serve_image/edit.png">.El usuario puede copiar un escenario y crear un nuevo haciendo clic en el icono <img src="/serve_image/copy.jpg">. El usuario puede eliminar cualquier escenario haciendo clic en el icono <img src="/serve_image/delete.png">.
+      El usuario puede crear un escenario haciendo clic en el botón <b> Agregar nuevo escenario </b>. Esto abrirá una nueva página donde el usuario debe darle un nombre al escenario. Después de darle un nombre al escenario, el usuario debe hacer clic en el botón <strong> Guardar </strong> que creará el escenario y lo llevará a la página de operación.<br><br>
+      El usuario puede copiar escenarios de otros proyectos y usarlos en el proyecto existente. para copiar escenarios, haga clic en <strong> Copiar escenario de otro campo </strong> que creará una copia del escenario seleccionado.<br><br>
+      El usuario también puede cargar sus propios escenarios y usarlos en el proyecto existente. Para realizar la carga, haga clic en <strong> Cargar sus propios escenarios </strong> y seleccione el tipo de archivo que desea cargar. Haga clic en <strong> Elegir archivo </strong> que luego cargará sus escenarios.<br>
+         &nbsp;&nbsp;&nbsp;&nbsp; Si está <strong> subiendo </strong> desde un archivo <strong> XML </strong>, asegúrese de que el <strong> archivo XML siga este formato&#58; </strong>
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;NTT&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;scenario&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;id&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;name&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;operations&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/operations&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;bmps&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/bmps&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;subareas&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/subareas&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;results&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/results&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;crop_results&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/crop_results&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/scenario&#62
+         <br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#60;/NTT&#62
+      <br><br><br>
+      Puede agregar tantos escenarios como sea necesario. Para simular escenarios, el usuario debe seleccionar qué escenario simular y hacer clic en <strong> Simular escenario seleccionado </strong>.<br><br>
+      Para ver los resultados de los escenarios simulados, haga clic en <strong> Ver resultados </strong>.<br><br>
+      <strong>Comportamiento</strong><br>
+      Una vez que se ha creado un escenario, el usuario puede editarlo haciendo clic en <img src = "/serve_image/edit.png">. El usuario puede copiar el escenario y crear un mismo escenario nuevo haciendo clic en <img src = "/serve_image/copy.jpg">. El usuario puede eliminar cualquier escenario haciendo clic en <img src = "/serve_image/delete.png">.
   operation_html:
       <strong>Operaciones</strong><br></br>
       La página de <b>Operaciones</b> permite al usuario manipular el sistema de recorte.
