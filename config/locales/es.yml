@@ -2342,35 +2342,37 @@ es:
       <strong>Opciones</strong><br>
       Una vez que se ha creado un escenario, el usuario puede editar haciendo clic en el icono <img src="/serve_image/edit.png">.El usuario puede copiar un escenario y crear un nuevo haciendo clic en el icono <img src="/serve_image/copy.jpg">. El usuario puede eliminar cualquier escenario haciendo clic en el icono <img src="/serve_image/delete.png">.
   operation_html:
-      <strong>Operations</strong><br></br>
-      The <b>Operation</b> Page lets the user manipulate the cropping system and the <b>Best Management Practices</b> Page lets the user manipulate the best management practices.
-      The user does not need to add BMPs to advance or for the scenario to run. However, the user does need to add a cropping system. To add a cropping system or BMPs the user needs to go to their respective page and follow the instructions.
-      A cropping system is <b>REQUIRED</b> for the user to be able to advance and simulate the results. The user can add rotations that are one year in length or much longer. They can have multiple crops, or a single crop. There are different options available in <b>Operation Page</b> for manipulating a cropping system. All of them are described below.<br></br>
-      <strong>Add Crop to Rotation</strong><br>
-      Using this option opens a new page which allows the user to select from common cropping systems. The user can manipulate these pre-existing cropping systems once they are added.<br></br>
-      <strong>Add New Operation</strong><br>
-      The user can also create a new Cropping System from scratch. To do this, the user needs to click on the <strong>Add New Operation</strong> button. This will take the user to a new page, there the user needs to select the crop, the operation, and type in the year (this is important if the crop rotation involves multiple crops over multiple years – CORN year 1 and SOYBEAN year 2), month, and day. Depending on the Operation that is selected, more options may be required to be entered or selected by the user (for example planting requires plant population and planting method). If required, the user can also change the Nutrient composition.
-      If the user decides to change the values or any other inforamtion of an operation, the user can change the values of the operation by clicking on the <img src="/serve_image/edit.png"> icon in the <b>Actions</b> column. This will take the user to a new page where they can make the required changes to the operation.
-      If the user decides that an operation he/she created was not necessary, the user can delete the operation by clicking on the <img src="/serve_image/delete.png"> icon in the <b>Actions</b> column. Then the user can proceed to the next page by clicking <strong> Continue </strong>.
+      <strong>Operaciones</strong><br></br>
+      La página de <b>Operaciones</b> permite al usuario manipular el sistema de recorte.
+      Se <b>REQUIERE</b> un sistema de cultivo para que el usuario pueda avanzar y simular los resultados. El usuario puede agregar rotaciones de un año o mucho más. Pueden tener múltiples cultivos o un solo cultivo. Hay diferentes opciones disponibles en la <b> Página de operación </b> para manipular un sistema de recorte. Todos ellos se describen a continuación.<br></br>
+      <strong>Agregar recorte a la rotación</strong><br>
+      El uso de esta opción abre una nueva página que permite al usuario seleccionar entre los sistemas de cultivo comunes. Para hacer esto, el usuario debe hacer clic en el botón <strong> Agregar recorte a la rotación </strong>. El usuario puede manipular estos sistemas de cultivo preexistentes una vez que se agregan.<br></br>
+      <strong>Agregar nueva operación</strong><br>
+      El usuario también puede crear un nuevo sistema de recorte desde cero. Para hacer esto, el usuario debe hacer clic en el botón <strong> Agregar nueva operación </strong>. Esto llevará al usuario a una nueva página, allí el usuario debe seleccionar el cultivo, la operación y el tipo de año (esto es importante si la rotación de cultivos involucra múltiples cultivos durante varios años - MAÍZ año 1 y SOJA año 2) , mes y día. Dependiendo de la Operación que se seleccione, es posible que el usuario deba ingresar o seleccionar más opciones (por ejemplo, la plantación requiere una población de plantas y un método de plantación). Si es necesario, el usuario también puede cambiar la composición de nutrientes. Haga clic en <strong> Agregar más </strong> para agregar otra nueva operación, haga clic en <strong> finalizar </strong> para guardar la nueva operación, haga clic en <strong> Atrás </strong> para volver a la página de operaciones.<br><br>
+      Si el usuario decide cambiar los valores o cualquier otra información de una operación, el usuario puede cambiar los valores de la operación haciendo clic en el icono <img src = "/serve_image/edit.png"> en las <b> Acciones </b> columna. Esto llevará al usuario a una nueva página donde podrá realizar los cambios necesarios en la operación.<br><br>
+      Si el usuario decide que una operación creada no era necesaria, el usuario puede eliminar la operación haciendo clic en el icono <img src = "/serve_image/delete.png"> en la columna <b> Acciones </b>. Luego, el usuario puede pasar a la página siguiente haciendo clic en <strong> Continuar </strong>.
+      El usuario puede hacer clic en <strong> Cambiar vista </strong> para ver los valores detallados de todas las operaciones en una tabla.<br><br>
+      Haga clic en <strong> Continuar </strong> para ir a la página de Prácticas de conservación.
   bmpnav_html:
-      <strong>Best Management Practices (BMPs)</strong><br></br>
-      Once a cropping system has been added, the user can simply save and continue to the results page for simulation. However, if the user would like to apply a best management practice to the cropping system, he or she can do so in the <b>Best Management Practices</b> Page.<br></br>
-      <strong>Adding a BMP</strong><br>
-      To add a BMP, the user needs to select a BMP by clicking on the check box under the <b>Select</b> column. This expands the selected Best Management Practices (BMPs) title and shows all the information required for adding the particular BMP. The BMPs are organized by groups, and the users can select which they are interested in adding. To add the BMP, expand the particular group (for example Auto Irrigation and Fertigation) and then select the specific BMP (for example Auto Irrigation).
-      Then the user needs to enter the information for the particular BMP. Whenever there is a text box, the user can hover over the text box to see a range of acceptable values.
-      Where there is a drop-down menu with the title <b>Select One</b> allows the user to select from a range of options.
-      Where there is a checkbox <b>Select</b> the user can simply click on it to select the BMP.
-      Remember that, if a BMP is expanded when you first get to the page, it means that this BMP has been selected.<br></br>
-      <strong>Mutually Exclusive BMPs</strong><br>
-      Some BMPs can co-exist with other BMPs. For the most part, most BMPs can co-exist with other BMPs. However there are a few mutually exclusive BMPs. The following BMP combinations are not allowed on NTT, and will come up with a message asking which one of the two BMPs you would like to have;<br>
-      Auto Irrigation and Auto Fertigation.<br>
-      Auto Irrigation and any Pads and Pipes.<br>
-      Only one Pads and Pipes is allowed at the same time.<br>
-      Filter Strip and Riparian Buffer.<br>
-      Waterways and Riparian Buffer.<br>
-      Filter Strip and Waterways.<br>
-      Contour Buffer and Filter Strip/Riparian Buffer.<br></br>
-      Other than these combinations, any combination (whether logical or not) is allowed on the NTT program.
+      <strong>Buenas Prácticas de Gestión (BMP)</strong><br></br>
+      Una vez que se ha agregado un sistema de cultivo, el usuario puede simplemente guardar y continuar a la página de resultados para la simulación. Sin embargo, si el usuario desea aplicar una mejor práctica de gestión al sistema de cultivo, puede hacerlo en la página <b> Mejores prácticas de gestión </b>.<br></br>
+      <strong>Agregar un BMP</strong><br>
+      Para agregar un BMP, el usuario debe seleccionar un BMP haciendo clic en la casilla de verificación debajo de la columna <b> Seleccionar </b>. Esto amplía el título de Mejores prácticas de gestión (BMP) seleccionado y muestra toda la información necesaria para agregar el BMP particular. Las BMP están organizadas por grupos y los usuarios pueden seleccionar cuál les interesa agregar. Para agregar el BMP, expanda el grupo en particular (por ejemplo, riego automático y fertilización) y luego seleccione el BMP específico (por ejemplo, riego automático).
+      Luego, el usuario debe ingresar la información para el BMP particular. Siempre que haya un cuadro de texto, el usuario puede colocar el cursor sobre el cuadro de texto para ver un rango de valores aceptables.
+      Donde hay un menú desplegable con el título <b> Seleccionar uno </b> permite al usuario seleccionar entre una variedad de opciones.
+      Donde hay una casilla de verificación <b> Seleccionar </b>, el usuario puede simplemente hacer clic en ella para seleccionar el BMP.
+      Recuerde que, si un BMP se expande cuando accede por primera vez a la página, significa que este BMP ha sido seleccionado.<br></br>
+      <strong>BMP mutuamente excluyentes</strong><br>
+      Algunas BMP pueden coexistir con otras BMP. En su mayor parte, la mayoría de las BMP pueden coexistir con otras BMP. Sin embargo, hay algunas BMP que se excluyen mutuamente. Las siguientes combinaciones de BMP no están permitidas en NTT y aparecerán con un mensaje preguntando cuál de los dos BMP le gustaría tener;<br>
+      1. Auto irrigación y auto fertilización.<br>
+      2. Riego automático y cualquier almohadilla y tubería.<br>
+      3. Solo se permite un Pads y Pipes al mismo tiempo.<br>
+      4. Tira de filtro y tampón ribereño.<br>
+      5. Vías fluviales y zona de amortiguamiento ribereña.<br>
+      6. Tira de filtro y vías fluviales.<br>
+      7. Tampón de contorno y tira de filtro / tampón ribereño.<br></br>
+      Aparte de estas combinaciones, cualquier combinación (lógica o no) está permitida en el programa NTT.<br><br>
+      Haga clic en <strong> Atrás </strong> para volver a la página de operación, haga clic en <strong> Continuar </strong> para ir a la página de escenarios de administración para simular los resultados.
   watershedpage:
     header: Ayuda para la página de cuencas
     body1: 'La página de cuencas le permite al usuario combinar varias parcelas y escenarios y simularlas como un único parcela.'
