@@ -2059,19 +2059,18 @@ def send_file_to_DNDC(apex_string, file, state)
   end
 
   def read_apex_results(msg)
-    
     ActiveRecord::Base.transaction do
       begin
         #clean all of the results exiting for this scenario.
         if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
-          @scenario.results.delete_all
+          #@scenario.results.delete_all
           @scenario.charts.delete_all
           @scenario.annual_results.delete_all
           @scenario.crop_results.delete_all
         else
           # clean results for watershed to avoid keeping some results from previous simulation
-          @watershed.results.delete_all
+          #@watershed.results.delete_all
           @watershed.charts.delete_all
           @watershed.annual_results.delete_all
           @watershed.crop_results.delete_all
@@ -2127,6 +2126,9 @@ def send_file_to_DNDC(apex_string, file, state)
       end
     end
     bmp = @scenario.bmps.find_by_bmpsublist_id([8,20])  # find out if there is reseervoir or Wetland BMP
+    #todo check this bmp when more than one buffer
+    total_sbs = @scenario.subareas().sum("abs(wsa)")
+    all_subs = @scenario.subareas.order(:bmp_id)
     data.each_line do |tempa|
       if i > 3 then
         year = tempa[7, 4].to_i
@@ -2203,16 +2205,18 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            qdr_sum += one_result["qdr"] * @scenario.field.soils[subs-1].percentage / 100
-            qdrn_sum += one_result["qdrn"] * @scenario.field.soils[subs-1].percentage / 100
-            qdrp_sum += one_result["qdrp"] * @scenario.field.soils[subs-1].percentage / 100
-            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * @scenario.field.soils[subs-1].percentage / 100
-            irri_sum += one_result["irri"] * @scenario.field.soils[subs-1].percentage / 100
-            dprk_sum += one_result["dprk"] * @scenario.field.soils[subs-1].percentage / 100
-            prkn_sum += one_result["prkn"] * @scenario.field.soils[subs-1].percentage / 100
-            n2o_sum += one_result["n2o"] * @scenario.field.soils[subs-1].percentage / 100
-            pcp += one_result["pcp"] * @scenario.field.soils[subs-1].percentage / 100
-            biom += one_result["biom"] * @scenario.field.soils[subs-1].percentage / 100
+            fraction = all_subs[subs-1].wsa / total_sbs
+            #fraction = @scenario.field.soils[subs-1].percentage / 100
+            qdr_sum += one_result["qdr"] * fraction
+            qdrn_sum += one_result["qdrn"] * fraction
+            qdrp_sum += one_result["qdrp"] * fraction
+            sub_surface_n_sum += ((tempa[394, 9].to_f+tempa[404, 9].to_f+tempa[414, 9].to_f) * (KG_TO_LBS / HA_TO_AC))  * fraction
+            irri_sum += one_result["irri"] * fraction
+            dprk_sum += one_result["dprk"] * fraction
+            prkn_sum += one_result["prkn"] * fraction
+            n2o_sum += one_result["n2o"] * fraction
+            pcp += one_result["pcp"] * fraction
+            biom += one_result["biom"] * fraction
           else
             qdr_sum += one_result["qdr"]
             qdrn_sum += one_result["qdrn"]
