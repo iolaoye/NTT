@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
 
    def county_authorized_users
  	 if self.admin == true then return true end
- 	 if self.email == "pokhrel@tiaer.tarleton.edu" or 
+ 	 if self.email == "pokhrel@tarleton.edu" or 
  	    self.email == "wen@tarleton.edu"
  	    return true
      end
