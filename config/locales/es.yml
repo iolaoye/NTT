@@ -1812,6 +1812,30 @@ es:
     <strong>Contact Us Page</strong><br></br>
     Está página provee información de contacto.<br>
     Clic <strong>Regraser a la Tabla de Contenidos</strong> para ir a la paágina de ayuda.
+
+  faq:
+    header: Preguntas frecuentes
+    subheader1: ¿Qué es NTT?
+    body1: La herramienta de seguimiento de nutrientes (NTT) es una herramienta gratuita, en línea y fácil de usar que calcula cuantitativamente las pérdidas de nitrógeno, fósforo y sedimentos de las tierras de cultivo y pastizales. Ha sido desarrollado por el Texas Institute of Applied Environmental Research (TIAER) en la Universidad Estatal de Tarleton en cooperación con la Oficina de Mercados Ambientales del USDA, NRCS y ARS. Si bien NTT ha existido durante varios años (por ejemplo, se usa una versión de NTT en la bahía de Chesapeake y se usa otra versión en Arkansas), esta versión representa la primera versión nacional de la herramienta.
+    subheader2: ¿Esta herramienta tiene alcance nacional?
+    body2: Sí, esta herramienta se puede utilizar en cualquier lugar de los Estados Unidos continentales. Sin embargo, en la mayoría de los casos, los parámetros del modelo son generalizados. Actualmente estamos trabajando con ARS para crear parámetros específicos de la región para áreas del país donde existen datos medidos que pueden ayudar a refinar las estimaciones en la herramienta. Actualmente, la herramienta incluye parámetros específicos de la región para la región de los Grandes Lagos, así como para Ohio y partes del Alto Mississippi. Los parámetros revisados ​​estarán disponibles en versiones futuras de la herramienta a medida que estén disponibles.
+    subheader3: ¿Estarán protegidos mis datos?
+    body3: NTT está protegido con contraseña y nadie más que usted ve sus datos.
+    subheader4: ¿Qué cultivos están incluidos?
+    body4: Los pastos, así como la mayoría de los cultivos principales, se incluyen en la herramienta.
+    subheader5: ¿Qué prácticas de conservación están incluidas?
+    body5: "La herramienta simula una variedad de prácticas de manejo y conservación que incluyen: riego, drenajes de baldosas, manejo de nutrientes (tipo, tiempo, ubicación y tasa), labranza cero, labranza de conservación, cultivos de cobertura, estanques / cuencas de control de agua y sedimentos, humedales, amortiguadores ( bosques y pastos), vías fluviales de pastos, franjas de amortiguación de contorno, terrazas, tratamiento de estiércol y pastoreo rotacional. Los usuarios también pueden simular la conversión de la tierra a cultivos perennes o bosques."
+    subheader6: ¿Cuál es el plan para mejorar / mantener NTT a lo largo del tiempo?
+    body6: NTT está alojado y mantenido en Tarleton State University. La Oficina de Mercados Ambientales del USDA se compromete a contribuir a la actualización y mantenimiento de NTT siempre que sea útil para las partes interesadas. Las versiones de NTT se actualizarán periódicamente con los parámetros regionales proporcionados por ARS, así como funciones y características mejoradas según sea necesario.
+    subheader7: ¿Cuál es el motor detrás de NTT?
+    body7: NTT utiliza el modelo APEX para simular pérdidas en el borde del campo, así como para simular el enrutamiento entre campos.
+    subheader8: ¿Qué tipo de datos ambientales se utilizan para suministrar NTT?
+    body8: NTT toma información sobre suelos, pendientes y clima de bases de datos nacionales según la ubicación de su campo. Los suelos provienen de la base de datos del National Soil Survey (SSRUGO). NTT simula su campo usando solo los tres suelos predominantes en su campo (por porcentaje de cobertura). El tiempo se extrae de la base de datos nacional PRISM. NTT simula su rotación durante 35 años de clima histórico. Por último, la información de la pendiente se calcula en función de la capa del mapa del modelo de elevación digital (DEM) de resolución de 30 m.
+    subheader9: ¿Qué representan las pérdidas de nutrientes y sedimentos estimadas por NTT?
+    body9: Debido a que su rotación se simula durante 35 años de clima histórico, las pérdidas de nitrógeno, fósforo y sedimentos representan las pérdidas anuales promedio en el borde del campo para un escenario de manejo dado. Los usuarios también pueden ver los resultados gráficamente por año para ver la variabilidad interanual, o por mes, para ver la variabilidad mensual promedio.
+    subheader10: ¿Por qué el USDA apoyó el desarrollo de NTT?
+    body10: El interés del USDA en desarrollar NTT fue para los mercados de calidad del agua que requieren métodos y herramientas para estimar cuantitativamente las pérdidas de nutrientes y sedimentos de una variedad de prácticas agrícolas y de mejor manejo. Sin embargo, la herramienta se puede utilizar para una variedad de aplicaciones, incluida la educación y el alcance de los agricultores, la sostenibilidad corporativa y las aplicaciones académicas o analíticas.
+
   help_html:
     <strong>Página de ayuda</strong><br></br>
   help_body1: Esta página ayuda al usuario a navegar por varias herramientas en este sitio web. El usuario puede aprender sobre NTT y sus funciones, que están integradas en la página web, haciendo clic en el tema de interés entre los presentados en la página<br></br>
@@ -1830,8 +1854,8 @@ es:
     <strong>Página de archivos APEX:</strong> esta página proporciona información sobre cómo realizar modificaciones a los archivos de APEX.<br>
     <strong>APEX:</strong>Esta página proporciona información sobre APEX.<br>
     <strong>NTT descargo de responsabilidad:</strong> Esta página es sobre NTT descargo de responsabilidad.<br></br>
-    Haga clic en  <strong>< Prev</strong> Anterior para ir a la página anterior.<br>
-    Haga clic en <strong>Next ></strong> para ir a la página siguiente.<br>
+    Haga clic en  <strong>< Anterior</strong> Anterior para ir a la página anterior.<br>
+    Haga clic en <strong>Siguiente ></strong> para ir a la página siguiente.<br>
     Haga clic en  <strong>Volver a la tabla de contenido</strong> para ir a la tabla de contenido de NTT<br>
 
   aplcat_parameters_html: <strong>Parámetros Tabulares</strong><br><br>
