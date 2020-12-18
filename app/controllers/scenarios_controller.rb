@@ -476,7 +476,7 @@ class ScenariosController < ApplicationController
         scenario.last_simulation = Time.now
         scenario.save
         @user = User.find(session[:user_id])
-        @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n")
+        @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
         #(Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
       end    # end scenarios selected
     end   #active transaction do
