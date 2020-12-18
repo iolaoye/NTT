@@ -257,9 +257,9 @@ class ScenariosController < ApplicationController
     time_begin = Time.now
     #create xml file and send the simulation to ntt.tft.cbntt.org server
     #read the coordinates for the county selected
-    file_name = "MD_013"
-    #file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-    full_name = "public/NTTFiles/" + file_name + ".txt"
+    #file_name = "MD_013"
+    file_name = county_state_code[0..1] + "_" + county_state_code[2..]
+    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" file_name + ".txt"
     
     ActiveRecord::Base.transaction do
       params[:select_ntt].each do |scenario_id|
