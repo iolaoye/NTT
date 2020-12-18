@@ -259,7 +259,7 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     #file_name = "MD_013"
     file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" file_name + ".txt"
+    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"
     
     ActiveRecord::Base.transaction do
       params[:select_ntt].each do |scenario_id|
