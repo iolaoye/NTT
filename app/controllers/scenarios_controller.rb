@@ -264,7 +264,10 @@ class ScenariosController < ApplicationController
     #full_name = "public/NTTFiles/" + file_name + ".txt"   
     ActiveRecord::Base.transaction do
       params[:select_ntt].each do |scenario_id|
+        #need to add all of the values in this inizialization in order to avoid nil errors.
+        total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
         crops = nil
+        #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
         scenario = Scenario.find(scenario_id)
         File.open(full_name).each do |line|
           line.gsub! "\n",""
@@ -366,8 +369,6 @@ class ScenariosController < ApplicationController
           result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           if xml["summary"]["results"]["errorcode"] == "0" then
-            #need to add all of the values in this inizialization in order to avoid nil errors. and need to initialize every time to add then to the array
-            total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
             #add all of the values because thereis not error
             total_xml["organicn"] += xml["summary"]["results"]["organicn"].to_f
             total_xml["no3"] += xml["summary"]["results"]["no3"].to_f
