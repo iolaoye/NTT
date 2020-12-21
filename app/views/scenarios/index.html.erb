@@ -234,9 +234,9 @@
 							</td>
 							<td class="gvCellStyleImage">
 								<% if scenario.simulation_status == true %>
-									<%= image_tag("go_icon.png", size: "13x13") %>
+									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
 								<% else %>
-									<%= image_tag("warning_icon.png", size: "13x13") %>
+									<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
 								<% end %>
 							</td>
 							<td class="gvCellStyleText">
@@ -306,9 +306,9 @@
 						</td>
 						<td class="gvCellStyleImage">
 								<% if scenario.simulation_status == true %>
-									<%= image_tag("go_icon.png", size: "13x13") %>
+									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
 								<% else %>
-									<%= image_tag("warning_icon.png", size: "13x13") %>
+									<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
 								<% end %>
 							</td>
 						<td class="gvCellStyleText">
