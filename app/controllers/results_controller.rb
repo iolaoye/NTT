@@ -222,7 +222,7 @@ class ResultsController < ApplicationController
                   fields.each do |f|
                     value = results_data.limit(1).pluck(f).inject(:+)
                     values.push(value)
-                    if value != nil then total.push (value * total_area)
+                    if value != nil then total.push (value * total_area) end
                   end
                   averages.push(values)
                   totals.push(total)
