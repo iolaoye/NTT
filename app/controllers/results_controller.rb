@@ -192,7 +192,7 @@ class ResultsController < ApplicationController
     if @type == nil then
         @type = t("general.view")
     end
-    debugger
+
     if @type != nil
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
@@ -227,7 +227,7 @@ class ResultsController < ApplicationController
                   end
                   averages.push(values)
                   totals.push(total)
-                  debugger
+
                   return cis,averages, totals, cic, crops, total_area
                 else
                   return [],[],[],[],[],[],0
@@ -360,7 +360,6 @@ class ResultsController < ApplicationController
               @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
               @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
               @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
-              debugger
             end
             #if @type == t("general.view") or @type == t('result.all_years') then
               #find the results for FEM.
