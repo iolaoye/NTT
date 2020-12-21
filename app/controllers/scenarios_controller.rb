@@ -502,6 +502,8 @@ class ScenariosController < ApplicationController
     ActiveRecord::Base.transaction do
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
+        @scenario.simulation_status = false
+        @scenario.save!
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
@@ -513,6 +515,7 @@ class ScenariosController < ApplicationController
         end # end unless msg
         if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
          @scenario.last_simulation = Time.now
+         @scenario.simulation_status = true
          @scenario.save!
         end
       end # end each do params loop

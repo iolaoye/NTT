@@ -157,6 +157,7 @@
 				  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.layer_file') %></th>
 				  <th class="gvCellStyleTitle"><%= t('menu.operation_file') %></th>
+				  <th class="gvCellStyleTitle"><%= t('scenario.simulated') %></th>
 				  <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
 				  <% if req_parm == "NTT" then %>
 				  	<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
@@ -231,6 +232,13 @@
 									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.operation_file') + " OK") %>
 								<% end %>
 							</td>
+							<td class="gvCellStyleImage">
+								<% if scenario.simulation_status == true %>
+									<%= image_tag("go_icon.png", size: "13x13") %>
+								<% else %>
+									<%= image_tag("warning_icon.png", size: "13x13") %>
+								<% end %>
+							</td>
 							<td class="gvCellStyleText">
 							<%= scenario.aplcat_last_simulation %>
 							</td>
@@ -296,6 +304,13 @@
 								<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.operation_file') + " OK") %>
 							<% end %>
 						</td>
+						<td class="gvCellStyleImage">
+								<% if scenario.simulation_status == true %>
+									<%= image_tag("go_icon.png", size: "13x13") %>
+								<% else %>
+									<%= image_tag("warning_icon.png", size: "13x13") %>
+								<% end %>
+							</td>
 						<td class="gvCellStyleText">
 							<% case req_parm %>
 							  	<% when "NTT" %>
