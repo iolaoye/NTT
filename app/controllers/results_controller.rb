@@ -192,6 +192,7 @@ class ResultsController < ApplicationController
     if @type == nil then
         @type = t("general.view")
     end
+    debugger
     if @type != nil
       @cis1 = nil
       (@type.eql?(t("general.view") + " " + t("result.by_soil")) && params[:result4]!=nil) ? @soil = params[:result4][:soil_id] : @soil = "0"
@@ -204,135 +205,169 @@ class ResultsController < ApplicationController
             t("general.view") + " " + t("result.by_soil"),
             t("result.summary") + " " + t("result.by_soil")
 
-            get_results = lambda do |scenario_id|
+
+            if @project.version.include? "special" then
+              
+              get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
-                    #Oscar Gallego - 10/28/2020 - Averaging to the initial and final years selected.
-                    #results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
-                    results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
-                    results_data.each do |rs|
-                      if rs.co2 == nil
-                        rs.co2 = 0
-                        rs.save
-                      end
-                    end
-                    order = 'ASC'
-                    if @type.eql? t('result.dry_years') then
-                        count = results_data.size * 0.25
-                    elsif @type.eql? t('result.wet_years') then
-                        order = 'DESC'
-                        count = results_data.size * 0.25
-                    elsif @type.eql? t('result.all_years') then
-                        first_year = params[:sim_initial_year].to_i
-                        last_year = params[:sim_final_year].to_i
-                        order = 'DESC'
-                        count = last_year - first_year + 1 #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
-                        if count == 0 #If the selected initial year and the final year are same. 11/02/2020 -Shikhar
-                          count = 1
-                        end
-                    else
-                        count = results_data.size
-                    end
-                    if !(session[:simulation] == 'watershed')
-                        total_area = @field.field_area
-                        bmps = Scenario.find(scenario_id).bmps
-                        bmps.each do |b|
-                            case b.bmpsublist_id
-                                when 13, 8
-                                    if b.sides == 1 then
-                                        total_area -= b.area
-                                    end
-                                when 14, 15
-                                    total_area -= b.area
-                            end
-                        end
-                    else
-                      if !params[:result1] == nil
-                        if !params[:result1][:scenario_id].empty? then
-                            watershed_scenarios = WatershedScenario.where(
-                              :watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
-                            watershed_scenarios.each do |ws|
-                                total_area += Field.find(ws.field_id).field_area
-                            end
-                        end
-                      end
-                    end
-
-                    # determine which scenario this is.
-                    cis = results_data.order('pcp '+order).limit(count)
-                          .group_by(&:sub1).map { |k, v|
-                          [k, v.map(&:orgn).confidence_interval,
-                                 v.map(&:qn).confidence_interval,
-                                 v.map(&:no3).confidence_interval,
-                                 v.map(&:qdrn).confidence_interval,
-                                 v.map(&:orgp).confidence_interval,
-                                 v.map(&:po4).confidence_interval,
-                                 v.map(&:qdrp).confidence_interval,
-                                 v.map(&:surface_flow).confidence_interval,
-                                 v.map(&:flow).confidence_interval,
-                                 v.map(&:qdr).confidence_interval,
-                                 v.map(&:irri).confidence_interval,
-                                 v.map(&:dprk).confidence_interval,
-                                 v.map(&:sed).confidence_interval,
-                                 v.map(&:ymnu).confidence_interval,
-                                 v.map(&:co2).confidence_interval,
-                                 v.map(&:n2o).confidence_interval
-                          ]}
-
-                    values = []
-                    averages = []
-                    fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
-                      'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
-                    fields.each do |f|
-                      values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
-                    end
-
-                    averages.push(values)
-
-                    #totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
-                    totals = results_data.order('pcp ' + order).limit(count)
-                              .pluck('avg(orgn)*' + total_area.to_s,
-                                  'avg(qn)*'  + total_area.to_s,
-                                  'avg(no3-qn)*' + total_area.to_s,
-                                  'avg(qdrn)*' + total_area.to_s,
-                                  'avg(orgp)*' + total_area.to_s,
-                                  'avg(po4)*' + total_area.to_s,
-                                  'avg(qdrp)*' + total_area.to_s,
-                                  'avg(surface_flow)*' + total_area.to_s,
-                                  'avg(flow-surface_flow)*' + total_area.to_s,
-                                  'avg(qdr)*' + total_area.to_s,
-                                  'avg(irri)*' + total_area.to_s,
-                                  'avg(dprk)*' + total_area.to_s,
-                                  'avg(sed)*' + total_area.to_s,
-                                  'avg(ymnu)*' + total_area.to_s,
-                                  'avg(co2)*' + total_area.to_s,
-                                  'avg(n2o)*' + total_area.to_s)
-                    crops_data = CropResult.select('*', 'yldg+yldf AS yield')
-                                      .where(simul + " = ? AND yldg+yldf > ?", scenario_id, 0)
-
-                    years = results_data.order('pcp '+order).limit(count).map(&:year)
-                    crops_data = crops_data.where(:year => years)
-                    cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
-
-                    crops = crops_data.where(simul + " = ? AND (yldg + yldf) > ?", scenario_id, 0)
-                                        .order("name")
-                                        .group(:name)
-                                        .pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name','avg(yldg)')
-
-                    return cis, averages, totals, cic, crops, total_area
+                  total_area = @field.field_area
+                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("scenario_id = ?", scenario_id)
+                  values = []
+                  total = []
+                  totals = []
+                  averages = []
+                  cis =   [[]]
+                  cic =  [[]]
+                  crops = [[]]
+                  fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
+                    'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
+                  fields.each do |f|
+                    values.push(results_data.limit(1).pluck(f).inject(:+))
+                    total.push(results_data.limit(1).pluck(f).inject(:+) * total_area)
+                  end
+                  averages.push(values)
+                  totals.push(total)
+                  debugger
+                  return cis,averages, totals, cic, crops, total_area
                 else
-                    return [],[],[],[],[],[],0
+                  return [],[],[],[],[],[],0
                 end
-            end
+              end
+              @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_county_results.call @scenario1
+              @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_county_results.call @scenario2
+              @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_county_results.call @scenario3
+            else
+              get_results = lambda do |scenario_id|
+                  if not (scenario_id.eql? "0" or scenario_id.eql? "")
+                      #Oscar Gallego - 10/28/2020 - Averaging to the initial and final years selected.
+                      #results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
+                      results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
+                      results_data.each do |rs|
+                        if rs.co2 == nil
+                          rs.co2 = 0
+                          rs.save
+                        end
+                      end
+                      order = 'ASC'
+                      if @type.eql? t('result.dry_years') then
+                          count = results_data.size * 0.25
+                      elsif @type.eql? t('result.wet_years') then
+                          order = 'DESC'
+                          count = results_data.size * 0.25
+                      elsif @type.eql? t('result.all_years') then
+                          first_year = params[:sim_initial_year].to_i
+                          last_year = params[:sim_final_year].to_i
+                          order = 'DESC'
+                          count = last_year - first_year + 1 #To limit the count to a required size between two selected years in All Years. 10/27/2020 -Shikhar
+                          if count == 0 #If the selected initial year and the final year are same. 11/02/2020 -Shikhar
+                            count = 1
+                          end
+                      else
+                          count = results_data.size
+                      end
+                      if !(session[:simulation] == 'watershed')
+                          total_area = @field.field_area
+                          bmps = Scenario.find(scenario_id).bmps
+                          bmps.each do |b|
+                              case b.bmpsublist_id
+                                  when 13, 8
+                                      if b.sides == 1 then
+                                          total_area -= b.area
+                                      end
+                                  when 14, 15
+                                      total_area -= b.area
+                              end
+                          end
+                      else
+                        if !params[:result1] == nil
+                          if !params[:result1][:scenario_id].empty? then
+                              watershed_scenarios = WatershedScenario.where(
+                                :watershed_id => Watershed.find(params[:result1][:scenario_id]).id)
+                              watershed_scenarios.each do |ws|
+                                  total_area += Field.find(ws.field_id).field_area
+                              end
+                          end
+                        end
+                      end
 
-            @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
-            @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
-            @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
-            if @type == t("general.view") or @type == t('result.all_years') then
-              #find the results for FEM.
-              if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
-              if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
-              if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
+                      # determine which scenario this is.
+                      cis = results_data.order('pcp '+order).limit(count)
+                            .group_by(&:sub1).map { |k, v|
+                            [k, v.map(&:orgn).confidence_interval,
+                                   v.map(&:qn).confidence_interval,
+                                   v.map(&:no3).confidence_interval,
+                                   v.map(&:qdrn).confidence_interval,
+                                   v.map(&:orgp).confidence_interval,
+                                   v.map(&:po4).confidence_interval,
+                                   v.map(&:qdrp).confidence_interval,
+                                   v.map(&:surface_flow).confidence_interval,
+                                   v.map(&:flow).confidence_interval,
+                                   v.map(&:qdr).confidence_interval,
+                                   v.map(&:irri).confidence_interval,
+                                   v.map(&:dprk).confidence_interval,
+                                   v.map(&:sed).confidence_interval,
+                                   v.map(&:ymnu).confidence_interval,
+                                   v.map(&:co2).confidence_interval,
+                                   v.map(&:n2o).confidence_interval
+                            ]}
+
+                      values = []
+                      averages = []
+                      fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
+                        'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
+                      fields.each do |f|
+                        values.push(results_data.order('pcp ' + order).limit(count).pluck(f).inject(:+) / count)
+                      end
+
+                      averages.push(values)
+
+                      #totals = AnnualResult.where(:sub1 => 0, simul.to_sym => scenario_id)
+                      totals = results_data.order('pcp ' + order).limit(count)
+                                .pluck('avg(orgn)*' + total_area.to_s,
+                                    'avg(qn)*'  + total_area.to_s,
+                                    'avg(no3-qn)*' + total_area.to_s,
+                                    'avg(qdrn)*' + total_area.to_s,
+                                    'avg(orgp)*' + total_area.to_s,
+                                    'avg(po4)*' + total_area.to_s,
+                                    'avg(qdrp)*' + total_area.to_s,
+                                    'avg(surface_flow)*' + total_area.to_s,
+                                    'avg(flow-surface_flow)*' + total_area.to_s,
+                                    'avg(qdr)*' + total_area.to_s,
+                                    'avg(irri)*' + total_area.to_s,
+                                    'avg(dprk)*' + total_area.to_s,
+                                    'avg(sed)*' + total_area.to_s,
+                                    'avg(ymnu)*' + total_area.to_s,
+                                    'avg(co2)*' + total_area.to_s,
+                                    'avg(n2o)*' + total_area.to_s)
+                      crops_data = CropResult.select('*', 'yldg+yldf AS yield')
+                                        .where(simul + " = ? AND yldg+yldf > ?", scenario_id, 0)
+
+                      years = results_data.order('pcp '+order).limit(count).map(&:year)
+                      crops_data = crops_data.where(:year => years)
+                      cic = Hash[*crops_data.group_by(&:name).map { |k,v| [k, v.map(&:yield).confidence_interval] }.flatten]
+
+                      crops = crops_data.where(simul + " = ? AND (yldg + yldf) > ?", scenario_id, 0)
+                                          .order("name")
+                                          .group(:name)
+                                          .pluck('avg(yldg+yldf)', 'avg(ws)', 'avg(ns)', 'avg(ps)', 'avg(ts)', 'name','avg(yldg)')
+
+                      return cis, averages, totals, cic, crops, total_area
+                  else
+                      return [],[],[],[],[],[],0
+                  end
+              end
+
+              @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
+              @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
+              @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
+              debugger
             end
+            #if @type == t("general.view") or @type == t('result.all_years') then
+              #find the results for FEM.
+              #if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
+              #if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end
+              #if @scenario3 != "0" && @scenario3 != "" then @fem_results3 = Scenario.find(@scenario3).fem_result end
+            #end
         when t('activerecord.models.result.fem_results')
           if @scenario1 != "0" && @scenario1 != "" then @fem_results1 = Scenario.find(@scenario1).fem_result end
           if @scenario2 != "0" && @scenario2 != "" then @fem_results2 = Scenario.find(@scenario2).fem_result end

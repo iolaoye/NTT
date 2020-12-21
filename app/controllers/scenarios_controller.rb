@@ -260,9 +260,10 @@ class ScenariosController < ApplicationController
     #file_name = "MD_013"
     file_name = county_state_code[0..1] + "_" + county_state_code[2..]
     full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"
-    
-    ActiveRecord::Base.transaction do
-      params[:select_ntt].each do |scenario_id|
+    #This if full name without state folder for testing
+    #full_name = "public/NTTFiles/" + file_name + ".txt"   
+    params[:select_ntt].each do |scenario_id|
+      ActiveRecord::Base.transaction do
         #need to add all of the values in this inizialization in order to avoid nil errors.
         total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
         crops = nil
@@ -477,9 +478,8 @@ class ScenariosController < ApplicationController
         scenario.save
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
-        #(Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase
-      end    # end scenarios selected
-    end   #active transaction do
+      end   #active transaction do
+    end    # end scenarios selected
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
