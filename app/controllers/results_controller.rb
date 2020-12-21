@@ -209,7 +209,7 @@ class ResultsController < ApplicationController
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
-                  results_data = CountyResult.select(
+                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("scenario_id = ?", scenario_id)
                   values = []
                   total = []
                   totals = []
