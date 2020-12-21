@@ -220,8 +220,9 @@ class ResultsController < ApplicationController
                   fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
                     'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
                   fields.each do |f|
-                    values.push(results_data.limit(1).pluck(f).inject(:+))
-                    total.push(results_data.limit(1).pluck(f).inject(:+) * total_area)
+                    value = results_data.limit(1).pluck(f).inject(:+)
+                    values.push(value)
+                    if value != nil then total.push (value * total_area)
                   end
                   averages.push(values)
                   totals.push(total)
