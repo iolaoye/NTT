@@ -227,7 +227,9 @@ class ResultsController < ApplicationController
                   averages.push(values)
                   totals.push(total)
                   #take confidence interval values'
-                  cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
+                  if results_data.orgn_ci != nil then
+                    cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
+                  end
                   return cis,averages, totals, cic, crops, total_area
                 else
                   return [],[],[],[],[],[],0
