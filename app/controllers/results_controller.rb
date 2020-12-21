@@ -205,9 +205,7 @@ class ResultsController < ApplicationController
             t("general.view") + " " + t("result.by_soil"),
             t("result.summary") + " " + t("result.by_soil")
 
-
-            if @project.version.include? "special" then
-              
+            if @project.version.include? "special" then              
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
@@ -227,7 +225,8 @@ class ResultsController < ApplicationController
                   end
                   averages.push(values)
                   totals.push(total)
-
+                  #take confidence interval values'
+                  cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
                   return cis,averages, totals, cic, crops, total_area
                 else
                   return [],[],[],[],[],[],0
