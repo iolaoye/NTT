@@ -186,7 +186,7 @@ class ScenariosController < ApplicationController
     msg = "OK"
     time_begin = Time.now
     session[:simulation] = 'scenario'
-    county = County.find_by_id(@project.location.county_id)
+    county = County.find_by_id(@field.field_average_slope.to_i)
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
@@ -454,7 +454,7 @@ class ScenariosController < ApplicationController
         avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
         avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
         avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
-        county_result = AnnualResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @project.location.county_id,scenario_id: scenario.id)
+        county_result = AnnualResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
         county_result.update(year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide,
                       flow_ci: avg_flow_ci,sed_ci: avg_sed_ci, orgn_ci: avg_orgn_ci, orgp_ci: avg_orgp_ci, no3_ci: avg_no3_ci, po4_ci: avg_po4_ci)
         if crops.is_a? Hash then
