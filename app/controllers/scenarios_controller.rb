@@ -269,6 +269,8 @@ class ScenariosController < ApplicationController
         crops = nil
         #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
         scenario = Scenario.find(scenario_id)
+        scenario.simulation_status = false
+        scenario.save
         File.open(full_name).each do |line|
           line.gsub! "\n",""
           line.gsub! "\r",""
@@ -475,6 +477,7 @@ class ScenariosController < ApplicationController
         end
         #update simulation date
         scenario.last_simulation = Time.now
+        scenario.simulation_status = true
         scenario.save
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
