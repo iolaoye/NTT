@@ -209,7 +209,7 @@ class ResultsController < ApplicationController
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
-                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("scenario_id = ?", scenario_id)
+                  results_data = CountyResult.select(
                   values = []
                   total = []
                   totals = []
@@ -217,18 +217,20 @@ class ResultsController < ApplicationController
                   cis =   [[]]
                   cic =  [[]]
                   crops = [[]]
-                  fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
-                    'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
-                  fields.each do |f|
-                    value = results_data.limit(1).pluck(f).inject(:+)
-                    values.push(value)
-                    if value != nil then total.push (value * total_area) end
-                  end
-                  averages.push(values)
-                  totals.push(total)
-                  #take confidence interval values'
-                  if results_data.orgn_ci != nil then
-                    cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
+                  if results_data != []
+                    fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
+                      'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
+                    fields.each do |f|
+                      value = results_data.limit(1).pluck(f).inject(:+)
+                      values.push(value)
+                      if value != nil then total.push (value * total_area) end
+                    end
+                    averages.push(values)
+                    totals.push(total)
+                    #take confidence interval values'
+                    if results_data.orgn_ci != nil then
+                      cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
+                    end
                   end
                   return cis,averages, totals, cic, crops, total_area
                 else
