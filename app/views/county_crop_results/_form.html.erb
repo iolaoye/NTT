@@ -1,0 +1,67 @@
+<%= form_with(model: county_crop_result, local: true) do |form| %>
+  <% if county_crop_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(county_crop_result.errors.count, "error") %> prohibited this county_crop_result from being saved:</h2>
+
+      <ul>
+      <% county_crop_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :state_id %>
+    <%= form.number_field :state_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :county_id %>
+    <%= form.number_field :county_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :scenario_id %>
+    <%= form.number_field :scenario_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :yield %>
+    <%= form.text_field :yield %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ws %>
+    <%= form.text_field :ws %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ns %>
+    <%= form.text_field :ns %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ps %>
+    <%= form.text_field :ps %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ts %>
+    <%= form.text_field :ts %>
+  </div>
+
+  <div class="field">
+    <%= form.label :yield_ci %>
+    <%= form.text_field :yield_ci %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

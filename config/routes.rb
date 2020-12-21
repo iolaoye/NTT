@@ -1,4 +1,5 @@
 NTTG3::Application.routes.draw do
+  resources :county_crop_results
   resources :posts, :has_many => :comments
   resources :posts
   resources :comments
