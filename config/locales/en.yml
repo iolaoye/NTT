@@ -582,6 +582,7 @@ en:
     scenario_name: Scenario Name
     scenario: Scenario
     simulate: Simulate
+    simulated: Simulated
     simulate_all_counties: Simulate All Counties
     add_crop_rotation: needs a crop rotation for a successful simulation.
     cover_crop_info: More than one cover crop has been added. Please modify the seeding rate accordingly
