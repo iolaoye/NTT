@@ -275,6 +275,7 @@ class ScenariosController < ApplicationController
           line.gsub! "\n",""
           line.gsub! "\r",""
           line_splited = line.split("|")
+          next if line_splited[0] == nil
           next if line_splited[0].include? "State"
           #create xml file and send it to run
           builder = Nokogiri::XML::Builder.new do |xml|
