@@ -576,6 +576,7 @@ pt:
     scenario_name: Nome Cenário
     scenario: Cenário
     simulate: Simular
+    simulated: Simulated
     add_crop_rotation: necesita una rotación de cultivo para ejecutar una simulación.
     cover_crop_info: Mas de um cultivo de proteccion han sido adicionados. Por favor modifique la tasa de plantas adecuadamente.
     cover_crop_added: cultivo de protección adicionado satisfactoriamente
