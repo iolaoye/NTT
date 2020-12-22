@@ -372,6 +372,9 @@ class ScenariosController < ApplicationController
           #run simulation
           result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
+          next if xml == nil
+          next if xml["summary"] == nil
+          next if xml["summary"]["results"] == nil
           if xml["summary"]["results"]["errorcode"] == "0" then
             #add all of the values because thereis not error
             total_xml["organicn"] += xml["summary"]["results"]["organicn"].to_f
@@ -408,7 +411,7 @@ class ScenariosController < ApplicationController
             total_xml["orgp_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
             total_xml["no3_ci"] += xml["summary"]["results"]["no3_ci"].to_f
             total_xml["po4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-            crops = xml["summary"]["crops"] # May have more than one crop
+            if xml["summary"]["crops"] != nil then crops = xml["summary"]["crops"] end # May have more than one crop and need to sum up yield per crop
             total_xml["total_runs"] += 1
           else
             total_xml["total_errors"] += 1
