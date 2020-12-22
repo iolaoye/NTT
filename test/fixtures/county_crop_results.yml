@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state_id: 1
+  county_id: 1
+  scenario_id: 1
+  name: MyString
+  yield: 1.5
+  ws: 1.5
+  ns: 1.5
+  ps: 1.5
+  ts: 1.5
+  yield_ci: 1.5
+
+two:
+  state_id: 1
+  county_id: 1
+  scenario_id: 1
+  name: MyString
+  yield: 1.5
+  ws: 1.5
+  ns: 1.5
+  ps: 1.5
+  ts: 1.5
+  yield_ci: 1.5

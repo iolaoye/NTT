@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>County Crop Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>County</th>
+      <th>Scenario</th>
+      <th>Name</th>
+      <th>Yield</th>
+      <th>Ws</th>
+      <th>Ns</th>
+      <th>Ps</th>
+      <th>Ts</th>
+      <th>Yield ci</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @county_crop_results.each do |county_crop_result| %>
+      <tr>
+        <td><%= county_crop_result.state_id %></td>
+        <td><%= county_crop_result.county_id %></td>
+        <td><%= county_crop_result.scenario_id %></td>
+        <td><%= county_crop_result.name %></td>
+        <td><%= county_crop_result.yield %></td>
+        <td><%= county_crop_result.ws %></td>
+        <td><%= county_crop_result.ns %></td>
+        <td><%= county_crop_result.ps %></td>
+        <td><%= county_crop_result.ts %></td>
+        <td><%= county_crop_result.yield_ci %></td>
+        <td><%= link_to 'Show', county_crop_result %></td>
+        <td><%= link_to 'Edit', edit_county_crop_result_path(county_crop_result) %></td>
+        <td><%= link_to 'Destroy', county_crop_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New County Crop Result', new_county_crop_result_path %>

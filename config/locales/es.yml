@@ -473,6 +473,8 @@ es:
     fields: Parcelas
     soils: Suelos
     scenarios: Escenarios
+    simulated_sucess: Last simulation ran successfully
+    simulated_warning: Last simulation did not run correctly
     bmps: Buenas Prácticas de Gestión
     operations: Operaciones
     economics: Costos
@@ -577,6 +579,7 @@ es:
     scenario_name: Nombre Escenario
     scenario: Escenario
     simulate: Simular
+    simulated: Simulated
     simulate_all_counties: Simular todos los condados
     add_crop_rotation: necesita una rotación de cultivo para ejecutar una simulación.
     cover_crop_info: Mas de un cultivo de proteccion han sido adicionados. Por favor modifique la tasa de plantas adecuadamente.
