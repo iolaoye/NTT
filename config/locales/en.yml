@@ -475,6 +475,8 @@ en:
     fields: Fields
     soils: Soils
     scenarios: Scenarios
+    simulated_sucess: Last simulation ran successfully
+    simulated_warning: Last simulation did not run correctly
     operations: Operations
     bmps: Conservation Practices
     subprojects: Subprojects

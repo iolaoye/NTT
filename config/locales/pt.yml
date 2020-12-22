@@ -472,6 +472,8 @@ pt:
     fields: Parcelas
     soils: Suelos
     scenarios: Cenários
+    simulated_sucess: Last simulation ran successfully
+    simulated_warning: Last simulation did not run correctly
     bmps: Buenas Prácticas de Gestión
     operations: Operaciones
     economics: Costos
