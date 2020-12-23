@@ -850,7 +850,7 @@ module ProjectsHelper
   end
 
   ########################################### Create county field ##################
-  def create_field(field_name, county_select)
+  def create_field(field_name, county_id)
     @field = Field.new
     @field.field_name = field_name
     @field.location_id = 0
@@ -859,7 +859,7 @@ module ProjectsHelper
     @field.soilp = 0
     @field.location_id = @location.id
     #save county id in here in order to have it available for other counties in the same state. And because there only one location for project. 
-    @field.field_average_slope = county_select
+    @field.field_average_slope = county_id
     if !(@field.save) then
       return false
     else

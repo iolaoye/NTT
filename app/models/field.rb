@@ -9,6 +9,7 @@ class Field < ActiveRecord::Base
     has_many :charts, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
 	has_many :annual_results, :through => :scenarios
+	has_many :county_results, :through => :scenarios
 	has_many :climes
 	belongs_to :location
   #validations

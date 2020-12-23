@@ -190,9 +190,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           run_special_simulation(county.county_state_code)
-        end
+        #end
         flash[:notice] = "The Selected Scenarios " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated"
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -260,19 +260,20 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     #file_name = "MD_013"
     file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"
+    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
     #This if full name without state folder for testing
     #full_name = "public/NTTFiles/" + file_name + ".txt"   
     params[:select_ntt].each do |scenario_id|
-      ActiveRecord::Base.transaction do
+      ActiveRecord::Base.transaction do       
         #need to add all of the values in this inizialization in order to avoid nil errors.
         total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
-        crops = nil
+        crops_yield = []
+        crop_runs = 0
         #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
         scenario = Scenario.find(scenario_id)
         scenario.simulation_status = false
-        scenario.save
         File.open(full_name).each do |line|
+          crops_summary = []
           line.gsub! "\n",""
           line.gsub! "\r",""
           line_splited = line.split("|")
@@ -370,7 +371,7 @@ class ScenariosController < ApplicationController
           xmlString.gsub! "[?xml version=\"1.0\"?]", ""
           xmlString.gsub! "]    [", "] ["
           #run simulation
-          result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
+          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           next if xml == nil
           next if xml["summary"] == nil
@@ -411,7 +412,29 @@ class ScenariosController < ApplicationController
             total_xml["orgp_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
             total_xml["no3_ci"] += xml["summary"]["results"]["no3_ci"].to_f
             total_xml["po4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-            if xml["summary"]["crops"] != nil then crops = xml["summary"]["crops"] end # May have more than one crop and need to sum up yield per crop
+            if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
+              if xml["summary"]["crops"].is_a? Hash then
+                crops_summary.push(xml["summary"]["crops"])
+              else
+                crops_summary = xml["summary"]["crops"]
+              end
+              crops_summary.each do |crop|
+                #needs to find the same crop inside the crops hash
+                crop_found = false
+                crops_yield.each do |yld|
+                  if yld["cropcode"] == crop["cropcode"] then
+                    yld["yield"] = yld["yield"].to_f + crop["yield"].to_f
+                    #yld["yield_ci"].to_f += crop["yield_ci"].to_f   #todo add ci
+                    crop_runs += 1
+                    crop_found = true
+                  end
+                end
+                if crop_found == false then
+                  crops_yield.push(crop)
+                  crop_runs += 1
+                end
+              end
+            end
             total_xml["total_runs"] += 1
           else
             total_xml["total_errors"] += 1
@@ -457,29 +480,18 @@ class ScenariosController < ApplicationController
         avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
         avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
         avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
-        county_result = AnnualResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-        county_result.update(year:2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide,
-                      flow_ci: avg_flow_ci,sed_ci: avg_sed_ci, orgn_ci: avg_orgn_ci, orgp_ci: avg_orgp_ci, no3_ci: avg_no3_ci, po4_ci: avg_po4_ci)
-        if crops.is_a? Hash then
-          cr = Crop.find(crops["cropcode"])
-          if cr != nil then
-            crop_yield = crops["yield"].to_f * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
+        county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
+        county_result.update(year: 2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide,flow_ci: avg_flow_ci,sed_ci: avg_sed_ci, orgn_ci: avg_orgn_ci, orgp_ci: avg_orgp_ci, no3_ci: avg_no3_ci, po4_ci: avg_po4_ci)
+        crop_yied = nil
+        crops_yield.each do |crop|
+          cr = Crop.find(crop["cropcode"])
+          if crop != nil then
+            crop_yield = (crop["yield"].to_f / crop_runs) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
           else
-            crop_yield = crops["yield"].to_f
+            crop_yield = crop["yield"].to_f / crop_runs
           end
-          crop_result = CropResult.find_or_initialize_by(scenario_id: scenario.id, name: crops["crop"])
-          crop_result.update(sub1: 0, year: 2018, yldg: crop_yield, yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
-        else
-          crops.each do |crop|
-            cr = Crop.find(crop["cropcode"])
-            if crop != nil then
-              crop_yield = crop["yield"].to_f * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
-            else
-              crop_yield = crop["yield"].to_f
-            end
-            crop_result = CropResult.find_or_initialize_by(scenario_id: scenario.id, name: crop["crop"])
-            crop_result.update(sub1: 0, year: 2018, yldg: crop_yield, yldf: 0, ws: 0, ns: 0, ps: 0, ts: 0)
-          end
+          crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
+          crop_result.update(yield: crop_yield, yield_ci: 0, ws: 0, ns: 0, ps: 0, ts: 0)
         end
         #update simulation date
         scenario.last_simulation = Time.now

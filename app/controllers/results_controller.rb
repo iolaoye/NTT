@@ -209,29 +209,32 @@ class ResultsController < ApplicationController
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
-                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("scenario_id = ?", scenario_id)
-                  values = []
-                  total = []
-                  totals = []
-                  averages = []
+                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').find_by_scenario_id(scenario_id)
+                  crops_data = CountyCropResult.where(:scenario_id => scenario_id)
+                  totals = [[]]
+                  averages = [[]]
                   cis =   [[]]
                   cic =  [[]]
-                  crops = [[]]
                   if results_data != []
-                    fields = ['orgn', 'qn', 'no3-qn', 'qdrn', 'orgp', 'po4', 'qdrp', 'surface_flow',
-                      'flow-surface_flow','qdr', 'irri', 'dprk','sed','ymnu','co2','n2o']
-                    fields.each do |f|
-                      value = results_data.limit(1).pluck(f).inject(:+)
-                      values.push(value)
-                      if value != nil then total.push (value * total_area) end
-                    end
-                    averages.push(values)
-                    totals.push(total)
+                    averages = [[results_data.orgn, results_data.qn, results_data.no3-results_data.qn,results_data.qdrn, results_data.orgp, results_data.po4, results_data.qdrp, 
+                      results_data.surface_flow,results_data.flow-results_data.surface_flow,results_data.qdr,results_data.irri,results_data.dprk,results_data.sed,results_data.ymnu,0,results_data.n2o]]
+                    averages[0].each do |f|
+                      value = 0
+                      if value != nil then value = f * total_area end
+                      totals[0].push(value)
+                    end                    
                     #take confidence interval values'
                     if results_data.orgn_ci != nil then
-                      cis = [results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]
+                      cis = [[results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]]
+                    end
+                    crops=[]
+                    crops_data.each do |crop|
+                      crop_array = [crop.yield, crop.ws, crop.ns, crop.ps, crop.ts, crop.name, crop.yield]
+                      crops.push(crop_array)
                     end
                   end
+                  #crops = crops_data.find_by_scenario_id(scenario_id)
+                                          #.order("name")
                   return cis,averages, totals, cic, crops, total_area
                 else
                   return [],[],[],[],[],[],0
@@ -360,7 +363,6 @@ class ResultsController < ApplicationController
                       return [],[],[],[],[],[],0
                   end
               end
-
               @cis1, @averages1, @totals1, @cic1, @crops1, @total_area1 = get_results.call @scenario1
               @cis2, @averages2, @totals2, @cic2, @crops2, @total_area2 = get_results.call @scenario2
               @cis3, @averages3, @totals3, @cic3, @crops3, @total_area3 = get_results.call @scenario3
