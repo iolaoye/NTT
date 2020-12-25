@@ -217,7 +217,7 @@ class ProjectsController < ApplicationController
         return false
       end
       if create_location then
-        return create_field(field_name)
+        return create_field(field_name, params[:county_select])
       else
         return false
       end

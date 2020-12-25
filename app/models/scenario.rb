@@ -10,10 +10,12 @@ class Scenario < ActiveRecord::Base
  	has_many :aplcat_parameters, :dependent => :destroy
 	has_many :grazing_parameters, :dependent => :destroy
 	has_many :supplement_parameters, :dependent => :destroy
-  has_many :aplcat_results, :dependent => :destroy
+  	has_many :aplcat_results, :dependent => :destroy
 	has_many :watershed_scenarios, :dependent => :destroy
 	has_many :annual_results, :dependent => :destroy
+	has_many :county_results, :dependent => :destroy
 	has_many :crop_results, :dependent => :destroy
+	has_many :county_crop_results, :dependent => :destroy
 	has_one :fem_result, :dependent => :destroy
 
 	belongs_to :field

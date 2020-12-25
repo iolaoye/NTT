@@ -102,7 +102,7 @@
         <% end %>
 		<%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %>
 
-	    <% if @field.annual_results.count > 0 %>
+	    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
 	    	<% case req_parm %>
 	    		<%when "FEM"%>
 		    		<%= link_to "FEM" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
