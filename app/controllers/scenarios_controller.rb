@@ -266,7 +266,10 @@ class ScenariosController < ApplicationController
     params[:select_ntt].each do |scenario_id|
       ActiveRecord::Base.transaction do       
         #need to add all of the values in this inizialization in order to avoid nil errors.
-        total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
+        #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
+        total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, 
+          "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
+
         crops_yield = []
         crop_runs = 0
         #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
@@ -371,47 +374,56 @@ class ScenariosController < ApplicationController
           xmlString.gsub! "[?xml version=\"1.0\"?]", ""
           xmlString.gsub! "]    [", "] ["
           #run simulation
-          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_tft/NTT_Service.ashx?input=' + xmlString))
+          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           next if xml == nil
           next if xml["summary"] == nil
           next if xml["summary"]["results"] == nil
           if xml["summary"]["results"]["errorcode"] == "0" then
             #add all of the values because thereis not error
-            total_xml["organicn"] += xml["summary"]["results"]["organicn"].to_f
-            total_xml["no3"] += xml["summary"]["results"]["no3"].to_f
-            total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
-            total_xml["subsurface_n"] += xml["summary"]["results"]["subsurface_n"].to_f
-            total_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
-            total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
-            total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
-            total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f
-            total_xml["tiledrainn"] += xml["summary"]["results"]["tiledrainn"].to_f
-            total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f
-            total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
-            total_xml["organicp"] += xml["summary"]["results"]["organicp"].to_f
-            total_xml["solublep"] += xml["summary"]["results"]["solublep"].to_f
-            total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
-            total_xml["tiledrainp"] += xml["summary"]["results"]["tiledrainp"].to_f
-            total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
-            total_xml["surfaceflow"] += xml["summary"]["results"]["surfaceflow"].to_f
-            total_xml["subsurfaceflow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
-            total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
-            total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
-            total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
-            total_xml["tiledrainflow"] += xml["summary"]["results"]["tiledrainflow"].to_f
-            total_xml["deeppercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
-            total_xml["irrigationapplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
-            total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
-            total_xml["sedimentsurface"] += xml["summary"]["results"]["sedimentsurface"].to_f
-            total_xml["sedimentmanure"] += xml["summary"]["results"]["sedimentmanure"].to_f
-            total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
-            total_xml["flow_ci"] += xml["summary"]["results"]["flow_ci"].to_f
-            total_xml["sed_ci"] += xml["summary"]["results"]["sed_ci"].to_f
-            total_xml["orgn_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
-            total_xml["orgp_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
-            total_xml["no3_ci"] += xml["summary"]["results"]["no3_ci"].to_f
-            total_xml["po4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
+            total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
+            total_xml["RunoffN"] += xml["summary"]["results"]["runoffn"].to_f
+            #total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
+            total_xml["SubsurfaceN"] += xml["summary"]["results"]["subsurfacen"].to_f
+            total_xml["TileDrainN"] += xml["summary"]["results"]["tiledrainn"].to_f
+            #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
+            #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
+            #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
+            #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
+            #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
+            total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
+            total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
+            #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
+            total_xml["TileDrainP"] += xml["summary"]["results"]["tiledrainp"].to_f
+            #total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
+            total_xml["SurfaceFlow"] += xml["summary"]["results"]["surfaceflow"].to_f
+            total_xml["SubsurfaceFlow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
+            #total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
+            #total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
+            #total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
+            total_xml["TileDrainFlow"] += xml["summary"]["results"]["tiledrainflow"].to_f
+            total_xml["DeepPercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
+            total_xml["IrrigationApplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
+            #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
+            total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
+            total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
+            total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
+            total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
+            total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
+            total_xml["TileDrainN_ci"] += xml["summary"]["results"]["tiledrainn_ci"].to_f
+            total_xml["OrgP_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
+            total_xml["PO4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
+            total_xml["TileDrainP_ci"] += xml["summary"]["results"]["tiledrainp_ci"].to_f
+            total_xml["SurfaceFlow_ci"] += xml["summary"]["results"]["surfaceflow_ci"].to_f
+            total_xml["SubsurfaceFlow_ci"] += xml["summary"]["results"]["subsurfaceflow_ci"].to_f
+            total_xml["TileDrainFlow_ci"] += xml["summary"]["results"]["tiledrainflow_ci"].to_f
+            total_xml["IrrigationApplied_ci"] += xml["summary"]["results"]["irrigationapplied_ci"].to_f
+            total_xml["DeepPercolation_ci"] += xml["summary"]["results"]["deeppercolation_ci"].to_f
+            total_xml["SurfaceErosion_ci"] += xml["summary"]["results"]["surfaceerosion_ci"].to_f
+            total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
+            #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
+            #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
+
             if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
               if xml["summary"]["crops"].is_a? Hash then
                 crops_summary.push(xml["summary"]["crops"])
@@ -446,42 +458,51 @@ class ScenariosController < ApplicationController
           f.write(total_xml)
         end
         # average_all_xml = (total_xml["organicn"] + total_xml["no3"] + total_xml["surface_n"] + total_xml["subsurface_n"] + total_xml["lateralsubsurfacen"] + total_xml["quickreturnn"] + total_xml["returnsubsurfacen"] + total_xml["tiledrainn"] + total_xml["volatilizedn"] + total_xml["nitrousoxide"] + total_xml["solublep"] + total_xml["leachedp"] + total_xml["tiledrainp"] + total_xml["flow"] + total_xml["surfaceflow"] + total_xml["subsurfaceflow"] + total_xml["lateralsubsurfaceflow"] + total_xml["quickreturnflow"] + total_xml["returnsubsurfaceflow"] + total_xml["tiledrainflow"] + total_xml["deeppercolation"] + total_xml["irrigationapplied"] + total_xml["sediment"] + total_xml["sedimentsurface"] + total_xml["sedimentmanure"] + total_xml["carbon"] + total_xml["flow_ci"] + total_xml["sed_ci"] + total_xml["orgn_ci"] + total_xml["orgp_ci"] + total_xml["no3_ci"] + total_xml["po4_ci"])/32
-        avg_organicn = total_xml["organicn"] / total_xml["total_runs"]
-        avg_no3 = total_xml["no3"]/ total_xml["total_runs"]
-        avg_surface_n = total_xml["surface_n"] / total_xml["total_runs"]
-        avg_subsurface_n = total_xml["subsurface_n"] / total_xml["total_runs"]
-        avg_lateralsubsurfacen = total_xml["lateralsubsurfacen"] / total_xml["total_runs"]
-        avg_quickreturnn = total_xml["quickreturnn"] / total_xml["total_runs"]
-        avg_returnsubsurfacen = total_xml["returnsubsurfacen"]/ total_xml["total_runs"]
-        avg_leachedn = total_xml["leachedn"] / total_xml["total_runs"]
-        avg_tiledrainn = total_xml["tiledrainn"] / total_xml["total_runs"]
-        avg_volatilizedn = total_xml["volatilizedn"] / total_xml["total_runs"]
-        avg_nitrousoxide = total_xml["nitrousoxide"] / total_xml["total_runs"]
-        avg_organicp = total_xml["organicp"] / total_xml["total_runs"]
-        avg_solublep = total_xml["solublep"] / total_xml["total_runs"]
-        avg_leachedp = total_xml["leachedp"] / total_xml["total_runs"]
-        avg_tiledrainp = total_xml["tiledrainp"]/ total_xml["total_runs"]
-        avg_flow = total_xml["flow"]/ total_xml["total_runs"]
-        avg_surfaceflow = total_xml["surfaceflow"]/ total_xml["total_runs"]
-        avg_subsurfaceflow = total_xml["subsurfaceflow"]/ total_xml["total_runs"]
-        avg_lateralsubsurfaceflow = total_xml["lateralsubsurfaceflow"]/ total_xml["total_runs"]
-        avg_quickreturnflow = total_xml["quickreturnflow"]/ total_xml["total_runs"]
-        avg_returnsubsurfaceflow = total_xml["returnsubsurfaceflow"]/ total_xml["total_runs"]
-        avg_tiledrainflow = total_xml["tiledrainflow"]/ total_xml["total_runs"]
-        avg_deeppercolation = total_xml["deeppercolation"]/ total_xml["total_runs"]
-        avg_irrigationapplied = total_xml["irrigationapplied"]/ total_xml["total_runs"]
-        avg_sediment = total_xml["sediment"]/ total_xml["total_runs"]
-        avg_sedimentsurface = total_xml["sedimentsurface"]/ total_xml["total_runs"]
-        avg_sedimentmanure = total_xml["sedimentmanure"]/ total_xml["total_runs"]
-        avg_carbon = total_xml["carbon"]/ total_xml["total_runs"]
-        avg_flow_ci = total_xml["flow_ci"]/ total_xml["total_runs"]
-        avg_sed_ci = total_xml["sed_ci"]/ total_xml["total_runs"]
-        avg_orgn_ci = total_xml["orgn_ci"]/ total_xml["total_runs"]
-        avg_orgp_ci = total_xml["orgp_ci"]/ total_xml["total_runs"]
-        avg_no3_ci = total_xml["no3_ci"]/ total_xml["total_runs"]
-        avg_po4_ci = total_xml["po4_ci"]/ total_xml["total_runs"]
+        avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
+        avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
+        #avg_surface_n = total_xml["surface_n"] / total_xml["total_runs"]
+        avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
+        #avg_lateralsubsurfacen = total_xml["lateralsubsurfacen"] / total_xml["total_runs"]
+        #avg_quickreturnn = total_xml["quickreturnn"] / total_xml["total_runs"]
+        #avg_returnsubsurfacen = total_xml["returnsubsurfacen"]/ total_xml["total_runs"]
+        #avg_leachedn = total_xml["leachedn"] / total_xml["total_runs"]
+        avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
+        #avg_volatilizedn = total_xml["volatilizedn"] / total_xml["total_runs"]        
+        avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
+        avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
+        #avg_leachedp = total_xml["leachedp"] / total_xml["total_runs"]
+        avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
+        #avg_flow = total_xml["flow"]/ total_xml["total_runs"]
+        avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
+        avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
+        #avg_lateralsubsurfaceflow = total_xml["lateralsubsurfaceflow"]/ total_xml["total_runs"]
+        #avg_quickreturnflow = total_xml["quickreturnflow"]/ total_xml["total_runs"]
+        #avg_returnsubsurfaceflow = total_xml["returnsubsurfaceflow"]/ total_xml["total_runs"]
+        avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
+        avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
+        avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
+        #avg_sediment = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
+        avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
+        avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
+        #avg_carbon = total_xml["carbon"]/ total_xml["total_runs"]
+        #avg_nitrousoxide = total_xml["nitrousoxide"] / total_xml["total_runs"]
+        avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
+        avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
+        avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
+        avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
+        avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
+        avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
+        avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
+        avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
+        avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
+        avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
+        avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
+        avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
+        avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
+        avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]                
         county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-        county_result.update(year: 2018, orgn: avg_organicn, no3: avg_no3, prkn: avg_leachedn, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_flow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, sed: avg_sediment, prkn: 0, pcp: 0, irri: 0, qn: 0, ymnu: 0, biom: 0, n2o: avg_nitrousoxide,flow_ci: avg_flow_ci,sed_ci: avg_sed_ci, orgn_ci: avg_orgn_ci, orgp_ci: avg_orgp_ci, no3_ci: avg_no3_ci, po4_ci: avg_po4_ci)
+        county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, qn: 0, biom: 0, n2o: 0, co2: 0,
+          orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
         crop_yied = nil
         crops_yield.each do |crop|
           cr = Crop.find(crop["cropcode"])
@@ -491,7 +512,7 @@ class ScenariosController < ApplicationController
             crop_yield = crop["yield"].to_f / crop_runs
           end
           crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
-          crop_result.update(yield: crop_yield, yield_ci: 0, ws: 0, ns: 0, ps: 0, ts: 0)
+          crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
         end
         #update simulation date
         scenario.last_simulation = Time.now

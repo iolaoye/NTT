@@ -209,15 +209,14 @@ class ResultsController < ApplicationController
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
-                  results_data = CountyResult.select('*','no3-qn as no3','flow-surface_flow as flow').find_by_scenario_id(scenario_id)
+                  results_data = CountyResult.find_by_scenario_id(scenario_id)
                   crops_data = CountyCropResult.where(:scenario_id => scenario_id)
                   totals = [[]]
                   averages = [[]]
                   cis =   [[]]
-                  cic =  [[]]
                   if results_data != []
-                    averages = [[results_data.orgn, results_data.qn, results_data.no3-results_data.qn,results_data.qdrn, results_data.orgp, results_data.po4, results_data.qdrp, 
-                      results_data.surface_flow,results_data.flow-results_data.surface_flow,results_data.qdr,results_data.irri,results_data.dprk,results_data.sed,results_data.ymnu,0,results_data.n2o]]
+                    averages = [[results_data.orgn,results_data.no3,results_data.qn,results_data.qdrn,results_data.orgp,results_data.po4,results_data.qdrp, 
+                      results_data.surface_flow,results_data.flow,results_data.qdr,results_data.irri,results_data.dprk,results_data.sed,results_data.ymnu,0,results_data.n2o]]
                     averages[0].each do |f|
                       value = 0
                       if value != nil then value = f * total_area end
@@ -225,11 +224,15 @@ class ResultsController < ApplicationController
                     end                    
                     #take confidence interval values'
                     if results_data.orgn_ci != nil then
-                      cis = [[results_data.orgn_ci,0,results_data.no3_ci,0,results_data.orgp_ci,results_data.po4,0,0,results_data.flow,0,0,0,results_data.sed,0,0,0]]
+                      cis = [[results_data.orgn_ci,results_data.no3_ci,results_data.qn_ci,results_data.qdrn_ci,results_data.orgp_ci,results_data.po4_ci,results_data.qdrp_ci, 
+                      results_data.surface_flow_ci,results_data.flow_ci,results_data.qdr_ci,results_data.irri_ci,results_data.dprk_ci,results_data.sed_ci,results_data.ymnu_ci,results_data.co2_ci,results_data.n2o_ci]]                      
                     end
                     crops=[]
+                    cic = []
                     crops_data.each do |crop|
                       crop_array = [crop.yield, crop.ws, crop.ns, crop.ps, crop.ts, crop.name, crop.yield]
+                      ci = [crop.name, crop.yield_ci]
+                      cic.push(ci)
                       crops.push(crop_array)
                     end
                   end
