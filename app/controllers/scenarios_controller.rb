@@ -190,9 +190,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        #fork do #comment when need to debugge.
+        fork do #comment when need to debugge.
           run_special_simulation(county.county_state_code)
-        #end
+        end
         flash[:notice] = "The Selected Scenarios " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated"
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -374,7 +374,7 @@ class ScenariosController < ApplicationController
           xmlString.gsub! "[?xml version=\"1.0\"?]", ""
           xmlString.gsub! "]    [", "] ["
           #run simulation
-          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+          result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           next if xml == nil
           next if xml["summary"] == nil
