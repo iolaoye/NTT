@@ -262,9 +262,11 @@ class ScenariosController < ApplicationController
     file_name = county_state_code[0..1] + "_" + county_state_code[2..]
     full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
     #This if full name without state folder for testing
-    #full_name = "public/NTTFiles/" + file_name + ".txt"   
+    #full_name = "public/NTTFiles/" + file_name + ".txt"
+    rec_num = ""
     params[:select_ntt].each do |scenario_id|
-      ActiveRecord::Base.transaction do       
+      ActiveRecord::Base.transaction do
+        begin
         #need to add all of the values in this inizialization in order to avoid nil errors.
         #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
         total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, 
@@ -282,6 +284,7 @@ class ScenariosController < ApplicationController
           line_splited = line.split("|")
           next if line_splited[0] == nil
           next if line_splited[0].include? "State"
+          rec_num = line_splited[2]
           #create xml file and send it to run
           builder = Nokogiri::XML::Builder.new do |xml|
             xml.NTT {
@@ -374,7 +377,7 @@ class ScenariosController < ApplicationController
           xmlString.gsub! "[?xml version=\"1.0\"?]", ""
           xmlString.gsub! "]    [", "] ["
           #run simulation
-          result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+          result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
           xml = Hash.from_xml(result.gsub("\n","").downcase)
           next if xml == nil
           next if xml["summary"] == nil
@@ -520,6 +523,12 @@ class ScenariosController < ApplicationController
         scenario.save
         @user = User.find(session[:user_id])
         @user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
+        rescue => e
+          raise ActiveRecord::Rollback
+          File.open("public/NTTFiles/" + file_name + ".log", "w+") do |f|
+            f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
+          end          
+        end   # end begin/rescue
       end   #active transaction do
     end    # end scenarios selected
   end
