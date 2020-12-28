@@ -13,5 +13,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail to: @user.email, subject: "NTT message", body: msg
   end
-
+  def email_with_att(user, msg, file)
+    attachments["attachment.csv"] = File.read(file)
+    @user = user
+    mail to: @user.email, subject: "NTT message", body: msg
+  end
 end
