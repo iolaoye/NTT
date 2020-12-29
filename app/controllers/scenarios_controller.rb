@@ -252,6 +252,7 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation(county_state_code)
+File.open("public/NTTFiles/log.log"), "w+") do |h|
     require 'nokogiri'
 
     #county = County.find_by_id(county_id).county_state_code
@@ -265,7 +266,7 @@ class ScenariosController < ApplicationController
     #This if full name without state folder for testing
     #full_name = "public/NTTFiles/" + file_name + ".txt"
     rec_num = ""
-  File.open(full_name.sub('txt','log'), "w+") do |h|
+  
     h.write(params[:select_ntt])
     h.write("\n")
     params[:select_ntt].each do |scenario_id|
