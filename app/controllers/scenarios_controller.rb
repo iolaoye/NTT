@@ -253,7 +253,6 @@ class ScenariosController < ApplicationController
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation(county_state_code)
     require 'nokogiri'
-    debugger
     #county = County.find_by_id(county_id).county_state_code
     #take initial time
     time_begin = Time.now
