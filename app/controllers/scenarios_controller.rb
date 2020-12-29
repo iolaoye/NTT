@@ -193,7 +193,7 @@ class ScenariosController < ApplicationController
         #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
         #end
-        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " + msg 
+        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " + msg. 
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
       else
@@ -266,7 +266,7 @@ class ScenariosController < ApplicationController
     rec_num = ""
     params[:select_ntt].each do |scenario_id|
       ActiveRecord::Base.transaction do
-        begin
+        #begin
         #need to add all of the values in this inizialization in order to avoid nil errors.
         #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
         total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, 
@@ -533,12 +533,12 @@ class ScenariosController < ApplicationController
         
         @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
 
-        rescue => e
-          raise ActiveRecord::Rollback
-          File.open("public/NTTFiles/" + file_name + ".log", "w+") do |f|
-            f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
-          end          
-        end   # end begin/rescue
+        # rescue => e
+        #   raise ActiveRecord::Rollback
+        #   File.open("public/NTTFiles/" + file_name + ".log", "w+") do |f|
+        #     f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
+        #   end          
+        # end   # end begin/rescue
       end   #active transaction do
     end    # end scenarios selected
   end
