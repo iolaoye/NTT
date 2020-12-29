@@ -253,6 +253,7 @@ class ScenariosController < ApplicationController
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation(county_state_code)
     require 'nokogiri'
+
     #county = County.find_by_id(county_id).county_state_code
     #take initial time
     time_begin = Time.now
@@ -264,6 +265,9 @@ class ScenariosController < ApplicationController
     #This if full name without state folder for testing
     #full_name = "public/NTTFiles/" + file_name + ".txt"
     rec_num = ""
+  File.open(full_name.sub('txt','log'), "w+") do |h|
+    h.write(params[:select_ntt])
+    h.write("\n")
     params[:select_ntt].each do |scenario_id|
       ActiveRecord::Base.transaction do
         #begin
@@ -271,18 +275,23 @@ class ScenariosController < ApplicationController
         #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
         total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, 
           "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
-
+    h.write(total_xml)
+    h.write("\n")
         crops_yield = []
         #crop_runs = 0
         #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
         scenario = Scenario.find(scenario_id)
         scenario.simulation_status = false
         File.open(full_name.sub('txt','csv'), "w+") do |g|
+    h.write(full_name)
+    h.write("\n")          
           File.open(full_name).each do |line|
             crops_summary = []
             line.gsub! "\n",""
             line.gsub! "\r",""
             line_splited = line.split("|")
+    h.write(full_name)
+    h.write("\n")                   
             next if line_splited == nil
             next if line_splited[0] == nil
             next if line_splited[0].include? "State"
@@ -541,6 +550,7 @@ class ScenariosController < ApplicationController
         # end   # end begin/rescue
       end   #active transaction do
     end    # end scenarios selected
+  end
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
