@@ -191,9 +191,9 @@ class ScenariosController < ApplicationController
     if @project.version.include? "special"
       if params[:select_ntt] != nil
         #fork do #comment when need to debugge.
-          run_special_simulation(county.county_state_code)
+          msg=run_special_simulation(county.county_state_code)
         #end
-        flash[:notice] = "The Selected Scenarios " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated"
+        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " + msg 
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
       else
