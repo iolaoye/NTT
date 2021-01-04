@@ -266,7 +266,7 @@ class ScenariosController < ApplicationController
       #This if full name without state folder for testing
       #full_name = "public/NTTFiles/" + file_name + ".txt"
       rec_num = ""
-    
+
       h.write(params[:select_ntt])
       h.write("\n")
       params[:select_ntt].each do |scenario_id|
@@ -538,7 +538,8 @@ class ScenariosController < ApplicationController
           scenario.last_simulation = Time.now
           scenario.simulation_status = true
           scenario.save
-          @user = User.find(session[:user_id])          
+          @user = User.find(session[:user_id])
+          #@user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
           # rescue => e
           #   raise ActiveRecord::Rollback
