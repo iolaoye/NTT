@@ -643,6 +643,18 @@ class BmpsController < ApplicationController
 ### ID: 3
   # Get depth, irrigation_id and crop_id from subarea to save into bmp
   def tile_drain(type)
+    @bmp.depth = @values[:bmp_td][:depth]
+    @bmp.irrigation_id = 0
+    @bmp.crop_id = 0
+    if @values[:irrigation_id] != nil then
+      @bmp.irrigation_id = 1
+      #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
+    end
+    if @values[:crop_id] != nil then
+      @bmp.crop_id = 1
+      #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
+    end
+    @bmp.save
     @soils = Soil.where(:field_id => @values[:field_id])
     # loop through soil to get subarea
     @soils.each do |soil|
@@ -651,19 +663,7 @@ class BmpsController < ApplicationController
         case type
           when "create", "update"
             subarea.idr = @values[:bmp_td][:depth].to_f * FT_TO_MM
-            @bmp.depth = @values[:bmp_td][:depth]
-            @bmp.irrigation_id = 0
             subarea.tdms = 0
-            @bmp.crop_id = 0
-            if @values[:irrigation_id] != nil then
-              @bmp.irrigation_id = 1
-              #subarea.tdms = 43    #only TD management is applicable in APEX. Bio is calculatd here.
-            end
-            if @values[:crop_id] != nil then
-              @bmp.crop_id = 1
-              #subarea.tdms = 33.  #not used for now. If activated should aadd_subarea_file look for tdms column.
-            end
-            @bmp.save
             subarea.drt = 2
             soil.wtmn = 1
             soil.wtmx = 5

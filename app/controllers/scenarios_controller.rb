@@ -252,19 +252,21 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation(county_state_code)
-    require 'nokogiri'
-    #county = County.find_by_id(county_id).county_state_code
-    #take initial time
-    time_begin = Time.now
-    #create xml file and send the simulation to ntt.tft.cbntt.org server
-    #read the coordinates for the county selected
-    #file_name = "MD_013"
-    file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
-    #This if full name without state folder for testing
-    #full_name = "public/NTTFiles/" + file_name + ".txt"
-    rec_num = ""
-    File.open(full_name.sub('txt','log'), "w+") do |h|  
+    File.open("public/NTTFiles/log.log", "w+") do |h|
+      require 'nokogiri'
+
+      #county = County.find_by_id(county_id).county_state_code
+      #take initial time
+      time_begin = Time.now
+      #create xml file and send the simulation to ntt.tft.cbntt.org server
+      #read the coordinates for the county selected
+      #file_name = "MD_013"
+      file_name = county_state_code[0..1] + "_" + county_state_code[2..]
+      full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
+      #This if full name without state folder for testing
+      #full_name = "public/NTTFiles/" + file_name + ".txt"
+      rec_num = ""
+
       h.write(params[:select_ntt])
       h.write("\n")
       params[:select_ntt].each do |scenario_id|
@@ -281,8 +283,6 @@ class ScenariosController < ApplicationController
           #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
           scenario = Scenario.find(scenario_id)
           scenario.simulation_status = false
-          h.write(full_name.sub('txt','csv'))
-          h.write("\n")
           File.open(full_name.sub('txt','csv'), "w+") do |g|
             h.write(full_name)
             h.write("\n")          
@@ -540,9 +540,7 @@ class ScenariosController < ApplicationController
           scenario.save
           @user = User.find(session[:user_id])
           #@user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
-          
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-
           # rescue => e
           #   raise ActiveRecord::Rollback
           #   File.open("public/NTTFiles/" + file_name + ".log", "w+") do |f|
@@ -551,8 +549,7 @@ class ScenariosController < ApplicationController
           # end   # end begin/rescue
         end   #active transaction do
       end    # end scenarios selected
-    end   #log.log file
-  end
+    end   #end log file
   end
 
 ################################  Simulate NTT for selected scenarios  #################################
