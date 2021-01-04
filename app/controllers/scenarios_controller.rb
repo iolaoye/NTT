@@ -190,9 +190,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
-        end
+        #end
         flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " 
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -438,8 +438,8 @@ class ScenariosController < ApplicationController
                 total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
                 #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
                 #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
-                total_xml.map {|k,v| g.write(v.to_s + ",")}
                 total_xml["total_runs"] += 1
+                xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
                 if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
                   if xml["summary"]["crops"].is_a? Hash then
                     crops_summary.push(xml["summary"]["crops"])
