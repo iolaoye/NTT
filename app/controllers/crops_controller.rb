@@ -23,7 +23,6 @@ class CropsController < ApplicationController
     else
       @crop = Crop.find(params[:id])
     end
-    unless params[:part] == nil @part = params[:part]
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @crop }
