@@ -2205,7 +2205,7 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            fraction = all_subs[subs-1].wsa / total_sbs
+            fraction = all_subs[subs-1].wsa.abs / total_sbs
             #fraction = @scenario.field.soils[subs-1].percentage / 100
             qdr_sum += one_result["qdr"] * fraction
             qdrn_sum += one_result["qdrn"] * fraction
