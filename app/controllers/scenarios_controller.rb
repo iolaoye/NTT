@@ -265,7 +265,7 @@ class ScenariosController < ApplicationController
       full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
       #This if full name without state folder for testing
       #full_name = "public/NTTFiles/" + file_name + ".txt"
-      rec_num = ""
+      rec_num = 0
 
       h.write(params[:select_ntt])
       h.write("\n")
@@ -296,7 +296,7 @@ class ScenariosController < ApplicationController
               next if line_splited == nil
               next if line_splited[0] == nil
               next if line_splited[0].include? "State"
-              rec_num = line_splited[2]
+              rec_num += 1
               #create xml file and send it to run
               builder = Nokogiri::XML::Builder.new do |xml|
                 xml.NTT {
@@ -439,6 +439,10 @@ class ScenariosController < ApplicationController
                 #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
                 #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
                 total_xml["total_runs"] += 1
+                if rec_num == 1 then 
+                  xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
+                  g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5")
+                end
                 xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
                 if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
                   if xml["summary"]["crops"].is_a? Hash then
@@ -463,7 +467,7 @@ class ScenariosController < ApplicationController
                     end
                     g.write(crop["crop"] + ", " + crop["yield"] + ", " + crop["unit"] + ", " + crop["yield_ci"])
                   end
-                end             
+                end
                 g.write("\n")
               else
                 total_xml["total_errors"] += 1
