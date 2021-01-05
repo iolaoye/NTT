@@ -4,7 +4,6 @@
 <% test = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% county = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost") || @project.version.include?("special")%>
  <% if alert != nil %>
- <% if alert != nil %>
     <div class="error_alert">
 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 	  <%= alert %>
@@ -132,7 +131,7 @@
 	    <br>
         <br>
 		<% if req_parm == "APLCAT" %>
-				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
+			<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
 		<%end%>
         <%= t('instructions.scenarios') %>
 
