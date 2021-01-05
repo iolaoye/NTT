@@ -465,7 +465,7 @@ class ScenariosController < ApplicationController
                       crop["crop_runs"] = 1
                       crops_yield.push(crop)                  
                     end
-                    g.write(crop["crop"] + ", " + crop["yield"] + ", " + crop["unit"] + ", " + crop["yield_ci"])
+                    g.write(crop["crop"] + ", " + crop["yield"] + ", " + crop["unit"] + ", " + crop["yield_ci"] + ",")
                   end
                 end
                 g.write("\n")
