@@ -910,9 +910,14 @@ def send_file_to_DNDC(apex_string, file, state)
       soil_info.push(records + "\n")
       #line 4 to 24 Layers information
       records = ""
+      new_layer = false
       for layers in initial_layer..layer_number - 1
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
+      end
+      if depth_cm < 2 and layers < 10 then   #add a new layer to 2m depth
+        new_layer = true
+        records = records + sprintf("%8.3f", 2)
       end
       soil_info.push(records + "\n")
       records = ""
@@ -922,66 +927,79 @@ def send_file_to_DNDC(apex_string, file, state)
         end
         records = records + sprintf("%8.3f", bulk_density[layers])
       end
+      if new_layer then records = records + sprintf("%8.3f", bulk_density[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.3f", uw[layers])
       end
+      if new_layer then records = records + sprintf("%8.3f", uw[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.3f", fc[layers])
       end
+      if new_layer then records = records + sprintf("%8.3f", fc[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", sand[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", sand[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", silt[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", silt[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", wn[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", wn[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", ph[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", ph[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", smb[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", smb[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", woc[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", woc[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", cac[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", cac[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", cec[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", cec[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", rok[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", rok[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", cnds[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", cnds[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
@@ -994,36 +1012,43 @@ def send_file_to_DNDC(apex_string, file, state)
         end
         records = records + sprintf("%8.2f", ssf[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", ssf[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", rsd[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", rsd[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", bdd[layers])
       end
+      if new_layer then records = records + sprintf("%8.3f", bdd[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", psp[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", psp[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", satc[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", satc[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", hcl[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", hcl[layers]) end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
         records = records + sprintf("%8.2f", wpo[layers])
       end
+      if new_layer then records = records + sprintf("%8.2f", wpo[layers]) end
       soil_info.push(records + "\n")
       records = ""
       (25..47).each do
@@ -1682,8 +1707,9 @@ def send_file_to_DNDC(apex_string, file, state)
           client = Savon.client(wsdl: URL_SoilsInfo)
           response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
           @hu[operation.apex_crop.to_s.to_sym] = response.body[:get_hu_response][:get_hu_result]
-        end 
-        operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
+        end
+        #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021 
+        #operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
         #end
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
