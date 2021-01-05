@@ -190,9 +190,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
-        end
+        #end
         flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " 
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -266,7 +266,7 @@ class ScenariosController < ApplicationController
       #This if full name without state folder for testing
       #full_name = "public/NTTFiles/" + file_name + ".txt"
       rec_num = 0
-
+      run_id = 0
       h.write(params[:select_ntt])
       h.write("\n")
       params[:select_ntt].each do |scenario_id|
@@ -290,13 +290,14 @@ class ScenariosController < ApplicationController
               crops_summary = []
               line.gsub! "\n",""
               line.gsub! "\r",""
-              line_splited = line.split("|")
+              line_splited = line.split("|")              
               h.write(full_name)
               h.write("\n")                   
               next if line_splited == nil
               next if line_splited[0] == nil
               next if line_splited[0].include? "State"
               rec_num += 1
+              run_id = line_splited[2]
               #create xml file and send it to run
               builder = Nokogiri::XML::Builder.new do |xml|
                 xml.NTT {
@@ -441,8 +442,9 @@ class ScenariosController < ApplicationController
                 total_xml["total_runs"] += 1
                 if rec_num == 1 then 
                   xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
-                  g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5")
+                  g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
                 end
+                xml["summary"]["results"]["id"] = run_id
                 xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
                 if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
                   if xml["summary"]["crops"].is_a? Hash then
@@ -465,7 +467,7 @@ class ScenariosController < ApplicationController
                       crop["crop_runs"] = 1
                       crops_yield.push(crop)                  
                     end
-                    g.write(crop["crop"] + ", " + crop["yield"] + ", " + crop["unit"] + ", " + crop["yield_ci"] + ",")
+                    g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                   end
                 end
                 g.write("\n")
