@@ -228,7 +228,7 @@
       -->
     <% end %>
     <%# ******************  UTILITY MENU TO FIELD LEVEL ********************************* %>
-    <% unless ENV["APP_VERSION"] == "modified" || county_authorized_users %>   <!-- @project.version.include?("special") -->
+    <% unless ENV["APP_VERSION"] == "modified" && User.find(session[:user_id]).county_authorized_users %>   <!-- @project.version.include?("special") -->
 		  <li class="<%= ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) ? "active" : "" %>">
   			<% if ((controller_name == "apex_controls") || (controller_name == "apex_parameters") || (controller_name == "subareas")|| (controller_name == "apex_soils") || (controller_name == "soil_operations") || (controller_name == "sites")) %>
   				<div class="header-icon"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div>
