@@ -1709,8 +1709,7 @@ def send_file_to_DNDC(apex_string, file, state)
           @hu[operation.apex_crop.to_s.to_sym] = response.body[:get_hu_response][:get_hu_result]
         end
         #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021 
-        #operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
-        #end
+        operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1
