@@ -1264,17 +1264,32 @@ module ScenariosHelper
 	end
 
 	def get_weather_file_name(lat, lon)
-	  	lat_less = lat - LAT_DIF
-		lat_plus = lat + LAT_DIF
-		lon_less = lon - LON_DIF
-		lon_plus = lon + LON_DIF
-		sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
-		sql = sql + " FROM stations"
-		sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
-		sql = sql + " ORDER BY distance"
-		station = Station.find_by_sql(sql).first
-		if station != nil
-			return station.file_name + "," + station.initial_year.to_s + "," + (station.final_year + 1).to_s
+		times = 1.0
+		@station = nil
+		while @station == nil and times <= 3.0
+			lat_less = lat - LAT_DIF * times
+			lat_plus = lat + LAT_DIF * times
+			lon_less = lon - LON_DIF * times
+			lon_plus = lon + LON_DIF * times
+			sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
+			sql = sql + " FROM stations"
+			sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+			sql = sql + " ORDER BY distance"
+			@station = Station.find_by_sql(sql).first
+			times = times + 0.5
+		end 
+		#replace in order to have the same rutin from NTT than from other interfaces such as SEC, TFT, and CSU. Oscar Gallego 1/7/21
+	  	#lat_less = lat - LAT_DIF
+		#lat_plus = lat + LAT_DIF
+		#lon_less = lon - LON_DIF
+		#lon_plus = lon + LON_DIF
+		#sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
+		#sql = sql + " FROM stations"
+		#sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+		#sql = sql + " ORDER BY distance"
+		#station = Station.find_by_sql(sql).first
+		if @station != nil
+			return @station.file_name + "," + @station.initial_year.to_s + "," + (@station.final_year + 1).to_s
 		else
 			return "Error saving weather file name"
 		end

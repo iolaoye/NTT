@@ -30,49 +30,49 @@
 	<% end %>
 <% end %>
 <div class="scrolling-wrapper">
-<div class="overlay">
-  <%= image_tag "loading.gif" %>
-  <h2>We are simulating your results, this may take a while. Please do not close your browser window</h2>
-</div>
-<% case %>
-  <% when flash[:error] != nil %>
-    <div class="error_alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-      <!--<h2>Simulation failed to run</h2>-->
-      <%= flash[:error] %>
+	<div class="overlay">
+	  <%= image_tag "loading.gif" %>
+	  <h2>We are simulating your results, this may take a while. Please do not close your browser window</h2>
 	</div>
-
-<% end %>
-<div class="page-header"><h1>
-	<% if request.parameters[:caller_id] == nil then %>
-		<% if request.parameters[:commit] != nil then %>
-			<% case true %>
-				<% when request.parameters[:commit].include?("APLCAT") %>
-					<% req_parm = "APLCAT" %>
-				<% when request.parameters[:commit].include?("FEM") %>
-					<% req_parm = "FEM" %>
-				<% else %>
-					<% req_parm = "NTT" %>
+	<% case %>
+	  <% when flash[:error] != nil %>
+	    <div class="error_alert">
+	      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+	      <!--<h2>Simulation failed to run</h2>-->
+	      <%= flash[:error] %>
+		</div>
+	<% end %>
+	<div class="page-header"><h1>
+		<% if request.parameters[:caller_id] == nil then %>
+			<% if request.parameters[:commit] != nil then %>
+				<% case true %>
+					<% when request.parameters[:commit].include?("APLCAT") %>
+						<% req_parm = "APLCAT" %>
+					<% when request.parameters[:commit].include?("FEM") %>
+						<% req_parm = "FEM" %>
+					<% else %>
+						<% req_parm = "NTT" %>
+				<% end %>
+			<% else %>
+				<% req_parm = "NTT" %>
 			<% end %>
 		<% else %>
-			<% req_parm = "NTT" %>
+			<% req_parm = request.parameters[:caller_id] %>
 		<% end %>
-	<% else %>
-		<% req_parm = request.parameters[:caller_id] %>
-	<% end %>
-	<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
-</div>
-<% if req_parm == "FEM" || req_parm == "APLCAT" || (!User.find(session[:user_id]).county_authorized_users && @project.version.include?("special")) then %><% acitive_menu = "style=display:none" %><% end %>
-<div <%=acitive_menu%>>
-	<%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
-	<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
-	<% if test == 1 %>
-		<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
-	<% end %>
-</div>
+		<%= req_parm + " " + t('general.management') + " " + t('menu.scenarios') %>
+	</div>
+	<% if req_parm == "FEM" || req_parm == "APLCAT" || (!User.find(session[:user_id]).county_authorized_users && @project.version.include?("special")) then %><% acitive_menu = "style=display:none" %><% end %>
+	<div <%=acitive_menu%>>
+		<%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
+		<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
+		<% if test == 1 %>
+			<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
+			<br>
+			<%= label :run_id, "This county has " + @last_line.to_s + " AOIs", :class => "nutrients_positive" %>
+		<% end %>
+	</div>
 	<% @scenario = Scenario.new %>
 	<div style="">
-		<br>
 		<div id="div_new" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
 			<h2><%= t('general.new') + " " + t('scenario.scenario') %></h2>
 			<%= render 'form' %>
@@ -83,128 +83,199 @@
 		<div id="div_upload" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
 			<%= render 'upload_scenarios' %>
 		</div>
-		<br>
 	</div>
-<%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
-    <% if @scenarios.count > 0 %>
-    	<% if req_parm == "NTT"%>
-			<%= submit_tag t('scenario.simulate'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
-		<% end %>
-        <% unless ENV["APP_VERSION"] == "modified" %>
-        	<% if aplcat == 1 && req_parm == "APLCAT"%>
-    			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
-    		<% end %>
-    		<% if fem == 1 && req_parm == "FEM"%>
-    			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
-    		<% end %>
-        	<% if dndc == 1 && req_parm == "DNDC"%>
-    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
-    		<% end %>
-        <% end %>
-        <% if county == 1 then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
-	    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
-	    	<% case req_parm %>
-	    		<%when "FEM"%>
-		    		<%= link_to "FEM" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
-	    		<%when "APLCAT"%>
-		    		<%= link_to "APLCAT" + " " + t('menu.results'), aplcat_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
-	    		<%when "DNDC"%>
-		    		<%= link_to "DNDC" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
-	    		<%else %>
-		    		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
-	    	<% end %>
-		    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
-		    	<% if req_parm == "NTT"%>
-          			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
-          		<% end %>
-          		<% if aplcat == 1 && req_parm == "APLCAT"%>
-          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
-          		<% end %>
-         		<% if fem == 1 && req_parm == "FEM"%>
-          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
-          		<% end %>
-         		<% if dndc == 1 && req_parm == "NTT"%>
-          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
-          		<% end %>
-          	<% end %>
-        <% end %>
-	    <br>
-        <br>
-		<% if req_parm == "APLCAT" %>
-			<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
-		<%end%>
-        <%= t('instructions.scenarios') %>
+	<%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
+	    <% if @scenarios.count > 0 %>
+	    	<% if req_parm == "NTT"%>
+				<%= submit_tag t('scenario.simulate'), data: {disable_with: 'Please wait. NTT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_scenario" %>
+			<% end %>
+	        <% unless ENV["APP_VERSION"] == "modified" %>
+	        	<% if aplcat == 1 && req_parm == "APLCAT"%>
+	    			<%= submit_tag t('scenario.simulate') + ' ' + 'APLCAT', data: {disable_with: 'Please wait. APLCAT simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_aplcat" %>
+	    		<% end %>
+	    		<% if fem == 1 && req_parm == "FEM"%>
+	    			<%= submit_tag t('scenario.simulate') + ' ' + 'FEM', data: {disable_with: 'Please wait. FEM simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_fem" %>
+	    		<% end %>
+	        	<% if dndc == 1 && req_parm == "DNDC"%>
+	    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
+	    		<% end %>
+	        <% end %>
+	        <% if county == 1 then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
+		    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
+		    	<% case req_parm %>
+		    		<%when "FEM"%>
+			    		<%= link_to "FEM" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
+		    		<%when "APLCAT"%>
+			    		<%= link_to "APLCAT" + " " + t('menu.results'), aplcat_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
+		    		<%when "DNDC"%>
+			    		<%= link_to "DNDC" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
+		    		<%else %>
+			    		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+		    	<% end %>
+			    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
+			    	<% if req_parm == "NTT"%>
+	          			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
+	          		<% end %>
+	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
+	          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
+	          		<% end %>
+	         		<% if fem == 1 && req_parm == "FEM"%>
+	          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+	          		<% end %>
+	         		<% if dndc == 1 && req_parm == "NTT"%>
+	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
+	          		<% end %>
+	          	<% end %>
+	        <% end %>
+		    <br>
+	        <br>
+			<% if req_parm == "APLCAT" %>
+				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
+			<%end%>
+	        <%= t('instructions.scenarios') %>
 
-		<div class="table">
-		  <div class="panel panel-default">
-			<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
-			  <thead>
-				<tr>
-				  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-          <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
-        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
-          <th><%=t('general.select')%></th>
-          <% end %>
-        <% unless req_parm == "APLCAT"%>
- 				  <th>Environment</th>
-				  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
-				  	<th><%=t('fem.economic')%></th>
-				  	<th>1501</th>
-				  <%end %>
-          <% end %>
-				  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
-				  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
-				  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
-				  <th class="gvCellStyleTitle"><%= t('menu.layer_file') %></th>
-				  <th class="gvCellStyleTitle"><%= t('menu.operation_file') %></th>
-				  <th class="gvCellStyleTitle"><%= t('scenario.simulated') %></th>
-				  <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
-				  <% if req_parm == "NTT" then %>
-				  	<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
-				  <% end %>
-				</tr>
-			  </thead>
-			  <tbody>
-				<% i=1 %>
-				<% @scenarios.each do |scenario| %>
-					<% if (i % 2 == 0) %>
-					<tr class="gvRowStyleEven">
-					<% else %>
-					<tr class="gvRowStyleOdd">
-					<% end %>
-					<%# Only show operations in which grazing is selected if in APLCAT - Jennifer 8/12/20 %>
-					<% if req_parm == "APLCAT" %>
-						<% flag = false%>
-						<% scenario.operations.each do |so|%>
-							<% if so.activity_id == 7 ||  so.activity_id == 9 %>
-								<% flag = true%>
+			<div class="table">
+			  <div class="panel panel-default">
+				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
+				  <thead>
+					<tr>
+					  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
+	          <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
+	        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
+	          <th><%=t('general.select')%></th>
+	          <% end %>
+	        <% unless req_parm == "APLCAT"%>
+	 				  <th>Environment</th>
+					  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+					  	<th><%=t('fem.economic')%></th>
+					  	<th>1501</th>
+					  <%end %>
+	          <% end %>
+					  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
+					  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
+					  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
+					  <th class="gvCellStyleTitle"><%= t('menu.layer_file') %></th>
+					  <th class="gvCellStyleTitle"><%= t('menu.operation_file') %></th>
+					  <th class="gvCellStyleTitle"><%= t('scenario.simulated') %></th>
+					  <th class="gvCellStyleTitle"><%= t('scenario.last_simulation') %></th>
+					  <% if req_parm == "NTT" then %>
+					  	<th class="gvCellStyleTitle"><%= t('general.actions') %></th>
+					  <% end %>
+					</tr>
+				  </thead>
+				  <tbody>
+					<% i=1 %>
+					<% @scenarios.each do |scenario| %>
+						<% if (i % 2 == 0) %>
+						<tr class="gvRowStyleEven">
+						<% else %>
+						<tr class="gvRowStyleOdd">
+						<% end %>
+						<%# Only show operations in which grazing is selected if in APLCAT - Jennifer 8/12/20 %>
+						<% if req_parm == "APLCAT" %>
+							<% flag = false%>
+							<% scenario.operations.each do |so|%>
+								<% if so.activity_id == 7 ||  so.activity_id == 9 %>
+									<% flag = true%>
+								<%end%>
 							<%end%>
-						<%end%>
-						<%  if flag == true%>
-							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_aplcat[]", scenario.id %></td>
-							<!--<%# if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
-								 <td id="<%#= scenario.name %>" class="gvCellStyleText">
-									<%#= check_box_tag "select_1501[]", scenario.id %>
+							<%  if flag == true%>
+								<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_aplcat[]", scenario.id %></td>
+								<!--<%# if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+									 <td id="<%#= scenario.name %>" class="gvCellStyleText">
+										<%#= check_box_tag "select_1501[]", scenario.id %>
+									</td>
+								<%#end %> -->
+								<td class="table-link">
+									<%= link_to scenario.name, edit_project_field_scenario_aplcat_parameter_path(@project, @field, scenario,0) %>
 								</td>
-							<%#end %> -->
+								<td class="gvCellStyleImage">
+									<% if @field.weather == nil %>
+										<% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
+										<%# warning = true %>
+									<% else %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.weather') + " OK") %>
+									<% end %>
+								</td>
+								<td class="gvCellStyleImage">
+									<% if Soil.find_by_field_id(scenario.field_id) == nil %>
+										<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.soils') + " No"), project_field_soils_path(@project, @field)) %>
+										<%# warning = true %>
+									<% else %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.soils') + " OK") %>
+									<% end %>
+								</td>
+								<td class="gvCellStyleImage">
+									<% soils = @field.soils %>
+									<% found = true %>
+									<% soils.each do |soil| %>
+										<% if soil.layers.count == 0 then %>
+											<% @soil_id = soil.id %>
+											<% found = false %>
+											<% break %>
+										<% end %>
+									<% end %>
+									<% if found == false %>
+										<%# session[:soil_id] = @soil_id %>
+										<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.layer_file') + " No"), project_field_soil_layers_path(@project, @field, @soil_id)) %>
+										<%# warning = true %>
+									<% else %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.layer_file') + " OK") %>
+									<% end %>
+								</td>
+								<td class="gvCellStyleImage">
+									<% if scenario.operations.count == 0 %>
+										<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.operation_file') + " No"), project_field_scenario_operations_path(@project, @field, scenario)) %>
+										<%# warning = true %>
+									<% else %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.operation_file') + " OK") %>
+									<% end %>
+								</td>
+								<td class="gvCellStyleImage">
+									<% if scenario.simulation_status == true %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
+									<% else %>
+										<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
+									<% end %>
+								</td>
+								<td class="gvCellStyleText">
+								<%= scenario.aplcat_last_simulation %>
+								</td>
+								</tr>
+							<%end%>
+						<%else%>
+						<!-- For FEM and NTT. Jennifer 8/24/2020 -->
+							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
+
+	 						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+	 						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
+								<td id="<%= scenario.name %>" class="gvCellStyleText">
+								  <%= check_box_tag "select_1501[]", scenario.id %>
+								</td>
+						    <%end %>
 							<td class="table-link">
-								<%= link_to scenario.name, edit_project_field_scenario_aplcat_parameter_path(@project, @field, scenario,0) %>
+							  	<% case req_parm %>
+								  	<% when "NTT" %>
+								  		<%= link_to scenario.name, project_field_scenario_operations_path(@project, @field, scenario) %>
+								  	<% when "FEM" %>
+								  		<%= scenario.name %>
+							  	<% end %>
 							</td>
 							<td class="gvCellStyleImage">
-								<% if @field.weather == nil %>
-									<% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
+							  	<% if @field.weather == nil %>
+							  		<% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
 									<%# warning = true %>
 								<% else %>
 									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.weather') + " OK") %>
-								<% end %>
+							  	<% end %>
 							</td>
 							<td class="gvCellStyleImage">
-								<% if Soil.find_by_field_id(scenario.field_id) == nil %>
+							  	<% if Soil.find_by_field_id(scenario.field_id) == nil %>
 									<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.soils') + " No"), project_field_soils_path(@project, @field)) %>
-									<%# warning = true %>
+							  		<%# warning = true %>
 								<% else %>
 									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.soils') + " OK") %>
-								<% end %>
+							  	<% end %>
 							</td>
 							<td class="gvCellStyleImage">
 								<% soils = @field.soils %>
@@ -233,107 +304,35 @@
 								<% end %>
 							</td>
 							<td class="gvCellStyleImage">
-								<% if scenario.simulation_status == true %>
-									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
-								<% else %>
-									<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
-								<% end %>
-							</td>
+									<% if scenario.simulation_status == true %>
+										<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
+									<% else %>
+										<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
+									<% end %>
+								</td>
 							<td class="gvCellStyleText">
-							<%= scenario.aplcat_last_simulation %>
+								<% case req_parm %>
+								  	<% when "NTT" %>
+								  		<%= scenario.last_simulation %>
+								  	<% when "FEM" %>
+								  		<%= scenario.fem_last_simulation %>
+							  	<% end %>
 							</td>
-							</tr>
-						<%end%>
-					<%else%>
-					<!-- For FEM and NTT. Jennifer 8/24/2020 -->
-						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
-
- 						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
- 						<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_fem[]", scenario.id %></td>
-							<td id="<%= scenario.name %>" class="gvCellStyleText">
-							  <%= check_box_tag "select_1501[]", scenario.id %>
-							</td>
-					    <%end %>
-						<td class="table-link">
-						  	<% case req_parm %>
-							  	<% when "NTT" %>
-							  		<%= link_to scenario.name, project_field_scenario_operations_path(@project, @field, scenario) %>
-							  	<% when "FEM" %>
-							  		<%= scenario.name %>
-						  	<% end %>
-						</td>
-						<td class="gvCellStyleImage">
-						  	<% if @field.weather == nil %>
-						  		<% link_to(image_tag("warning_icon.png", size: "13x13", :class => 'gvCellStyleImage', :title => t('menu.weather') + " No"), edit_project_field_weather_path(@project, @field, @field.weather)) %>
-								<%# warning = true %>
-							<% else %>
-								<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.weather') + " OK") %>
-						  	<% end %>
-						</td>
-						<td class="gvCellStyleImage">
-						  	<% if Soil.find_by_field_id(scenario.field_id) == nil %>
-								<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.soils') + " No"), project_field_soils_path(@project, @field)) %>
-						  		<%# warning = true %>
-							<% else %>
-								<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.soils') + " OK") %>
-						  	<% end %>
-						</td>
-						<td class="gvCellStyleImage">
-							<% soils = @field.soils %>
-							<% found = true %>
-							<% soils.each do |soil| %>
-								<% if soil.layers.count == 0 then %>
-									<% @soil_id = soil.id %>
-									<% found = false %>
-									<% break %>
-								<% end %>
+					  		<% if req_parm == "NTT" then %>
+								<td class="gvCellStyleActions">
+									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
+									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
+									<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
+								</td>
 							<% end %>
-							<% if found == false %>
-								<%# session[:soil_id] = @soil_id %>
-								<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.layer_file') + " No"), project_field_soil_layers_path(@project, @field, @soil_id)) %>
-								<%# warning = true %>
-							<% else %>
-								<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.layer_file') + " OK") %>
-							<% end %>
-						</td>
-						<td class="gvCellStyleImage">
-							<% if scenario.operations.count == 0 %>
-								<%= link_to(image_tag("warning_icon.png", size: "13x13", :title => t('menu.operation_file') + " No"), project_field_scenario_operations_path(@project, @field, scenario)) %>
-								<%# warning = true %>
-							<% else %>
-								<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.operation_file') + " OK") %>
-							<% end %>
-						</td>
-						<td class="gvCellStyleImage">
-								<% if scenario.simulation_status == true %>
-									<%= image_tag("go_icon.png", size: "13x13", :title => t('menu.simulated_sucess')) %>
-								<% else %>
-									<%= image_tag("warning_icon.png", size: "13x13", :title => t('menu.simulated_warning')) %>
-								<% end %>
-							</td>
-						<td class="gvCellStyleText">
-							<% case req_parm %>
-							  	<% when "NTT" %>
-							  		<%= scenario.last_simulation %>
-							  	<% when "FEM" %>
-							  		<%= scenario.fem_last_simulation %>
-						  	<% end %>
-						</td>
-				  		<% if req_parm == "NTT" then %>
-							<td class="gvCellStyleActions">
-								<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
-								<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
-								<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
-							</td>
+						 	</tr>
 						<% end %>
-					 	</tr>
+					<% i = i + 1 %>
 					<% end %>
-				<% i = i + 1 %>
-				<% end %>
-			  </tbody>
-			</table>
-		  </div>
-		</div>
-    <% end %>
-<% end %>
+				  </tbody>
+				</table>
+			  </div>
+			</div>
+	    <% end %>
+	<% end %>
 </div>
