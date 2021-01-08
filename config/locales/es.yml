@@ -1150,7 +1150,7 @@ es:
       abwc: Peso corporal promedio de las vacas (lb)
       abwmb: Peso corporal promedio de los toros maduros (lb)
       abwh: Peso corporal promedio de las novillas (lb)
-      abwrh: Average Body Weight of Replacement Heifers (lb)
+      abwrh: Peso corporal promedio de las vaquillas de reemplazo (lb)
       prh: Proporción novillas de reemplazo (%)
       prb: Proporción toros de reemplazo (%)
       adwgbc: Aumento promedio de peso diario (lb) por terneros/ganado en crecimiento
@@ -1158,12 +1158,12 @@ es:
       mrga: Tasa de mortalidad en crecimiento de animales (%)
       jdcc: Día juliano en que las vacas conciben
       gpc: Período de gestación de las vacas
-      tpwg: Total pregnancy weight gain (lb)
+      tpwg: Aumento de peso total durante el embarazo (lb)
       csefa: Terneros empiezan a comer forraje (days)
       srop: Rata de embarazos exitosos (%)
       bwoc: Peso de los terneros al nacer (lb)
       jdbs: Día juliano de compra/venta
-      abc: Animal Breed Code
+      abc: Código de raza animal
       dmd: Digestibilidad de la materia seca (DMD) (%)
       dmi: "DMI (% de peso corporal)"
       napanr: Tasa de población en el rango nativo. Número de animales / acre
@@ -1177,12 +1177,12 @@ es:
       foue: Fracción de la energía urinaria expresada como fracción de GE
       ash: Contenido de ceniza en el estiércol (fracción de la ingesta de materia seca)
       mmppfm: Potencial máximo de producción de metano para el abono (Bo)
-      cfmms: Conversion factor for manure management system
-      fnemimms: Fraction of nitrogen excretion managed in manure management system
-      effn2ofmms: Emission factor for direct N2O emissions from manure management system
-      dwawfga: Drinking water adjustment factor for weight:Growing animals
-      dwawflc: Drinking water adjustment factor for weight:Lactating cows
-      dwawfmb: Drinking water adjustment factor for weight:Mature bulls
+      cfmms: Factor de conversión para el sistema de gestión del estiércol
+      fnemimms: Fracción de la excreción de nitrógeno gestionada en el sistema de gestión del estiércol
+      effn2ofmms: Factor de emisión para las emisiones directas de N2O del sistema de gestión del estiércol
+      dwawfga: Factor de ajuste del agua potable por peso:animales en crecimiento
+      dwawflc: Factor de ajuste del agua potable por peso:vacas lactantes
+      dwawfmb: Factor de ajuste del agua potable por peso:Toros maduros
       pgu: Proporción de agua subterránea utilizada (%) en la producción animal
       ada: Profundidad media del acuífero (ft)
       ape: Rendimiento medio de bombeo (%)
@@ -1195,45 +1195,45 @@ es:
       animal_growth_parameters: Parámetros de crecimiento y nutrición de los animales
       environmental_parameters: Parámetros del medio ambiente
       greenhouse_parameters: Parámetros Invernaderos
-      simulation_parameters: Simulation Parameters
-      forage_quantity_input: Forage Quality Input
-      number_of_forage: Number of growing forage for which quality data will be entered.
-      forage_id_html: Forage Id (refer to <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>)
-      jdi: 'Forage Quantity Improvement:'
-      increase: Begin to increase
-      stabilization: Start to stabilize
-      decline: End of stability
-      opt4: Start to decline
-      cplof: Crude protein levels (% DM) of forage
-      lowest: Lowest
-      highest: Highest
+      simulation_parameters: Parámetros de simulación
+      forage_quantity_input: Insumo de calidad del forraje
+      number_of_forage: Número de forraje en crecimiento para el que se introducirán datos de calidad.
+      forage_id_html: Id de forraje (refer to <a href="/FCT-NASEM-2018.txt" target="_blank">"<u>FCT-NASEM-2018.txt</u>"</a>)
+      jdi: 'Mejora de la cantidad de forraje:'
+      increase: Empezar a aumentar
+      stabilization: Empiece a estabilizarse
+      decline: Fin de la estabilidad
+      opt4: Empieza a declinar
+      cplof: Niveles de proteína bruta (% DM) del forraje
+      lowest: Más bajo
+      highest: Mas alto
       tdnlof: TDN levels (% DM) of forage
       nlof: NDF levels (% DM) of forage
       alof: ADF levels (% DM) of forage
-      firobw: Feed intake rates (% of body weight)
-      mrgauh: Mortality rate of growing animals until harvest
-      plac: Proportion of live animal to carcass (%)
-      pcbb: Proportion of carcass to boneless beef
-      fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excerted)
-      domd: Digestibility of milk (DMD) %
-      vsim: Volatile solid in manure (kg of dry organic matter) If it is zero; model will estimate
-      faueea: 'Fraction of urinary energy expressed as fraction of GE (Typical values: 0.4 forage diet and 0.02 for grain diet)'
-      acim: Ash content in manure (fraction of dry matter intake)
-      mmppm: Maximum methane production potential for the manure (Bo)
-      cffm: 'Conversion factor for manure management system (Increases with temperature: pasture 1-2 storage 2-5)'
-      fnemm: Fraction of nitrogen excretion managed in manure management system
-      effd: Emission factor for direct N2O emissions from manure management system
-      ptbd: Proportion (for beef by-products) to be discounted in footprint estimation (e.g. value of byproducts)
-      pocib: Proportion of carbon in beef cattle manure (% on a dry matter basis)
-      bneap: 'Bulls: Nitrogen excretion as proportion of intake (%)'
-      cneap: 'Cows: Nitrogen excretion as proportion of intake (%)'
-      hneap: 'Heifers: Nitrogen excretion as proportion of intake (%)'
-      pobw: Proportion (0 to 1) of body weight as shrunk body weight (SBW)
-      posw: Proportion (0 to 1) of shrunk weight gain (SWG) as empty body gain (EBG)
-      posb: Proportion (0 to 1) of shrunk body weight (SBW) as empty body weight (EBW)
-      poad: Proportion (0 to 1) of apparent digestion of RDP in rumen
+      firobw: Tasas de ingesta de alimento (% del peso corporal)
+      mrgauh: Tasa de mortalidad de los animales en crecimiento hasta la cosecha
+      plac: Proporción de animal vivo a canal (%)
+      pcbb: Proporción de la canal a la carne deshuesada
+      fmbmm: Fracción de estiércol que se convierte en estiércol metano (g de metano por kg de estiércol sólido extraído)
+      domd: Digestibilidad de la leche (DMD)%
+      vsim: Sólido volátil en abono (kg de materia orgánica seca) Si es cero; el modelo estimará
+      faueea: 'Fracción de energía urinaria expresada como fracción de GE (valores típicos: 0,4 dieta forrajera y 0,02 para dieta de granos)'
+      acim: Contenido de cenizas en el estiércol (fracción de la ingesta de materia seca)
+      mmppm: Potencial máximo de producción de metano para el estiércol (Bo)
+      cffm: 'Factor de conversión para el sistema de manejo del estiércol (aumenta con la temperatura: pasto 1-2 almacenamiento 2-5)'
+      fnemm: Fracción de la excreción de nitrógeno gestionada en el sistema de gestión del estiércol
+      effd: Factor de emisión para las emisiones directas de N2O del sistema de gestión del estiércol
+      ptbd: Proporción (para subproductos de carne vacuna) que se descontará en la estimación de la huella (por ejemplo, valor de los subproductos)
+      pocib: Proporción de carbono en el estiércol de ganado vacuno (% sobre la base de materia seca)
+      bneap: 'Toros: excreción de nitrógeno como proporción de la ingesta (%)'
+      cneap: 'Vacas: excreción de nitrógeno como proporción de la ingesta (%)'
+      hneap: 'Novillas: excreción de nitrógeno como proporción de la ingesta (%)'
+      pobw: Proporción (0 a 1) del peso corporal como peso corporal reducido (SBW)
+      posw: Proporción (0 a 1) de aumento de peso reducido (SWG) como aumento de cuerpo vacío (EBG)
+      posb: Proporción (0 a 1) de peso corporal reducido (SBW) como peso corporal vacío (EBW)
+      poad: Proporción (0 a 1) de digestión aparente de RDP en el rumen
       poada: Proportion (0 to 1) of apparent digestion of RUP in abomasum
-      cibo: '% change in bodyweight for over-eating'
+      cibo: '% de cambio en el peso corporal por comer en exceso'
       simulation_methods: Simulation Methods
       water_use_pumping_parameters: Parámetros del uso y bombeo del agua
       other_parameters: Otros Parámetros
@@ -1725,6 +1725,7 @@ es:
     projects: "Para seleccionar un proyecto existente, haga clic en el nombre del proyecto"
     fields: "Clic en el nombre de la parcela para simulación del modelo."
     watersheds: "Para seleccionar un cuenca, haga clic en el nombre de la cuenca"
+    aplcat_notice: "La siguiente lista solo incluye escenarios con operaciones de pastoreo"
     scenarios: "Para seleccionar un escenario haga clic en el nombre del escenario, para correr la simulación seleccione el cuadro"
     watershed_scenarios: Adicione las parcelas en el orden en que se enrutan de una a otra y seleccione el escenario que va a ser simulado con la parcela seleccionada.
   sysreq:
@@ -2155,7 +2156,7 @@ es:
     4. El usuario puede eliminar suelo (s) haciendo clic en el icono <img src = "/serve_image/delete.png"> en la columna Acción.<br><br>
   soil_body2_modified: 1. The total soil percentage of the selected soils cannot be more than 100% or equal to 0%. If this is the case, NTT will automatically adjust the values.<br></br>
     2. User can delete soil(s) by clicking <img src="/serve_image/delete.png"> icon under Action column.<br><br>
-  soil_body3: Presione <strong>Save And Continue</Strong> para ir a la página de escenarios.
+  soil_body3: Presione <strong>Salvar y Continuar</Strong> para ir a la página de escenarios.
   layers_html:
     <strong>Página de Capas</strong><br><br>
     Esta página le permite al usuario adicionar, editar y borrar las capas del suelo así;<br></br>
