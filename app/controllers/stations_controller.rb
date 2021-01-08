@@ -1,4 +1,5 @@
 class StationsController < ApplicationController
+  include ScenariosHelper
   # GET /stations
   # GET /stations.json
   def index
@@ -15,20 +16,21 @@ class StationsController < ApplicationController
   # GET /stations/1.json
   def show
     if params[:nlat] != nil then
-      times = 1.0
-      @station = nil
-      while @station == nil and times <= 3.0
-        lat_less = params[:nlat].to_f - LAT_DIF * times
-        lat_plus = params[:nlat].to_f + LAT_DIF * times
-        lon_less = params[:nlon].to_f - LON_DIF * times
-        lon_plus = params[:nlon].to_f + LON_DIF * times
-        sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year, initial_year"
-        sql = sql + " FROM stations"
-        sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
-        sql = sql + " ORDER BY distance"
-        @station = Station.find_by_sql(sql).first
-        times = times + 0.5
-      end 
+      get_weather_file_name(params[:nlat].to_f, params[:nlon].to_f)
+      #times = 1.0
+      #@station = nil
+      # while @station == nil and times <= 3.0
+      #   lat_less = params[:nlat].to_f - LAT_DIF * times
+      #   lat_plus = params[:nlat].to_f + LAT_DIF * times
+      #   lon_less = params[:nlon].to_f - LON_DIF * times
+      #   lon_plus = params[:nlon].to_f + LON_DIF * times
+      #   sql = "SELECT lat,lon,file_name,(lat-" + params[:nlat] + ") + (lon + " + params[:nlon] + ") as distance, final_year, initial_year"
+      #   sql = sql + " FROM stations"
+      #   sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+      #   sql = sql + " ORDER BY distance"
+      #   @station = Station.find_by_sql(sql).first
+      #   times = times + 0.5
+      # end
       if params[:state] != nil then
         file = "D:/Weather/1981-2017/PRISM From Rewati/Weather/" + params[:state] + "/" + @station.file_name
         client = Savon.client(wsdl: URL_SoilsInfoDev)

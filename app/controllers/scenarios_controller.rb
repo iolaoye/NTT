@@ -41,7 +41,18 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     @scenarios = Scenario.where(:field_id => @field.id)
-
+    if @project.version.include?("special") then
+      county = County.find_by_id(@field.field_average_slope.to_i)
+      file_name = county.county_state_code[0..1] + "_" + county.county_state_code[2..]
+      full_name = "public/NTTFiles/" + county.county_state_code[0..1] + "/" + file_name + ".txt"
+      last_line = nil
+      File.open(full_name).each do |line|
+        last_line = line if(!line.chomp.empty?)
+      end
+      if(last_line)
+        @last_line = last_line.split("|")[2]
+      end
+    end
     if (params[:scenario] != nil)
     msg = copy_other_scenario
     if msg != "OK" then
