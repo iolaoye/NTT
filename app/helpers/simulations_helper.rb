@@ -2113,7 +2113,7 @@ def send_file_to_DNDC(apex_string, file, state)
         msg = "Failed, Error: " + e.inspect
         raise ActiveRecord::Rollback
       ensure
-        return msg
+        return "OK"
       end
     end
   end
@@ -3100,8 +3100,8 @@ def send_file_to_DNDC(apex_string, file, state)
     end
     if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
     #@scenario.last_simulation = Time.now
-    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-    return msg
+    #if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
+    return "OK"
   end # end show method
 
 end
