@@ -1237,8 +1237,10 @@ module ScenariosHelper
 	## Create layers receiving from map for each soil.
 	def create_layers(layers)
 	  	if layers == nil then return t('notices.no_layers') end
-	    for l in 1..layers["lay_number"].to_i
-	      layer_number = "layer" + l.to_s
+	  	layer_number = 0
+	  	depth = 0
+	    #define an inner function to add crops results to crops_data including the last year.
+	    add_layer = ->() {
 	      layer = @soil.layers.new
 	      layer.sand = layers[layer_number]["sand"]
 	      layer.silt = layers[layer_number]["silt"]
@@ -1249,17 +1251,27 @@ module ScenariosHelper
 	      	layer.organic_matter = 0.5
 	      end
 	      layer.ph = layers[layer_number]["ph"]
-	      layer.depth = layers[layer_number]["depth"]
-	      layer.depth /= IN_TO_CM
-	      layer.depth = layer.depth.round(2)
+	      layer.depth = depth
+	      #layer.depth = (layers[layer_number]["depth"].to_f / IN_TO_CM).round(2)
+	      #layer.depth /= IN_TO_CM
+	      #layer.depth = layer.depth.round(2)
 	      layer.cec = layers[layer_number]["cec"]
 	      layer.soil_p = 0
 	      if layer.save then
-	        msg = "OK"
+	        return "OK"
 	      else
-	        msg = "Error saving some layers"
+	        return "Error saving some layers"
 	      end
+	    }
+	    for l in 1..layers["lay_number"].to_i
+	      layer_number = "layer" + l.to_s
+	      depth = (layers[layer_number]["depth"].to_f / IN_TO_CM).round(2)
+	      msg = add_layer.call
 	    end #end for create_layers
+	    if (layers[layer_number]["depth"].to_f / 100).round(3) < 2 then
+	    	depth = 78.74
+	    	msg = add_layer.call
+	    end
 	    return msg
 	end
 
