@@ -915,10 +915,11 @@ def send_file_to_DNDC(apex_string, file, state)
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end
-      if depth_cm.round(3) < 2 and layers < 10 then   #add a new layer to 2m depth
-        new_layer = false   #this will avoid adding new layers before the simulation. The 2m layer are now added when the soils are created only.
-        records = records + sprintf("%8.3f", 2)
-      end
+      #this will avoid adding new layers before the simulation. The 2m layer are now added when the soils are created only.
+      #if depth_cm.round(3) < 2 and layers < 10 then   #add a new layer to 2m depth
+        #new_layer = true   
+        #records = records + sprintf("%8.3f", 2)
+      #end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
