@@ -915,7 +915,7 @@ def send_file_to_DNDC(apex_string, file, state)
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end
-      if depth_cm < 2 and layers < 10 then   #add a new layer to 2m depth
+      if depth_cm.round(3) < 2 and layers < 10 then   #add a new layer to 2m depth
         new_layer = true
         records = records + sprintf("%8.3f", 2)
       end
