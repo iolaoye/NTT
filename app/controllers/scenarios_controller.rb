@@ -201,9 +201,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
-        end
+        #end
         flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " 
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -337,7 +337,12 @@ class ScenariosController < ApplicationController
                           xml.Opv1 soop.opv1
                           xml.Opv2 soop.opv2
                           xml.Opv3 soop.opv3
-                          xml.Opv4 soop.opv4
+                          oper = soop.operation
+                          if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
+                            xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
+                          else
+                            xml.Opv4 soop.opv4
+                          end
                           xml.Opv5 soop.opv5
                         }  # end operations
                       end
