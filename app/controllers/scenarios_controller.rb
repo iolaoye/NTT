@@ -590,7 +590,7 @@ class ScenariosController < ApplicationController
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
         @scenario.simulation_status = false
-        @scenario.save!
+        #@scenario.save!
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
@@ -603,8 +603,8 @@ class ScenariosController < ApplicationController
         if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
          @scenario.last_simulation = Time.now
          @scenario.simulation_status = true
-         @scenario.save!
         end
+        @scenario.save!
       end # end each do params loop
     end  # end transaction do
     return msg
