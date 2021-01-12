@@ -65,11 +65,12 @@
 	<div <%=acitive_menu%>>
 		<%= button_tag t('general.new') + ' ' + t('scenario.scenario'), :class => 'btn btn-primary', :id => "new_scenario" %>
 		<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
-		<% if test == 1 %>
+		<% if test == 1 && @project.version.include?("special")%>
 			<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
 			<br>
-			<%= label :run_id, "This county has " + @last_line.to_s + " AOIs", :class => "nutrients_positive" %>
+			<%= label_tag(:run_id, "This County has #{@last_line} AOIs", :class => "nutrients_positive")%>
 		<% end %>
+
 	</div>
 	<% @scenario = Scenario.new %>
 	<div style="">
