@@ -1268,10 +1268,13 @@ module ScenariosHelper
 	      depth = (layers[layer_number]["depth"].to_f / IN_TO_CM).round(2)
 	      msg = add_layer.call
 	    end #end for create_layers
-	    if (layers[layer_number]["depth"].to_f / 100).round(3) < 2 then
-	    	depth = 78.74
-	    	msg = add_layer.call
-	    end
+	    #If last soil layer is less than 1.75 m a new layer is added at 2 m depth. for now it is only in dev. Oscar Gallego 1/13/21
+	    if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+		    if (layers[layer_number]["depth"].to_f / 100).round(3) < 1.75 then
+		    	depth = 78.74
+		    	msg = add_layer.call
+		    end
+		end
 	    return msg
 	end
 
