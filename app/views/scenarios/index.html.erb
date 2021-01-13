@@ -129,6 +129,7 @@
 	          	<% end %>
 				<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
 	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
+
 	          	<% end %>
 	        <% end %>
 		    <br>
