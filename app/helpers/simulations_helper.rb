@@ -2091,22 +2091,21 @@ def send_file_to_DNDC(apex_string, file, state)
         if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
           #@scenario.results.delete_all
-          @scenario.charts.delete_all
-          @scenario.annual_results.delete_all
-          @scenario.crop_results.delete_all
+          @scenario.charts.delete_all unless @scenario.charts.count == 0
+          @scenario.annual_results.delete_all unless @scenario.annual_results.count == 0
+          @scenario.crop_results.delete_all unless @scenario.crop_results.count == 0
         else
           # clean results for watershed to avoid keeping some results from previous simulation
           #@watershed.results.delete_all
-          @watershed.charts.delete_all
-          @watershed.annual_results.delete_all
-          @watershed.crop_results.delete_all
+          @watershed.charts.delete_all unless @watershed.charts.count == 0
+          @watershed.annual_results.delete_all unless @watershed.annual_results.count == 0
+          @watershed.crop_results.delete_all unless @watershed.crop_results.count == 0
         end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         #apex_start_year = @field.weather.simulation_initial_year - 5 + 1
         #changed to take the year from apex_control because the rport are control in the same way. 10/6/20 Oscar Gallego.
         apex_start_year = @project.apex_controls[1].value + 1
-        
         msg = load_results_annual(apex_start_year, msg)
         
         msg = load_crop_results(apex_start_year)
@@ -2231,7 +2230,11 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            fraction = all_subs[subs-1].wsa.abs / total_sbs
+            if @grazing.activity_id == 9 then
+              fraction = (total_sbs / (@grazing.nh4_n / @grazing.moisture + 1)) / total_sbs
+            else
+              fraction = all_subs[subs-1].wsa.abs / total_sbs
+            end
             #fraction = @scenario.field.soils[subs-1].percentage / 100
             qdr_sum += one_result["qdr"] * fraction
             qdrn_sum += one_result["qdrn"] * fraction
@@ -3075,7 +3078,6 @@ def send_file_to_DNDC(apex_string, file, state)
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
     #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
-
     if @project.location.state_id == 0 then 
       if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
     else
