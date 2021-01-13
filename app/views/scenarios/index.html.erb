@@ -127,8 +127,8 @@
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	          	<% end %>
-				<% if req_parm == "NTT"%>
-	          		<%= link_to t('scenario.econ_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
+				<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
 	          	<% end %>
 	        <% end %>
 		    <br>
