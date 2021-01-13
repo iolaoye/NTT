@@ -597,6 +597,7 @@ en:
     simulation_success: scenarios simulated successfully in
     other_scenario: Copy Scenario from other project/field
     upload_scenarios: Upload your own scenarios
+    economic_results: Economic Results
   location:
     new_location: New Location
     edit: Editing Location
