@@ -111,7 +111,7 @@
 		    		<%when "DNDC"%>
 			    		<%= link_to "DNDC" + " " + t('menu.results'), fem_results_project_field_result_path(@project, @field,0), :class => 'btn btn-success' %>
 		    		<%else %>
-			    		<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+			    	    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 		    	<% end %>
 			    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
 			    	<% if req_parm == "NTT"%>
@@ -126,6 +126,9 @@
 	         		<% if dndc == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
+	          	<% end %>
+				<% if req_parm == "NTT"%>
+	          		<%= link_to t('scenario.econ_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
 	          	<% end %>
 	        <% end %>
 		    <br>
