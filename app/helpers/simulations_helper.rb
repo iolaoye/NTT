@@ -2230,8 +2230,12 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            if @grazing.activity_id == 9 then
-              fraction = (total_sbs / (@grazing.nh4_n / @grazing.moisture + 1)) / total_sbs
+            if @grazing != nil then
+              if @grazing.activity_id == 9 then
+                fraction = (total_sbs / (@grazing.nh4_n / @grazing.moisture + 1)) / total_sbs
+              else
+                fraction = all_subs[subs-1].wsa.abs / total_sbs
+              end
             else
               fraction = all_subs[subs-1].wsa.abs / total_sbs
             end
