@@ -242,6 +242,7 @@ class WatershedsController < ApplicationController
           
           #todo weather is created just from the first field at this time. and @scenario too. It should be for each field/scenario
           @scenario = Scenario.find(watershed_scenarios[0].scenario_id)
+          @field = Field.find(watershed_scenarios[0].field_id)
           msg = create_control_file()     #this prepares the apexcont.dat file
           if msg.eql?("OK") then msg = create_parameter_file() else return msg end      #this prepares the parms.dat file
           #if msg.eql?("OK") then msg = create_weather_file(dir_name, watershed_scenarios[0].field_id) else return msg end      #this prepares the apex.wth file
