@@ -2091,9 +2091,9 @@ def send_file_to_DNDC(apex_string, file, state)
         if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
           #@scenario.results.delete_all
-          @scenario.charts.delete_all
-          @scenario.annual_results.delete_all
-          @scenario.crop_results.delete_all
+          @scenario.charts.delete_all unless @scenario.charts.count == 0
+          @scenario.annual_results.delete_all unless @scenario.annual_results.count == 0
+          @scenario.crop_results.delete_all unless 
         else
           # clean results for watershed to avoid keeping some results from previous simulation
           #@watershed.results.delete_all
