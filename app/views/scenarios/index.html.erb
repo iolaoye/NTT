@@ -127,8 +127,9 @@
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	          	<% end %>
-				<% if req_parm == "NTT" and test == 1%>
-	          		<%= link_to t('scenario.econ_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
+				<% if req_parm == "NTT" and test == 1 then %>
+	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
+
 	          	<% end %>
 	        <% end %>
 		    <br>
