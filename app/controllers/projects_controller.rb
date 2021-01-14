@@ -648,6 +648,7 @@ class ProjectsController < ApplicationController
       xml.subtype_id operation.subtype_id
       xml.moisture operation.moisture
       xml.org_c operation.org_c
+      xml.nh4_n operation.nh4_n
       xml.rotation operation.rotation
       soil_operations = SoilOperation.where(:operation_id => operation.id)
       xml.soil_operations {
@@ -2628,6 +2629,8 @@ class ProjectsController < ApplicationController
           operation.moisture = p.text
         when "org_c"
           operation.org_c = p.text
+        when "nh4_n"
+          operation.nh4_n = p.text
         when "rotation"
           operation.rotation = p.text
         when "soil_operations"
