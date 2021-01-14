@@ -251,7 +251,12 @@ class ResultsController < ApplicationController
                   if not (scenario_id.eql? "0" or scenario_id.eql? "")
                       #Oscar Gallego - 10/28/2020 - Averaging to the initial and final years selected.
                       #results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where(:sub1 => 0, simul.to_sym => scenario_id)
-                      results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
+                      #results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
+                      if !(session[:simulation] == 'watershed')
+                        results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and scenario_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
+                      else
+                        results_data = AnnualResult.select('*','no3-qn as no3','flow-surface_flow as flow').where("sub1 = ? and watershed_id = ? and year >= ? and year <= ?", 0,scenario_id, params[:sim_initial_year], params[:sim_final_year])
+                      end
                       results_data.each do |rs|
                         if rs.co2 == nil
                           rs.co2 = 0
