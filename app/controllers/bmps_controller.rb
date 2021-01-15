@@ -1449,6 +1449,7 @@ end
   end # end method
 
   def create_new_subarea(name, id)
+    if @project.version.include?("special") then return end
     is_filled = false
     case id
       when 8
