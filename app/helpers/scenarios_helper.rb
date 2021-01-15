@@ -911,8 +911,13 @@ module ScenariosHelper
 	        #client = Savon.client(wsdl: URL_Weather)
 	        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
 	        #opv1 = response.body[:get_hu_response][:get_hu_result]
-			#this code will take Heat Units from database according to Ali 11/2/216
-			opv1 = Crop.find(operation.crop_id).heat_units
+	        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+	        	#this code will take Heat Units from database according to Ali 11/2/216
+	        	opv1 = Crop.find(operation.crop_id).heat_units
+	        else
+	        	#keep zero until it is calculated in the simulation process. Oscar Gallego 1/15/21
+				opv1 = 0
+			end
 	      #opv1 = 2.2
 	    when 2 #fertilizer - converte amount applied
 	      	case operation.type_id

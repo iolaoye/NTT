@@ -1709,8 +1709,12 @@ def send_file_to_DNDC(apex_string, file, state)
           response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
           @hu[operation.apex_crop.to_s.to_sym] = response.body[:get_hu_response][:get_hu_result]
         end
-        #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021 
+        #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021
+        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+          @hu[operation.apex_crop.to_s.to_sym] = Crop.find(operation.operation.crop_id).heat_units
+        end
         operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
+        operation.save
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1
