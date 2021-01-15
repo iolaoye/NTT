@@ -1701,6 +1701,7 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
+        #if the opv1 is zero the model will calculate the new want and save it in the table. Other wise it uses
         #to avoid calling this every time the HU are store in an array and verify that array first
         if @hu[operation.apex_crop.to_s.to_sym] == nil
           # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
@@ -1711,10 +1712,14 @@ def send_file_to_DNDC(apex_string, file, state)
         end
         #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021
         if request.url.include? "ntt.bk" or request.url.include? "localhost" then
-          @hu[operation.apex_crop.to_s.to_sym] = Crop.find(operation.operation.crop_id).heat_units
+          #todo to update production database I need to run this command SoilOperation.where(:activity_id => 1).update_all(:opv1 => 0)
+          if operation.opv1 <= 0 then
+            @hu[operation.apex_crop.to_s.to_sym] = Crop.find(operation.operation.crop_id).heat_units
+          end
         end
         operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
         operation.save
+
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1
