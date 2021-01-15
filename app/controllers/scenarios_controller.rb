@@ -54,13 +54,13 @@ class ScenariosController < ApplicationController
       end
     end
     if (params[:scenario] != nil)
-    msg = copy_other_scenario
-    if msg != "OK" then
-      @errors.push msg
-    else
-      flash[:notice] = "Scenario copied successfuly"
+      msg = copy_other_scenario
+      if msg != "OK" then
+        @errors.push msg
+      else
+        flash[:notice] = "Scenario copied successfuly"
+      end
     end
-  end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
