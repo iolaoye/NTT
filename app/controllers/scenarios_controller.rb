@@ -285,8 +285,7 @@ class ScenariosController < ApplicationController
           #begin
           #need to add all of the values in this inizialization in order to avoid nil errors.
           #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
-          total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, 
-            "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
+          total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
           h.write(total_xml)
           h.write("\n")
           crops_yield = []
@@ -386,7 +385,7 @@ class ScenariosController < ApplicationController
                           }
                         when 15
                           xml.ContourBuffer {
-                            xml.Vegetation bmp.crop_id
+                            xml.Crop_id bmp.crop_id
                             xml.Width bmp.width
                             xml.Fraction bmp.crop_width
                           }
@@ -445,6 +444,8 @@ class ScenariosController < ApplicationController
                 #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
                 total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
                 total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
+                total_xml["Precipitation"] += xml["summary"]["results"]["precipitation"].to_f
+                total_xml["Evapotranspiration"] += xml["summary"]["results"]["evapotranspiration"].to_f
                 total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
                 total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
                 total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
@@ -533,6 +534,8 @@ class ScenariosController < ApplicationController
           avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
           #avg_carbon = total_xml["carbon"]/ total_xml["total_runs"]
           #avg_nitrousoxide = total_xml["nitrousoxide"] / total_xml["total_runs"]
+          avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
+          avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
           avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
           avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
           avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
@@ -546,9 +549,9 @@ class ScenariosController < ApplicationController
           avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
           avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
           avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
-          avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]                
+          avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
           county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0,
+          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
             orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
           crop_yied = nil
           crops_yield.each do |crop|
