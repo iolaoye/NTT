@@ -826,6 +826,7 @@ es:
     add_to: Adicionar a
     already_selected: 'Ese parcela ya ha sido seleccionado. Por favor, elija otra vez.'
     routing_to: "Flujo hacia"
+    routing_to_tooltip: The routing to column will be updated after the simulation process. This is only for information purposes
   submit:
     create: Crear
     save: Salvar

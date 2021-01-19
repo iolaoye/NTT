@@ -845,6 +845,7 @@ en:
     add_to: Add to
     already_selected: 'That field has already been selected. Please choose again.'
     routing_to: "Routing to"
+    routing_to_tooltip: The routing to column will be updated after the simulation process. This is only for information purposes
   submit:
     create: Create
     save: Save
