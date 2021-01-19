@@ -386,6 +386,7 @@ class ScenariosController < ApplicationController
                           }
                         when 15
                           xml.ContourBuffer {
+                            xml.Vegetation bmp.crop_id
                             xml.Width bmp.width
                             xml.Fraction bmp.crop_width
                           }
