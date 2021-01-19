@@ -384,6 +384,11 @@ class ScenariosController < ApplicationController
                             xml.Width bmp.width
                             xml.Fraction bmp.slope_reduction
                           }
+                        when 15
+                          xml.ContourBuffer {
+                            xml.Width bmp.width
+                            xml.Fraction bmp.crop_width
+                          }
                         when 16
                           xml.LandLeveling {
                             xml.SlopeReduction bmp.slope_reduction
