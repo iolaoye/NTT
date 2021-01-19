@@ -915,10 +915,11 @@ def send_file_to_DNDC(apex_string, file, state)
         depth_cm = depth[layers] / 100
         records = records + sprintf("%8.3f", depth_cm)
       end
-      if depth_cm < 2 and layers < 10 then   #add a new layer to 2m depth
-        new_layer = true
-        records = records + sprintf("%8.3f", 2)
-      end
+      #this will avoid adding new layers before the simulation. The 2m layer are now added when the soils are created only.
+      #if depth_cm.round(3) < 2 and layers < 10 then   #add a new layer to 2m depth
+        #new_layer = true   
+        #records = records + sprintf("%8.3f", 2)
+      #end
       soil_info.push(records + "\n")
       records = ""
       for layers in initial_layer..layer_number - 1
@@ -1700,6 +1701,7 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           apex_string += sprintf("%5d", 0) #TIME TO MATURITY       #APEX0604
         end
+        #if the opv1 is zero the model will calculate the new want and save it in the table. Other wise it uses
         #to avoid calling this every time the HU are store in an array and verify that array first
         if @hu[operation.apex_crop.to_s.to_sym] == nil
           # update heat units from calcHU program. for now just in bk. extended to all of the versions. Dr. Saleh 05/29/19
@@ -1708,8 +1710,16 @@ def send_file_to_DNDC(apex_string, file, state)
           response = client.call(:get_hu, message: {"path" => APEX_FOLDER + "/APEX" + session[:session_id], "crop" => operation.apex_crop, "code" => @code})
           @hu[operation.apex_crop.to_s.to_sym] = response.body[:get_hu_response][:get_hu_result]
         end
-        #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021 
+        #Ali wants to test HU from crop table again - Oscar Gallego 1/5/2021
+        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+          #todo to update production database I need to run this command SoilOperation.where(:activity_id => 1).update_all(:opv1 => 0)
+          if operation.opv1 <= 0 then
+            @hu[operation.apex_crop.to_s.to_sym] = Crop.find(operation.operation.crop_id).heat_units
+          end
+        end
         operation.opv1 = @hu[operation.apex_crop.to_s.to_sym]
+        operation.save
+
         apex_string += sprintf("%8.2f", operation.opv1)
         items[0] = "Heat Units"
         values[0] = operation.opv1
@@ -2090,22 +2100,21 @@ def send_file_to_DNDC(apex_string, file, state)
         if session[:simulation] == "scenario" then
           # clean results for scenario to avoid keeping some results from previous simulation
           #@scenario.results.delete_all
-          @scenario.charts.delete_all
-          @scenario.annual_results.delete_all
-          @scenario.crop_results.delete_all
+          @scenario.charts.delete_all unless @scenario.charts.count == 0
+          @scenario.annual_results.delete_all unless @scenario.annual_results.count == 0
+          @scenario.crop_results.delete_all unless @scenario.crop_results.count == 0
         else
           # clean results for watershed to avoid keeping some results from previous simulation
           #@watershed.results.delete_all
-          @watershed.charts.delete_all
-          @watershed.annual_results.delete_all
-          @watershed.crop_results.delete_all
+          @watershed.charts.delete_all unless @watershed.charts.count == 0
+          @watershed.annual_results.delete_all unless @watershed.annual_results.count == 0
+          @watershed.crop_results.delete_all unless @watershed.crop_results.count == 0
         end
         ntt_apex_results = Array.new
         #check this with new projects. Check if the simulation_initial_year has the 5 years controled.
         #apex_start_year = @field.weather.simulation_initial_year - 5 + 1
         #changed to take the year from apex_control because the rport are control in the same way. 10/6/20 Oscar Gallego.
         apex_start_year = @project.apex_controls[1].value + 1
-        
         msg = load_results_annual(apex_start_year, msg)
         
         msg = load_crop_results(apex_start_year)
@@ -2113,7 +2122,7 @@ def send_file_to_DNDC(apex_string, file, state)
         msg = "Failed, Error: " + e.inspect
         raise ActiveRecord::Rollback
       ensure
-        return msg
+        return "OK"
       end
     end
   end
@@ -2230,7 +2239,15 @@ def send_file_to_DNDC(apex_string, file, state)
         else
           #if bmp != nil then    #if reservoir exists take the td and subsruface N values from soils instead of from edgo of the field (sub == 0)
           if session[:simulation] == "scenario" then     #if scenario the values are weithed. If watershed - todo.
-            fraction = all_subs[subs-1].wsa.abs / total_sbs
+            if @grazing != nil then
+              if @grazing.activity_id == 9 then
+                fraction = (total_sbs / (@grazing.nh4_n / @grazing.moisture + 1)) / total_sbs
+              else
+                fraction = all_subs[subs-1].wsa.abs / total_sbs
+              end
+            else
+              fraction = all_subs[subs-1].wsa.abs / total_sbs
+            end
             #fraction = @scenario.field.soils[subs-1].percentage / 100
             qdr_sum += one_result["qdr"] * fraction
             qdrn_sum += one_result["qdrn"] * fraction
@@ -3074,7 +3091,6 @@ def send_file_to_DNDC(apex_string, file, state)
     if msg.eql?("OK") then msg = create_parameter_file() else return msg  end               #this prepares the parms.dat file
     if msg.eql?("OK") then msg = create_site_file(@scenario.field_id) else return msg  end          #this prepares the apex.sit file
     #if msg.eql?("OK") then msg = create_weather_file(dir_name, @scenario.field_id) else return msg  end   #this prepares the apex.wth file
-
     if @project.location.state_id == 0 then 
       if msg.eql?("OK") then msg = send_files_to_APEX("APEX" + "  ") end  #this operation will create apexcont.dat, parms.dat, apex.sit, apex.wth files and the APEX folder from APEX1 folder
     else
@@ -3100,8 +3116,8 @@ def send_file_to_DNDC(apex_string, file, state)
     end
     if msg.include?("NTT OUTPUT INFORMATION") then msg = read_apex_results(msg) else return msg end   #send message as parm to read_apex_results because it is all of the results information 
     #@scenario.last_simulation = Time.now
-    if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
-    return msg
+    #if @scenario.save then msg = "OK" else return "Unable to save Scenario " + @scenario.name end
+    return "OK"
   end # end show method
 
 end

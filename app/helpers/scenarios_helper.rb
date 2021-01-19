@@ -911,8 +911,13 @@ module ScenariosHelper
 	        #client = Savon.client(wsdl: URL_Weather)
 	        #response = client.call(:get_hu, message: {"crop" => Crop.find(operation.crop_id).number, "nlat" => Weather.find_by_field_id(params[:field_id]).latitude, "nlon" => Weather.find_by_field_id(params[:field_id]).longitude})
 	        #opv1 = response.body[:get_hu_response][:get_hu_result]
-			#this code will take Heat Units from database according to Ali 11/2/216
-			opv1 = Crop.find(operation.crop_id).heat_units
+	        if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+	        	#this code will take Heat Units from database according to Ali 11/2/216
+	        	opv1 = Crop.find(operation.crop_id).heat_units
+	        else
+	        	#keep zero until it is calculated in the simulation process. Oscar Gallego 1/15/21
+				opv1 = 0
+			end
 	      #opv1 = 2.2
 	    when 2 #fertilizer - converte amount applied
 	      	case operation.type_id
@@ -1237,8 +1242,10 @@ module ScenariosHelper
 	## Create layers receiving from map for each soil.
 	def create_layers(layers)
 	  	if layers == nil then return t('notices.no_layers') end
-	    for l in 1..layers["lay_number"].to_i
-	      layer_number = "layer" + l.to_s
+	  	layer_number = 0
+	  	depth = 0
+	    #define an inner function to add crops results to crops_data including the last year.
+	    add_layer = ->() {
 	      layer = @soil.layers.new
 	      layer.sand = layers[layer_number]["sand"]
 	      layer.silt = layers[layer_number]["silt"]
@@ -1249,32 +1256,60 @@ module ScenariosHelper
 	      	layer.organic_matter = 0.5
 	      end
 	      layer.ph = layers[layer_number]["ph"]
-	      layer.depth = layers[layer_number]["depth"]
-	      layer.depth /= IN_TO_CM
-	      layer.depth = layer.depth.round(2)
+	      layer.depth = depth
+	      #layer.depth = (layers[layer_number]["depth"].to_f / IN_TO_CM).round(2)
+	      #layer.depth /= IN_TO_CM
+	      #layer.depth = layer.depth.round(2)
 	      layer.cec = layers[layer_number]["cec"]
 	      layer.soil_p = 0
 	      if layer.save then
-	        msg = "OK"
+	        return "OK"
 	      else
-	        msg = "Error saving some layers"
+	        return "Error saving some layers"
 	      end
+	    }
+	    for l in 1..layers["lay_number"].to_i
+	      layer_number = "layer" + l.to_s
+	      depth = (layers[layer_number]["depth"].to_f / IN_TO_CM).round(2)
+	      msg = add_layer.call
 	    end #end for create_layers
+	    #If last soil layer is less than 1.75 m a new layer is added at 2 m depth. for now it is only in dev. Oscar Gallego 1/13/21
+	    if request.url.include? "ntt.bk" or request.url.include? "localhost" then
+		    if (layers[layer_number]["depth"].to_f / 100).round(3) < 1.75 then
+		    	depth = 78.74
+		    	msg = add_layer.call
+		    end
+		end
 	    return msg
 	end
 
 	def get_weather_file_name(lat, lon)
-	  	lat_less = lat - LAT_DIF
-		lat_plus = lat + LAT_DIF
-		lon_less = lon - LON_DIF
-		lon_plus = lon + LON_DIF
-		sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
-		sql = sql + " FROM stations"
-		sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
-		sql = sql + " ORDER BY distance"
-		station = Station.find_by_sql(sql).first
-		if station != nil
-			return station.file_name + "," + station.initial_year.to_s + "," + (station.final_year + 1).to_s
+		times = 1.0
+		@station = nil
+		while @station == nil and times <= 3.0
+			lat_less = lat - LAT_DIF * times
+			lat_plus = lat + LAT_DIF * times
+			lon_less = lon - LON_DIF * times
+			lon_plus = lon + LON_DIF * times
+			sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
+			sql = sql + " FROM stations"
+			sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+			sql = sql + " ORDER BY distance"
+			@station = Station.find_by_sql(sql).first
+			times = times + 0.5
+		end 
+		#replace in order to have the same rutin from NTT than from other interfaces such as SEC, TFT, and CSU. Oscar Gallego 1/7/21
+	  	#lat_less = lat - LAT_DIF
+		#lat_plus = lat + LAT_DIF
+		#lon_less = lon - LON_DIF
+		#lon_plus = lon + LON_DIF
+		#sql = "SELECT lat,lon,file_name,(lat-" + lat.to_s + ") + (lon + " + lon.to_s + ") as distance, final_year, initial_year"
+		#sql = sql + " FROM stations"
+		#sql = sql + " WHERE lat > " + lat_less.to_s + " and lat < " + lat_plus.to_s + " and lon > " + lon_less.to_s + " and lon < " + lon_plus.to_s  
+		#sql = sql + " ORDER BY distance"
+		#station = Station.find_by_sql(sql).first
+		if @station != nil
+			return @station.file_name + "," + @station.initial_year.to_s + "," + (@station.final_year + 1).to_s
 		else
 			return "Error saving weather file name"
 		end

@@ -41,15 +41,26 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     @scenarios = Scenario.where(:field_id => @field.id)
-
-    if (params[:scenario] != nil)
-    msg = copy_other_scenario
-    if msg != "OK" then
-      @errors.push msg
-    else
-      flash[:notice] = "Scenario copied successfuly"
+    if @project.version.include?("special") then
+      county = County.find_by_id(@field.field_average_slope.to_i)
+      file_name = county.county_state_code[0..1] + "_" + county.county_state_code[2..]
+      full_name = "public/NTTFiles/" + county.county_state_code[0..1] + "/" + file_name + ".txt"
+      last_line = nil
+      File.open(full_name).each do |line|
+        last_line = line if(!line.chomp.empty?)
+      end
+      if(last_line)
+        @last_line = last_line.split("|")[2]
+      end
     end
-  end
+    if (params[:scenario] != nil)
+      msg = copy_other_scenario
+      if msg != "OK" then
+        @errors.push msg
+      else
+        flash[:notice] = "Scenario copied successfuly"
+      end
+    end
     add_breadcrumb t('menu.scenarios')
 
     respond_to do |format|
@@ -326,7 +337,12 @@ class ScenariosController < ApplicationController
                           xml.Opv1 soop.opv1
                           xml.Opv2 soop.opv2
                           xml.Opv3 soop.opv3
-                          xml.Opv4 soop.opv4
+                          oper = soop.operation
+                          if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
+                            xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
+                          else
+                            xml.Opv4 soop.opv4
+                          end
                           xml.Opv5 soop.opv5
                         }  # end operations
                       end
@@ -367,6 +383,11 @@ class ScenariosController < ApplicationController
                           xml.GrassWaterway {
                             xml.Width bmp.width
                             xml.Fraction bmp.slope_reduction
+                          }
+                        when 15
+                          xml.ContourBuffer {
+                            xml.Width bmp.width
+                            xml.Fraction bmp.crop_width
                           }
                         when 16
                           xml.LandLeveling {
@@ -579,7 +600,7 @@ class ScenariosController < ApplicationController
       @scenarios_selected.each do |scenario_id|
         @scenario = Scenario.find(scenario_id)
         @scenario.simulation_status = false
-        @scenario.save!
+        #@scenario.save!
         if @scenario.operations.count <= 0 then
           @errors.push(@scenario.name + " " + t('scenario.add_crop_rotation'))
           return
@@ -592,8 +613,8 @@ class ScenariosController < ApplicationController
         if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
          @scenario.last_simulation = Time.now
          @scenario.simulation_status = true
-         @scenario.save!
         end
+        @scenario.save!
       end # end each do params loop
     end  # end transaction do
     return msg
