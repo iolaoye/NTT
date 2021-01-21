@@ -254,6 +254,42 @@ class LocationsController < ApplicationController
     if (params[:error] == "" or params[:error] == nil) then
         #get the number of fields submitted
         fields = params[:FieldsName].split(",")
+        coordinates = params[:FieldsXY].split(" ,")
+        areas = params[:FieldArea].split(",")
+        # step 5: update location
+        state_abbreviation = params[:StateAbbr]
+        if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
+         state = State.find_by_state_name(state_abbreviation.strip)     
+        else
+         state = State.find_by_state_abbreviation(state_abbreviation)
+        end
+        if state == nil then
+         @location.state_id = 0
+        else
+         @location.state_id = state.id
+        end
+        county_name = params[:CountyName]
+        if @location.state_id > 0 
+          if county_name == nil then
+            @location.county_id = 0
+          else
+            county_name.slice! " County"
+            county_name.slice! " Parish"   #Lousiana Counties
+            county_name.slice! "  Borough" #Alaska Counties.
+            county_name.slice! "'s"
+            county = state.counties.where("county_name like '%" + county_name + "%'").first
+            #county = County.find_by_county_name(county_name)
+            if county == nil then 
+              @location.county_id = 0
+            else
+              @location.county_id = county.id
+            end 
+          end
+        else
+          @location.county_id = 0
+        end
+        @location.coordinates = params[:FarmXY]
+        @location.save
         # step 1: delete fields not found
         @location.fields.each do |field|
           isFound = false
@@ -270,8 +306,10 @@ class LocationsController < ApplicationController
         for i in 0..fields.count - 1
           # find or create field
           @field = @location.fields.where(:field_name => fields[i]).first || @location.fields.build(:field_name => fields[i])
-          @field.coordinates = params[:FieldsXY].split(" ,")[i]
-          @field.field_area = (params[:FieldArea].split(",")[i].to_f / AC_TO_M2).round(2)
+          #validate if the coordinates array is smaller than the fields array. In that case in end adding fields. In this way the process does not crash.
+          break if coordinates[i] == nil or coordinates[i].strip == "" 
+          @field.coordinates = coordinates[i]
+          @field.field_area = (areas[i].to_f / AC_TO_M2).round(2)
           @field.updated = true
           if @field.save
              #create_soils(i, @field.id, @field.field_type).  #commented because the solils will be gotten in fields page
@@ -317,40 +355,6 @@ class LocationsController < ApplicationController
           end
           #@weather.save
         end # end for fields
-        # step 5: update location
-        state_abbreviation = params[:StateAbbr]
-        if state_abbreviation.length > 2 then  #if state_abbreviation.length > 2 means it is state name
-         state = State.find_by_state_name(state_abbreviation.strip)     
-        else
-         state = State.find_by_state_abbreviation(state_abbreviation)
-        end
-        if state == nil then
-         @location.state_id = 0
-        else
-         @location.state_id = state.id
-        end
-        county_name = params[:CountyName]
-        if @location.state_id > 0 
-          if county_name == nil then
-            @location.county_id = 0
-          else
-            county_name.slice! " County"
-            county_name.slice! " Parish"   #Lousiana Counties
-            county_name.slice! "  Borough" #Alaska Counties.
-            county_name.slice! "'s"
-            county = state.counties.where("county_name like '%" + county_name + "%'").first
-            #county = County.find_by_county_name(county_name)
-            if county == nil then 
-              @location.county_id = 0
-            else
-              @location.county_id = county.id
-            end 
-          end
-        else
-          @location.county_id = 0
-        end
-        @location.coordinates = params[:FarmXY]
-        @location.save
         # step 6 load parameters and controls for the specific state or general if states controls and parms are not specified
         load_controls()
         load_parameters(0)
