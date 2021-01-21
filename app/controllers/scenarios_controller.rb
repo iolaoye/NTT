@@ -412,6 +412,10 @@ class ScenariosController < ApplicationController
               xmlString.gsub! "]    [", "] ["
               #run simulation
               result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+              if result == nil
+                total_xml["total_errors"] += 1
+                next
+              end
               xml = Hash.from_xml(result.gsub("\n","").downcase)
               next if xml == nil
               next if xml["summary"] == nil
