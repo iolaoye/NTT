@@ -1292,63 +1292,63 @@ es:
       nov: Noviembre
       dec: Diciembre
       rhae: Humedad relativa del aire exhalado por animales (%)
-      tabo: Temperature of air breathed out by animals (deg F)
-      mpism: Moisture present in solid manure (%)
-      spilm: Solids present in liquid manure (urine) (%)
-      pom: 'Proportion of manure (solid+liquid) moisture evaporated (%) [30-40% literature value]'
-      srinr: "Stocking rate in native range: number of animals/acre"
-      sriip: "Stocking rate in introduced pasture: number of animals/acre"
-      pogu: Proportion of groundwater used (%) in animal production
-      adoa: Average depth of aquifer (feet)
-      ape: Average pumping efficiency (%) (40-70 usual range)
-      fmbmm: Fraction of manure becoming manure methane (g of methane per kg of solid manure excreted)
+      tabo: Temperatura del aire exhalado por los animales (grados F)
+      mpism: Humedad presente en estiércol sólido (%)
+      spilm: Sólidos presentes en el estiércol líquido (orina) (%)
+      pom: 'Proporción de estiércol (sólido + líquido) humedad evaporada (%) [30-40% del valor de la literatura]'
+      srinr: "Tasa de carga en el área de distribución nativa: número de animales / acre"
+      sriip: "Tasa de carga ganadera en pastos introducidos: número de animales / acre"
+      pogu: Proporción de agua subterránea utilizada (%) en la producción animal
+      adoa: Profundidad promedio del acuífero (pies)
+      ape: Eficiencia de bombeo promedio (%) (rango habitual 40-70)
+      fmbmm: Fracción de estiércol que se convierte en estiércol metano (g de metano por kg de estiércol sólido excretado)
       supplement_parameters: Parameteros de suplemento
-      animal_transport_input: Animal Transport Input
-      totaltrip: Total number of trips in the simulation
-      tripn: Trip number
-      trans_feeder: Transporting feeder cattle or transporting cattle for auction
-      trans_finish: Transporting finished cattle
-      categories_trans: Categories of animal transported
-      categories_slaug: Categories of animals finished and ready for slaughter
-      avg_marweight: Average market weight of each animal (lb)
-      num_animal: Number of animals in each category
-      mortality_rate: Mortality rate of cattle
-      distance: Distance moved (miles)
-      trailer: Trailer selected for moving
-      trucks: Truck selected for moving
-      fuel_type: Fuel type
-      same_vehicle: Use the same vehicle for all trips?
-      loading: Loading pressure equation
-      thoughtless: Thoughtless loading
-      arranged: Some arranged loading
-      floor_space: Floor space requirement based loading
-      carcass: Proportion of live animal becoming carcass (%)
-      boneless_beef: Proportion of carcass becoming boneless beef (%)
-      freqtrip: Frequency of trip (once/how many years)
-      filedetails: File name containing the details for the trip
-      cattlepro: Whether empty trip is related to cattle production or not
-      purpose: Purpose of the trip (Buying/Selling)
-      codepurpose: Code indicating the purpose of the trip
-      buying: Buying
-      selling: Selling
-      calf: Calf
-      rep_heifers: Replacement Heifers
-      fc_heifers: First Calf Heifers
-      cow: Cow
-      bull: Bull
-      agr: Animal Growth Results
-      fir: Feed Intake Rates
-      wir: Water Intake Results
-      mer: Manure excretion Results
-      nbl: Nitrogen Balance Results
-      gavg: Grand Averages
-      ghge: Greenhouse gas emissions
-      animal_weights: Animal Weights
-      dry_matter_intake: Dry Matter Intake
-      gross_energy_intake: Gross Matter Intake
-      water_intake: Water Intake
-      solid_manure_excr: Soild Manure Excretion
-      nitrogen_intake: nitrogen_intake
+      animal_transport_input: Entrada de transporte animal
+      totaltrip: Número total de viajes en la simulación
+      tripn: Número de viaje
+      trans_feeder: Transporte de ganado de engorde o transporte de ganado para subasta
+      trans_finish: Transporte de ganado terminado
+      categories_trans: Categorías de animales transportados
+      categories_slaug: Categorías de animales terminados y listos para el sacrificio
+      avg_marweight: Peso de mercado promedio de cada animal (lb)
+      num_animal: Número de animales en cada categoría
+      mortality_rate: Tasa de mortalidad del ganado
+      distance: Distancia movida (millas)
+      trailer: Remolque seleccionado para mudanza
+      trucks: Camión seleccionado para mudanza
+      fuel_type: Tipo de combustible
+      same_vehicle: ¿Utiliza el mismo vehículo para todos los viajes?
+      loading: Ecuación de presión de carga
+      thoughtless: Carga irreflexiva
+      arranged: Alguna carga arreglada
+      floor_space: Carga basada en requisitos de espacio de piso
+      carcass: Proporción de animales vivos que se convierten en cadáveres (%)
+      boneless_beef: Proporción de canales que se convierten en carne de vacuno deshuesada (%)
+      freqtrip: Frecuencia de viaje (una vez / cuántos años)
+      filedetails: Nombre de archivo que contiene los detalles del viaje
+      cattlepro: Si el viaje vacío está relacionado con la producción de ganado o no
+      purpose: Objeto del viaje (compra / venta)
+      codepurpose: Código que indica el propósito del viaje
+      buying: Comprando
+      selling: De venta
+      calf: Becerra
+      rep_heifers: Novillas de reemplazo
+      fc_heifers: Novillas del primer becerro
+      cow: Vaca
+      bull: Toro
+      agr: Resultados de crecimiento animal
+      fir: Tasas de ingesta de alimento
+      wir: Resultados de la ingesta de agua
+      mer: Resultados de la excreción de estiércol
+      nbl: Resultados del balance de nitrógeno
+      gavg: Grandes promedios
+      ghge: Emisiones de gases de efecto invernadero
+      animal_weights: Pesos de animales
+      dry_matter_intake: Ingesta de materia seca
+      gross_energy_intake: Ingesta de materia bruta
+      water_intake: Consumo de agua
+      solid_manure_excr: Excreción de estiércol vegetal
+      nitrogen_intake: Ingesta de nitrógeno
       total_nitrogen_excretion: Total Nitrogen Excretion
       total_nitrogen_retained: Total Nitrogen Retained
       fecal_nitrogen_excretion: Fecal Nitrogen Excretion
