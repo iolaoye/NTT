@@ -1349,50 +1349,50 @@ es:
       water_intake: Consumo de agua
       solid_manure_excr: Excreción de estiércol vegetal
       nitrogen_intake: Ingesta de nitrógeno
-      total_nitrogen_excretion: Total Nitrogen Excretion
-      total_nitrogen_retained: Total Nitrogen Retained
-      fecal_nitrogen_excretion: Fecal Nitrogen Excretion
-      urine_nitrogen_excretion: Urine Nitrogen Excretion
-      enteric_methane_emission: Enteric Methane Emission
-      manure_methane_emission: Manure Methane Emission
-      co2_balance_input: CO2 Balance Input
-      selectp: Please select a parameter
-      nativer: Parameters for native range
-      n_tfa: Total farm area
-      n_sr: Stoking rate (ac/cow)
-      n_arnfa: Area receiving N fertilizer application (acres)
-      n_arpfa: Area receiving P fertilizer application (acres)
-      n_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
-      n_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
-      n_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
-      n_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
-      n_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
-      n_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
-      n_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
-      n_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
-      n_socc: Soil organic carbon change (kg of CO2/ha/year)
-      introducedp: Parameters for introduced pasture
-      i_tfa: Total farm area
-      i_sr: Stoking rate (ac/cow)
-      i_arnfa: Area receiving N fertilizer application (acres)
-      i_arpfa: Area receiving P fertilizer application (acres)
-      i_nfar: Nitrogen fertilizer application rate (kg of N/ha/year)
-      i_pfar: Phosphorus fertilizer application rate (kg of P/ha/year)
-      i_co2enfp: CO2 emission of Nitrogen fertilizer production (kg of CO2/kg of N use)
-      i_co2enfa: CO2 emission of N fertilizer application (35.25 kg of CO2/ha/year)
-      i_co2epfp: CO2 emission of phosphorus fertilizer production (kg of CO2/kg of P use)
-      i_lamf: Land atmosphere methane flux (kg of CO2/ha/year)
-      i_lan2of: Land atmosphere N2O flux (kg of CO2/ha/year)
-      i_laco2f: Land atmosphere CO2 flux (kf of CO2/ha/year)
-      i_socc: Soil organic carbon change (kg of CO2/ha/year)
-      secondary_emissions_input: Secondary Emissions Input
-      theta: Theta (unit conversion constant) [Adopted from FEM]
-      fge: Fuel use constant for gasoline engines
-      fde: Fuel use constant for diesel engines
-      area: Area
-      fuel: Fuel
-      equipment: Equipment
-      select_fmo: Select the number of Field Management operation
+      total_nitrogen_excretion: Excreción total de nitrógeno
+      total_nitrogen_retained: Nitrógeno total retenido
+      fecal_nitrogen_excretion: Excreción de nitrógeno fecal
+      urine_nitrogen_excretion: Excreción de nitrógeno en orina
+      enteric_methane_emission: Emisión de metano entérico
+      manure_methane_emission: Emisión de estiércol metano
+      co2_balance_input: Entrada de balance de CO2
+      selectp: Seleccione un parámetro
+      nativer: Parámetros para rango nativo
+      n_tfa: Superficie total de la finca
+      n_sr: Tasa de avivamiento (ac / vaca)
+      n_arnfa: Área que recibe la aplicación de fertilizantes nitrogenados (acres)
+      n_arpfa: Área que recibe la aplicación de fertilizante P (acres)
+      n_nfar: Tasa de aplicación de fertilizante nitrogenado (kg de N / ha / año)
+      n_pfar: Tasa de aplicación de fertilizante de fósforo (kg de P / ha / año)
+      n_co2enfp: Emisión de CO2 de la producción de fertilizantes nitrogenados (kg de CO2 / kg de uso de N)
+      n_co2enfa: Emisión de CO2 de la aplicación de fertilizantes nitrogenados (35.25 kg de CO2 / ha / año)
+      n_co2epfp: Emisión de CO2 de la producción de fertilizantes de fósforo (kg de CO2 / kg de uso de P)
+      n_lamf: Flujo de metano en la atmósfera terrestre (kg de CO2 / ha / año)
+      n_lan2of: Flujo de N2O en la atmósfera terrestre (kg de CO2 / ha / año)
+      n_laco2f: Flujo de CO2 en la atmósfera terrestre (kf de CO2 / ha / año)
+      n_socc: Cambio de carbono orgánico del suelo (kg de CO2 / ha / año)
+      introducedp: Parámetros para pastos introducidos
+      i_tfa: Superficie total de la finca
+      i_sr: Tasa de avivamiento (ac / vaca)
+      i_arnfa: Área que recibe la aplicación de fertilizantes nitrogenados (acres)
+      i_arpfa: Área que recibe la aplicación de fertilizante P (acres)
+      i_nfar: Tasa de aplicación de fertilizante nitrogenado (kg de N / ha / año)
+      i_pfar: Tasa de aplicación de fertilizante de fósforo (kg de P / ha / año)
+      i_co2enfp: Emisión de CO2 de la producción de fertilizantes nitrogenados (kg de CO2 / kg de uso de N)
+      i_co2enfa: Emisión de CO2 de la aplicación de fertilizantes nitrogenados (35.25 kg de CO2 / ha / año)
+      i_co2epfp: Emisión de CO2 de la producción de fertilizantes de fósforo (kg de CO2 / kg de uso de P)
+      i_lamf: Flujo de metano en la atmósfera terrestre (kg de CO2 / ha / año)
+      i_lan2of: Flujo de N2O en la atmósfera terrestre (kg de CO2 / ha / año)
+      i_laco2f: Flujo de CO2 en la atmósfera terrestre (kf de CO2 / ha / año)
+      i_socc: Cambio de carbono orgánico del suelo (kg de CO2 / ha / año)
+      secondary_emissions_input: Entrada de emisiones secundarias
+      theta: Theta (constante de conversión de unidades) [Adoptado de FEM]
+      fge: Consumo constante de combustible para motores de gasolina
+      fde: Consumo constante de combustible para motores diésel
+      area: Zona
+      fuel: Combustible
+      equipment: Equipo
+      select_fmo: Seleccione el número de operación de Gestión de campo
       parameter1: Parameter 1
       parameter2: Parameter 2
       parameter3: Parameter 3
@@ -1416,22 +1416,22 @@ es:
       parameter21: Parameter 21
       parameter22: Parameter 22
       parameter23: Parameter 23
-      runparm_aplcat_parameters: RunParm APLCAT Parameters
-      running_drinking_water: Running drinking water estimation and energy requirement computation in Cow-Calf system.
-      running_complete_stocker: Running the complete stocker program.
-      running_ghg: Running GHG emission module for the Cow-Calf system.
-      running_transportation: Running transportation module for the Cow-Calf system.
+      runparm_aplcat_parameters: Parámetros RunParm APLCAT
+      running_drinking_water: Ejecución de la estimación de agua potable y cálculo de los requisitos de energía en el sistema Vaca-Ternero.
+      running_complete_stocker: Ejecutando el programa de almacenamiento completo.
+      running_ghg: Ejecución del módulo de emisión de GEI para el sistema Vaca-Ternero.
+      running_transportation: Ejecución del módulo de transporte para el sistema Vaca-Ternero.
       animal_feed_parameters: Alimentación Animal
-      error: There is an error creating APLCAT txt file. Check
-      cow_calf: Animal Parameters
-      animal_trans: Animal Transport Input
-      co2_balance: CO2 Balance Input
-      forage_quality: Forage Quality Input
-      simul_file: Scenario Files
-      secondary_emm: Secondary Emmission Input
-      simul_method: Simulation Methods
-      simul_parms: Simulation Parameters
-      water_est: Water Estimation Parameters
+      error: Hay un error al crear el archivo txt APLCAT. Verificar
+      cow_calf: Parámetros de animales
+      animal_trans: Entrada de transporte animal
+      co2_balance: Entrada de balance de CO2
+      forage_quality: Insumo de calidad del forraje
+      simul_file: Archivos de escenario
+      secondary_emm: Entrada de emisión secundaria
+      simul_method: Métodos de simulación
+      simul_parms: Parámetros de simulación
+      water_est: Parámetros de estimación de agua
       run_parm: RunParm APLCAT
       tabular_parameters: Parámetros Tabulares
   grazing:
