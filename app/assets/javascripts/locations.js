@@ -15,6 +15,7 @@ var strDrawnAOI = '';
 var x;
 var strFarmXY;
 var infowindow = null;
+var shapeLabels = [];
 
 var ready = function pageLoad() {
     Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
@@ -214,11 +215,36 @@ function SetLable(shape, lable) {
         regionLabel.open(map)
     }   //regionLabel.setMap(null) }   //regionLabel.close(map);
     else { regionLabel.open(map); }
+    shapeLabels.push(regionLabel);
+}
+// Added by Jennifer 1/22/21
+function DeleteLabel(){
+    var coordinates = selectedShape.getPath().getArray();
+    var totalLat = 0;
+    var totalLong = 0;
+    for (i = 0; i < coordinates.length; i++) {
+        totalLat = totalLat + coordinates[i].lat();
+        totalLong = totalLong + coordinates[i].lng();
+    }
+    totalLat = totalLat / coordinates.length;
+    totalLong = totalLong / coordinates.length;
+    var latLng = new google.maps.LatLng(totalLat, totalLong);
+
+    for (j = 0; j < shapeLabels.length; j++){
+        var coords = shapeLabels[j].getPosition();
+        if (coords.equals(latLng)) {
+            shapeLabels[j].close();
+            break;
+        }
+    }
 }
 
 function deleteSelectedShape() {
     if (selectedShape) {
         selectedShape.setMap(null);
+
+        DeleteLabel();
+        
         // Find and remove item from an array
         var i = shapes.indexOf(selectedShape);
         if (i != -1) {
