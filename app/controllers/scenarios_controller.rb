@@ -275,29 +275,29 @@ class ScenariosController < ApplicationController
     #full_name = "public/NTTFiles/" + file_name + ".txt"
     rec_num = 0
     run_id = 0
-    h.write(params[:select_ntt])
-    h.write("\n")
+    #h.write(params[:select_ntt])
+    #h.write("\n")
     params[:select_ntt].each do |scenario_id|
       ActiveRecord::Base.transaction do
         begin
           #need to add all of the values in this inizialization in order to avoid nil errors.
           total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
-          h.write(total_xml)
-          h.write("\n")
+          #h.write(total_xml)
+          #h.write("\n")
           crops_yield = []
           scenario = Scenario.find(scenario_id)
           scenario.simulation_status = false
           File.open(full_name.sub('txt','csv'), "w+") do |g|
-            h.write(full_name)
-            h.write("\n")          
+            #h.write(full_name)
+            #h.write("\n")          
             File.open(full_name).each do |line|
               begin
                 crops_summary = []
                 line.gsub! "\n",""
                 line.gsub! "\r",""
                 line_splited = line.split("|")              
-                h.write(full_name)
-                h.write("\n")                   
+                #h.write(full_name)
+                #h.write("\n")                   
                 next if line_splited == nil
                 next if line_splited[0] == nil
                 next if line_splited[0].include? "State"
