@@ -263,37 +263,35 @@ class ScenariosController < ApplicationController
 
 ################################  Simulate NTT for selected scenarios  #################################
   def run_special_simulation(county_state_code)
-    File.open("public/NTTFiles/log.log", "w+") do |h|
-      require 'nokogiri'
-
-      #county = County.find_by_id(county_id).county_state_code
-      #take initial time
-      time_begin = Time.now
-      #create xml file and send the simulation to ntt.tft.cbntt.org server
-      #read the coordinates for the county selected
-      #file_name = "MD_013"
-      file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-      full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
-      #This if full name without state folder for testing
-      #full_name = "public/NTTFiles/" + file_name + ".txt"
-      rec_num = 0
-      run_id = 0
-      h.write(params[:select_ntt])
-      h.write("\n")
-      params[:select_ntt].each do |scenario_id|
-        ActiveRecord::Base.transaction do
-          begin
-            #need to add all of the values in this inizialization in order to avoid nil errors.
-            total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
-            h.write(total_xml)
-            h.write("\n")
-            crops_yield = []
-            scenario = Scenario.find(scenario_id)
-            scenario.simulation_status = false
-            File.open(full_name.sub('txt','csv'), "w+") do |g|
-              h.write(full_name)
-              h.write("\n")          
-              File.open(full_name).each do |line|
+    require 'nokogiri'
+    #take initial time
+    time_begin = Time.now
+    #create xml file and send the simulation to ntt.tft.cbntt.org server
+    #read the coordinates for the county selected
+    #file_name = "MD_013"
+    file_name = county_state_code[0..1] + "_" + county_state_code[2..]
+    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
+    #This if full name without state folder for testing
+    #full_name = "public/NTTFiles/" + file_name + ".txt"
+    rec_num = 0
+    run_id = 0
+    h.write(params[:select_ntt])
+    h.write("\n")
+    params[:select_ntt].each do |scenario_id|
+      ActiveRecord::Base.transaction do
+        begin
+          #need to add all of the values in this inizialization in order to avoid nil errors.
+          total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
+          h.write(total_xml)
+          h.write("\n")
+          crops_yield = []
+          scenario = Scenario.find(scenario_id)
+          scenario.simulation_status = false
+          File.open(full_name.sub('txt','csv'), "w+") do |g|
+            h.write(full_name)
+            h.write("\n")          
+            File.open(full_name).each do |line|
+              begin
                 crops_summary = []
                 line.gsub! "\n",""
                 line.gsub! "\r",""
@@ -498,71 +496,75 @@ class ScenariosController < ApplicationController
                 else
                   total_xml["total_errors"] += 1
                 end
-                #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
-                #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
-              end   # end file,open full_name
-            end   # end File.open csv
-            avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
-            avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
-            avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
-            avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
-            avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
-            avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
-            avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
-            avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
-            avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
-            avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
-            avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
-            avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
-            avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
-            avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
-            avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
-            avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
-            avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
-            avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
-            avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
-            avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
-            avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
-            avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
-            avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
-            avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
-            avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
-            avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
-            avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
-            avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
-            avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
-            avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
-            county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-            county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
-              orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
-            crop_yied = nil
-            crops_yield.each do |crop|
-              cr = Crop.find(crop["cropcode"])
-              if crop != nil then
-                #convert because in the results page it is converted back.
-                crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
-              else
-                crop_yield = crop["yield"].to_f / crop["crop_runs"]
-              end
-              crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
-              crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
+              rescue => e
+                File.open(full_name.sub('txt','log'), "w+") do |f|
+                  f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
+                end
+                next         
+                #raise ActiveRecord::Rollback
+              end   # end begin/rescue
+            end   # end file,open full_name
+          end   # end File.open csv
+          avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
+          avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
+          avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
+          avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
+          avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
+          avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
+          avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
+          avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
+          avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
+          avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
+          avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
+          avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
+          avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
+          avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
+          avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
+          avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
+          avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
+          avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
+          avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
+          avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
+          avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
+          avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
+          avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
+          avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
+          avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
+          avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
+          avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
+          avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
+          avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
+          avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
+          county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
+          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
+            orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
+          crop_yied = nil
+          crops_yield.each do |crop|
+            cr = Crop.find(crop["cropcode"])
+            if crop != nil then
+              #convert because in the results page it is converted back.
+              crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
+            else
+              crop_yield = crop["yield"].to_f / crop["crop_runs"]
             end
-            #update simulation date
-            scenario.last_simulation = Time.now
-            scenario.simulation_status = true
-            scenario.save
-            @user = User.find(session[:user_id])
-            @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-          rescue => e
-            File.open(full_name.sub('txt','csv'), "w+") do |f|
-              f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
-            end          
-            raise ActiveRecord::Rollback
-          end   # end begin/rescue
-        end   #active transaction do
-      end    # end scenarios selected
-    end   #end log file
-  end
+            crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
+            crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
+          end
+          #update simulation date
+          scenario.last_simulation = Time.now
+          scenario.simulation_status = true
+          scenario.save
+          @user = User.find(session[:user_id])
+          @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
+        rescue => e
+          File.open(full_name.sub('txt','log'), "w+") do |f|
+            f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
+          end          
+          raise ActiveRecord::Rollback
+        end   # end begin/rescue
+      end   #active transaction do
+    end    # end scenarios selected
+  end   #end log file
 
 ################################  Simulate NTT for selected scenarios  #################################
   def simulate_ntt
