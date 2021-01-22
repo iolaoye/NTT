@@ -282,15 +282,12 @@ class ScenariosController < ApplicationController
       h.write("\n")
       params[:select_ntt].each do |scenario_id|
         ActiveRecord::Base.transaction do
-          #begin
+          begin
           #need to add all of the values in this inizialization in order to avoid nil errors.
-          #total_xml = {"total_runs" => 0,"total_errors" => 0,"organicn" => 0, "no3" => 0, "surface_n" => 0, "subsurface_n" => 0, "lateralsubsurfacen" => 0, "quickreturnn" => 0, "returnsubsurfacen" => 0, "leachedn" => 0, "tiledrainn" => 0, "volatilizedn" => 0, "nitrousoxide" => 0, "organicp"=> 0, "solublep" => 0, "leachedp" => 0, "tiledrainp" => 0, "flow" => 0, "surfaceflow" => 0, "subsurfaceflow" => 0, "lateralsubsurfaceflow" => 0, "quickreturnflow" => 0, "returnsubsurfaceflow" => 0, "tiledrainflow" => 0, "deeppercolation" => 0, "irrigationapplied" => 0, "irrigationapplied" => 0, "sediment" => 0, "sedimentsurface" => 0, "sedimentmanure" => 0, "carbon" => 0, "flow_ci" => 0, "sed_ci" => 0, "orgn_ci" => 0, "orgp_ci" => 0, "no3_ci" => 0, "po4_ci" => 0, "crop" => nil, "cropcode" => nil, "yield" => nil}
           total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
           h.write(total_xml)
           h.write("\n")
           crops_yield = []
-          #crop_runs = 0
-          #todo create a loop to roon all of the scenarios. Swe should send an email for each scenario ran.
           scenario = Scenario.find(scenario_id)
           scenario.simulation_status = false
           File.open(full_name.sub('txt','csv'), "w+") do |g|
@@ -505,39 +502,20 @@ class ScenariosController < ApplicationController
               #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
             end   # end file,open full_name
           end   # end File.open csv
-          #end
-          # File.open("public/NTTFiles/" + file_name + ".out", "w+") do |f|
-          #   f.write(total_xml)
-          # end
-          # average_all_xml = (total_xml["organicn"] + total_xml["no3"] + total_xml["surface_n"] + total_xml["subsurface_n"] + total_xml["lateralsubsurfacen"] + total_xml["quickreturnn"] + total_xml["returnsubsurfacen"] + total_xml["tiledrainn"] + total_xml["volatilizedn"] + total_xml["nitrousoxide"] + total_xml["solublep"] + total_xml["leachedp"] + total_xml["tiledrainp"] + total_xml["flow"] + total_xml["surfaceflow"] + total_xml["subsurfaceflow"] + total_xml["lateralsubsurfaceflow"] + total_xml["quickreturnflow"] + total_xml["returnsubsurfaceflow"] + total_xml["tiledrainflow"] + total_xml["deeppercolation"] + total_xml["irrigationapplied"] + total_xml["sediment"] + total_xml["sedimentsurface"] + total_xml["sedimentmanure"] + total_xml["carbon"] + total_xml["flow_ci"] + total_xml["sed_ci"] + total_xml["orgn_ci"] + total_xml["orgp_ci"] + total_xml["no3_ci"] + total_xml["po4_ci"])/32
           avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
           avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
-          #avg_surface_n = total_xml["surface_n"] / total_xml["total_runs"]
           avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
-          #avg_lateralsubsurfacen = total_xml["lateralsubsurfacen"] / total_xml["total_runs"]
-          #avg_quickreturnn = total_xml["quickreturnn"] / total_xml["total_runs"]
-          #avg_returnsubsurfacen = total_xml["returnsubsurfacen"]/ total_xml["total_runs"]
-          #avg_leachedn = total_xml["leachedn"] / total_xml["total_runs"]
           avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
-          #avg_volatilizedn = total_xml["volatilizedn"] / total_xml["total_runs"]        
           avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
           avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
-          #avg_leachedp = total_xml["leachedp"] / total_xml["total_runs"]
           avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
-          #avg_flow = total_xml["flow"]/ total_xml["total_runs"]
           avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
           avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
-          #avg_lateralsubsurfaceflow = total_xml["lateralsubsurfaceflow"]/ total_xml["total_runs"]
-          #avg_quickreturnflow = total_xml["quickreturnflow"]/ total_xml["total_runs"]
-          #avg_returnsubsurfaceflow = total_xml["returnsubsurfaceflow"]/ total_xml["total_runs"]
           avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
           avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
           avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
-          #avg_sediment = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
           avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
           avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
-          #avg_carbon = total_xml["carbon"]/ total_xml["total_runs"]
-          #avg_nitrousoxide = total_xml["nitrousoxide"] / total_xml["total_runs"]
           avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
           avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
           avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
@@ -574,14 +552,13 @@ class ScenariosController < ApplicationController
           scenario.simulation_status = true
           scenario.save
           @user = User.find(session[:user_id])
-          #@user.send_fields_simulated_email("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name)
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-          # rescue => e
-          #   raise ActiveRecord::Rollback
-          #   File.open("public/NTTFiles/" + file_name + ".log", "w+") do |f|
-          #     f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
-          #   end          
-          # end   # end begin/rescue
+          rescue => e
+            File.open(full_name.sub('txt','csv'), "w+") do |f|
+              f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
+            end          
+            raise ActiveRecord::Rollback
+          end   # end begin/rescue
         end   #active transaction do
       end    # end scenarios selected
     end   #end log file
