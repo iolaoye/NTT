@@ -283,276 +283,276 @@ class ScenariosController < ApplicationController
       params[:select_ntt].each do |scenario_id|
         ActiveRecord::Base.transaction do
           begin
-          #need to add all of the values in this inizialization in order to avoid nil errors.
-          total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
-          h.write(total_xml)
-          h.write("\n")
-          crops_yield = []
-          scenario = Scenario.find(scenario_id)
-          scenario.simulation_status = false
-          File.open(full_name.sub('txt','csv'), "w+") do |g|
-            h.write(full_name)
-            h.write("\n")          
-            File.open(full_name).each do |line|
-              crops_summary = []
-              line.gsub! "\n",""
-              line.gsub! "\r",""
-              line_splited = line.split("|")              
+            #need to add all of the values in this inizialization in order to avoid nil errors.
+            total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
+            h.write(total_xml)
+            h.write("\n")
+            crops_yield = []
+            scenario = Scenario.find(scenario_id)
+            scenario.simulation_status = false
+            File.open(full_name.sub('txt','csv'), "w+") do |g|
               h.write(full_name)
-              h.write("\n")                   
-              next if line_splited == nil
-              next if line_splited[0] == nil
-              next if line_splited[0].include? "State"
-              rec_num += 1
-              run_id = line_splited[2]
-              #create xml file and send it to run
-              builder = Nokogiri::XML::Builder.new do |xml|
-                xml.NTT {
-                  xml.StartInfo {
-                    #save start information
-                    xml.StateId line_splited[0]    #state abrevation.
-                    xml.CountyId file_name.split("_")[1]    #county code.
-                    xml.ProjectName @project.name
-                  } # end xml.StartInfo
-                  #save field information
-                  xml.FieldInfo {
-                    xml.Field_id @field.id.to_s + "_" + line_splited[2]
-                    xml.Area 100
-                    xml.SoilP 0
-                    xml.Coordinates line_splited[3]
-                    xml.ScenarioInfo {
-                      xml.Name scenario.name #@scenario.name
-                      #create operations
-                      SoilOperation.where(:scenario_id => scenario.id).each do |soop|   # multiple soiloperations for each scenario_id
-                        xml.ManagementInfo {
-                          xml.Operation soop.apex_operation
-                          xml.Year soop.year
-                          xml.Month soop.month
-                          xml.Day soop.day
-                          xml.Crop soop.apex_crop
-                          xml.Opv1 soop.opv1
-                          xml.Opv2 soop.opv2
-                          xml.Opv3 soop.opv3
-                          oper = soop.operation
-                          if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
-                            xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
-                          else
-                            xml.Opv4 soop.opv4
-                          end
-                          xml.Opv5 soop.opv5
-                        }  # end operations
-                      end
-                      # Added by Jennifer 12/3/20
-                      Bmp.where(:scenario_id => scenario.id).each do |bmp|
-                        xml.BmpInfo {
-                        case bmp.bmpsublist_id
-                        when 1
-                          xml.Autoirrigation {
-                            xml.Code
-                            xml.Efficiency bmp.irrigation_efficiency
-                            xml.Frequency bmp.maximum_single_application
-                            xml.Stress bmp.water_stress_factor
-                            xml.Volume # in mm
-                            xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA # convert pounds/acre to kg/ha
-                          }
-                        when 3
-                          xml.TileDrain {
-                            xml.Depth bmp.depth*FT_TO_MM # convert ft to mm
-                          }
-                        when 8
-                          xml.Wetland {
-                            xml.Area bmp.area*AC_TO_HA # convert ac to ha
-                          }
-                        when 9
-                          xml.Pond {
-                            xml.Fraction bmp.irrigation_efficiency
-                          }
-                        when 13
-                          xml.GrassBuffer {
-                            xml.CropCode bmp.crop_id
-                            xml.Area bmp.area*AC_TO_HA # convert ac to ha
-                            xml.GrassStripWidth bmp.width * FT_TO_M # convert ft to m
-                            xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M # convert ft to m
-                            xml.Fraction * bmp.slope_reduction
-                          }
-                        when 14
-                          xml.GrassWaterway {
-                            xml.Width bmp.width
-                            xml.Fraction bmp.slope_reduction
-                          }
-                        when 15
-                          xml.ContourBuffer {
-                            xml.Crop_id bmp.crop_id
-                            xml.Width bmp.width
-                            xml.Fraction bmp.crop_width
-                          }
-                        when 16
-                          xml.LandLeveling {
-                            xml.SlopeReduction bmp.slope_reduction
-                          }
-                        when 17
-                          xml.TerraceSystem {
-                            xml.Active
-                          }
-                        end # end case statement
-                        } # end bmpinfo
-                      end
-                    } # end scenario
-                  } # end field
-                } # end xml.start info
-              end #builder do end
-              xmlString = builder.to_xml
-              xmlString.gsub! "<", "["
-              xmlString.gsub! ">", "]"
-              xmlString.gsub! "\n", ""
-              xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-              xmlString.gsub! "]    [", "] ["
-              #run simulation
-              result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
-              if result == nil
-                total_xml["total_errors"] += 1
-                next
-              end
-              xml = Hash.from_xml(result.gsub("\n","").downcase)
-              next if xml == nil
-              next if xml["summary"] == nil
-              next if xml["summary"]["results"] == nil
-              if xml["summary"]["results"]["errorcode"] == "0" then
-                #add all of the values because thereis not error
-                total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
-                total_xml["RunoffN"] += xml["summary"]["results"]["runoffn"].to_f
-                #total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
-                total_xml["SubsurfaceN"] += xml["summary"]["results"]["subsurfacen"].to_f
-                total_xml["TileDrainN"] += xml["summary"]["results"]["tiledrainn"].to_f
-                #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
-                #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
-                #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
-                #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
-                #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
-                total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
-                total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
-                #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
-                total_xml["TileDrainP"] += xml["summary"]["results"]["tiledrainp"].to_f
-                #total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
-                total_xml["SurfaceFlow"] += xml["summary"]["results"]["surfaceflow"].to_f
-                total_xml["SubsurfaceFlow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
-                #total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
-                #total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
-                #total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
-                total_xml["TileDrainFlow"] += xml["summary"]["results"]["tiledrainflow"].to_f
-                total_xml["DeepPercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
-                total_xml["IrrigationApplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
-                #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
-                total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
-                total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
-                total_xml["Precipitation"] += xml["summary"]["results"]["precipitation"].to_f
-                total_xml["Evapotranspiration"] += xml["summary"]["results"]["evapotranspiration"].to_f
-                total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
-                total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
-                total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
-                total_xml["TileDrainN_ci"] += xml["summary"]["results"]["tiledrainn_ci"].to_f
-                total_xml["OrgP_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
-                total_xml["PO4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-                total_xml["TileDrainP_ci"] += xml["summary"]["results"]["tiledrainp_ci"].to_f
-                total_xml["SurfaceFlow_ci"] += xml["summary"]["results"]["surfaceflow_ci"].to_f
-                total_xml["SubsurfaceFlow_ci"] += xml["summary"]["results"]["subsurfaceflow_ci"].to_f
-                total_xml["TileDrainFlow_ci"] += xml["summary"]["results"]["tiledrainflow_ci"].to_f
-                total_xml["IrrigationApplied_ci"] += xml["summary"]["results"]["irrigationapplied_ci"].to_f
-                total_xml["DeepPercolation_ci"] += xml["summary"]["results"]["deeppercolation_ci"].to_f
-                total_xml["SurfaceErosion_ci"] += xml["summary"]["results"]["surfaceerosion_ci"].to_f
-                total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
-                #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
-                #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
-                total_xml["total_runs"] += 1
-                if rec_num == 1 then 
-                  xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
-                  g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
+              h.write("\n")          
+              File.open(full_name).each do |line|
+                crops_summary = []
+                line.gsub! "\n",""
+                line.gsub! "\r",""
+                line_splited = line.split("|")              
+                h.write(full_name)
+                h.write("\n")                   
+                next if line_splited == nil
+                next if line_splited[0] == nil
+                next if line_splited[0].include? "State"
+                rec_num += 1
+                run_id = line_splited[2]
+                #create xml file and send it to run
+                builder = Nokogiri::XML::Builder.new do |xml|
+                  xml.NTT {
+                    xml.StartInfo {
+                      #save start information
+                      xml.StateId line_splited[0]    #state abrevation.
+                      xml.CountyId file_name.split("_")[1]    #county code.
+                      xml.ProjectName @project.name
+                    } # end xml.StartInfo
+                    #save field information
+                    xml.FieldInfo {
+                      xml.Field_id @field.id.to_s + "_" + line_splited[2]
+                      xml.Area 100
+                      xml.SoilP 0
+                      xml.Coordinates line_splited[3]
+                      xml.ScenarioInfo {
+                        xml.Name scenario.name #@scenario.name
+                        #create operations
+                        SoilOperation.where(:scenario_id => scenario.id).each do |soop|   # multiple soiloperations for each scenario_id
+                          xml.ManagementInfo {
+                            xml.Operation soop.apex_operation
+                            xml.Year soop.year
+                            xml.Month soop.month
+                            xml.Day soop.day
+                            xml.Crop soop.apex_crop
+                            xml.Opv1 soop.opv1
+                            xml.Opv2 soop.opv2
+                            xml.Opv3 soop.opv3
+                            oper = soop.operation
+                            if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
+                              xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
+                            else
+                              xml.Opv4 soop.opv4
+                            end
+                            xml.Opv5 soop.opv5
+                          }  # end operations
+                        end
+                        # Added by Jennifer 12/3/20
+                        Bmp.where(:scenario_id => scenario.id).each do |bmp|
+                          xml.BmpInfo {
+                          case bmp.bmpsublist_id
+                          when 1
+                            xml.Autoirrigation {
+                              xml.Code
+                              xml.Efficiency bmp.irrigation_efficiency
+                              xml.Frequency bmp.maximum_single_application
+                              xml.Stress bmp.water_stress_factor
+                              xml.Volume # in mm
+                              xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA # convert pounds/acre to kg/ha
+                            }
+                          when 3
+                            xml.TileDrain {
+                              xml.Depth bmp.depth*FT_TO_MM # convert ft to mm
+                            }
+                          when 8
+                            xml.Wetland {
+                              xml.Area bmp.area*AC_TO_HA # convert ac to ha
+                            }
+                          when 9
+                            xml.Pond {
+                              xml.Fraction bmp.irrigation_efficiency
+                            }
+                          when 13
+                            xml.GrassBuffer {
+                              xml.CropCode bmp.crop_id
+                              xml.Area bmp.area*AC_TO_HA # convert ac to ha
+                              xml.GrassStripWidth bmp.width * FT_TO_M # convert ft to m
+                              xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M # convert ft to m
+                              xml.Fraction * bmp.slope_reduction
+                            }
+                          when 14
+                            xml.GrassWaterway {
+                              xml.Width bmp.width
+                              xml.Fraction bmp.slope_reduction
+                            }
+                          when 15
+                            xml.ContourBuffer {
+                              xml.Crop_id bmp.crop_id
+                              xml.Width bmp.width
+                              xml.Fraction bmp.crop_width
+                            }
+                          when 16
+                            xml.LandLeveling {
+                              xml.SlopeReduction bmp.slope_reduction
+                            }
+                          when 17
+                            xml.TerraceSystem {
+                              xml.Active
+                            }
+                          end # end case statement
+                          } # end bmpinfo
+                        end
+                      } # end scenario
+                    } # end field
+                  } # end xml.start info
+                end #builder do end
+                xmlString = builder.to_xml
+                xmlString.gsub! "<", "["
+                xmlString.gsub! ">", "]"
+                xmlString.gsub! "\n", ""
+                xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+                xmlString.gsub! "]    [", "] ["
+                #run simulation
+                result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+                if result == nil
+                  total_xml["total_errors"] += 1
+                  next
                 end
-                xml["summary"]["results"]["id"] = run_id
-                xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
-                if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
-                  if xml["summary"]["crops"].is_a? Hash then
-                    crops_summary.push(xml["summary"]["crops"])
-                  else
-                    crops_summary = xml["summary"]["crops"]
+                xml = Hash.from_xml(result.gsub("\n","").downcase)
+                next if xml == nil
+                next if xml["summary"] == nil
+                next if xml["summary"]["results"] == nil
+                if xml["summary"]["results"]["errorcode"] == "0" then
+                  #add all of the values because thereis not error
+                  total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
+                  total_xml["RunoffN"] += xml["summary"]["results"]["runoffn"].to_f
+                  #total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
+                  total_xml["SubsurfaceN"] += xml["summary"]["results"]["subsurfacen"].to_f
+                  total_xml["TileDrainN"] += xml["summary"]["results"]["tiledrainn"].to_f
+                  #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
+                  #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
+                  #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
+                  #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
+                  #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
+                  total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
+                  total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
+                  #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
+                  total_xml["TileDrainP"] += xml["summary"]["results"]["tiledrainp"].to_f
+                  #total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
+                  total_xml["SurfaceFlow"] += xml["summary"]["results"]["surfaceflow"].to_f
+                  total_xml["SubsurfaceFlow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
+                  #total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
+                  #total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
+                  #total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
+                  total_xml["TileDrainFlow"] += xml["summary"]["results"]["tiledrainflow"].to_f
+                  total_xml["DeepPercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
+                  total_xml["IrrigationApplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
+                  #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
+                  total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
+                  total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
+                  total_xml["Precipitation"] += xml["summary"]["results"]["precipitation"].to_f
+                  total_xml["Evapotranspiration"] += xml["summary"]["results"]["evapotranspiration"].to_f
+                  total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
+                  total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
+                  total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
+                  total_xml["TileDrainN_ci"] += xml["summary"]["results"]["tiledrainn_ci"].to_f
+                  total_xml["OrgP_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
+                  total_xml["PO4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
+                  total_xml["TileDrainP_ci"] += xml["summary"]["results"]["tiledrainp_ci"].to_f
+                  total_xml["SurfaceFlow_ci"] += xml["summary"]["results"]["surfaceflow_ci"].to_f
+                  total_xml["SubsurfaceFlow_ci"] += xml["summary"]["results"]["subsurfaceflow_ci"].to_f
+                  total_xml["TileDrainFlow_ci"] += xml["summary"]["results"]["tiledrainflow_ci"].to_f
+                  total_xml["IrrigationApplied_ci"] += xml["summary"]["results"]["irrigationapplied_ci"].to_f
+                  total_xml["DeepPercolation_ci"] += xml["summary"]["results"]["deeppercolation_ci"].to_f
+                  total_xml["SurfaceErosion_ci"] += xml["summary"]["results"]["surfaceerosion_ci"].to_f
+                  total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
+                  #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
+                  #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
+                  total_xml["total_runs"] += 1
+                  if rec_num == 1 then 
+                    xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
+                    g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
                   end
-                  crops_summary.each do |crop|
-                    #needs to find the same crop inside the crops hash
-                    crop_found = false
-                    crops_yield.each do |yld|
-                      if yld["cropcode"] == crop["cropcode"] then
-                        yld["yield"] = yld["yield"].to_f + crop["yield"].to_f
-                        #yld["yield_ci"].to_f += crop["yield_ci"].to_f   #todo add ci
-                        yld["crop_runs"] += 1
-                        crop_found = true
+                  xml["summary"]["results"]["id"] = run_id
+                  xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
+                  if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
+                    if xml["summary"]["crops"].is_a? Hash then
+                      crops_summary.push(xml["summary"]["crops"])
+                    else
+                      crops_summary = xml["summary"]["crops"]
+                    end
+                    crops_summary.each do |crop|
+                      #needs to find the same crop inside the crops hash
+                      crop_found = false
+                      crops_yield.each do |yld|
+                        if yld["cropcode"] == crop["cropcode"] then
+                          yld["yield"] = yld["yield"].to_f + crop["yield"].to_f
+                          #yld["yield_ci"].to_f += crop["yield_ci"].to_f   #todo add ci
+                          yld["crop_runs"] += 1
+                          crop_found = true
+                        end
                       end
+                      if crop_found == false then
+                        crop["crop_runs"] = 1
+                        crops_yield.push(crop)                  
+                      end
+                      g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                     end
-                    if crop_found == false then
-                      crop["crop_runs"] = 1
-                      crops_yield.push(crop)                  
-                    end
-                    g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                   end
+                  g.write("\n")
+                else
+                  total_xml["total_errors"] += 1
                 end
-                g.write("\n")
+                #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
+                #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
+              end   # end file,open full_name
+            end   # end File.open csv
+            avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
+            avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
+            avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
+            avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
+            avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
+            avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
+            avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
+            avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
+            avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
+            avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
+            avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
+            avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
+            avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
+            avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
+            avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
+            avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
+            avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
+            avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
+            avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
+            avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
+            avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
+            avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
+            avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
+            avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
+            avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
+            avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
+            avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
+            avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
+            avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
+            avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
+            county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
+            county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
+              orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
+            crop_yied = nil
+            crops_yield.each do |crop|
+              cr = Crop.find(crop["cropcode"])
+              if crop != nil then
+                #convert because in the results page it is converted back.
+                crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
               else
-                total_xml["total_errors"] += 1
+                crop_yield = crop["yield"].to_f / crop["crop_runs"]
               end
-              #todo access every element in the xml hash for i.e.: xml["summary"]["results"]["no3"]
-              #todo need to add any adddional node in the total_xml initialization statement at the begining of this funtion
-            end   # end file,open full_name
-          end   # end File.open csv
-          avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
-          avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
-          avg_subsurface_n = total_xml["SubsurfaceN"] / total_xml["total_runs"]
-          avg_tiledrainn = total_xml["TileDrainN"] / total_xml["total_runs"]
-          avg_organicp = total_xml["OrgP"] / total_xml["total_runs"]
-          avg_solublep = total_xml["PO4"] / total_xml["total_runs"]
-          avg_tiledrainp = total_xml["TileDrainP"]/ total_xml["total_runs"]
-          avg_surfaceflow = total_xml["SurfaceFlow"]/ total_xml["total_runs"]
-          avg_subsurfaceflow = total_xml["SubsurfaceFlow"]/ total_xml["total_runs"]
-          avg_tiledrainflow = total_xml["TileDrainFlow"]/ total_xml["total_runs"]
-          avg_deeppercolation = total_xml["DeepPercolation"]/ total_xml["total_runs"]
-          avg_irrigationapplied = total_xml["IrrigationApplied"]/ total_xml["total_runs"]
-          avg_sedimentsurface = total_xml["SurfaceErosion"]/ total_xml["total_runs"]
-          avg_sedimentmanure = total_xml["ManureErosion"]/ total_xml["total_runs"]
-          avg_precipitation = total_xml["Precipitation"]/ total_xml["total_runs"]
-          avg_evapotranspiration = total_xml["Evapotranspiration"]/ total_xml["total_runs"]
-          avg_orgn_ci = total_xml["OrgN_ci"]/ total_xml["total_runs"]
-          avg_no3_ci = total_xml["RunoffN_ci"]/ total_xml["total_runs"]
-          avg_subsurfacen_ci = total_xml["SubsurfaceN_ci"]/ total_xml["total_runs"]
-          avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
-          avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
-          avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
-          avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
-          avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
-          avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
-          avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
-          avg_deeppercolation_ci = total_xml["DeepPercolation_ci"]/ total_xml["total_runs"]
-          avg_irrigationapplied_ci = total_xml["IrrigationApplied_ci"]/ total_xml["total_runs"]
-          avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
-          avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
-          county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
-            orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
-          crop_yied = nil
-          crops_yield.each do |crop|
-            cr = Crop.find(crop["cropcode"])
-            if crop != nil then
-              #convert because in the results page it is converted back.
-              crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
-            else
-              crop_yield = crop["yield"].to_f / crop["crop_runs"]
+              crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
+              crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
             end
-            crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
-            crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
-          end
-          #update simulation date
-          scenario.last_simulation = Time.now
-          scenario.simulation_status = true
-          scenario.save
-          @user = User.find(session[:user_id])
-          @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
+            #update simulation date
+            scenario.last_simulation = Time.now
+            scenario.simulation_status = true
+            scenario.save
+            @user = User.find(session[:user_id])
+            @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
           rescue => e
             File.open(full_name.sub('txt','csv'), "w+") do |f|
               f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num)
