@@ -39,8 +39,13 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def save_county_result
+    debugger
     if params[:results] != nil then
-      
+
+    end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @county }
     end
   end
 
