@@ -132,6 +132,7 @@ NTTG3::Application.routes.draw do
         resources :aplcat_results
         resources :animal_transports
         post :simulate, on: :collection
+        get 'save_county_result'
         resources :operations do
           get :list, on: :collection
           get :cropping_system, on: :collection
