@@ -39,9 +39,8 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def save_county_result
-    debugger
     if params[:results] != nil then
-
+      
     end
   end
 
@@ -296,7 +295,6 @@ class ScenariosController < ApplicationController
     if(last_line)
       @last_line = last_line.split("|")[2]
     end
-    debugger
     if params[:aoi] == nil then params[:aoi] = 0 end
     if params[:aoi_percentage] == nil then params[:aoi_percentage] = 0.5 end
     if params[:aoi] > 0 then @aoi = params[:aoi].to_f; @total_aois = 1
