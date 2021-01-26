@@ -39,7 +39,6 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def save_county_result
-    debugger
     if params[:results] != nil then
 
     end
