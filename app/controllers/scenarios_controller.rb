@@ -35,13 +35,70 @@ class ScenariosController < ApplicationController
     end
   end
 
+################################  save county_crop_result  #################################
+# GET /scenarios
+# GET /scenarios.json
+  def save_county_crop_result(code, crop_name, yield1, unit, yield_ci)
+    #todo check a crop that the apex code is different from id to be suer what is comming in 
+    #crop_yied = nil
+    #cr = Crop.find_by_number(code)
+    # if cr != nil then
+    #   #convert because in the results page it is converted back.
+    #   crop_yield = yield1.to_f * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
+    # else
+    #   crop_yield = yield1.to_f
+    # end
+    crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: @scenario.id, name: crop_name)
+    crop_result.update(yield: yield1, yield_ci: yield_ci, ws: 0, ns: 0, ps: 0, ts: 0)
+  end
+################################  end save county_crop_result  #################################
+
 ################################  index  #################################
 # GET /scenarios
 # GET /scenarios.json
   def save_county_result
     if params[:results] != nil then
-
+      values = params[:results].split(",")
+      #update county_results
+      #orgn,runoffn,subsurfacen,tiledrainn,orgp,po4,tiledrainp,surfaceflow,subsurfaceflow,tiledrainflow,irrigationapplied,
+      #deeppercolation,surfaceerosion,manureerosion,evapotranspiration,precipitation,
+      #orgn_ci,runoffn_ci,subsurfacen_ci,tiledrainn_ci,orgp_ci,po4_ci,tiledrainp_ci,surfaceflow_ci,subsurfaceflow_ci,tiledrainflow_ci,irrigationapplied_ci,deeppercolation_ci,surfaceerosion_ci,manureerosion_ci,
+      county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: @scenario.id)
+      county_result.update(year: 2018, orgn: values[0],no3: values[1],qn:values[2], qdrn: values[3], orgp:values[4], po4:values[5], qdrp:values[6], flow:values[7], surface_flow: values[8], qdr:values[9], irri: values[10],
+        dprk:values[11],sed: values[12],ymnu: values[13], evapotranspiration: values[14], precipitation: values[15],
+        prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, prkn: 0,
+        orgn_ci: values[16], qn_ci: values[17],no3_ci: values[18], qdrn_ci: values[19], orgp_ci: values[20], po4_ci: values[21], qdrp_ci: values[22], surface_flow_ci: values[23], flow_ci: values[24], qdr_ci: values[25], irri_ci: values[26], dprk_ci: values[27], sed_ci: values[28], ymnu_ci: values[29], co2_ci: 0, n2o_ci: 0)
+      #update counte_crop_results
+      #crop1,name1,yield1,unit1,ci1,crop2,name2,yield2,unit2,ci2,crop3,name3,yield3,unit3,ci3,crop4,name4,yield4,unit4,ci4,crop5,name5,yield5,unit5,ci5
+      index1 = 30
+      if values[index1].to_i > 0 then
+        #first crop
+        save_county_crop_result(values[index1],values[index1+1],values[index1+2],values[index1+3],values[index1+4])
+      end
+      index1 = 35
+      if values[index1].to_i > 0 then
+        #second crop
+        save_county_crop_result(values[index1],values[index1+1],values[index1+2],values[index1+3],values[index1+4])
+      end
+      index1 = 40
+      if values[index1].to_i > 0 then
+        #third crop
+        save_county_crop_result(values[index1],values[index1+1],values[index1+2],values[index1+3],values[index1+4])
+      end
+      index1 = 45
+      if values[index1].to_i > 0 then
+        #forth crop
+        save_county_crop_result(values[index1],values[index1+1],values[index1+2],values[index1+3],values[index1+4])
+      end
+      index1 = 50
+      if values[index1].to_i > 0 then
+        #fifth crop
+        save_county_crop_result(values[index1],values[index1+1],values[index1+2],values[index1+3],values[index1+4])
+      end
     end
+    @scenario.simulation_status = true
+    @scenario.last_simulation = Time.now
+    @scenario.save
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @county }
@@ -315,7 +372,6 @@ class ScenariosController < ApplicationController
       end 
     end    # end scenarios selected
   end   #end log file
-
 
   def run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
     ActiveRecord::Base.transaction do
