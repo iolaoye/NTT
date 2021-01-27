@@ -113,6 +113,10 @@
 		    		<%else %>
 			    	    <%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 		    	<% end %>
+				<% if req_parm == "NTT" and test == 1 then %>
+	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
+
+	          	<% end %>
 			    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
 			    	<% if req_parm == "NTT"%>
 	          			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
@@ -120,16 +124,12 @@
 	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
 	          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
-	         		<% if fem == 1 && req_parm == "FEM"%>
+	         		<% if fem == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	         		<% if dndc == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
-	          	<% end %>
-				<% if req_parm == "NTT" and test == 1 then %>
-	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
-
 	          	<% end %>
 	        <% end %>
 		    <br>
