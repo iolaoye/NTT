@@ -401,7 +401,6 @@ class ScenariosController < ApplicationController
                   xml.StateId line_splited[0]    #state abrevation.
                   xml.CountyId file_name.split("_")[1]    #county code.
                   xml.ProjectName @project.name
-@aoi = 0.005
                   xml.run_type @aoi    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
                   xml.total_aois @total_aois     #total number of aois in the county selected
                   xml.eMail User.find(session[:user_id]).email
@@ -505,7 +504,6 @@ class ScenariosController < ApplicationController
             break
           end   # end file,open full_name
           #run simulation
-#debugger
           if @aoi >= 0 then
             uri = 'http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString
             fork do
@@ -516,7 +514,6 @@ class ScenariosController < ApplicationController
                 #do nothing. error expected because the connection is being canceled.
               end
             end
-            debugger
             break
             #Net::HTTP.post URI('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
             #Net::HTTP.post.new(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
