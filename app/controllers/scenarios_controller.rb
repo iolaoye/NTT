@@ -363,16 +363,16 @@ class ScenariosController < ApplicationController
     end
     params[:select_ntt].each do |scenario_id|
       #if @aoi > 0 then
-        run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
+        #run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
       #else
-        #fork do
-          #run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name)
-        #end
+        fork do
+          run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
+        end
       #end 
     end    # end scenarios selected
   end   #end log file
 
-  def run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
+  def run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
     ActiveRecord::Base.transaction do
       #need to add all of the values in this inizialization in order to avoid nil errors.
       total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
@@ -410,7 +410,7 @@ class ScenariosController < ApplicationController
                 } # end xml.StartInfo
                 #save field information
                 xml.FieldInfo {
-                  xml.Field_id county_state_code
+                  xml.Field_id county_state_code + "_" + line_splited[2]
                   xml.Area 100
                   xml.SoilP 0
                   xml.Coordinates line_splited[3]
@@ -501,6 +501,7 @@ class ScenariosController < ApplicationController
             xmlString.gsub! "\n", ""
             xmlString.gsub! "[?xml version=\"1.0\"?]", ""
             xmlString.gsub! "]    [", "] ["
+            xmlString.gsub! "   ", ""
             break
           end   # end file,open full_name
           #run simulation
@@ -672,9 +673,7 @@ class ScenariosController < ApplicationController
     end   #active transaction do
   end
 
-
-
-  def run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name)
+  def run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
     ActiveRecord::Base.transaction do
       #need to add all of the values in this inizialization in order to avoid nil errors.
       total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
@@ -701,10 +700,13 @@ class ScenariosController < ApplicationController
                   xml.StateId line_splited[0]    #state abrevation.
                   xml.CountyId file_name.split("_")[1]    #county code.
                   xml.ProjectName @project.name
+                  xml.run_type line_splited[2]    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
+                  xml.total_aois @last_line     #total number of aois in the county selected
+                  xml.eMail User.find(session[:user_id]).email
                 } # end xml.StartInfo
                 #save field information
                 xml.FieldInfo {
-                  xml.Field_id @field.id.to_s + "_" + line_splited[2]
+                  xml.Field_id county_state_code + "_" + line_splited[2]
                   xml.Area 100
                   xml.SoilP 0
                   xml.Coordinates line_splited[3]
@@ -795,8 +797,9 @@ class ScenariosController < ApplicationController
             xmlString.gsub! "\n", ""
             xmlString.gsub! "[?xml version=\"1.0\"?]", ""
             xmlString.gsub! "]    [", "] ["
+            xmlString.gsub! "   ", ""
             #run simulation
-            result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+            result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block1/NTT_Service.ashx?input=' + xmlString))
             if result == nil then
               g.write("Result is nil in id " + run_id)
               break
@@ -887,7 +890,7 @@ class ScenariosController < ApplicationController
                     crop["crop_runs"] = 1
                     crops_yield.push(crop)                  
                   end
-                  g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
+                  g.write(crop["cropcode"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                 end
               end
               g.write("\n")
