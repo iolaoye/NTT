@@ -357,19 +357,18 @@ class ScenariosController < ApplicationController
       @last_line = last_line.split("|")[2]
     end
     if params[:aoi] == nil then params[:aoi] = 0 end
-    if params[:aoi_percentage] == nil then params[:aoi_percentage] = 0.5 end
-    if params[:aoi] > 0 then @aoi = params[:aoi].to_f; @total_aois = 1
-      elsif params[:aoi_percentage] > 0 and params[:aoi_percentage] < 100 then @aoi = params[:aoi_percentage].to_f/100; @total_aois = @last_line
+    if params[:aoi] >= 1 then @aoi = params[:aoi].to_f; @total_aois = 1
+      elsif params[:aoi] > 0 and params[:aoi] < 1 then @aoi = params[:aoi].to_f; @total_aois = @last_line
       else @aoi = 0; @total_aois = @last_line
     end
     params[:select_ntt].each do |scenario_id|
-      if @aoi > 0 then
+      #if @aoi > 0 then
         run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
-      else
-        fork do
-          run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name)
-        end
-      end 
+      #else
+        #fork do
+          #run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name)
+        #end
+      #end 
     end    # end scenarios selected
   end   #end log file
 
@@ -402,9 +401,10 @@ class ScenariosController < ApplicationController
                   xml.StateId line_splited[0]    #state abrevation.
                   xml.CountyId file_name.split("_")[1]    #county code.
                   xml.ProjectName @project.name
+@aoi = 0.005
                   xml.run_type @aoi    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
                   xml.total_aois @total_aois     #total number of aois in the county selected
-                  xml.eMail "gallego@tarleton.edu"
+                  xml.eMail User.find(session[:user_id]).email
                   xml.project_id @project.id
                   xml.field_id @field.id
                   xml.scenario_id scenario_id
@@ -505,13 +505,18 @@ class ScenariosController < ApplicationController
             break
           end   # end file,open full_name
           #run simulation
-          if @aoi > 0 then
+#debugger
+          if @aoi >= 0 then
             uri = 'http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString
-            begin
-              result = Net::HTTP.post URI(uri),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
-            rescue Exception => error
-              #do nothing. error expected because the connection is being canceled.
+            fork do
+              begin
+                result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+                #result = Net::HTTP.post URI(uri),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
+              rescue Exception => error
+                #do nothing. error expected because the connection is being canceled.
+              end
             end
+            debugger
             break
             #Net::HTTP.post URI('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
             #Net::HTTP.post.new(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
