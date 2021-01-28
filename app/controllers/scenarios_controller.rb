@@ -66,7 +66,7 @@ class ScenariosController < ApplicationController
       county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: @scenario.id)
       county_result.update(year: 2018, orgn: values[0],no3: values[1],qn:values[2], qdrn: values[3], orgp:values[4], po4:values[5], qdrp:values[6], flow:values[7], surface_flow: values[8], qdr:values[9], irri: values[10],
         dprk:values[11],sed: values[12],ymnu: values[13], evapotranspiration: values[14], precipitation: values[15],
-        prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, prkn: 0,
+        prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0,
         orgn_ci: values[16], qn_ci: values[17],no3_ci: values[18], qdrn_ci: values[19], orgp_ci: values[20], po4_ci: values[21], qdrp_ci: values[22], surface_flow_ci: values[23], flow_ci: values[24], qdr_ci: values[25], irri_ci: values[26], dprk_ci: values[27], sed_ci: values[28], ymnu_ci: values[29], co2_ci: 0, n2o_ci: 0)
       #update counte_crop_results
       #crop1,name1,yield1,unit1,ci1,crop2,name2,yield2,unit2,ci2,crop3,name3,yield3,unit3,ci3,crop4,name4,yield4,unit4,ci4,crop5,name5,yield5,unit5,ci5
@@ -363,16 +363,16 @@ class ScenariosController < ApplicationController
     end
     params[:select_ntt].each do |scenario_id|
       #if @aoi > 0 then
-        run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
+        #run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
       #else
         #fork do
-          #run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name)
+          run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
         #end
       #end 
     end    # end scenarios selected
   end   #end log file
 
-  def run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
+  def run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
     ActiveRecord::Base.transaction do
       #need to add all of the values in this inizialization in order to avoid nil errors.
       total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
@@ -410,7 +410,7 @@ class ScenariosController < ApplicationController
                 } # end xml.StartInfo
                 #save field information
                 xml.FieldInfo {
-                  xml.Field_id county_state_code
+                  xml.Field_id county_state_code + "_" + line_splited[2]
                   xml.Area 100
                   xml.SoilP 0
                   xml.Coordinates line_splited[3]
@@ -501,6 +501,7 @@ class ScenariosController < ApplicationController
             xmlString.gsub! "\n", ""
             xmlString.gsub! "[?xml version=\"1.0\"?]", ""
             xmlString.gsub! "]    [", "] ["
+            xmlString.gsub! "   ", ""
             break
           end   # end file,open full_name
           #run simulation
@@ -646,7 +647,7 @@ class ScenariosController < ApplicationController
             avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
             avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
             county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-            county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
+            county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
               orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
             crop_yied = nil
             crops_yield.each do |crop|
@@ -672,15 +673,16 @@ class ScenariosController < ApplicationController
     end   #active transaction do
   end
 
-
-
-  def run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name)
+  def run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
     ActiveRecord::Base.transaction do
       #need to add all of the values in this inizialization in order to avoid nil errors.
       total_xml = {"total_runs" => 0,"total_errors" => 0,"OrgN" => 0, "RunoffN" => 0, "SubsurfaceN" => 0, "TileDrainN" => 0, "OrgP" => 0, "PO4" => 0, "TileDrainP" => 0, "SurfaceFlow" => 0, "SubsurfaceFlow" => 0, "TileDrainFlow" => 0, "nitrousoxide" => 0, "DeepPercolation"=> 0, "IrrigationApplied" => 0, "SurfaceErosion" => 0, "ManureErosion" => 0, "Precipitation" => 0, "Evapotranspiration" => 0, "OrgN_ci" => 0, "RunoffN_ci" => 0, "SubsurfaceN_ci" => 0, "TileDrainN_ci" => 0, "OrgP_ci" => 0, "PO4_ci" => 0, "TileDrainP_ci" => 0, "SurfaceFlow_ci" => 0, "SubsurfaceFlow_ci" => 0, "TileDrainFlow_ci" => 0, "IrrigationApplied_ci" => 0, "DeepPercolation_ci" => 0, "SurfaceErosion_ci" => 0, "ManureErosion_ci" => 0, "carbon" => 0}
       crops_yield = []
       scenario = Scenario.find(scenario_id)
       scenario.simulation_status = false
+      soil_operations = SoilOperation.where(:scenario_id => scenario.id)
+      bmps = Bmp.where(:scenario_id => scenario.id)
+      @user = User.find(session[:user_id])
       File.open(full_name.sub('txt','csv'), "w+") do |g|
         begin
           File.open(full_name).each do |line|
@@ -701,17 +703,20 @@ class ScenariosController < ApplicationController
                   xml.StateId line_splited[0]    #state abrevation.
                   xml.CountyId file_name.split("_")[1]    #county code.
                   xml.ProjectName @project.name
+                  xml.run_type line_splited[2]    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
+                  xml.total_aois @last_line     #total number of aois in the county selected
+                  xml.eMail @user.email
                 } # end xml.StartInfo
                 #save field information
                 xml.FieldInfo {
-                  xml.Field_id @field.id.to_s + "_" + line_splited[2]
+                  xml.Field_id county_state_code + "_" + line_splited[2]
                   xml.Area 100
                   xml.SoilP 0
                   xml.Coordinates line_splited[3]
                   xml.ScenarioInfo {
                     xml.Name scenario.name #@scenario.name
                     #create operations
-                    SoilOperation.where(:scenario_id => scenario.id).each do |soop|   # multiple soiloperations for each scenario_id
+                    soil_operations.each do |soop|   # multiple soiloperations for each scenario_id
                       xml.ManagementInfo {
                         xml.Operation soop.apex_operation
                         xml.Year soop.year
@@ -731,7 +736,7 @@ class ScenariosController < ApplicationController
                       }  # end operations
                     end
                     # Added by Jennifer 12/3/20
-                    Bmp.where(:scenario_id => scenario.id).each do |bmp|
+                    bmps.each do |bmp|
                       xml.BmpInfo {
                       case bmp.bmpsublist_id
                       when 1
@@ -795,8 +800,9 @@ class ScenariosController < ApplicationController
             xmlString.gsub! "\n", ""
             xmlString.gsub! "[?xml version=\"1.0\"?]", ""
             xmlString.gsub! "]    [", "] ["
+            xmlString.gsub! "   ", ""
             #run simulation
-            result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+            result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block1/NTT_Service.ashx?input=' + xmlString))
             if result == nil then
               g.write("Result is nil in id " + run_id)
               break
@@ -887,7 +893,7 @@ class ScenariosController < ApplicationController
                     crop["crop_runs"] = 1
                     crops_yield.push(crop)                  
                   end
-                  g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
+                  g.write(crop["cropcode"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                 end
               end
               g.write("\n")
@@ -928,7 +934,7 @@ class ScenariosController < ApplicationController
           avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
           avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
           county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, prkn: 0, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
+          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
             orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
           crop_yied = nil
           crops_yield.each do |crop|
@@ -946,7 +952,6 @@ class ScenariosController < ApplicationController
           scenario.last_simulation = Time.now
           scenario.simulation_status = true
           scenario.save
-          @user = User.find(session[:user_id])
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
         rescue => e
           File.open(full_name.sub('txt','log'), "w+") do |f|
