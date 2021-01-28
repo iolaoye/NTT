@@ -365,9 +365,9 @@ class ScenariosController < ApplicationController
       #if @aoi > 0 then
         #run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
       #else
-        #fork do
+        fork do
           run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
-        #end
+        end
       #end 
     end    # end scenarios selected
   end   #end log file
