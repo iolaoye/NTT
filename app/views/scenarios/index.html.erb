@@ -101,7 +101,7 @@
 	    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
 	    		<% end %>
 	        <% end %>
-	        <% if county == 1 && req_parm != "APLCAT" then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
+	        <% if county == 1 && @project.version.include?("special") then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
 		    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
 		    	<% case req_parm %>
 		    		<%when "FEM"%>
