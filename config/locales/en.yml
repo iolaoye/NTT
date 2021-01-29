@@ -504,6 +504,7 @@ en:
     download_aplcat: Download APLCAT Files
     animal_transport: Animal Transport
     new_animal_transport: New Animal Transport
+    select_aois: Select AOIs
   project:
     project: Project
     new_project: 'Create New Project'
@@ -598,6 +599,8 @@ en:
     other_scenario: Copy Scenario from other project/field
     upload_scenarios: Upload your own scenarios
     economic_results: Economic Results
+    select_area_of_interest: Select Area of Interest
+    select_percentage: Select Percentage
   location:
     new_location: New Location
     edit: Editing Location
