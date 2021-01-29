@@ -802,7 +802,7 @@ class ScenariosController < ApplicationController
             xmlString.gsub! "]    [", "] ["
             xmlString.gsub! "   ", ""
             #run simulation
-            result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block1/NTT_Service.ashx?input=' + xmlString))
+            result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
             if result == nil then
               g.write("Result is nil in id " + run_id)
               break
