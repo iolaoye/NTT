@@ -205,7 +205,7 @@ class ResultsController < ApplicationController
             t("general.view") + " " + t("result.by_soil"),
             t("result.summary") + " " + t("result.by_soil")
 
-            if @project.version.include? "special" then              
+            if @project.version.include? "special" then
               get_county_results = lambda do |scenario_id|
                 if not (scenario_id.eql? "0" or scenario_id.eql? "")
                   total_area = @field.field_area
