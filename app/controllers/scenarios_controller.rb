@@ -802,21 +802,21 @@ class ScenariosController < ApplicationController
             #run simulation
             result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
             if result == nil then
-              g.write("Result is nil in id " + run_id)
-              break
+              g.write(run_id + ",540,Error - Result is nil in id " + run_id)
+              next
             end
             xml = Hash.from_xml(result.gsub("\n","").downcase)
             if xml == nil then 
-              g.write("xml is nil in id" + run_id)
-              break 
+              g.write(run_id + ",541,Error - xml is nil in id" + run_id)
+              next 
             end
             if xml["summary"] == nil then 
-              g.write("xml[summary] is nil in id" + run_id)
-              break 
+              g.write(run_id + ",542,Error - xml[summary] is nil in id" + run_id)
+              next 
             end  
             if xml["summary"]["results"] == nil then 
-              g.write("xml[summary][results] is nil in id" + run_id)
-              break 
+              g.write(run_id + ",543,Error - xml[summary][results] is nil in id" + run_id)
+              next 
             end
             if xml["summary"]["results"]["errorcode"] == "0" then
               #add all of the values because thereis not error
@@ -953,7 +953,7 @@ class ScenariosController < ApplicationController
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
         rescue => e
           File.open(full_name.sub('txt','log'), "w+") do |f|
-            g.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num.to_s)
+            f.write("Failed, Error: " + e.inspect + " \n" + "AOI Nmber: " + rec_num.to_s)
           end          
           raise ActiveRecord::Rollback
         end   # end begin/rescue
