@@ -201,13 +201,13 @@ class ScenariosController < ApplicationController
         flash[:notice] = t('models.scenario') + " " + @scenario.name + t('notices.created')
         format.html { redirect_to project_field_scenario_operations_path(@project, @field, @scenario), notice: t('models.scenario') + " " + t('general.success') }
       else
-      flash[:info] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
+        flash[:alert] = t('scenario.scenario_name') + " " + t('errors.messages.blank') + " / " + t('errors.messages.taken') + "."
         format.html { redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT") }
         format.json { render json: scenario.errors, status: :unprocessable_entity }
       end
     end
   end
-        
+
 ################################  UPDATE  #################################
 # PATCH/PUT /scenarios/1
 # PATCH/PUT /scenarios/1.json
