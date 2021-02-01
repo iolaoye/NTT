@@ -959,7 +959,7 @@ class ScenariosController < ApplicationController
           scenario.save
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
         rescue => e
-          File.open(full_name.sub('txt','log'), "w+") do |f|
+          File.open(full_name.sub('txt','log1'), "w+") do |f|
             f.write("Failed, Error: " + e.inspect + " \n" + "AOI Number: " + rec_num.to_s + "\n")
           end          
           raise ActiveRecord::Rollback
