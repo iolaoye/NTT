@@ -1,6 +1,6 @@
 <%= form_for [@project, @field, @weather] do |f| %>
     <% case %>
-	  <% when @weather.errors.any? %>
+    <% when @weather.errors.any? %>
         <div id="error_explanation">
           <h2><%= t('activerecord.form_errors', :count => @weather.errors.count, :model => t('models.weather').downcase) %></h2>
           <ul>
@@ -83,9 +83,9 @@
           </div>
           <%= t('weather.note') %></p>
           <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
-          <%= f.number_field :simulation_initial_year, :class => "fieldNumbers" %>
+          <%= f.number_field :simulation_initial_year, :class => "fieldNumbers", :min => 1981, :max => 2015%>
           <%= f.label " " + t('weather.final_year') %>
-          <%= f.number_field :simulation_final_year, :class => "fieldNumbers" %>  <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
+          <%= f.number_field :simulation_final_year, :class => "fieldNumbers", :min => 1981, :max => 2015 %>  <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
         </div>
       </div>
     </div>
