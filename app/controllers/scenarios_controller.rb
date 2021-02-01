@@ -808,20 +808,20 @@ class ScenariosController < ApplicationController
                 g.write(run_id + ",544,Failed, Error: " + e.inspect + " " + run_id)
               end
             end         
-            if result == nil then
+            if result == nil or result.include?("could not find file") then
               g.write(run_id + ",540,Error - Result is nil in id " + run_id)
               next
             end
             xml = Hash.from_xml(result.gsub("\n","").downcase)
-            if xml == nil then 
+            if xml == nil or xml.include?("could not find file") then 
               g.write(run_id + ",541,Error - xml is nil in id" + run_id)
               next 
             end
-            if xml["summary"] == nil then 
+            if xml["summary"] == nil or xml["summary"].include?("could not find file") then 
               g.write(run_id + ",542,Error - xml[summary] is nil in id" + run_id)
               next 
             end  
-            if xml["summary"]["results"] == nil then 
+            if xml["summary"]["results"] == nil or xml["summary"]["results"].include?("could not find file")  then 
               g.write(run_id + ",543,Error - xml[summary][results] is nil in id" + run_id)
               next 
             end
@@ -906,6 +906,7 @@ class ScenariosController < ApplicationController
               total_xml["total_errors"] += 1
               xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}
             end
+
             #raise ActiveRecord::Rollback
           end   # end file,open full_name
           avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
@@ -959,7 +960,7 @@ class ScenariosController < ApplicationController
           scenario.save
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
         rescue => e
-          File.open(full_name.sub('txt','log'), "w+") do |f|
+          File.open(full_name.sub('txt','lgt'), "w+") do |f|
             f.write("Failed, Error: " + e.inspect + " \n" + "AOI Number: " + rec_num.to_s + "\n")
           end          
           raise ActiveRecord::Rollback
