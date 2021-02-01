@@ -69,8 +69,7 @@
       <%= f.submit t('weather.update'), name: 'update', :class => "btn btn-primary" %>
     </div>
   <% end %>
-
-  <%= form_for [@project, @field, @weather], :url => save_simulation_project_field_weather_path(@project, @field, @weather), method: :post do |f| %>
+   <%= form_for [@project, @field, @weather], :url => save_simulation_project_field_weather_path(@project, @field, @weather), :html => { :onsubmit => "validateMyForm" } , method: :post do |f| %>
     <div id="fsetSimulation" class="panel panel-default">
       <div class="panel-heading"><%= t('weather.years_of_simulation') %></div>
       <div class="panel-body">
@@ -85,7 +84,8 @@
           <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
           <%= f.number_field :simulation_initial_year, :class => "fieldNumbers", :min => 1981, :max => 2015%>
           <%= f.label " " + t('weather.final_year') %>
-          <%= f.number_field :simulation_final_year, :class => "fieldNumbers", :min => 1981, :max => 2015 %>  <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
+          <%= f.number_field :simulation_final_year, :class => "fieldNumbers", :min => 1981, :max => 2015 %>  
+          <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
         </div>
       </div>
     </div>
@@ -95,8 +95,8 @@
       <%= link_to t('general.continue'), project_field_scenarios_path(@project, @field), :class => 'btn btn-success' %>
     </div>
 
+
 <script type="text/javascript">
-    //script to hide elements on page load and show selected radio
     $(document).ready(function(){
         document.getElementById("fsetUploadWeatherFile").style.display = "none";
         document.getElementById("fsetCoordinates").style.display = "none";
@@ -109,4 +109,16 @@
           document.getElementById("fsetCoordinates").style.display = "";
         }
     });
+
+    $('form').submit(function(e) {  // Jennifer 2/1/21
+        var initial = document.getElementById("weather_simulation_initial_year").value;
+        var final = document.getElementById("weather_simulation_final_year").value;
+        if (final < initial) {
+          alert('Initial year cannot be greater than final year.');
+          location.reload();
+          return false;
+        }
+        return true;
+        });
 </script>
+
