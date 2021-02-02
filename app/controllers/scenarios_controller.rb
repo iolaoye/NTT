@@ -682,150 +682,142 @@ class ScenariosController < ApplicationController
       bmps = Bmp.where(:scenario_id => scenario.id)
       @user = User.find(session[:user_id])
       File.open(full_name.sub('txt','csv'), "w+") do |g|
-        begin
           File.open(full_name).each do |line|
-            crops_summary = []
-            line.gsub! "\n",""
-            line.gsub! "\r",""
-            line_splited = line.split("|")              
-            next if line_splited == nil
-            next if line_splited[0] == nil
-            next if line_splited[0].include? "State"
-            rec_num += 1
-            run_id = line_splited[2]
-            #create xml file and send it to run
-            builder = Nokogiri::XML::Builder.new do |xml|
-              xml.NTT {
-                xml.StartInfo {
-                  #save start information
-                  xml.StateId line_splited[0]    #state abrevation.
-                  xml.CountyId file_name.split("_")[1]    #county code.
-                  xml.ProjectName @project.name
-                  xml.run_type line_splited[2]    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
-                  xml.total_aois @last_line     #total number of aois in the county selected
-                  xml.eMail @user.email
-                } # end xml.StartInfo
-                #save field information
-                xml.FieldInfo {
-                  xml.Field_id county_state_code + "_" + line_splited[2]
-                  xml.Area 100
-                  xml.SoilP 0
-                  xml.Coordinates line_splited[3]
-                  xml.ScenarioInfo {
-                    xml.Name scenario.name #@scenario.name
-                    #create operations
-                    soil_operations.each do |soop|   # multiple soiloperations for each scenario_id
-                      xml.ManagementInfo {
-                        xml.Operation soop.apex_operation
-                        xml.Year soop.year
-                        xml.Month soop.month
-                        xml.Day soop.day
-                        xml.Crop soop.apex_crop
-                        xml.Opv1 soop.opv1
-                        xml.Opv2 soop.opv2
-                        xml.Opv3 soop.opv3
-                        oper = soop.operation
-                        if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
-                          xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
-                        else
-                          xml.Opv4 soop.opv4
-                        end
-                        xml.Opv5 soop.opv5
-                      }  # end operations
-                    end
-                    # Added by Jennifer 12/3/20
-                    bmps.each do |bmp|
-                      xml.BmpInfo {
-                      case bmp.bmpsublist_id
-                      when 1
-                        xml.Autoirrigation {
-                          xml.Code
-                          xml.Efficiency bmp.irrigation_efficiency
-                          xml.Frequency bmp.maximum_single_application
-                          xml.Stress bmp.water_stress_factor
-                          xml.Volume # in mm
-                          xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA # convert pounds/acre to kg/ha
-                        }
-                      when 3
-                        xml.TileDrain {
-                          xml.Depth bmp.depth*FT_TO_MM # convert ft to mm
-                        }
-                      when 8
-                        xml.Wetland {
-                          xml.Area bmp.area*AC_TO_HA # convert ac to ha
-                        }
-                      when 9
-                        xml.Pond {
-                          xml.Fraction bmp.irrigation_efficiency
-                        }
-                      when 13
-                        xml.GrassBuffer {
-                          xml.CropCode bmp.crop_id
-                          xml.Area bmp.area*AC_TO_HA # convert ac to ha
-                          xml.GrassStripWidth bmp.width * FT_TO_M # convert ft to m
-                          xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M # convert ft to m
-                          xml.Fraction * bmp.slope_reduction
-                        }
-                      when 14
-                        xml.GrassWaterway {
-                          xml.Width bmp.width
-                          xml.Fraction bmp.slope_reduction
-                        }
-                      when 15
-                        xml.ContourBuffer {
-                          xml.Crop_id bmp.crop_id
-                          xml.Width bmp.width
-                          xml.Fraction bmp.crop_width
-                        }
-                      when 16
-                        xml.LandLeveling {
-                          xml.SlopeReduction bmp.slope_reduction
-                        }
-                      when 17
-                        xml.TerraceSystem {
-                          xml.Active
-                        }
-                      end # end case statement
-                      } # end bmpinfo
-                    end
-                  } # end scenario
-                } # end field
-              } # end xml.start info
-            end #builder do end
-            xmlString = builder.to_xml
-            xmlString.gsub! "<", "["
-            xmlString.gsub! ">", "]"
-            xmlString.gsub! "\n", ""
-            xmlString.gsub! "[?xml version=\"1.0\"?]", ""
-            xmlString.gsub! "]    [", "] ["
-            xmlString.gsub! "   ", ""
-            #run simulation
             begin
+              crops_summary = []
+              line.gsub! "\n",""
+              line.gsub! "\r",""
+              line_splited = line.split("|")              
+              next if line_splited == nil
+              next if line_splited[0] == nil
+              next if line_splited[0].include? "State"
+              rec_num += 1
+              run_id = line_splited[2]
+              #create xml file and send it to run
+              builder = Nokogiri::XML::Builder.new do |xml|
+                xml.NTT {
+                  xml.StartInfo {
+                    #save start information
+                    xml.StateId line_splited[0]    #state abrevation.
+                    xml.CountyId file_name.split("_")[1]    #county code.
+                    xml.ProjectName @project.name
+                    xml.run_type line_splited[2]    #if > 0 just one aoi. if < 0 percentage. if = 0 then 100%
+                    xml.total_aois @last_line     #total number of aois in the county selected
+                    xml.eMail @user.email
+                  } # end xml.StartInfo
+                  #save field information
+                  xml.FieldInfo {
+                    xml.Field_id county_state_code + "_" + line_splited[2]
+                    xml.Area 100
+                    xml.SoilP 0
+                    xml.Coordinates line_splited[3]
+                    xml.ScenarioInfo {
+                      xml.Name scenario.name #@scenario.name
+                      #create operations
+                      soil_operations.each do |soop|   # multiple soiloperations for each scenario_id
+                        xml.ManagementInfo {
+                          xml.Operation soop.apex_operation
+                          xml.Year soop.year
+                          xml.Month soop.month
+                          xml.Day soop.day
+                          xml.Crop soop.apex_crop
+                          xml.Opv1 soop.opv1
+                          xml.Opv2 soop.opv2
+                          xml.Opv3 soop.opv3
+                          oper = soop.operation
+                          if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
+                            xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
+                          else
+                            xml.Opv4 soop.opv4
+                          end
+                          xml.Opv5 soop.opv5
+                        }  # end operations
+                      end
+                      # Added by Jennifer 12/3/20
+                      bmps.each do |bmp|
+                        xml.BmpInfo {
+                        case bmp.bmpsublist_id
+                        when 1
+                          xml.Autoirrigation {
+                            xml.Code
+                            xml.Efficiency bmp.irrigation_efficiency
+                            xml.Frequency bmp.maximum_single_application
+                            xml.Stress bmp.water_stress_factor
+                            xml.Volume # in mm
+                            xml.ApplicationRate bmp.dry_manure*LBS_AC_TO_T_HA # convert pounds/acre to kg/ha
+                          }
+                        when 3
+                          xml.TileDrain {
+                            xml.Depth bmp.depth*FT_TO_MM # convert ft to mm
+                          }
+                        when 8
+                          xml.Wetland {
+                            xml.Area bmp.area*AC_TO_HA # convert ac to ha
+                          }
+                        when 9
+                          xml.Pond {
+                            xml.Fraction bmp.irrigation_efficiency
+                          }
+                        when 13
+                          xml.GrassBuffer {
+                            xml.CropCode bmp.crop_id
+                            xml.Area bmp.area*AC_TO_HA # convert ac to ha
+                            xml.GrassStripWidth bmp.width * FT_TO_M # convert ft to m
+                            xml.ForestStripWidth bmp.grass_field_portion * FT_TO_M # convert ft to m
+                            xml.Fraction * bmp.slope_reduction
+                          }
+                        when 14
+                          xml.GrassWaterway {
+                            xml.Width bmp.width
+                            xml.Fraction bmp.slope_reduction
+                          }
+                        when 15
+                          xml.ContourBuffer {
+                            xml.Crop_id bmp.crop_id
+                            xml.Width bmp.width
+                            xml.Fraction bmp.crop_width
+                          }
+                        when 16
+                          xml.LandLeveling {
+                            xml.SlopeReduction bmp.slope_reduction
+                          }
+                        when 17
+                          xml.TerraceSystem {
+                            xml.Active
+                          }
+                        end # end case statement
+                        } # end bmpinfo
+                      end
+                    } # end scenario
+                  } # end field
+                } # end xml.start info
+              end #builder do end
+              xmlString = builder.to_xml
+              xmlString.gsub! "<", "["
+              xmlString.gsub! ">", "]"
+              xmlString.gsub! "\n", ""
+              xmlString.gsub! "[?xml version=\"1.0\"?]", ""
+              xmlString.gsub! "]    [", "] ["
+              xmlString.gsub! "   ", ""
+              #run simulation
               result = Net::HTTP.get(URI.parse('http://ntt.tft.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
-            #if there is an error not being validated.
-            rescue => e
-              File.open(full_name.sub('txt','log'), "w+") do |f|
-                g.write(run_id + ",544,Failed, Error: " + e.inspect + " " + run_id)
+              if result == nil or result.include?("could not find file") then
+                g.write(run_id + ",540,Error - Result is nil in id " + run_id)
+                next
               end
-            end         
-            if result == nil or result.include?("could not find file") then
-              g.write(run_id + ",540,Error - Result is nil in id " + run_id)
-              next
-            end
-            xml = Hash.from_xml(result.gsub("\n","").downcase)
-            if xml == nil or xml.include?("could not find file") then 
-              g.write(run_id + ",541,Error - xml is nil in id" + run_id)
-              next 
-            end
-            if xml["summary"] == nil or xml["summary"].include?("could not find file") then 
-              g.write(run_id + ",542,Error - xml[summary] is nil in id" + run_id)
-              next 
-            end  
-            if xml["summary"]["results"] == nil or xml["summary"]["results"].include?("could not find file")  then 
-              g.write(run_id + ",543,Error - xml[summary][results] is nil in id" + run_id)
-              next 
-            end
-            begin
+              xml = Hash.from_xml(result.gsub("\n","").downcase)
+              if xml == nil or xml.include?("could not find file") then 
+                g.write(run_id + ",541,Error - xml is nil in id" + run_id)
+                next 
+              end
+              if xml["summary"] == nil or xml["summary"].include?("could not find file") then 
+                g.write(run_id + ",542,Error - xml[summary] is nil in id" + run_id)
+                next 
+              end  
+              if xml["summary"]["results"] == nil or xml["summary"]["results"].include?("could not find file")  then 
+                g.write(run_id + ",543,Error - xml[summary][results] is nil in id" + run_id)
+                next 
+              end
               if xml["summary"]["results"]["errorcode"] == "0" then
                 #add all of the values because thereis not error
                 total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
@@ -911,8 +903,8 @@ class ScenariosController < ApplicationController
               File.open(full_name.sub('txt','log'), "w+") do |f|
                 g.write(run_id + ",545,Failed, Error: " + e.inspect + " " + run_id)
               end
+              next
             end
-            #raise ActiveRecord::Rollback
           end   # end file,open full_name
           avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
           avg_no3 = total_xml["RunoffN"]/ total_xml["total_runs"]
@@ -964,12 +956,6 @@ class ScenariosController < ApplicationController
           scenario.simulation_status = true
           scenario.save
           @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-        rescue => e
-          File.open(full_name.sub('txt','lgt'), "w+") do |f|
-            f.write("Failed, Error: " + e.inspect + " \n" + "AOI Number: " + rec_num.to_s + "\n")
-          end          
-          raise ActiveRecord::Rollback
-        end   # end begin/rescue
       end   # end File.open csv
     end   #active transaction do
   end
