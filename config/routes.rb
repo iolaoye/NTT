@@ -91,7 +91,7 @@ NTTG3::Application.routes.draw do
     end
     resources :fem_generals do
       get 'reset', on: :member
-    end    
+    end
     resources :fem_machines do
       get 'reset', on: :member
     end
@@ -123,6 +123,7 @@ NTTG3::Application.routes.draw do
         post :download_aplcat, on: :collection
         post :download_fem, on: :collection
         post :download_dndc, on: :collection
+        post :download_aoi, on: :collection
         resources :aplcat_parameters do
           get 'animal_transports', on: :member
 	        get 'aplcat', on: :member
