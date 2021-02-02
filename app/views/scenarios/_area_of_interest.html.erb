@@ -1,0 +1,35 @@
+<!-- Form for taking inputs to find Area of Interest from text files. Shikhar. 01/29/2021. -->
+<%= form_for :area_of_interest do |f| %>
+<form id="myForm">
+  <div class="actions"> <h2><%= t('scenario.area_of_interest') %></h2>
+  <%= radio_button_tag :select, "1" %><%=t('scenario.select_area_of_interest')%>
+  <%= radio_button_tag :select, "2" %><%=t('scenario.select_percentage')%>
+  <br>
+    <div id="select1" style=display:none>
+      <%= f.number_field :selected_aoi, class: 'gvTitleStyleNumber', :min => 0, :max => "#{@last_line}", :value => 0 %><br><br>
+      </div>
+      <div id="select2" style=display:none>
+        <%= f.number_field :selected_percentage, class: 'gvTitleStyleNumber', :min => 0.00, :max =>1.00, :value => 1.00, :step => 0.01 %><br><br>
+        </div>
+
+  <%= submit_tag t('menu.select_aois'), :class => 'btn btn-primary' %>
+  <%= link_to t('general.back'), project_field_scenarios_path(@project, @field), :class => "btn btn-primary" %>
+  </div>
+<% end %>
+
+  <script>
+    $(document).ready(function() {
+        $("input[name$='select']").click(function() {
+            var test = $(this).val();
+
+            $("#select1").hide();
+            $("#select" + test).show();
+        });
+        $("input[name$='select']").click(function() {
+            var test = $(this).val();
+
+            $("#select2").hide();
+            $("#select" + test).show();
+        });
+    });
+  </script>

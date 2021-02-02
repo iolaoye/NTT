@@ -39,7 +39,7 @@ class ScenariosController < ApplicationController
 # GET /scenarios
 # GET /scenarios.json
   def save_county_crop_result(code, crop_name, yield1, unit, yield_ci)
-    #todo check a crop that the apex code is different from id to be suer what is comming in 
+    #todo check a crop that the apex code is different from id to be suer what is comming in
     #crop_yied = nil
     #cr = Crop.find_by_number(code)
     # if cr != nil then
@@ -117,12 +117,33 @@ class ScenariosController < ApplicationController
       file_name = county.county_state_code[0..1] + "_" + county.county_state_code[2..]
       full_name = "public/NTTFiles/" + county.county_state_code[0..1] + "/" + file_name + ".txt"
       last_line = nil
+      ### Work in progress. To take inputs from user to select a line from text files based on inputs. Shikhar. 01/22/2021. ###
+      aoi = nil
+      user_input_aoi = 100 #"100" is just an example, need to get the value from area_of_interest form. Shikhar. 01/27/2021.
+      p_line_selected = nil
+      user_input_percentage = 0.80 #"0.80" is just an example, need to get the value from area_of_interest form. Shikhar. 01/27/2021.
+
       File.open(full_name).each do |line|
         last_line = line if(!line.chomp.empty?)
+        aoi = line if(line[/\b#{user_input_aoi}\b/i]) #read lines based on input. Shikhar. 01/22/2021.
       end
+
       if(last_line)
         @last_line = last_line.split("|")[2]
+        @aoi = aoi.split("|") #to see on the interface if a line based on input is selected or not.
       end
+
+      percentage = user_input_percentage * @last_line.to_f #calculate and get the number to find until which line is to be read after simulation.
+      percentage_to_integer = percentage.to_i
+
+      File.open(full_name).each do |line|
+        p_line_selected = line if(line[/\b#{percentage_to_integer}\b/i]) #read lines based on input. Shikhar. 01/27/2021. note: it just takes one line for now.
+      end
+
+      if(percentage)
+        @percentage = p_line_selected.split("|") #to see on the interface if a line based on input is selected or not.
+      end
+      ### Work in progress. To take inputs from user to select a line from text files based on inputs. Shikhar. 01/22/2021. ###
     end
     if (params[:scenario] != nil)
       msg = copy_other_scenario
@@ -275,7 +296,7 @@ class ScenariosController < ApplicationController
         fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
         end
-        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated " 
+        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated "
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
       else
@@ -287,7 +308,7 @@ class ScenariosController < ApplicationController
       #when params[:commit].include?('NTT')
       if params[:select_ntt] != nil
         msg = simulate_ntt
-      end 
+      end
       if params[:select_fem] != nil and msg == "OK"
       #when params[:commit].include?("APLCAT")
         msg = simulate_fem
@@ -341,7 +362,7 @@ class ScenariosController < ApplicationController
     #read the coordinates for the county selected
     #file_name = "MD_013"
     file_name = county_state_code[0..1] + "_" + county_state_code[2..]
-    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"    
+    full_name = "public/NTTFiles/" + county_state_code[0..1] + "/" + file_name + ".txt"
     #This if full name without state folder for testing
     #full_name = "public/NTTFiles/" + file_name + ".txt"
     rec_num = 0
@@ -366,7 +387,7 @@ class ScenariosController < ApplicationController
         #run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
       #else
         run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
-      #end 
+      #end
     end    # end scenarios selected
   end   #end log file
 
@@ -383,7 +404,7 @@ class ScenariosController < ApplicationController
           File.open(full_name).each do |line|
             line.gsub! "\n",""
             line.gsub! "\r",""
-            line_splited = line.split("|")              
+            line_splited = line.split("|")
             next if line_splited == nil
             next if line_splited[0] == nil
             next if line_splited[0].include? "State"
@@ -427,7 +448,7 @@ class ScenariosController < ApplicationController
                         xml.Opv3 soop.opv3
                         oper = soop.operation
                         if oper.activity_id == 2 and oper.type_id == 1 then   #for commercial fertilizer.
-                          xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0" 
+                          xml.Opv4 (soop.operation.no3_n/100).to_s + "," + (soop.operation.po4_p/100).to_s + "," + (soop.operation.org_n/100).to_s + ","  + (soop.operation.org_p/100).to_s + ",0,0"
                         else
                           xml.Opv4 soop.opv4
                         end
@@ -521,17 +542,17 @@ class ScenariosController < ApplicationController
               break
             end
             xml = Hash.from_xml(result.gsub("\n","").downcase)
-            if xml == nil then 
+            if xml == nil then
               g.write("xml is nil in id" + run_id)
-              break 
+              break
             end
-            if xml["summary"] == nil then 
+            if xml["summary"] == nil then
               g.write("xml[summary] is nil in id" + run_id)
-              break 
-            end  
-            if xml["summary"]["results"] == nil then 
+              break
+            end
+            if xml["summary"]["results"] == nil then
               g.write("xml[summary][results] is nil in id" + run_id)
-              break 
+              break
             end
             if xml["summary"]["results"]["errorcode"] == "0" then
               #add all of the values because thereis not error
@@ -543,8 +564,8 @@ class ScenariosController < ApplicationController
               #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
               #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
               #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
-              #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
-              #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
+              #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f
+              #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f
               total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
               total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
               #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
@@ -580,12 +601,12 @@ class ScenariosController < ApplicationController
               #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
               #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
               total_xml["total_runs"] += 1
-              if rec_num == 1 then 
+              if rec_num == 1 then
                 xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
                 g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
               end
               xml["summary"]["results"]["id"] = run_id
-              xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
+              xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}
               if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
                 if xml["summary"]["crops"].is_a? Hash then
                   crops_summary.push(xml["summary"]["crops"])
@@ -604,7 +625,7 @@ class ScenariosController < ApplicationController
                   end
                   if crop_found == false then
                     crop["crop_runs"] = 1
-                    crops_yield.push(crop)                  
+                    crops_yield.push(crop)
                   end
                   g.write(crop["crop"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                 end
@@ -636,7 +657,7 @@ class ScenariosController < ApplicationController
             avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
             avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
             avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
-            avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
+            avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]
             avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
             avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
             avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
@@ -928,7 +949,7 @@ class ScenariosController < ApplicationController
           avg_tiledrainn_ci = total_xml["TileDrainN_ci"] / total_xml["total_runs"]
           avg_orgp_ci = total_xml["OrgP_ci"]/ total_xml["total_runs"]
           avg_po4_ci = total_xml["PO4_ci"]/ total_xml["total_runs"]
-          avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]       
+          avg_tiledrainp_ci = total_xml["TileDrainP_ci"]/ total_xml["total_runs"]
           avg_surfaceflow_ci = total_xml["SurfaceFlow_ci"]/ total_xml["total_runs"]
           avg_subsurfaceflow_ci = total_xml["SubsurfaceFlow_ci"]/ total_xml["total_runs"]
           avg_tiledrainflow_ci = total_xml["TileDrainFlow_ci"]/ total_xml["total_runs"]
@@ -1044,8 +1065,8 @@ class ScenariosController < ApplicationController
         if msg.include? "Error" then
           msg = "OK"
           msg = run_scenario
-          if msg != "OK" then 
-            @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating APLCAT)") 
+          if msg != "OK" then
+            @errors.push("Error simulating NTT " + @scenario.name + " (You should run 'Simulate NTT' before simulating APLCAT)")
             return "Error"
           end
         end
@@ -1059,7 +1080,7 @@ class ScenariosController < ApplicationController
           raise ActiveRecord::Rollback
         end # end if msg
         if msg.eql?("OK")
-            @scenario.aplcat_last_simulation = Time.now 
+            @scenario.aplcat_last_simulation = Time.now
             @scenario.save!
         end
       end # end each do params loop
@@ -1067,7 +1088,7 @@ class ScenariosController < ApplicationController
 
     return msg
   end  # end method simulate_aplcat
-  
+
 ################################  FEM - simulate the selected scenario for FEM #################################
   def simulate_fem
     @errors = Array.new
@@ -1087,7 +1108,7 @@ class ScenariosController < ApplicationController
         end
         #if @scenario.crop_results.count <=0 then
           msg = run_scenario()
-          if msg != "OK" then 
+          if msg != "OK" then
             @errors.push("Error simulating NTT " + @scenario.name)
             return
           end
@@ -1671,7 +1692,7 @@ class ScenariosController < ApplicationController
       flash.now[:alert] = "ERROR: '" + scenario.name + " copy' already exists. Please delete or rename the existing '" + scenario.name + " copy'"
     else
       msg = duplicate_scenario(params[:id], " copy", params[:field_id])
-      if msg == "OK" 
+      if msg == "OK"
         flash.now[:notice] = scenario.name + " " + t('notices.copied')
       else
         flash.now[:notice] = msg
@@ -1760,7 +1781,7 @@ class ScenariosController < ApplicationController
   end
 
   def copy_other_scenario
-    
+
     name = " copy"
     scenario = Scenario.find(params[:scenario][:id])   #1. find scenario to copy
     #2. copy scenario to new scenario
@@ -1811,13 +1832,13 @@ class ScenariosController < ApplicationController
         msg = upload_scenarios_txt
       when "3"
         original_data = params[:scenarios].read
-        @data = Nokogiri::XML(original_data.gsub("[","<").gsub("]",">")) 
+        @data = Nokogiri::XML(original_data.gsub("[","<").gsub("]",">"))
         if @data.elements[0].name.downcase == "navigation"  #this is a comet project
           @data.root.elements.each do |node|
             if node.name == "FieldInfo"
               msg = upload_scenarios_comet(node)
             end
-          end          
+          end
         else
           msg = upload_scenarios_xml
         end
@@ -1898,7 +1919,7 @@ class ScenariosController < ApplicationController
 
           case operation.activity_id
             when 1   #planting
-              operation.type_id = opr[7]  #planting code 
+              operation.type_id = opr[7]  #planting code
               operation.amount = opr[8]  #seeding/ft2
             when 2   #fertilizer
               operation.type_id = opr[7]  #fertilizer category (commercial - manure)
@@ -2009,7 +2030,7 @@ class ScenariosController < ApplicationController
         msg = "XML files does not have nodes"
         @errors.push msg
         return msg
-      when @data.elements[0].name.downcase != "ntt" 
+      when @data.elements[0].name.downcase != "ntt"
         msg = "Element[0] is not NTT - Please fix the xml file and try again."
         @errors.push msg
         return msg
@@ -2031,7 +2052,7 @@ class ScenariosController < ApplicationController
           if scenario.save
             #Copy subareas info by scenario
             add_scenario_to_soils(scenario, false)
-            if scn.xpath("operation").length == 0 then 
+            if scn.xpath("operation").length == 0 then
               xscn = scn.xpath("operations")
             else
               xscn = scn
@@ -2053,7 +2074,7 @@ class ScenariosController < ApplicationController
                   operation.type_id = opr.xpath("type_id").text.  #fertilizer category (commercial/manure)
                   operation.subtype_id = opr.xpath("subtype_id").text  #fertilizer code
                   operation.amount = opr.xpath("amount").text #lbs/ac
-                  operation.depth = opr.xpath("depth").text 
+                  operation.depth = opr.xpath("depth").text
                   operation.no3_n = opr.xpath("no3_n").text #elemtn N %
                   operation.po4_p = opr.xpath("po4_p").text #elemt p %
                   if operation.moisture != nil then operation.moisture = opr[13] end
