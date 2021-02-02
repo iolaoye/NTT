@@ -89,7 +89,8 @@ class WatershedScenariosController < ApplicationController
     watershed_scenario = WatershedScenario.find(params[:id])
     project_id = watershed_scenario.watershed.location.project.id
     watershed_scenario.delete
-	  redirect_to project_watersheds_path(project_id, :watershed_id => watershed_scenario.watershed.id), notice: t('models.watershed_scenario') + t('notices.deleted')
+    redirect_to project_watersheds_path(project_id), notice: t('models.watershed_scenario') + t('notices.deleted')
+	  # redirect_to project_watersheds_path(project_id, :watershed_id => watershed_scenario.watershed.id), notice: t('models.watershed_scenario') + t('notices.deleted')
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
