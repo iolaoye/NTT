@@ -22,6 +22,7 @@ pt:
           saved: "%{model} Salvau"
           created: "%{model} Criado"
           deleted: "%{model} Deletado"
+          added: "Field/Scenario added to field routing"
     models:
       project: "Projeto"
       location: "Localização"
