@@ -2,6 +2,7 @@
     $("#div_new").toggle(true)
     $("#div_copy_other").toggle(false)
     $("#div_upload").toggle(false)
+    $("#div_area_of_interest").toggle(false)
 
 change_select_scenarios = ->
     tbl_scenarios = $("#tbl_scenarios")
@@ -12,9 +13,17 @@ copy_from_other_field = ->
     $("#div_copy_other").toggle(true)
     $("#div_new").toggle(false)
     $("#div_upload").toggle(false)
+    $("#div_area_of_interest").toggle(false)
 
 upload_user_scenarios = ->
     $("#div_upload").toggle(true)
+    $("#div_copy_other").toggle(false)
+    $("#div_new").toggle(false)
+    $("#div_area_of_interest").toggle(false)
+
+area_of_interest = -> #Display functions for Area of Interest form. Shikhar. 01/29/2021.
+    $("#div_area_of_interest").toggle(true)
+    $("#div_upload").toggle(false)
     $("#div_copy_other").toggle(false)
     $("#div_new").toggle(false)
 
@@ -82,6 +91,8 @@ $(document).ready ->
         copy_from_other_field()
     $("#upload_scenarios").click ->
         upload_user_scenarios()
+    $("#area_of_interest").click ->
+        area_of_interest()
     $("#field_id").change ->
         select_scenarios()
     $("#project_id").change ->
