@@ -825,88 +825,93 @@ class ScenariosController < ApplicationController
               g.write(run_id + ",543,Error - xml[summary][results] is nil in id" + run_id)
               next 
             end
-            if xml["summary"]["results"]["errorcode"] == "0" then
-              #add all of the values because thereis not error
-              total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
-              total_xml["RunoffN"] += xml["summary"]["results"]["runoffn"].to_f
-              #total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
-              total_xml["SubsurfaceN"] += xml["summary"]["results"]["subsurfacen"].to_f
-              total_xml["TileDrainN"] += xml["summary"]["results"]["tiledrainn"].to_f
-              #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
-              #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
-              #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
-              #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
-              #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
-              total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
-              total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
-              #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
-              total_xml["TileDrainP"] += xml["summary"]["results"]["tiledrainp"].to_f
-              #total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
-              total_xml["SurfaceFlow"] += xml["summary"]["results"]["surfaceflow"].to_f
-              total_xml["SubsurfaceFlow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
-              #total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
-              #total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
-              #total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
-              total_xml["TileDrainFlow"] += xml["summary"]["results"]["tiledrainflow"].to_f
-              total_xml["DeepPercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
-              total_xml["IrrigationApplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
-              #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
-              total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
-              total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
-              total_xml["Precipitation"] += xml["summary"]["results"]["precipitation"].to_f
-              total_xml["Evapotranspiration"] += xml["summary"]["results"]["evapotranspiration"].to_f
-              total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
-              total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
-              total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
-              total_xml["TileDrainN_ci"] += xml["summary"]["results"]["tiledrainn_ci"].to_f
-              total_xml["OrgP_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
-              total_xml["PO4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
-              total_xml["TileDrainP_ci"] += xml["summary"]["results"]["tiledrainp_ci"].to_f
-              total_xml["SurfaceFlow_ci"] += xml["summary"]["results"]["surfaceflow_ci"].to_f
-              total_xml["SubsurfaceFlow_ci"] += xml["summary"]["results"]["subsurfaceflow_ci"].to_f
-              total_xml["TileDrainFlow_ci"] += xml["summary"]["results"]["tiledrainflow_ci"].to_f
-              total_xml["IrrigationApplied_ci"] += xml["summary"]["results"]["irrigationapplied_ci"].to_f
-              total_xml["DeepPercolation_ci"] += xml["summary"]["results"]["deeppercolation_ci"].to_f
-              total_xml["SurfaceErosion_ci"] += xml["summary"]["results"]["surfaceerosion_ci"].to_f
-              total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
-              #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
-              #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
-              total_xml["total_runs"] += 1
-              if rec_num == 1 then 
-                xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
-                g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
-              end
-              xml["summary"]["results"]["id"] = run_id
-              xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
-              if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
-                if xml["summary"]["crops"].is_a? Hash then
-                  crops_summary.push(xml["summary"]["crops"])
-                else
-                  crops_summary = xml["summary"]["crops"]
+            begin
+              if xml["summary"]["results"]["errorcode"] == "0" then
+                #add all of the values because thereis not error
+                total_xml["OrgN"] += xml["summary"]["results"]["orgn"].to_f
+                total_xml["RunoffN"] += xml["summary"]["results"]["runoffn"].to_f
+                #total_xml["surface_n"] += xml["summary"]["results"]["surface_n"].to_f
+                total_xml["SubsurfaceN"] += xml["summary"]["results"]["subsurfacen"].to_f
+                total_xml["TileDrainN"] += xml["summary"]["results"]["tiledrainn"].to_f
+                #otal_xml["lateralsubsurfacen"] += xml["summary"]["results"]["lateralsubsurfacen"].to_f
+                #total_xml["quickreturnn"] += xml["summary"]["results"]["quickreturnn"].to_f
+                #total_xml["returnsubsurfacen"] += xml["summary"]["results"]["returnsubsurfacen"].to_f
+                #total_xml["leachedn"] += xml["summary"]["results"]["leachedn"].to_f           
+                #total_xml["volatilizedn"] += xml["summary"]["results"]["volatilizedn"].to_f            
+                total_xml["OrgP"] += xml["summary"]["results"]["orgp"].to_f
+                total_xml["PO4"] += xml["summary"]["results"]["po4"].to_f
+                #total_xml["leachedp"] += xml["summary"]["results"]["leachedp"].to_f
+                total_xml["TileDrainP"] += xml["summary"]["results"]["tiledrainp"].to_f
+                #total_xml["flow"] += xml["summary"]["results"]["flow"].to_f
+                total_xml["SurfaceFlow"] += xml["summary"]["results"]["surfaceflow"].to_f
+                total_xml["SubsurfaceFlow"] += xml["summary"]["results"]["subsurfaceflow"].to_f
+                #total_xml["lateralsubsurfaceflow"] += xml["summary"]["results"]["lateralsubsurfaceflow"].to_f
+                #total_xml["quickreturnflow"] += xml["summary"]["results"]["quickreturnflow"].to_f
+                #total_xml["returnsubsurfaceflow"] += xml["summary"]["results"]["returnsubsurfaceflow"].to_f
+                total_xml["TileDrainFlow"] += xml["summary"]["results"]["tiledrainflow"].to_f
+                total_xml["DeepPercolation"] += xml["summary"]["results"]["deeppercolation"].to_f
+                total_xml["IrrigationApplied"] += xml["summary"]["results"]["irrigationapplied"].to_f
+                #total_xml["sediment"] += xml["summary"]["results"]["sediment"].to_f
+                total_xml["SurfaceErosion"] += xml["summary"]["results"]["surfaceerosion"].to_f
+                total_xml["ManureErosion"] += xml["summary"]["results"]["manureerosion"].to_f
+                total_xml["Precipitation"] += xml["summary"]["results"]["precipitation"].to_f
+                total_xml["Evapotranspiration"] += xml["summary"]["results"]["evapotranspiration"].to_f
+                total_xml["OrgN_ci"] += xml["summary"]["results"]["orgn_ci"].to_f
+                total_xml["RunoffN_ci"] += xml["summary"]["results"]["runoffn_ci"].to_f
+                total_xml["SubsurfaceN_ci"] += xml["summary"]["results"]["subsurfacen_ci"].to_f
+                total_xml["TileDrainN_ci"] += xml["summary"]["results"]["tiledrainn_ci"].to_f
+                total_xml["OrgP_ci"] += xml["summary"]["results"]["orgp_ci"].to_f
+                total_xml["PO4_ci"] += xml["summary"]["results"]["po4_ci"].to_f
+                total_xml["TileDrainP_ci"] += xml["summary"]["results"]["tiledrainp_ci"].to_f
+                total_xml["SurfaceFlow_ci"] += xml["summary"]["results"]["surfaceflow_ci"].to_f
+                total_xml["SubsurfaceFlow_ci"] += xml["summary"]["results"]["subsurfaceflow_ci"].to_f
+                total_xml["TileDrainFlow_ci"] += xml["summary"]["results"]["tiledrainflow_ci"].to_f
+                total_xml["IrrigationApplied_ci"] += xml["summary"]["results"]["irrigationapplied_ci"].to_f
+                total_xml["DeepPercolation_ci"] += xml["summary"]["results"]["deeppercolation_ci"].to_f
+                total_xml["SurfaceErosion_ci"] += xml["summary"]["results"]["surfaceerosion_ci"].to_f
+                total_xml["ManureErosion_ci"] += xml["summary"]["results"]["manureerosion_ci"].to_f
+                #total_xml["nitrousoxide"] += xml["summary"]["results"]["nitrousoxide"].to_f
+                #total_xml["carbon"] += xml["summary"]["results"]["carbon"].to_f
+                total_xml["total_runs"] += 1
+                if rec_num == 1 then 
+                  xml["summary"]["results"].map {|k,v| g.write(k.to_s + ",")}
+                  g.write("crop1,yield1,unit1,ci1,crop2,yield2,unit2,ci2,crop3,yield3,unit3,ci3,crop4,yield4,unit4,ci4,crop5,yield5,unit5,ci5" + "\n")
                 end
-                crops_summary.each do |crop|
-                  #needs to find the same crop inside the crops hash
-                  crop_found = false
-                  crops_yield.each do |yld|
-                    if yld["cropcode"] == crop["cropcode"] then
-                      yld["yield"] = yld["yield"].to_f + crop["yield"].to_f
-                      yld["crop_runs"] += 1
-                      crop_found = true
+                xml["summary"]["results"]["id"] = run_id
+                xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}                
+                if xml["summary"]["crops"] != nil then # May have more than one crop and need to sum up yield per crop
+                  if xml["summary"]["crops"].is_a? Hash then
+                    crops_summary.push(xml["summary"]["crops"])
+                  else
+                    crops_summary = xml["summary"]["crops"]
+                  end
+                  crops_summary.each do |crop|
+                    #needs to find the same crop inside the crops hash
+                    crop_found = false
+                    crops_yield.each do |yld|
+                      if yld["cropcode"] == crop["cropcode"] then
+                        yld["yield"] = yld["yield"].to_f + crop["yield"].to_f
+                        yld["crop_runs"] += 1
+                        crop_found = true
+                      end
                     end
+                    if crop_found == false then
+                      crop["crop_runs"] = 1
+                      crops_yield.push(crop)                  
+                    end
+                    g.write(crop["cropcode"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                   end
-                  if crop_found == false then
-                    crop["crop_runs"] = 1
-                    crops_yield.push(crop)                  
-                  end
-                  g.write(crop["cropcode"] + "," + crop["yield"] + "," + crop["unit"] + "," + crop["yield_ci"] + ",")
                 end
+                g.write("\n")
+              else
+                total_xml["total_errors"] += 1
+                xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}
               end
-              g.write("\n")
-            else
-              total_xml["total_errors"] += 1
-              xml["summary"]["results"].map {|k,v| g.write(v.to_s + ",")}
+            rescue => e
+              File.open(full_name.sub('txt','log'), "w+") do |f|
+                g.write(run_id + ",545,Failed, Error: " + e.inspect + " " + run_id)
+              end
             end
-
             #raise ActiveRecord::Rollback
           end   # end file,open full_name
           avg_organicn = total_xml["OrgN"] / total_xml["total_runs"]
