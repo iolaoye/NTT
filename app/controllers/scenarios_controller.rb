@@ -524,15 +524,15 @@ class ScenariosController < ApplicationController
             break
           end   # end file,open full_name
           #run simulation
-          if @aoi >= 0 then
+          #if @aoi >= 0 then
             uri = 'http://ntt.tft.cbntt.org/ntt_block2/NTT_Service.ashx?input=' + xmlString
             #fork do
-              begin
+              #begin
                 result = Net::HTTP.get(URI.parse(uri))
                 #result = Net::HTTP.post URI(uri),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
-              rescue Exception => error
+              #rescue Exception => error
                 #do nothing. error expected because the connection is being canceled.
-              end
+              #end
             #end
             return
             #Net::HTTP.post URI('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
@@ -686,7 +686,7 @@ class ScenariosController < ApplicationController
             scenario.save
             @user = User.find(session[:user_id])
             @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-          end   # end if @aoi
+          #end   # end if @aoi
         #end   # end begin/rescue
       end   # end File.open csv
     end   #active transaction do
