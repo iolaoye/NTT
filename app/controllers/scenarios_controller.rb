@@ -525,7 +525,7 @@ class ScenariosController < ApplicationController
           end   # end file,open full_name
           #run simulation
           if @aoi >= 0 then
-            uri = 'http://ntt.ama.cbntt.org/ntt_block2/NTT_Service.ashx?input=' + xmlString
+            uri = 'http://ntt.tft.cbntt.org/ntt_block2/NTT_Service.ashx?input=' + xmlString
             #fork do
               begin
                 result = Net::HTTP.get(URI.parse(uri))
