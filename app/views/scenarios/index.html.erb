@@ -67,8 +67,8 @@
 		<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
 		<% if test == 1 && @project.version.include?("special")%>
 			<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
-      <%= button_tag t('scenario.area_of_interest'), :class => "btn btn-primary", :id => "area_of_interest" %><br><!-- Form for taking inputs to find Area of Interest from text files. Shikhar. 01/29/2021. --><br>
-			<%= label_tag(:run_id, "This County has #{@last_line} AOIs", :class => "nutrients_positive")%>
+      		<%#= button_tag t('scenario.area_of_interest'), :class => "btn btn-primary", :id => "area_of_interest" %><br><!-- Form for taking inputs to find Area of Interest from text files. Shikhar. 01/29/2021. --><br>
+			<%#= label_tag(:run_id, "This County has #{@last_line} AOIs", :class => "nutrients_positive")%>
 		<% end %>
 
 	</div>
@@ -136,6 +136,14 @@
 	          	<% end %>
 	        <% end %>
 		    <br>
+		    <% if test == 1 && @project.version.include?("special")%>
+				<%= label_tag(:run_id, "This County has #{@last_line} AOIs", :class => "nutrients_positive")%>
+				<%= fields_for :area_of_interest do |k| %>
+					<%= k.number_field :aoi_select, :class => 'gvTitleStyleNumber', :step => "any", :required => false, :min => 0 %>
+					<%= label_tag(:aois, '(if > 0 AOI, if < 0 fraction to run, if = 0 run 100%)', :class => "nutrients_positive") %>
+				<% end %>
+			<% end %>
+
 	        <br>
 			<% if req_parm == "APLCAT" %>
 				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
@@ -158,7 +166,7 @@
 					  	<th><%=t('fem.economic')%></th>
 					  	<th>1501</th>
 					  <%end %>
-	          <% end %>
+	        <% end %>
 					  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
