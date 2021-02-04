@@ -272,9 +272,9 @@ class ScenariosController < ApplicationController
     #case true
     if @project.version.include? "special"
       if params[:select_ntt] != nil
-        fork do #comment when need to debugge.
+        #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
-        end
+        #end
         flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated "
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
@@ -356,16 +356,16 @@ class ScenariosController < ApplicationController
     if(last_line)
       @last_line = last_line.split("|")[2]
     end
-    if params[:aoi] == nil then params[:aoi] = 0 end
-    if params[:aoi] >= 1 then @aoi = params[:aoi].to_f; @total_aois = 1
-      elsif params[:aoi] > 0 and params[:aoi] < 1 then @aoi = params[:aoi].to_f; @total_aois = @last_line
+    if params[:area_of_interest][:aoi_select] == nil then params[:area_of_interest][:aoi_select] = "0" end
+    if params[:area_of_interest][:aoi_select].to_f >= 1 then @aoi = params[:area_of_interest][:aoi_select].to_f; @total_aois = 1
+      elsif params[:area_of_interest][:aoi_select].to_f > 0 and params[:area_of_interest][:aoi_select].to_f < 1 then @aoi = params[:area_of_interest][:aoi_select].to_f; @total_aois = @last_line
       else @aoi = 0; @total_aois = @last_line
     end
     params[:select_ntt].each do |scenario_id|
       #if @aoi > 0 then
-        #run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
+        run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
       #else
-        run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
+        #run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
       #end
     end    # end scenarios selected
   end   #end log file
@@ -503,17 +503,17 @@ class ScenariosController < ApplicationController
             break
           end   # end file,open full_name
           #run simulation
-          if @aoi >= 0 then
-            uri = 'http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString
-            fork do
-              begin
-                result = Net::HTTP.get(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
+          #if @aoi >= 0 then
+            uri = 'http://ntt.tft.cbntt.org/ntt_block2/NTT_Service.ashx?input=' + xmlString
+            #fork do
+              #begin
+                result = Net::HTTP.get(URI.parse(uri))
                 #result = Net::HTTP.post URI(uri),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
-              rescue Exception => error
+              #rescue Exception => error
                 #do nothing. error expected because the connection is being canceled.
-              end
-            end
-            break
+              #end
+            #end
+            return
             #Net::HTTP.post URI('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString),{"input" => "rails","max" => "1"}.to_json, "Content-Type" => "application/xml"
             #Net::HTTP.post.new(URI.parse('http://ntt.ama.cbntt.org/ntt_block/NTT_Service.ashx?input=' + xmlString))
             if result == nil then
@@ -665,7 +665,7 @@ class ScenariosController < ApplicationController
             scenario.save
             @user = User.find(session[:user_id])
             @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
-          end   # end if @aoi
+          #end   # end if @aoi
         #end   # end begin/rescue
       end   # end File.open csv
     end   #active transaction do
