@@ -117,33 +117,12 @@ class ScenariosController < ApplicationController
       file_name = county.county_state_code[0..1] + "_" + county.county_state_code[2..]
       full_name = "public/NTTFiles/" + county.county_state_code[0..1] + "/" + file_name + ".txt"
       last_line = nil
-      ### Work in progress. To take inputs from user to select a line from text files based on inputs. Shikhar. 01/22/2021. ###
-      aoi = nil
-      user_input_aoi = 100 #"100" is just an example, need to get the value from area_of_interest form. Shikhar. 01/27/2021.
-      p_line_selected = nil
-      user_input_percentage = 0.80 #"0.80" is just an example, need to get the value from area_of_interest form. Shikhar. 01/27/2021.
-
       File.open(full_name).each do |line|
         last_line = line if(!line.chomp.empty?)
-        aoi = line if(line[/\b#{user_input_aoi}\b/i]) #read lines based on input. Shikhar. 01/22/2021.
       end
-
       if(last_line)
         @last_line = last_line.split("|")[2]
-        @aoi = aoi.split("|") #to see on the interface if a line based on input is selected or not.
       end
-
-      percentage = user_input_percentage * @last_line.to_f #calculate and get the number to find until which line is to be read after simulation.
-      percentage_to_integer = percentage.to_i
-
-      File.open(full_name).each do |line|
-        p_line_selected = line if(line[/\b#{percentage_to_integer}\b/i]) #read lines based on input. Shikhar. 01/27/2021. note: it just takes one line for now.
-      end
-
-      if(percentage)
-        @percentage = p_line_selected.split("|") #to see on the interface if a line based on input is selected or not.
-      end
-      ### Work in progress. To take inputs from user to select a line from text files based on inputs. Shikhar. 01/22/2021. ###
     end
     if (params[:scenario] != nil)
       msg = copy_other_scenario
@@ -2196,6 +2175,10 @@ class ScenariosController < ApplicationController
 
   def download_dndc
     download_dndc_files()
+  end
+
+  def download_aoi
+    download_aoi_files()
   end
 
   private
