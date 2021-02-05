@@ -177,6 +177,7 @@ class ProjectsController < ApplicationController
 
   def upload
     @id = params[:format]
+    session[:simulation] = 'scenario'
     #nothing to do here. Just render the upload view
   end
 
