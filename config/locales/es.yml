@@ -22,7 +22,7 @@ es:
           saved: "%{model} Salvado"
           created: "%{model} Creado"
           deleted: "%{model} Borrado"
-          added: "Field/Scenario added to field routing"
+          added: "added to field routing"
     models:
       project: "Proyecto"
       location: "Ubicación"

@@ -158,13 +158,15 @@ class WatershedsController < ApplicationController
 			@new_watershed_scenario.scenario_id = scenario_id
 			@new_watershed_scenario.watershed_id = params[:watershed_id]
 			#### Save new watershed
+      field_name = Field.find(field_id).field_name
+      scenario_name = Scenario.find(scenario_id).name
 			if @new_watershed_scenario.save
-			  return t('activerecord.notices.messages.added')
+			  return "'" + field_name + " ~ " + scenario_name + " " + "Scenario'" + " has been " + t('activerecord.notices.messages.added') + "."
 			else
 			  return "Error"
 			end
 	  else
-		 return "Error => " + t('errors.messages.exist')
+		 return "Error => Field " + t('errors.messages.exist')
 	  end
   end
 
