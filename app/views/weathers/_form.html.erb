@@ -80,7 +80,6 @@
             <%= f.label "-" %>
             <%= f.label @weather.weather_final_year %>
           </div>
-          <% debugger %>
           <%= t('weather.note') %></p>
           <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
           <%= f.number_field :simulation_initial_year, :class => "fieldNumbers", :min => @weather.weather_initial_year, :max => @weather.weather_final_year %>
