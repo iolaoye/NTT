@@ -275,7 +275,11 @@ class ScenariosController < ApplicationController
         #fork do #comment when need to debugge.
           msg=run_special_simulation(county.county_state_code)
         #end
-        flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated "
+        if @aoi < 1    #running more than one aoi
+          flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated "
+        else
+          flash[:notice] = "The Selected Scenarios for AOI #" + @aoi.to_s + " has been simulated"
+        end
         redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         return
       else
@@ -356,17 +360,17 @@ class ScenariosController < ApplicationController
     if(last_line)
       @last_line = last_line.split("|")[2]
     end
-    if params[:area_of_interest][:aoi_select] == nil then params[:area_of_interest][:aoi_select] = "0" end
+    if params[:area_of_interest][:aoi_select] == nil or params[:area_of_interest][:aoi_select] == "" then params[:area_of_interest][:aoi_select] = "0" end
     if params[:area_of_interest][:aoi_select].to_f >= 1 then @aoi = params[:area_of_interest][:aoi_select].to_f; @total_aois = 1
       elsif params[:area_of_interest][:aoi_select].to_f > 0 and params[:area_of_interest][:aoi_select].to_f < 1 then @aoi = params[:area_of_interest][:aoi_select].to_f; @total_aois = @last_line
       else @aoi = 0; @total_aois = @last_line
     end
     params[:select_ntt].each do |scenario_id|
-      #if @aoi > 0 then
+      if @aoi < 1 then
         run_counties_scenario(full_name, rec_num, run_id, scenario_id, file_name, county_state_code)
-      #else
-        #run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
-      #end
+      else
+        run_county_scenario(full_name, rec_num, run_id, scenario_id, file_name,county_state_code)
+      end
     end    # end scenarios selected
   end   #end log file
 
@@ -693,6 +697,7 @@ class ScenariosController < ApplicationController
               next if line_splited[0].include? "State"
               rec_num += 1
               run_id = line_splited[2]
+              next if run_id.to_i != @aoi
               #create xml file and send it to run
               builder = Nokogiri::XML::Builder.new do |xml|
                 xml.NTT {
@@ -937,25 +942,26 @@ class ScenariosController < ApplicationController
           avg_sedimentsurface_ci = total_xml["SurfaceErosion_ci"]/ total_xml["total_runs"]
           avg_sedimentmanure_ci = total_xml["ManureErosion_ci"]/ total_xml["total_runs"]
           county_result = CountyResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id)
-          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, pcp: 0, biom: 0, n2o: 0, co2: 0, precipitation: avg_precipitation, evapotranspiration: avg_evapotranspiration,
+          county_result.update(year: 2018, orgn: avg_organicn,no3: avg_no3,qn:avg_subsurface_n, prkn: 0, qdrn: avg_tiledrainn, orgp:avg_organicp, po4:avg_solublep, qdrp:avg_tiledrainp, flow:avg_subsurfaceflow, surface_flow: avg_surfaceflow, qdr:avg_tiledrainflow, dprk:avg_deeppercolation, irri: avg_irrigationapplied,sed: avg_sedimentsurface,ymnu: avg_sedimentmanure, pcp: 0, biom: 0, n2o: 0, co2: 0, pcp: avg_precipitation,
             orgn_ci: avg_orgn_ci, qn_ci: avg_subsurfacen_ci,no3_ci: avg_no3_ci, qdrn_ci: avg_tiledrainn_ci, orgp_ci: avg_orgp_ci, po4_ci: avg_po4_ci, qdrp_ci: avg_tiledrainp_ci, surface_flow_ci: avg_surfaceflow_ci, flow_ci: avg_subsurfaceflow_ci, qdr_ci: avg_tiledrainflow_ci, irri_ci: avg_irrigationapplied_ci, dprk_ci: avg_deeppercolation_ci, sed_ci: avg_sedimentsurface_ci, ymnu_ci: avg_sedimentmanure_ci, co2_ci: 0, n2o_ci: 0)
           crop_yied = nil
           crops_yield.each do |crop|
             cr = Crop.find(crop["cropcode"])
             if crop != nil then
               #convert because in the results page it is converted back.
-              crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
+              #crop_yield = (crop["yield"].to_f / crop["crop_runs"]) * (cr.dry_matter/100) / (cr.conversion_factor/HA_TO_AC)
+              crop_yield = crop["yield"].to_f / crop["crop_runs"]
             else
               crop_yield = crop["yield"].to_f / crop["crop_runs"]
             end
-            crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: crop["crop"])
+            crop_result = CountyCropResult.find_or_initialize_by(state_id: @project.location.state_id, county_id: @field.field_average_slope.to_i,scenario_id: scenario.id, name: cr["code"])
             crop_result.update(yield: crop_yield, yield_ci: crop["yield_ci"], ws: 0, ns: 0, ps: 0, ts: 0)
           end
           #update simulation date
           scenario.last_simulation = Time.now
           scenario.simulation_status = true
           scenario.save
-          @user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
+          #@user.send_email_with_att("Your State/County/Scenario " + @project.name + "/" + @field.field_name + "/" + scenario.name + " project had ended with: \n Scenarios Simulated " + total_xml["total_runs"].to_s + " in " + (Time.now - @time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase + "\n" + "Scenarios with errors " + total_xml["total_errors"].to_s + "\n" + "File Used " + full_name + "\n", full_name.sub('txt','csv'))
       end   # end File.open csv
     end   #active transaction do
   end
