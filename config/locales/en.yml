@@ -23,7 +23,7 @@ en:
           saved: "%{model} Saved"
           created: "%{model} Created"
           deleted: "%{model} Deleted"
-          added: "Field/Scenario added to field routing"
+          added: "added to field routing"
     models:
       projects: "Projects"
       location: "Location"
@@ -505,6 +505,7 @@ en:
     animal_transport: Animal Transport
     new_animal_transport: New Animal Transport
     select_aois: Select AOIs
+    download_aoi: Download Area of Interest
   project:
     project: Project
     new_project: 'Create New Project'
@@ -599,6 +600,7 @@ en:
     other_scenario: Copy Scenario from other project/field
     upload_scenarios: Upload your own scenarios
     economic_results: Economic Results
+    area_of_interest: Area of Interest
     select_area_of_interest: Select Area of Interest
     select_percentage: Select Percentage
   location:

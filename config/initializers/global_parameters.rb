@@ -34,6 +34,8 @@
 	APLCAT_FOLDER = "D:/NTTHTML5Files"
 #APLCAT folders.
 	FEM_FOLDER = "D:/NTT_FEM_Files"
+#Area of Interest folders.
+	AOI_FOLDER = "D:/NTT_AOI_Files"
 
 #folder for examples
 	EXAMPLES = "public/Examples"

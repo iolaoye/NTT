@@ -87,9 +87,12 @@ class WatershedScenariosController < ApplicationController
   # DELETE /watershed_scenarios/1.json
   def destroy
     watershed_scenario = WatershedScenario.find(params[:id])
+    field_name = Field.find(watershed_scenario.field_id).field_name
+    scenario_name = Scenario.find(watershed_scenario.scenario_id).name
     project_id = watershed_scenario.watershed.location.project.id
+    flash[:info] = "'" + field_name + " ~ " + scenario_name + " " + "Scenario'" + " " + t('notices.deleted')
     watershed_scenario.delete
-	  redirect_to project_watersheds_path(project_id, :watershed_id => watershed_scenario.watershed.id), notice: t('models.watershed_scenario') + t('notices.deleted')
+    redirect_to project_watersheds_path(project_id), notice: t('models.watershed_scenario') + t('notices.deleted')
   end
 
 ################################ NEW SCENARIO - ADD NEW FIELD/SCENARIO TO THE LIST OF THE SELECTED WATERSHED #################################
