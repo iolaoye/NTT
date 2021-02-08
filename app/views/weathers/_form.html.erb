@@ -80,11 +80,12 @@
             <%= f.label "-" %>
             <%= f.label @weather.weather_final_year %>
           </div>
+          <% debugger %>
           <%= t('weather.note') %></p>
           <%= f.label t('weather.years_of_simulation') + ": " + t('weather.initial_year') %>
-          <%= f.number_field :simulation_initial_year, :class => "fieldNumbers", :min => 1981, :max => Weather.order(:weather_final_year).last.weather_final_year %>
+          <%= f.number_field :simulation_initial_year, :class => "fieldNumbers", :min => @weather.weather_initial_year, :max => @weather.weather_final_year %>
           <%= f.label " " + t('weather.final_year') %>
-          <%= f.number_field :simulation_final_year, :class => "fieldNumbers", :min => 1981, :max => Weather.order(:weather_final_year).last.weather_final_year%>
+          <%= f.number_field :simulation_final_year, :class => "fieldNumbers", :min => @weather.weather_initial_year, :max => @weather.weather_final_year%>
           <%= f.submit t('weather.update_simulation'), :class => 'btn btn-success' %>
         </div>
       </div>
