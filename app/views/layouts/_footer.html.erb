@@ -8,6 +8,9 @@
                     <%if request.url.include?(url_for=("/projects?")) %>
                       <% unless ENV["APP_VERSION"] == "modified" %><li><%= image_tag('download.gif') %> <%= t('general.download') + " " + t('project.project') %></li><% end %>
                     <% end %>
+                    <%if request.url.include?(url_for=("/scenarios?")) %>
+                      <% unless ENV["APP_VERSION"] == "modified" %><li><%= image_tag('download.gif') %> <%= t('general.download') + " " + t('activerecord.models.apex.apex_folder') %></li><% end %>
+                    <% end %>
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
                     <li><%= image_tag('copy.jpg') %> <%= t('general.copy') %></li>
                     <li><%= image_tag('delete.png') %> <%= t('general.delete') %></li>

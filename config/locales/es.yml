@@ -46,6 +46,7 @@ es:
         fem_results: "Resultados Economicos"
       apex:
         apex_file: "Archivos de APEX"
+        apex_folder: "Apex Folder"
         control: "Controls"
         parameter: "Parámetros"
         subarea: "Subáreas"
