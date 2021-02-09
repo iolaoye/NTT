@@ -288,8 +288,9 @@ class ScenariosController < ApplicationController
         return
       end
     else
-      #when params[:commit].include?('NTT')
-      if params[:select_ntt] != nil
+
+      # #when params[:commit].include?('NTT') or params["simulate_download_apex"] exist
+      if params[:select_ntt] != nil || params["simulate_download_apex"] != nil
         msg = simulate_ntt
       end
       if params[:select_fem] != nil and msg == "OK"
@@ -813,12 +814,14 @@ class ScenariosController < ApplicationController
     @errors = Array.new
     msg = "OK"
     @apex_version = 806
-    if params[:select_ntt] == nil and params[:select_1501] == nil then msg = "Select at least one scenario to simulate " end
+    if params[:select_ntt] == nil and params[:select_1501] == nil and params[:simulate_download_apex] == nil then msg = "Select at least one scenario to simulate " end
     if msg != "OK" then
       @errors.push(msg)
       return msg
     end
-    if params[:select_ntt] == nil then
+    if params[:simulate_download_apex]
+      @scenarios_selected = params[:simulate_download_apex][:scen_id]
+    elsif params[:select_ntt] == nil then
       @scenarios_selected = params[:select_1501]
       @apex_version = 1501
     else
@@ -842,6 +845,9 @@ class ScenariosController < ApplicationController
         if msg.eql?("OK") # Only create/update simulation time if no errors were encountered
          @scenario.last_simulation = Time.now
          @scenario.simulation_status = true
+         if params[:simulate_download_apex]  != nil
+          download()
+         end
         end
         @scenario.save!
       end # end each do params loop
