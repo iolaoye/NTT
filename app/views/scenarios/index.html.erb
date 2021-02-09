@@ -3,7 +3,7 @@
 <% dndc = 0 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% test = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost")%>
 <% county = 1 if request.url.include?("ntt.bk.cbntt.org") || request.url.include?("localhost") || @project.version.include?("special")%>
- <% if alert != nil %>
+<% if alert != nil %>
     <div class="error_alert">
 	  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
 	  <%= alert %>
@@ -67,10 +67,8 @@
 		<%= button_tag t('scenario.other_scenario'), :class => "btn btn-primary", :id => "other_field_scenario" %>
 		<% if test == 1 && @project.version.include?("special")%>
 			<%= button_tag t('scenario.upload_scenarios'), :class => "btn btn-primary", :id => "upload_scenarios" %>
-      		<%#= button_tag t('scenario.area_of_interest'), :class => "btn btn-primary", :id => "area_of_interest" %><br><!-- Form for taking inputs to find Area of Interest from text files. Shikhar. 01/29/2021. --><br>
-			<%#= label_tag(:run_id, "This County has #{@last_line} AOIs", :class => "nutrients_positive")%>
+			<br>
 		<% end %>
-
 	</div>
 	<% @scenario = Scenario.new %>
 	<div style="">
@@ -84,10 +82,7 @@
 		<div id="div_upload" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders">
 			<%= render 'upload_scenarios' %>
 		</div>
-    <div id="div_area_of_interest" style="display:none; width:80%; background-color: #fefbd8" class="toggable borders"> <!-- Form for taking inputs to find Area of Interest from text files. Shikhar. 01/29/2021. -->
-         <%= render 'area_of_interest' %>
-       </div>
-     </div>
+    </div>
 	<%= form_tag simulate_project_field_scenarios_path(@project, @field), method: :post do |f| %>
 	    <% if @scenarios.count > 0 %>
 	    	<% if req_parm == "NTT"%>
