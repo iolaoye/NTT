@@ -271,10 +271,13 @@ class ScenariosController < ApplicationController
     county = County.find_by_id(@field.field_average_slope.to_i)
     #case true
     if @project.version.include? "special"
-      if params[:select_ntt] != nil
-        #fork do #comment when need to debugge.
-          msg=run_special_simulation(county.county_state_code)
-        #end
+      if params[:select_ntt] != nil || params[:simulate_download_apex] != nil
+        msg=run_special_simulation(county.county_state_code)
+        if params[:commit] == t('activerecord.models.apex.download') + " " + t('menu.apex_file') then
+          #this means the download button was click
+          download()
+          return
+        end
         if @aoi < 1    #running more than one aoi
           flash[:notice] = "The Selected Scenarios for " + county.county_name + " county have been sent to run on background. An email will be sent for each scenario simulated "
         else
