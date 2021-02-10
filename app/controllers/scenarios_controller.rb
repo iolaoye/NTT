@@ -288,9 +288,8 @@ class ScenariosController < ApplicationController
         return
       end
     else
-
       # #when params[:commit].include?('NTT') or params["simulate_download_apex"] exist
-      if params[:select_ntt] != nil || params["simulate_download_apex"] != nil
+      if params[:select_ntt] != nil || params[:simulate_download_apex] != nil
         msg = simulate_ntt
       end
       if params[:select_fem] != nil and msg == "OK"
@@ -308,6 +307,8 @@ class ScenariosController < ApplicationController
       #@scenario = Scenario.find(params[:select_scenario])
       flash[:notice] = @scenarios_selected.count.to_s + " " + t('scenario.simulation_success') + " " + (Time.now - time_begin).round(2).to_s + " " + t('datetime.prompts.second').downcase if @scenarios_selected.count > 0
       case true
+        when params[:simulate_download_apex] != nil
+          #do nothing 
         when params[:commit].include?('NTT')
           redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
         when params[:commit].include?("APLCAT")
@@ -2016,8 +2017,6 @@ class ScenariosController < ApplicationController
 
 
   def download
-    #params[:simulate_download_apex][:scen_id]=params[:id]
-    simulate_ntt()
     download_apex_files()
   end
 
