@@ -48,6 +48,7 @@ en:
         aplcat_results: "APLCAT Results"
       apex:
         apex_file: "Apex Files"
+        apex_folder: "Apex Folder"
         control: "Controls"
         parameter: "Parameters"
         subarea: "Subareas"
