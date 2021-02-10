@@ -99,7 +99,11 @@
 	    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
 	    		<% end %>
 	        <% end %>
-	        <% if county == 1 && @project.version.include?("special") then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
+	        <% if county == 1 && @project.version.include?("special") then %>
+					<%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %>
+					<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+					<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+			<% end %>
 		    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
 		    	<% case req_parm %>
 		    		<%when "FEM"%>
@@ -113,7 +117,6 @@
 		    	<% end %>
 				<% if req_parm == "NTT" and test == 1 then %>
 	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
-
 	          	<% end %>
 			    <% unless ENV["APP_VERSION"] == "modified" %>
 			    	<% if @project.version.include?("special")%>
@@ -123,8 +126,8 @@
 	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
 	          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
-	         		<% if fem == 1 && req_parm == "NTT"%>
-	          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+				    <% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT")%>
+                        <button type="button" class="btn btn-warning"><strong><a href="#" id="trigger" style="color:white;" title="<%= t('scenario.download_instruction_tooltip')%>"><%=" How to " + t('activerecord.models.apex.download')%>?</a></strong></button>
 	          		<% end %>
 	         		<% if dndc == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
@@ -328,9 +331,11 @@
 								  		<%= scenario.fem_last_simulation %>
 							  	<% end %>
 							</td>
+							<!-- Jennifer 2/10/21 -->
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
 									<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post %>
+									<%= <%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem')%>,{:action => :download_fem}, :method => :post %>                   
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
 									<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
