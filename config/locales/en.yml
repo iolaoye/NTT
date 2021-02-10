@@ -46,9 +46,11 @@ en:
         monthly_charts: "Monthly Charts"
         fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
+      fem:
+        fem: "FEM"
       apex:
+        apex: "APEX"
         apex_file: "Apex Files"
-        apex_folder: "Apex Folder"
         control: "Controls"
         parameter: "Parameters"
         subarea: "Subareas"
@@ -526,6 +528,7 @@ en:
     Language: Language
     documentations: Documentation
     validation: Validation
+    folder: Folder
   languages:
     english: 'English'
     spanish: 'Spanish'

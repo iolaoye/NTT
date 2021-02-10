@@ -44,9 +44,11 @@ es:
         annual_charts: "Gráficas Anuales"
         monthly_charts: "Gráficas Mensuales"
         fem_results: "Resultados Economicos"
+      fem:
+        fem: "FEM"
       apex:
+        apex: "APEX"
         apex_file: "Archivos de APEX"
-        apex_folder: "Apex Folder"
         control: "Controls"
         parameter: "Parámetros"
         subarea: "Subáreas"
@@ -522,6 +524,7 @@ es:
     Language: Idioma
     documentations: Documentación
     validation: Validación
+    folder: Folder
   languages:
     english: Inglés
     spanish: Español
