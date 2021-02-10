@@ -2016,6 +2016,8 @@ class ScenariosController < ApplicationController
 
 
   def download
+    #params[:simulate_download_apex][:scen_id]=params[:id]
+    simulate_ntt()
     download_apex_files()
   end
 
