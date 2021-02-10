@@ -115,8 +115,8 @@
 	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
 
 	          	<% end %>
-			    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
-			    	<% if req_parm == "NTT"%>
+			    <% unless ENV["APP_VERSION"] == "modified" %>
+			    	<% if req_parm == "NTT" or @project.version.include?("special")%>
 	          			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
@@ -150,18 +150,16 @@
 				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
 				  <thead>
 					<tr>
-					  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-	          <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
-	        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
-	          <th><%=t('general.select')%></th>
-	          <% end %>
-	        <% unless req_parm == "APLCAT"%>
-	 				  <th>Environment</th>
-					  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
-					  	<th><%=t('fem.economic')%></th>
-					  	<th>1501</th>
-					  <%end %>
-	        <% end %>
+				        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
+				          <th><%=t('general.select')%></th>
+				        <% end %>
+				        <% unless req_parm == "APLCAT"%>
+							  <th>Environment</th>
+						  	<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+						  		<th><%=t('fem.economic')%></th>
+						  		<th>1501</th>
+						  	<%end %>
+				        <% end %>
 					  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
@@ -255,7 +253,7 @@
 								</tr>
 							<%end%>
 						<%else%>
-						<!-- For FEM and NTT. Jennifer 8/24/2020 -->
+							<!-- For FEM and NTT. Jennifer 8/24/2020 -->
 							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
 
 	 						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
@@ -331,7 +329,6 @@
 							</td>
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
-									<%#= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download, :simulate_download_apex => { :scen_id => [scenario.id] }}, :method => :post%>
  									<%= link_to image_tag("download.gif"),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post %>
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
@@ -340,7 +337,7 @@
 							<% end %>
 						 	</tr>
 						<% end %>
-					<% i = i + 1 %>
+						<% i = i + 1 %>
 					<% end %>
 				  </tbody>
 				</table>

@@ -59,14 +59,6 @@ module ApplicationHelper
 				true
 			elsif current_page?(url_for(:controller => 'bmps', :action => 'index'))
 				true
-			#elsif params[:scenario_id] != nil
-				#if request.url.include?(url_for("/aplcat_parameters"))
-					#@scenario_name = Scenario.find(params[:scenario_id]).name
-					#true
-				#elsif request.url.include?(url_for("/grazing_parameters")) || request.url.include?(url_for("/supplement_parameters")) || request.url.include?(url_for("/animal_transports"))
-					#@scenario_name = Scenario.find(params[:scenario_id]).name
-					#true
-				#end
 			else
 				false
 			end
@@ -83,8 +75,6 @@ module ApplicationHelper
 				true
 			elsif request.url.include?(url_for("/summary"))
 				true
-			#elsif request.url.include?("fem")
-				#true
 			elsif request.url.include?(url_for("/results")) && !(request.url.include?("fem")|| request.url.include?("aplcat"))
 				true
 			else
@@ -249,27 +239,27 @@ module ApplicationHelper
 	  		end
 		end
 
-			def download_aoi_files
-				client = Savon.client(wsdl: URL_SoilsInfo)
-		    response = client.call(:download_aoi_folder, message: {"NTTFilesFolder" => AOI_FOLDER + "/AOI", "session1" => session[:session_id], "type" => "aoi"})
-		    path_source = response.body[:download_aoi_folder_response][:download_aoi_folder_result]
-			if path_source.nil?
-				flash[:info] = "Error: No simulations exist in this session. " +
-												"Please run a simulation before downloading AOIs files."
-				redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
-			else
-			    file_name = path_source.split("\\")
-			    path = File.join(DOWNLOAD, file_name[2])
-			    require 'open-uri'
-			    File.open(path, "wb") do |saved_file|
-					# the following "open" is provided by open-uri
-				    open("http://ntt.ama.cbntt.org//NTTRails//NNRestService.ashx?test=zip&path=" + path_source, "rb") do |read_file|
-				    #open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
-				      saved_file.write(read_file.read)
-			      	end
-					send_file path, :type => "application/xml", :x_sendfile => true
-				end
-	  		end
-		end
+		# def download_aoi_files
+		# 	client = Savon.client(wsdl: URL_SoilsInfo)
+		#     response = client.call(:download_aoi_folder, message: {"NTTFilesFolder" => AOI_FOLDER + "/AOI", "session1" => session[:session_id], "type" => "aoi"})
+		#     path_source = response.body[:download_aoi_folder_response][:download_aoi_folder_result]
+		# 	if path_source.nil?
+		# 		flash[:info] = "Error: No simulations exist in this session. " +
+		# 										"Please run a simulation before downloading AOIs files."
+		# 		redirect_to project_field_scenarios_path(@project, @field,:caller_id => "NTT")
+		# 	else
+		# 	    file_name = path_source.split("\\")
+		# 	    path = File.join(DOWNLOAD, file_name[2])
+		# 	    require 'open-uri'
+		# 	    File.open(path, "wb") do |saved_file|
+		# 			# the following "open" is provided by open-uri
+		# 		    open("http://ntt.ama.cbntt.org//NTTRails//NNRestService.ashx?test=zip&path=" + path_source, "rb") do |read_file|
+		# 		    #open("http://nn.tarleton.edu//NTTRails//NNRestService.ashx?test=zip&path=" + path_source + ".zip", "rb") do |read_file|
+		# 		      saved_file.write(read_file.read)
+		# 	      	end
+		# 			send_file path, :type => "application/xml", :x_sendfile => true
+		# 		end
+	    #  	end
+		# end
 
 end
