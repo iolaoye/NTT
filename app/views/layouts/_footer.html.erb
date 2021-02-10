@@ -10,8 +10,8 @@
                     <% end %>
                     <%if request.url.include?(url_for=("/scenarios?")) %>
                       <% unless ENV["APP_VERSION"] == "modified" %>
-                      <li><%= t('activerecord.models.apex.apex')%><%= image_tag('download.gif') %><%= t('general.download') + ' ' %><%= t('footer.folder')%></li>
-                      <li><%= t('activerecord.models.fem.fem')%><%= image_tag('download_lightblue_fem.png') %><%= t('general.download') + ' ' %><%= t('footer.folder')%></li>
+                      <li> <%= image_tag('download.gif') %><%=t('activerecord.models.apex.apex' + " ")%><%= t('general.download') + ' ' %><%= t('footer.folder')%></li>
+                      <li><%= image_tag('download_lightblue_fem.png') %><%= t('activerecord.models.fem.fem' + " ")%><%= t('general.download') + ' ' %><%= t('footer.folder')%></li>
                       <% end %>
                     <% end %>
                     <li><%= image_tag('edit.png') %> <%= t('general.edit') %></li>
