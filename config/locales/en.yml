@@ -607,6 +607,7 @@ en:
     area_of_interest: Area of Interest
     select_area_of_interest: Select Area of Interest
     select_percentage: Select Percentage
+    download_instruction_tooltip: To download APEX or FEM folder, click on respective arrow located under Actions column
   location:
     new_location: New Location
     edit: Editing Location

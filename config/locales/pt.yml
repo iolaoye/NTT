@@ -594,6 +594,7 @@ pt:
     other_scenario: Copiar cenário de otro Projeto/parcela
     upload_scenarios: Carga tus propios cenários
     economic_results: Economic Results
+    download_instruction_tooltip: To download APEX or FEM folder, click on respective arrow located under Actions column
   location:
     new_location: Nueva Ubicación
     edit: Revisión de Ubicación
