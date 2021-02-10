@@ -116,7 +116,7 @@
 
 	          	<% end %>
 			    <% unless ENV["APP_VERSION"] == "modified" %>
-			    	<% if req_parm == "NTT" or @project.version.include?("special")%>
+			    	<% if @project.version.include?("special")%>
 						<%= submit_tag t('activerecord.models.apex.download') + " " + t('menu.apex_file'), :class => 'light', data: {:action => :download}, :method => :post%>
 	          			<%#= submit_tag t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
