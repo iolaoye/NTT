@@ -46,9 +46,11 @@ en:
         monthly_charts: "Monthly Charts"
         fem_results: "Economic Results"
         aplcat_results: "APLCAT Results"
+      fem:
+        fem: "FEM"
       apex:
+        apex: "APEX"
         apex_file: "Apex Files"
-        apex_folder: "Apex Folder"
         control: "Controls"
         parameter: "Parameters"
         subarea: "Subareas"
@@ -526,6 +528,7 @@ en:
     Language: Language
     documentations: Documentation
     validation: Validation
+    folder: Folder
   languages:
     english: 'English'
     spanish: 'Spanish'
@@ -604,6 +607,7 @@ en:
     area_of_interest: Area of Interest
     select_area_of_interest: Select Area of Interest
     select_percentage: Select Percentage
+    download_instruction_tooltip: To download APEX or FEM folder, click on respective arrow located under Actions column
   location:
     new_location: New Location
     edit: Editing Location
@@ -1767,6 +1771,9 @@ en:
     watersheds: "Select management scenario from each field and add to %{watershed}. Repeat this proccess to complete each %{watershed} option"
     aplcat_notice: "The following list only include scenarios with grazing operations"
     scenarios: "To select a scenario click on the scenario name, to simulate scenarios click on the check box"
+    scenarios_download: "To download APEX or FEM folder click, under actions column and in front of the scenario you want to download to, "
+    scenarios_download_apex: "APEX or"
+    scenarios_download_fem: "FEM link"
     watershed_scenarios: Add fields in the order they are going to be routing from one to the next one and select the scenario that is going to be simulated with the field selected.
   sysreq:
     header: System Requirements

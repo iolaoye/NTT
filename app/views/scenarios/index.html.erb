@@ -99,7 +99,11 @@
 	    			<%= submit_tag t('scenario.simulate') + ' ' + 'DNDC', data: {disable_with: 'Please wait. DNDC simulation in progress . . .'}, :class => 'btn btn-primary', :id => "simulate_dndc" %>
 	    		<% end %>
 	        <% end %>
-	        <% if county == 1 && @project.version.include?("special") then %> <%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %><% end %>
+	        <% if county == 1 && @project.version.include?("special") then %>
+					<%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %>
+					<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
+					<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
+			<% end %>
 		    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
 		    	<% case req_parm %>
 		    		<%when "FEM"%>
@@ -113,17 +117,14 @@
 		    	<% end %>
 				<% if req_parm == "NTT" and test == 1 then %>
 	          		<%= link_to t('scenario.economic_results'), fem_results_project_field_result_path(@project, @field, 0), :class => 'btn btn-success' %>
-
 	          	<% end %>
-			    <% unless ENV["APP_VERSION"] == "modified" || @project.version.include?("special") %>
-			    	<% if req_parm == "NTT"%>
-	          			<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
+			    <% unless ENV["APP_VERSION"] == "modified" %>
+			    	<% if @project.version.include?("special")%>
+						<%= submit_tag t('activerecord.models.apex.download') + " " + t('menu.apex_file'), :class => 'light', data: {:action => :download}, :method => :post%>
+	          			<%#= submit_tag t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
 	          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
-	          		<% end %>
-	         		<% if fem == 1 && req_parm == "NTT"%>
-	          			<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
 	         		<% if dndc == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
@@ -144,24 +145,25 @@
 				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
 			<%end%>
 	        <%= t('instructions.scenarios') %>
-
+			<br>
+			<% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT")%>
+			 <%= t('instructions.scenarios_download') %><%= image_tag("download.gif")%><%= t('instructions.scenarios_download_apex') %><%= image_tag("download_lightblue_fem.png")%><%= t('instructions.scenarios_download_fem') %>
+			<% end %>
 			<div class="table">
 			  <div class="panel panel-default">
 				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
 				  <thead>
 					<tr>
-					  <%#th class="gvCellStyleTitle"><%= check_box_tag "select_all" %></th>
-	          <%#th class="gvCellStyleTitle"><%= t('general.select') %></th>
-	        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
-	          <th><%=t('general.select')%></th>
-	          <% end %>
-	        <% unless req_parm == "APLCAT"%>
-	 				  <th>Environment</th>
-					  <% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
-					  	<th><%=t('fem.economic')%></th>
-					  	<th>1501</th>
-					  <%end %>
-	        <% end %>
+				        <% if req_parm == "APLCAT"%> <!--Table headings modified to show only in APLCAT management scenario - Shikhar 10/19/20-->
+				          <th><%=t('general.select')%></th>
+				        <% end %>
+				        <% unless req_parm == "APLCAT"%>
+							  <th>Environment</th>
+						  	<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
+						  		<th><%=t('fem.economic')%></th>
+						  		<th>1501</th>
+						  	<%end %>
+				        <% end %>
 					  <th class="gvCellStyleTitle"><%= t('general.name') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.weather') %></th>
 					  <th class="gvCellStyleTitle"><%= t('menu.soils') %></th>
@@ -255,7 +257,7 @@
 								</tr>
 							<%end%>
 						<%else%>
-						<!-- For FEM and NTT. Jennifer 8/24/2020 -->
+							<!-- For FEM and NTT. Jennifer 8/24/2020 -->
 							<td id="<%= scenario.name %>" class="gvCellStyleText" style="text-align:center"><%= check_box_tag "select_ntt[]", scenario.id %></td>
 
 	 						<% if request.url.include? "localhost" or request.url.include? "ntt.bk" then %>
@@ -329,10 +331,11 @@
 								  		<%= scenario.fem_last_simulation %>
 							  	<% end %>
 							</td>
+							<!-- Jennifer 2/10/21 -->
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
-									<%#= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download, :simulate_download_apex => { :scen_id => [scenario.id] }}, :method => :post%>
- 									<%#= link_to image_tag("download.gif"),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post %>
+									<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post, :id => 'download_apex_folder'%>
+									<%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem'),{:action => :download_fem}, :method => :post, :id => 'download_fem_folder' %>                   
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
 									<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
@@ -340,7 +343,7 @@
 							<% end %>
 						 	</tr>
 						<% end %>
-					<% i = i + 1 %>
+						<% i = i + 1 %>
 					<% end %>
 				  </tbody>
 				</table>
