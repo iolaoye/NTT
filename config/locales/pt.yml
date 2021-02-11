@@ -1718,6 +1718,9 @@ pt:
     fields: "Clic en el Nome de la parcela para simulación del modelo."
     watersheds: "Para seleccionar um bacia, haga clic en el Nome de la bacia"
     scenarios: "Para seleccionar um cenário haga clic en el Nome del cenário, para correr la simulación Selecione el cuadro"
+    scenarios_download: "To download APEX or FEM folder click, under actions column and in front of the scenario you want to download to, "
+    scenarios_download_apex: "APEX or"
+    scenarios_download_fem: "FEM link"
     watershed_scenarios: Adicione las parcelas en el orden en que se enrutan de una a otra y Selecione el cenário que va a ser simulado con la parcela seleccionada.
   sysreq:
     header: Requisitos del Sistema

@@ -126,9 +126,6 @@
 	          		<% if aplcat == 1 && req_parm == "APLCAT"%>
 	          			<%= link_to t('menu.download_aplcat'), {:action => :download_aplcat}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
-				    <% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT")%>
-                        <button type="button" class="btn btn-warning"><strong><a href="#" id="trigger" style="color:white;" title="<%= t('scenario.download_instruction_tooltip')%>"><%=" How to " + t('activerecord.models.apex.download')%>?</a></strong></button>
-	          		<% end %>
 	         		<% if dndc == 1 && req_parm == "NTT"%>
 	          			<%= link_to t('menu.download_dndc'), {:action => :download_dndc}, :method => :post, :class => 'btn btn-default' %>
 	          		<% end %>
@@ -148,7 +145,10 @@
 				<p style="color:blue"><%= t('instructions.aplcat_notice')%></p>
 			<%end%>
 	        <%= t('instructions.scenarios') %>
-
+			<br>
+			<% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT")%>
+			 <%= t('instructions.scenarios_download') %><%= image_tag("download.gif")%><%= t('instructions.scenarios_download_apex') %><%= image_tag("download_lightblue_fem.png")%><%= t('instructions.scenarios_download_fem') %>
+			<% end %>
 			<div class="table">
 			  <div class="panel panel-default">
 				<table class="table table-striped", id="tbl_scenarios", name="tbl_scenarios">
@@ -334,8 +334,8 @@
 							<!-- Jennifer 2/10/21 -->
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
-									<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post %>
-									<%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem'),{:action => :download_fem}, :method => :post %>                   
+									<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post, :id => 'download_apex_folder'%>
+									<%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem'),{:action => :download_fem}, :method => :post, :id => 'download_fem_folder' %>                   
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
 									<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
