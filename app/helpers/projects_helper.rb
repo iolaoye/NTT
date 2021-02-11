@@ -338,6 +338,16 @@ module ProjectsHelper
         results.each do |r|
           duplicate_result(r)
         end
+      else
+        results = scenario.county_results
+        results.each do |r|
+          duplicate_result(r)
+        end
+        # Duplicate crop results when soil_id > 0.
+        results = scenario.county_crop_results
+        results.each do |r|
+          duplicate_result(r)
+        end
       end
     else
       return "Error Saving scenario"
