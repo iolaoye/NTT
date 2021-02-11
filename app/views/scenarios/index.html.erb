@@ -331,7 +331,7 @@
 							</td>
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
-									<%= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download, :simulate_download_apex => { :scen_id => [scenario.id] }}, :method => :post%>
+									<%#= link_to t('activerecord.models.apex.download') + " " + t('menu.apex_file'), {:action => :download, :simulate_download_apex => { :scen_id => [scenario.id] }}, :method => :post%>
  									<%#= link_to image_tag("download.gif"),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post %>
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
