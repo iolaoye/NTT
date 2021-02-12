@@ -101,7 +101,6 @@
 	        <% end %>
 	        <% if county == 1 && @project.version.include?("special") then %>
 					<%= submit_tag t('scenario.simulate_all_counties'), :class => 'btn btn-primary' %>
-					<%= link_to t('general.view') + " " + t('menu.results'), project_field_results_path(@project, @field), :class => 'btn btn-success' %>
 					<%= link_to t('menu.download_fem'), {:action => :download_fem}, :method => :post, :class => 'btn btn-default' %>
 			<% end %>
 		    <% if @field.annual_results.count > 0 or @field.county_results.count > 0 %>
