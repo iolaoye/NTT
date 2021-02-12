@@ -145,7 +145,7 @@
 			<%end%>
 	        <%= t('instructions.scenarios') %>
 			<br>
-			<% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT")%>
+			<% if req_parm == "NTT" || (fem == 1 && req_parm == "NTT") || !(@project.version.include?("special"))%>
 			 <%= t('instructions.scenarios_download') %><%= image_tag("download.gif")%><%= t('instructions.scenarios_download_apex') %><%= image_tag("download_lightblue_fem.png")%><%= t('instructions.scenarios_download_fem') %>
 			<% end %>
 			<div class="table">
@@ -333,8 +333,10 @@
 							<!-- Jennifer 2/10/21 -->
 					  		<% if req_parm == "NTT" then %>
 								<td class="gvCellStyleActions">
-									<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post, :id => 'download_apex_folder'%>
-									<%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem'),{:action => :download_fem}, :method => :post, :id => 'download_fem_folder' %>                   
+									<% unless ENV["APP_VERSION"] == "modified" %>
+										<%= link_to image_tag("download.gif") + t('activerecord.models.apex.apex'),simulate_project_field_scenarios_path(@project, @field, :commit => :Simulate, :simulate_download_apex => { :scen_id => [scenario.id] }), method: :post, :id => 'download_apex_folder'%>
+										<%= link_to image_tag("download_lightblue_fem.png") + t('activerecord.models.fem.fem'),{:action => :download_fem}, :method => :post, :id => 'download_fem_folder' %>
+									<% end %>                  
 									<%= link_to image_tag("edit.png"), edit_project_field_scenario_path(@project, @field, scenario), title: t('general.edit') %>
 									<%= link_to image_tag("copy.jpg"), copy_scenario_project_field_scenario_path(@project, @field, scenario), data: {disable_with: 'Please wait....', method: :get} %>
 									<%= link_to image_tag("delete.png"), project_field_scenario_path(@project, @field, scenario), title: t('general.delete'), method: :delete, data: {confirm: t('general.confirm')} %>
